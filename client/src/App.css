@@ -1,0 +1,71 @@
+.box-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .box-shadow:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .delete-btn {
+    border: 2px solid darkblue; /* Blue stroke */
+    color: darkblue;           /* Blue text color */
+    background-color: transparent; /* No fill color */
+    transition: all 0.3s ease-in-out; /* Smooth hover effect */
+  }
+  
+  .delete-btn:hover {
+    background-color: darkblue; /* Fill with blue on hover */
+    color: white;           /* Change text to white on hover */
+  }
+
+
+  .btn-update {
+    background-color: darkblue;
+    color: darkblue;
+    border: none;
+  }
+  
+  .btn-update:hover {
+    background-color: darkblue;
+  }
+
+
+  .text-center {
+    text-align: center;
+  }
+  
+  .box-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .box-shadow:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .cell-spacing {
+    padding: 15px; /* Adjust this value to increase or decrease spacing */
+  }
+  
+  .box-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ddd;
+  }
+  
+  .box-shadow:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .btn {
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 8px 12px;
+  }
+  
+  
+  
