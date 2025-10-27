@@ -39,7 +39,7 @@ function App() {
           <Route path='/fs-view5' element={<View5/>}></Route>
           <Route path="/fs-view5/:stationId" element={<View5 />} />
           <Route path='/fs-view6' element={<View6/>}></Route>
-          <Route path='/ComponentHome' element={<ComponentHome/>}></Route>
+          <Route path='/' element={<ComponentHome/>}></Route>
           <Route path='/ComponentHome/FuelLevel' element={<FuelLevel/>}></Route>
           <Route path='/ComponentHome/StationInfo' element={<StationInfo/>}></Route>
           <Route path='/' element={<Dashboard/>}></Route> 
