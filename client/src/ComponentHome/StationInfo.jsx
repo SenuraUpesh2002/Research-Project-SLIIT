@@ -31,13 +31,20 @@ const StationInfo = ({ stationId }) => {
   return (
     <Container maxWidth="md" sx={{ mt: 4, position: 'relative' }}>
       <Button
-        variant="contained"
-        color="primary"
-        sx={{ position: 'absolute', top: 16, right: 35 }}
-        onClick={() => navigate('/fs-view1')}
-      >
-        Proceed with your station
-      </Button>
+  variant="contained"
+  sx={{
+    backgroundColor: "#351B65",
+    '&:hover': {
+      backgroundColor: "#2a154f"  // Slightly darker for hover
+    },
+    position: 'absolute',
+    top: 16,
+    right: 35
+  }}
+  onClick={() => navigate('/fs-view1')}
+>
+  Proceed with your station
+</Button>
 
       <Paper elevation={3} sx={{ p: 3 }}>
         <Typography variant="h4" gutterBottom>
