@@ -12,7 +12,7 @@ const StationInfo = ({ stationId }) => {
     // Simulate API
     setTimeout(() => {
       setStationData({
-        name: 'CPC Colombo Main Station',
+        name: 'Colombo Main Station',
         location: 'Colombo 07, Sri Lanka',
         contact: '+94 11 1234567',
         noOfTanks: 2,
@@ -33,7 +33,7 @@ const StationInfo = ({ stationId }) => {
       <Button
         variant="contained"
         color="primary"
-        sx={{ position: 'absolute', top: 16, right: 16 }}
+        sx={{ position: 'absolute', top: 16, right: 35 }}
         onClick={() => navigate('/fs-view1')}
       >
         Proceed with your station
