@@ -84,7 +84,7 @@ function FuelDashboard() {
         <List>
           {dashboardLinks.map((item) => (
             <ListItem
-              button
+              button={true}
               key={item.label}
               onClick={item.action}
               selected={activeSection === item.label.replace(/\s+/g, "").toLowerCase()}
