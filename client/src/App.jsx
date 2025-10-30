@@ -4,7 +4,7 @@ import './App.css';
 import Button from '@mui/material/Button';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Dashboard  from './components/Dashboard/Dashboard';
+//import Dashboard  from './components/Dashboard/Dashboard';
 import Sensors from "./Drivers";
 import CreateUsers from './CreateUser';
 import UpdateUsers from './UpdateUser';
@@ -41,8 +41,8 @@ function App() {
           <Route path='/fs-view6' element={<View6/>}></Route>
           <Route path='/' element={<ComponentHome/>}></Route>
           <Route path='/ComponentHome/FuelLevel' element={<FuelLevel/>}></Route>
-          <Route path='/ComponentHome/StationInfo' element={<StationInfo/>}></Route>
-          <Route path='/' element={<Dashboard/>}></Route> 
+          <Route path='/StationInfo' element={<StationInfo/>}></Route>
+          
           <Route path='/sensor' element={<Sensors/>} ></Route>
           <Route path='/create' element={<CreateUsers/>} ></Route>
           <Route path='/update' element={<UpdateUsers/>} ></Route>

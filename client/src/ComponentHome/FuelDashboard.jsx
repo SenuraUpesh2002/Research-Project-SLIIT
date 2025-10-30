@@ -6,59 +6,65 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Box
 } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import InfoIcon from '@mui/icons-material/Info';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useNavigate } from "react-router-dom";
 
 function FuelDashboard() {
-  // Sidebar drawer links
+  const navigate = useNavigate();
+
   const dashboardLinks = [
-    { label: "Home", icon: <HomeIcon /> },
-    { label: "Station Info", icon: <InfoIcon /> },
-    { label: "Fuel Level", icon: <LocalGasStationIcon /> },
-    { label: "Notifications", icon: <NotificationsActiveIcon /> },
-    { label: "Settings", icon: <SettingsIcon /> }
+    { label: "Home", icon: <HomeIcon />, path: "/" },
+    { label: "Filling Station Information", icon: <InfoIcon />, path: "/StationInfo" },
+    { label: "Fuel Level", icon: <LocalGasStationIcon />, path: "/fuel-level" },
+    { label: "Notifications", icon: <NotificationsActiveIcon />, path: "/notifications" },
+    { label: "Settings", icon: <SettingsIcon />, path: "/settings" }
   ];
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: 200,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
+    <Box sx={{ display: "flex" }}>
+      <Drawer
+        variant="permanent"
+        sx={{
           width: 200,
-          boxSizing: "border-box",
-          backgroundColor: "#9667d9",
-          color: "#fff"
-        }
-      }}
-    >
-      <List>
-        {dashboardLinks.map((item) => (
-          <ListItem
-            button={true}
-            key={item.label}
-            sx={{
-              marginY: 1,
-              borderRadius: 2,
-              "&:hover": {
-                backgroundColor: "#8051c9"
-              }
-            }}
-          >
-            <ListItemIcon sx={{ color: "#fff", minWidth: 40 }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText primary={item.label} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider sx={{ bgcolor: "#fff" }} />
-    </Drawer>
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: 260,
+            boxSizing: "border-box",
+            backgroundColor: "#9667d9",
+            color: "#fff"
+          }
+        }}
+      >
+        <List>
+          {dashboardLinks.map((item) => (
+            <ListItem
+              button={true}
+              key={item.label}
+              onClick={() => navigate(item.path)}
+              sx={{
+                marginY: 1,
+                borderRadius: 2,
+                "&:hover": {
+                  backgroundColor: "#8051c9"
+                }
+              }}
+            >
+              <ListItemIcon sx={{ color: "#fff", minWidth: 40 }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider sx={{ bgcolor: "#fff" }} />
+      </Drawer>
+    </Box>
   );
 }
 
