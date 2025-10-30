@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Paper, Typography, Box, Table, TableHead, TableBody, TableRow, TableCell, CircularProgress, Chip } from '@mui/material';
-// Import your API function here
-// import { fetchStationInfo } from '../api/stationApi';
+import { Container, Paper, Typography, Box, Table, TableHead, TableBody, TableRow, TableCell, CircularProgress, Chip, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const StationInfo = ({ stationId }) => {
   const [stationData, setStationData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Dummy fetch, replace with your actual API call
   useEffect(() => {
@@ -18,8 +18,8 @@ const StationInfo = ({ stationId }) => {
         noOfTanks: 2,
         status: 'Active',
         tanks: [
-          { id: 1, type: 'Petrol 92', capacity: 20_000, currentLevel: 12_350, lastUpdated: '2025-10-14 11:30', sensorStatus: 'OK' },
-          { id: 2, type: 'Auto Diesel', capacity: 10_000, currentLevel: 9_750, lastUpdated: '2025-10-14 11:25', sensorStatus: 'OK' }
+          { id: 1, type: 'Petrol 92', capacity: 20000, currentLevel: 12350, lastUpdated: '2025-10-14 11:30', sensorStatus: 'OK' },
+          { id: 2, type: 'Auto Diesel', capacity: 10000, currentLevel: 9750, lastUpdated: '2025-10-14 11:25', sensorStatus: 'OK' }
         ]
       });
       setLoading(false);
@@ -29,7 +29,16 @@ const StationInfo = ({ stationId }) => {
   if (loading) return <Box display="flex" justifyContent="center" mt={4}><CircularProgress /></Box>;
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
+    <Container maxWidth="md" sx={{ mt: 4, position: 'relative' }}>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ position: 'absolute', top: 16, right: 16 }}
+        onClick={() => navigate('/fs-view1')}
+      >
+        Proceed with your station
+      </Button>
+
       <Paper elevation={3} sx={{ p: 3 }}>
         <Typography variant="h4" gutterBottom>
           {stationData.name}
