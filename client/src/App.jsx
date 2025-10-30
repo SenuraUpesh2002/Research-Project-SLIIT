@@ -19,7 +19,7 @@ import View4 from './StationRegister/View4';
 import View5 from './StationRegister/View5';
 import View6 from './StationRegister/View6';
 import ComponentHome from './ComponentHome/FuelDashboard';
-import FuelLevel from './ComponentHome/FuelLevel';
+import FuelLevel from './ComponentHome/FuelLevel'; //New route
 import StationInfo from './ComponentHome/StationInfo';
 
 
