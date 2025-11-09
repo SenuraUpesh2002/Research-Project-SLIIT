@@ -17,14 +17,14 @@ const Sensor = ({ stationId }) => {
   useEffect(() => {
     setTimeout(() => {
       setSensorData({
-        stationName: 'CPC Colombo Main Station',
+        stationName: 'Station',
         sensors: [
           {
             id: 1,
-            sensorType: 'Ultrasonic AJ-SR04T',
+            sensorType: 'JSN-SR04T-V3',
             installationDate: '2024-05-06',
-            location: 'Tank 1 (Petrol 92)',
-            manufacturer: 'Aojie Tech',
+            location: 'Tank No-1 (Petrol 92)',
+            manufacturer: 'German',
             calibrationStatus: 'Calibrated',
             lastReading: 12.35,
             lastUpdated: '2025-10-30 09:15',
@@ -58,7 +58,7 @@ const Sensor = ({ stationId }) => {
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
         <Typography variant="h4" gutterBottom>
-          Sensor Data – {sensorData.stationName}
+          Fuel Level Acquisition & Ingestion – {sensorData.stationName}
         </Typography>
         {sensorData.sensors.map((sensor, idx) => (
           <Paper key={sensor.id} elevation={2} sx={{ p: 2, mb: 4, bgcolor: idx % 2 === 0 ? "#f8f7fd" : "#f3f9ee" }}>
