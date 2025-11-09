@@ -43,7 +43,8 @@ function App() {
           <Route path='/ComponentHome/FuelLevel' element={<FuelLevel/>}></Route>
           <Route path='/StationInfo' element={<StationInfo/>}></Route>
           
-          <Route path='/sensor' element={<Sensors/>} ></Route>
+          <Route path='/sensor' element={<Sensor/>}></Route>
+          {/* <Route path='/sensor' element={<Sensors/>} ></Route> */}
           <Route path='/create' element={<CreateUsers/>} ></Route>
           <Route path='/update' element={<UpdateUsers/>} ></Route>
           <Route path='/forecasting' element={<ForecastingHome/>} ></Route>
