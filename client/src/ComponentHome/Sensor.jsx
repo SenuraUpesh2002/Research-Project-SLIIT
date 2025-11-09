@@ -5,31 +5,79 @@ import {
   Paper,
   Typography,
   Box,
-  Grid,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
   CircularProgress,
   Chip,
   Divider
 } from '@mui/material';
 
-const Sensor = ({ stationId }) => {
-  const [sensorData, setSensorData] = useState(null);
+const SENSOR_TYPE = "JSN-SR04T-V3";
+const SENSOR_LOCATION = "Tank-1-Octane-92";
+
+function formatDateTime(ts) {
+  if (!ts) return "-";
+  // If ts is a Date, convert to string; else assume YYYY-MM-DD HH:mm:ss
+  // (Backend MySQL usually gives as string)
+  try {
+    const dt = typeof ts === "string" ? new Date(ts.replace(' ', 'T')) : new Date(ts);
+    if (isNaN(dt)) return ts;
+    return dt.toLocaleDateString() + ' ' + dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  } catch {
+    return ts;
+  }
+}
+
+const Sensor = () => {
+  const [sensorData, setSensorData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [backendError, setBackendError] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/sensor') // Your server endpoint
+    axios.get('http://localhost:8081/sensor')
       .then(res => {
-        setSensorData(res.data || []);
+        if (Array.isArray(res.data)) {
+          setSensorData(res.data);
+        } else if (res.data) {
+          setSensorData([res.data]);
+        } else {
+          setSensorData([]);
+        }
+        setBackendError(false);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setBackendError(true);
+        setSensorData([]);
+        setLoading(false);
+      });
   }, []);
 
-  if (loading)
+  if (loading) {
     return (
       <Box display="flex" justifyContent="center" mt={4}>
         <CircularProgress />
       </Box>
     );
+  }
+
+  if (backendError) {
+    return (
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Paper elevation={3} sx={{ p: 3, bgcolor: '#ffeaea' }}>
+          <Typography variant="h5" color="error" gutterBottom>
+            Cannot connect to backend server!
+          </Typography>
+          <Typography>
+            Ensure your Node.js/Express API is running at <b>http://localhost:8081</b> and try again.
+          </Typography>
+        </Paper>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
@@ -37,50 +85,48 @@ const Sensor = ({ stationId }) => {
         <Typography variant="h4" gutterBottom>
           Fuel Level Acquisition & Ingestion – Real Sensor Data
         </Typography>
-        {sensorData.length === 0 && <Typography>No sensor data found.</Typography>}
-        {sensorData.map((sensor, idx) => (
-          <Paper key={sensor.id} elevation={2} sx={{ p: 2, mb: 4, bgcolor: idx % 2 === 0 ? "#f8f7fd" : "#f3f9ee" }}>
-            <Grid container spacing={2}>
-              {/* Physical Details */}
-              <Grid item xs={12} md={6}>
-                <Box sx={{ p: 2, border: '1px solid #e3e3e3', borderRadius: 2 }}>
-                  <Typography variant="h6" color="primary" gutterBottom>
-                    Physical Details
-                  </Typography>
-                  <Divider sx={{ mb: 2 }} />
-                  <Typography><b>Sensor ID:</b> {sensor.id}</Typography>
-                  <Typography><b>Type:</b> JSN-SR04T-V3</Typography>
-                  <Typography><b>Location:</b> Tank 1</Typography>
-                  <Typography><b>Installation Date:</b> {sensor.reading_time ? sensor.reading_time.split(' ')[0] : '-'}</Typography>
-                </Box>
-              </Grid>
-              {/* Operational Details */}
-              <Grid item xs={12} md={6}>
-                <Box sx={{ p: 2, border: '1px solid #e3e3e3', borderRadius: 2 }}>
-                  <Typography variant="h6" color="secondary" gutterBottom>
-                    Operational Details
-                  </Typography>
-                  <Divider sx={{ mb: 2 }} />
-                  <Typography>
-                    <b>Last Reading:</b> {sensor.reading}
-                  </Typography>
-                  <Typography>
-                    <b>Last Updated:</b> {sensor.reading_time}
-                  </Typography>
-                  <Typography>
-                    <b>Status:</b>{' '}
+        
+        {/* PHYSICAL DETAILS ONCE */}
+        <Box sx={{ mb: 3, p: 2, border: "1px solid #e3e3e3", borderRadius: 2, bgcolor: "#f8f7fd" }}>
+          <Typography variant="h6" color="primary" gutterBottom>
+            Physical Details
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          <Typography><b>Type:</b> {SENSOR_TYPE}</Typography>
+          <Typography><b>Location:</b> {SENSOR_LOCATION}</Typography>
+        </Box>
+
+        {/* OPERATIONAL DETAILS TABLE */}
+        {(!sensorData || sensorData.length === 0) ? (
+          <Typography>No sensor data found.</Typography>
+        ) : (
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell><b>ID</b></TableCell>
+                <TableCell><b>Reading</b></TableCell>
+                <TableCell><b>Time</b></TableCell>
+                <TableCell><b>Status</b></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {sensorData.map((sensor, idx) => (
+                <TableRow key={sensor.id || idx}>
+                  <TableCell>{sensor.id}</TableCell>
+                  <TableCell>{sensor.reading}</TableCell>
+                  <TableCell>{formatDateTime(sensor.reading_time)}</TableCell>
+                  <TableCell>
                     <Chip
-                      label={sensor.reading > 0 ? 'Active' : 'Inactive'}
-                      color={sensor.reading > 0 ? 'success' : 'error'}
+                      label={sensor.reading > 0 ? "Active" : "Inactive"}
+                      color={sensor.reading > 0 ? "success" : "error"}
                       size="small"
-                      sx={{ ml: 1 }}
                     />
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Paper>
-        ))}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </Paper>
     </Container>
   );

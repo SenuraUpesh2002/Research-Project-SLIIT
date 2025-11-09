@@ -230,8 +230,8 @@ app.get("/api/fs_ceypetco/:stationId", (req, res) => {
 
 
 //Retrieval of sensor data
-app.get('/api/sensor', (req, res) => {
-  db.query('SELECT * FROM jsnsr04t ORDER BY reading_time DESC LIMIT 10', (err, results) => {
+app.get('/sensor', (req, res) => {
+  connection.query('SELECT * FROM jsnsr04t ORDER BY reading_time DESC LIMIT 10', (err, results) => {
     if (err) return res.status(500).send('DB Error');
     res.json(results);
   });
