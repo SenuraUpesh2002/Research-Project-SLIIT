@@ -18,16 +18,29 @@ import {
 const SENSOR_TYPE = "JSN-SR04T-V3";
 const SENSOR_LOCATION = "Tank-1-Octane-92";
 
+// Helper to format timestamp string for table
 function formatDateTime(ts) {
   if (!ts) return "-";
-  // If ts is a Date, convert to string; else assume YYYY-MM-DD HH:mm:ss
-  // (Backend MySQL usually gives as string)
   try {
     const dt = typeof ts === "string" ? new Date(ts.replace(' ', 'T')) : new Date(ts);
-    if (isNaN(dt)) return ts;
     return dt.toLocaleDateString() + ' ' + dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   } catch {
     return ts;
+  }
+}
+
+// Returns "Active" if the record is the latest and within 15 mins, else "End"
+function getRecordStatus(sensor, idx, sensors) {
+  if (idx !== 0) return "End";
+  if (!sensor.reading_time) return "End";
+  const now = new Date();
+  const readingDate = new Date(sensor.reading_time.replace(' ', 'T'));
+  const diffMs = now - readingDate;
+  const diffMins = diffMs / (1000 * 60);
+  if (diffMins < 15) {
+    return "Active";
+  } else {
+    return "End";
   }
 }
 
@@ -39,13 +52,14 @@ const Sensor = () => {
   useEffect(() => {
     axios.get('http://localhost:8081/sensor')
       .then(res => {
+        let rows = [];
         if (Array.isArray(res.data)) {
-          setSensorData(res.data);
+          // Sort records with latest first (desc by time)
+          rows = [...res.data].sort((a, b) => new Date(b.reading_time) - new Date(a.reading_time));
         } else if (res.data) {
-          setSensorData([res.data]);
-        } else {
-          setSensorData([]);
+          rows = [res.data];
         }
+        setSensorData(rows);
         setBackendError(false);
         setLoading(false);
       })
@@ -110,20 +124,23 @@ const Sensor = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sensorData.map((sensor, idx) => (
-                <TableRow key={sensor.id || idx}>
-                  <TableCell>{sensor.id}</TableCell>
-                  <TableCell>{sensor.reading}</TableCell>
-                  <TableCell>{formatDateTime(sensor.reading_time)}</TableCell>
-                  <TableCell>
-                    <Chip
-                      label={sensor.reading > 0 ? "Active" : "Inactive"}
-                      color={sensor.reading > 0 ? "success" : "error"}
-                      size="small"
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
+              {sensorData.map((sensor, idx) => {
+                const statusLabel = getRecordStatus(sensor, idx, sensorData);
+                return (
+                  <TableRow key={sensor.id || idx}>
+                    <TableCell>{sensor.id}</TableCell>
+                    <TableCell>{sensor.reading}</TableCell>
+                    <TableCell>{formatDateTime(sensor.reading_time)}</TableCell>
+                    <TableCell>
+                      <Chip
+                        label={statusLabel}
+                        color={statusLabel === "Active" ? "success" : "warning"}
+                        size="small"
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         )}
