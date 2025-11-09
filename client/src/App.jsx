@@ -21,6 +21,7 @@ import View6 from './StationRegister/View6';
 import ComponentHome from './ComponentHome/FuelDashboard';
 import FuelLevel from './ComponentHome/FuelLevel'; 
 import StationInfo from './ComponentHome/StationInfo';
+import Sensor from './ComponentHome/Sensor';
 
 
 function App() {
