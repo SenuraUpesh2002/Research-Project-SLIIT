@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Container,
   Paper,
@@ -15,37 +16,13 @@ const Sensor = ({ stationId }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setSensorData({
-        stationName: 'Station',
-        sensors: [
-          {
-            id: 1,
-            sensorType: 'JSN-SR04T-V3',
-            installationDate: '2024-05-06',
-            location: 'Tank No-1 (Petrol 92)',
-            manufacturer: 'German',
-            calibrationStatus: 'Calibrated',
-            lastReading: 12.35,
-            lastUpdated: '2025-10-30 09:15',
-            status: 'Active'
-          },
-          {
-            id: 2,
-            sensorType: 'Temperature Sensor DS18B20',
-            installationDate: '2024-06-10',
-            location: 'Tank 1 (Petrol 92)',
-            manufacturer: 'Maxim Integrated',
-            calibrationStatus: 'Pending',
-            lastReading: 32.1,
-            lastUpdated: '2025-10-30 09:10',
-            status: 'Inactive'
-          }
-        ]
-      });
-      setLoading(false);
-    }, 800);
-  }, [stationId]);
+    axios.get('http://localhost:5000/api/sensor') // Your server endpoint
+      .then(res => {
+        setSensorData(res.data || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   if (loading)
     return (
@@ -58,52 +35,43 @@ const Sensor = ({ stationId }) => {
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
         <Typography variant="h4" gutterBottom>
-          Fuel Level Acquisition & Ingestion – {sensorData.stationName}
+          Fuel Level Acquisition & Ingestion – Real Sensor Data
         </Typography>
-        {sensorData.sensors.map((sensor, idx) => (
+        {sensorData.length === 0 && <Typography>No sensor data found.</Typography>}
+        {sensorData.map((sensor, idx) => (
           <Paper key={sensor.id} elevation={2} sx={{ p: 2, mb: 4, bgcolor: idx % 2 === 0 ? "#f8f7fd" : "#f3f9ee" }}>
             <Grid container spacing={2}>
               {/* Physical Details */}
               <Grid item xs={12} md={6}>
-                <Box sx={{ p: 2 }}>
+                <Box sx={{ p: 2, border: '1px solid #e3e3e3', borderRadius: 2 }}>
                   <Typography variant="h6" color="primary" gutterBottom>
                     Physical Details
                   </Typography>
                   <Divider sx={{ mb: 2 }} />
                   <Typography><b>Sensor ID:</b> {sensor.id}</Typography>
-                  <Typography><b>Type:</b> {sensor.sensorType}</Typography>
-                  <Typography><b>Manufacturer:</b> {sensor.manufacturer}</Typography>
-                  <Typography><b>Installation Date:</b> {sensor.installationDate}</Typography>
-                  <Typography><b>Location:</b> {sensor.location}</Typography>
+                  <Typography><b>Type:</b> JSN-SR04T-V3</Typography>
+                  <Typography><b>Location:</b> Tank 1</Typography>
+                  <Typography><b>Installation Date:</b> {sensor.reading_time ? sensor.reading_time.split(' ')[0] : '-'}</Typography>
                 </Box>
               </Grid>
               {/* Operational Details */}
               <Grid item xs={12} md={6}>
-                <Box sx={{ p: 2 }}>
+                <Box sx={{ p: 2, border: '1px solid #e3e3e3', borderRadius: 2 }}>
                   <Typography variant="h6" color="secondary" gutterBottom>
                     Operational Details
                   </Typography>
                   <Divider sx={{ mb: 2 }} />
                   <Typography>
-                    <b>Calibration Status:</b>{' '}
-                    <Chip
-                      label={sensor.calibrationStatus}
-                      color={sensor.calibrationStatus === 'Calibrated' ? 'success' : 'warning'}
-                      size="small"
-                      sx={{ ml: 1 }}
-                    />
+                    <b>Last Reading:</b> {sensor.reading}
                   </Typography>
                   <Typography>
-                    <b>Last Reading:</b> {sensor.lastReading}
-                  </Typography>
-                  <Typography>
-                    <b>Last Updated:</b> {sensor.lastUpdated}
+                    <b>Last Updated:</b> {sensor.reading_time}
                   </Typography>
                   <Typography>
                     <b>Status:</b>{' '}
                     <Chip
-                      label={sensor.status}
-                      color={sensor.status === 'Active' ? 'success' : 'error'}
+                      label={sensor.reading > 0 ? 'Active' : 'Inactive'}
+                      color={sensor.reading > 0 ? 'success' : 'error'}
                       size="small"
                       sx={{ ml: 1 }}
                     />
