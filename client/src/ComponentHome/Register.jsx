@@ -88,14 +88,21 @@ function Register() {
         />
 
         <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ mt: 3, py: 1.5, fontWeight: "bold" }}
-        >
-          Register
-        </Button>
+  type="submit"
+  variant="contained"
+  fullWidth
+  sx={{
+    mt: 3,
+    py: 1.5,
+    fontWeight: "bold",
+    backgroundColor: "#351B65",
+    "&:hover": {
+      backgroundColor: "#2a144d",  // A darker shade for hover effect
+    },
+  }}
+>
+  Register
+</Button>
       </Box>
     </Paper>
   );
