@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require("body-parser");
 const mysql = require('mysql');
-
+import mysql from "mysql2/promise";
   
 const app = express()
 app.use(bodyParser.json());
