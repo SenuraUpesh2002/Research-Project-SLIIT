@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require("body-parser");
 const mysql = require('mysql');
-import mysql from "mysql2/promise";
+
   
 const app = express()
 app.use(bodyParser.json());
@@ -250,40 +250,6 @@ app.post('/sensor', (req, res) => {
       res.send('OK');
     }
   );
-});
-
-
-// Registration page(Register.jsx) endpoint
-app.post("/api/register", async (req, res) => {
-  try {
-    const { email, role, password } = req.body;
-
-    // Basic validation
-    if (!email || !role || !password) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    // Check if email already exists
-    const [existingUsers] = await db.query("SELECT * FROM registration WHERE email = ?", [email]);
-    if (existingUsers.length > 0) {
-      return res.status(409).json({ error: "Email already registered" });
-    }
-
-    // Hash password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    // Insert new user
-    await db.query(
-      "INSERT INTO registration (email, role, password) VALUES (?, ?, ?)",
-      [email, role, hashedPassword]
-    );
-
-    return res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    console.error("Registration error:", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
 });
 
 
