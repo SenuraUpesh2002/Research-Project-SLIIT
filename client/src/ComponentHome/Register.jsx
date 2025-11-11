@@ -26,11 +26,26 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add form validation and submission logic here
-    console.log({ email, role, password });
-  };
+  const handleSubmit = async (event) => {
+  event.preventDefault();
+  try {
+    const response = await fetch("http://localhost:8081/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, role, password }),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert(result.message);
+      // Optionally navigate to login or home page
+    } else {
+      alert(result.error || "Registration failed");
+    }
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+};
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
