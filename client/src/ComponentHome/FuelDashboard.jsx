@@ -6,14 +6,16 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-  Box
+  Box,
+  IconButton,
+  Tooltip
 } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import InfoIcon from '@mui/icons-material/Info';
 import SettingsIcon from '@mui/icons-material/Settings';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';  // Icon for Register
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useNavigate } from "react-router-dom";
 
 function FuelDashboard() {
@@ -25,12 +27,15 @@ function FuelDashboard() {
     { label: "Fuel Level", icon: <LocalGasStationIcon />, path: "/fuel-level" },
     { label: "Sensor Readings", icon: <LocalGasStationIcon />, path: "/sensor" },
     { label: "Notifications", icon: <NotificationsActiveIcon />, path: "/notifications" },
-    { label: "Settings", icon: <SettingsIcon />, path: "/settings" },
-    { label: "Register", icon: <PersonAddIcon />, path: "/register" }  // New Register option
+    { label: "Settings", icon: <SettingsIcon />, path: "/settings" }
   ];
 
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", position: "relative" }}>
       <Drawer
         variant="permanent"
         sx={{
@@ -47,7 +52,7 @@ function FuelDashboard() {
         <List>
           {dashboardLinks.map((item) => (
             <ListItem
-              button={true}
+              button
               key={item.label}
               onClick={() => navigate(item.path)}
               sx={{
@@ -67,6 +72,33 @@ function FuelDashboard() {
         </List>
         <Divider sx={{ bgcolor: "#fff" }} />
       </Drawer>
+
+      {/* Register button positioned top right */}
+      <Box
+        sx={{
+          position: "fixed",
+          top: 16,
+          right: 16,
+          zIndex: 1300, // higher than Drawer
+        }}
+      >
+        <Tooltip title="Register">
+          <IconButton
+            color="primary"
+            onClick={handleRegisterClick}
+            sx={{
+              bgcolor: "#9667d9",
+              color: "#fff",
+              "&:hover": {
+                bgcolor: "#8051c9"
+              }
+            }}
+            size="large"
+          >
+            <PersonAddIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
     </Box>
   );
 }
