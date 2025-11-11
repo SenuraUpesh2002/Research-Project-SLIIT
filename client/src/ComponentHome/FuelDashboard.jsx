@@ -87,10 +87,10 @@ function FuelDashboard() {
             color="primary"
             onClick={handleRegisterClick}
             sx={{
-              bgcolor: "#9667d9",
+              bgcolor: "#351B65",
               color: "#fff",
               "&:hover": {
-                bgcolor: "#8051c9"
+                bgcolor: "#9667D9"
               }
             }}
             size="large"
