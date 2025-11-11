@@ -237,7 +237,20 @@ app.get('/sensor', (req, res) => {
   });
 });
 
-
+app.post('/sensor', (req, res) => {
+  const { reading } = req.body;
+  connection.query(
+    'INSERT INTO jsnsr04t (reading) VALUES (?)',
+    [reading],
+    (err, result) => {
+      if (err) {
+        console.error('DB Error: ', err);
+        return res.status(500).send('DB Error');
+      }
+      res.send('OK');
+    }
+  );
+});
 
 
 app.listen(8081 , () => {

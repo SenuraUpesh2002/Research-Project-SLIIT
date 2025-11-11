@@ -96,18 +96,18 @@ const Sensor = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
-          Fuel Level Acquisition & Ingestion – Real Sensor Data
-        </Typography>
+        <Typography variant="h5" gutterBottom>
+          Fuel Level Acquisition & Reading Ingestion – Sensor Based Data
+        </Typography><br></br>
         
         {/* PHYSICAL DETAILS ONCE */}
         <Box sx={{ mb: 3, p: 2, border: "1px solid #e3e3e3", borderRadius: 2, bgcolor: "#f8f7fd" }}>
           <Typography variant="h6" color="primary" gutterBottom>
-            Physical Details
+            Sensor Identification Information
           </Typography>
           <Divider sx={{ mb: 2 }} />
-          <Typography><b>Type:</b> {SENSOR_TYPE}</Typography>
-          <Typography><b>Location:</b> {SENSOR_LOCATION}</Typography>
+          <Typography><b>Sensor Identity:</b> {SENSOR_TYPE}</Typography>
+          <Typography><b>Installed Location:</b> {SENSOR_LOCATION}</Typography>
         </Box>
 
         {/* OPERATIONAL DETAILS TABLE */}
