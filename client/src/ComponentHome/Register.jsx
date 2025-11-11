@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   TextField,
@@ -23,6 +24,8 @@ function Register() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add form validation and submission logic here
@@ -33,10 +36,14 @@ function Register() {
     setShowPassword(!showPassword);
   };
 
+  const handleBack = () => {
+    navigate(-1); // Goes back to the previous page
+  };
+
   return (
-    <Paper elevation={6} sx={{ maxWidth: 400, margin: "auto", padding: 4, mt: 8 }}>
+    <Paper elevation={6} sx={{ maxWidth: 500, margin: "auto", padding: 4, mt: 8 }}>
       <Typography variant="h5" mb={3} align="center" fontWeight="bold">
-        Register
+        Registration<br></br><h6>FuelWatch - Real Time Fuel Availability Monitoring</h6>
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <TextField
@@ -103,6 +110,15 @@ function Register() {
 >
   Register
 </Button>
+
+<Button
+          variant="outlined"
+          fullWidth
+          sx={{ mt: 3, mb: 1 }}
+          onClick={handleBack}
+        >
+          Back
+        </Button>
       </Box>
     </Paper>
   );
