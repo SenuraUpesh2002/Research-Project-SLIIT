@@ -118,6 +118,7 @@ const Sensor = () => {
             <TableHead>
               <TableRow>
                 <TableCell><b>ID</b></TableCell>
+                <TableCell><b>Tank Height</b></TableCell>
                 <TableCell><b>Reading</b></TableCell>
                 <TableCell><b>Time</b></TableCell>
                 <TableCell><b>Status</b></TableCell>
@@ -129,6 +130,7 @@ const Sensor = () => {
                 return (
                   <TableRow key={sensor.id || idx}>
                     <TableCell>{sensor.id}</TableCell>
+                    <TableCell>43.18</TableCell>
                     <TableCell>{sensor.reading}</TableCell>
                     <TableCell>{formatDateTime(sensor.reading_time)}</TableCell>
                     <TableCell>
