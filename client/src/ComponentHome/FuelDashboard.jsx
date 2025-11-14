@@ -26,6 +26,7 @@ function FuelDashboard() {
     { label: "Filling Station Information", icon: <InfoIcon />, path: "/StationInfo" },
     { label: "Fuel Level", icon: <LocalGasStationIcon />, path: "/fuel-level" },
     { label: "Sensor Readings", icon: <LocalGasStationIcon />, path: "/sensor" },
+    { label: "Behavior Identification", icon: <LocalGasStationIcon />, path: "/anomaly" },
     { label: "Notifications", icon: <NotificationsActiveIcon />, path: "/notifications" },
     { label: "Settings", icon: <SettingsIcon />, path: "/settings" }
   ];
