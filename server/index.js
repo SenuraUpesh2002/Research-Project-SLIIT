@@ -283,6 +283,33 @@ app.post('/register', (req, res) => {
 });
 
 
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required' });
+  }
+  // Authenticate: match email and password
+  connection.query(
+    'SELECT * FROM registration WHERE email = ? AND password = ?',
+    [email, password],
+    (err, results) => {
+      if (err) {
+        console.error('DB Error:', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+      if (results.length === 1) {
+        // Authentication success
+        res.json({ message: 'Login successful', user: results[0] });
+      } else {
+        // Wrong credentials
+        res.status(401).json({ error: 'Invalid email or password' });
+      }
+    }
+  );
+});
+
+
+
 
 app.listen(8081 , () => {
     console.log("Server is running")
