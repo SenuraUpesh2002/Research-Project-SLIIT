@@ -253,35 +253,35 @@ app.post('/sensor', (req, res) => {
 });
 
 
-// Registration API endpoint
-app.post('/register', async (req, res) => {
-  try {
-    const { email, role, password } = req.body;
+// Registration endpoint using callbacks
+app.post('/register', (req, res) => {
+  const { email, role, password } = req.body;
 
-    // Validate input
-    if (!email || !role || !password) {
-      return res.status(400).json({ error: 'Please provide email, role, and password' });
+  if (!email || !role || !password) {
+    return res.status(400).json({ error: 'Please provide email, role, and password' });
+  }
+
+  // Check if email exists
+  connection.query('SELECT * FROM registration WHERE email = ?', [email], (err, results) => {
+    if (err) {
+      console.error('DB Error:', err);
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
-
-    // Check if email already exists
-    const [existing] = await db.query('SELECT * FROM registration WHERE email = ?', [email]);
-    if (existing.length > 0) {
+    if (results.length > 0) {
       return res.status(409).json({ error: 'Email already exists' });
     }
 
-    // Insert user record without hashing
-    await db.query('INSERT INTO registration (email, role, password) VALUES (?, ?, ?)', [
-      email,
-      role,
-      password
-    ]);
-
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    console.error('Registration Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+    // Insert new user record
+    connection.query('INSERT INTO registration (email, role, password) VALUES (?, ?, ?)', [email, role, password], (err, result) => {
+      if (err) {
+        console.error('DB Error on insert:', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+      res.status(201).json({ message: 'User registered successfully', id: result.insertId });
+    });
+  });
 });
+
 
 
 app.listen(8081 , () => {
