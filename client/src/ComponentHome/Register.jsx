@@ -58,7 +58,7 @@ function Register() {
   return (
     <Paper elevation={6} sx={{ maxWidth: 500, margin: "auto", padding: 4, mt: 8 }}>
       <Typography variant="h5" mb={3} align="center" fontWeight="bold">
-        Registration<br></br><h6>FuelWatch - Real Time Fuel Availability Monitoring</h6>
+        Sign Up<br></br><h6>FuelWatch - Real Time Fuel Availability Monitoring</h6>
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <TextField
