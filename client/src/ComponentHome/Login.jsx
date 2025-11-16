@@ -22,6 +22,7 @@ function Login() {
       const result = await response.json();
       if (response.ok) {
         alert("Login successful");
+        navigate("/FuelDashboard");
         // Redirect or store user info/token as needed
       } else {
         setError(result.error || "Login failed");
