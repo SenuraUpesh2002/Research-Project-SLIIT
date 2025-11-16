@@ -85,7 +85,7 @@ function FuelDashboard() {
       {/* Notification popup for user role */}
       <Snackbar
         open={open}
-        autoHideDuration={10000}
+        autoHideDuration={20000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
