@@ -23,7 +23,9 @@ import FuelLevel from './ComponentHome/FuelLevel';
 import StationInfo from './ComponentHome/StationInfo';
 import Sensor from './ComponentHome/Sensor';
 import Register from './ComponentHome/Register';
+import Login from './ComponentHome/Login';
 import Anomaly from './ComponentHome/Anomaly';
+
 
 function App() {
 
@@ -42,6 +44,7 @@ function App() {
           <Route path="/fs-view5/:stationId" element={<View5 />} />
           <Route path='/fs-view6' element={<View6/>}></Route>
           <Route path='/' element={<Register/>}></Route>
+          <Route path='/login' element={<Login/>}></Route>
           <Route path='/ComponentHome/FuelLevel' element={<FuelLevel/>}></Route>
           <Route path='/StationInfo' element={<StationInfo/>}></Route>
           
