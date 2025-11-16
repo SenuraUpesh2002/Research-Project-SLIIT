@@ -1,22 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
+  Box,
   Drawer,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Divider,
-  Box
+  Snackbar,
+  Alert
 } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import InfoIcon from '@mui/icons-material/Info';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { useNavigate } from "react-router-dom";
 
 function FuelDashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const role = location.state?.role || "";
+
+  const [open, setOpen] = useState(!!role);
+
+  useEffect(() => {
+    setOpen(!!role);
+  }, [role]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    setOpen(false);
+  };
 
   const dashboardLinks = [
     { label: "Home", icon: <HomeIcon />, path: "/" },
@@ -66,6 +81,22 @@ function FuelDashboard() {
         </List>
         <Divider sx={{ bgcolor: "#fff" }} />
       </Drawer>
+      
+      {/* Notification popup for user role */}
+      <Snackbar
+        open={open}
+        autoHideDuration={10000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          sx={{ width: "100%", background: "#351B65", color: "#fff", fontWeight: "bold" }}
+        >
+          {role ? `You are logged in as a ${role}` : ""}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
