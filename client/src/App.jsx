@@ -18,13 +18,14 @@ import View3 from './StationRegister/View3';
 import View4 from './StationRegister/View4';
 import View5 from './StationRegister/View5';
 import View6 from './StationRegister/View6';
-import ComponentHome from './ComponentHome/FuelDashboard';
-import FuelLevel from './ComponentHome/FuelLevel'; 
+import FuelDashboard from './ComponentHome/FuelDashboard';
+//import FuelLevel from './ComponentHome/FuelLevel'; 
 import StationInfo from './ComponentHome/StationInfo';
 import Sensor from './ComponentHome/Sensor';
 import Register from './ComponentHome/Register';
 import Login from './ComponentHome/Login';
 import Anomaly from './ComponentHome/Anomaly';
+
 
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
           <Route path='/fs-view6' element={<View6/>}></Route>
           <Route path='/' element={<Register/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
-          <Route path='/ComponentHome/FuelLevel' element={<FuelLevel/>}></Route>
+          <Route path='/FuelDashboard' element={<FuelDashboard/>}></Route>
           <Route path='/StationInfo' element={<StationInfo/>}></Route>
           
           <Route path='/sensor' element={<Sensor/>}></Route>

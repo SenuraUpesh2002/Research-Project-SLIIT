@@ -38,6 +38,7 @@ function Register() {
     const result = await response.json();
     if (response.ok) {
       alert(result.message);
+      navigate("/Login");
       // Optionally navigate to login or home page
     } else {
       alert(result.error || "Registration failed");
