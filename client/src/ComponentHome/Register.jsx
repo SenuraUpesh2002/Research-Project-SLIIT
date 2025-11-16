@@ -126,14 +126,7 @@ function Register() {
   Register
 </Button>
 
-<Button
-          variant="outlined"
-          fullWidth
-          sx={{ mt: 3, mb: 1 }}
-          onClick={handleBack}
-        >
-          Back
-        </Button>
+
       </Box>
     </Paper>
   );
