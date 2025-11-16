@@ -253,6 +253,37 @@ app.post('/sensor', (req, res) => {
 });
 
 
+// Registration API endpoint
+app.post('/register', async (req, res) => {
+  try {
+    const { email, role, password } = req.body;
+
+    // Validate input
+    if (!email || !role || !password) {
+      return res.status(400).json({ error: 'Please provide email, role, and password' });
+    }
+
+    // Check if email already exists
+    const [existing] = await db.query('SELECT * FROM registration WHERE email = ?', [email]);
+    if (existing.length > 0) {
+      return res.status(409).json({ error: 'Email already exists' });
+    }
+
+    // Insert user record without hashing
+    await db.query('INSERT INTO registration (email, role, password) VALUES (?, ?, ?)', [
+      email,
+      role,
+      password
+    ]);
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error('Registration Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.listen(8081 , () => {
     console.log("Server is running")
 })
