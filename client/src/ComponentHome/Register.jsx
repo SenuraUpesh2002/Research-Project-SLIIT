@@ -127,6 +127,22 @@ function Register() {
   Register
 </Button>
 
+<Button
+          variant="text"
+          fullWidth
+          onClick={handleLoginNavigate}
+          sx={{
+            mt: 2,
+            fontWeight: "bold",
+            color: "#351B65",
+            "&:hover": {
+              backgroundColor: "#ECEAF7"
+            },
+          }}
+        >
+          LOGIN
+        </Button>
+
 
       </Box>
     </Paper>
