@@ -56,6 +56,10 @@ function Register() {
     navigate(-1); // Goes back to the previous page
   };
 
+  const handleLoginNavigate = () => {
+    navigate("/Login");
+  };
+
   return (
     <Paper elevation={6} sx={{ maxWidth: 500, margin: "auto", padding: 4, mt: 8 }}>
       <Typography variant="h5" mb={3} align="center" fontWeight="bold">
