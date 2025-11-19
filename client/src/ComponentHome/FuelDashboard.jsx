@@ -17,6 +17,8 @@ import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import InfoIcon from '@mui/icons-material/Info';
 import SettingsIcon from '@mui/icons-material/Settings';
+import PersonIcon from "@mui/icons-material/Person";
+import WorkIcon from "@mui/icons-material/Work";
 
 
 function FuelDashboard() {
