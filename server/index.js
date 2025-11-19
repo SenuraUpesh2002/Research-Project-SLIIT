@@ -310,6 +310,31 @@ app.post('/login', (req, res) => {
 
 
 
+// API to get sensor health status
+app.get('/sensor/health', (req, res) => {
+  connection.query(
+    'SELECT MAX(reading_time) AS lastReading, AVG(reading) AS avgReading FROM jsnsr04t',
+    (err, results) => {
+      if (err) return res.status(500).send('DB Error');
+      const lastReadingTime = results[0].lastReading;
+      const avgReading = results[0].avgReading;
+      const now = new Date();
+      const diffMins = lastReadingTime ? (now - new Date(lastReadingTime)) / 1000 / 60 : null;
+
+      const active = diffMins !== null && diffMins < 15 && avgReading > 0 && avgReading <= 37.78;
+      res.json({ active, diffMins: diffMins || 9999, avgReading });
+    }
+  );
+});
+
+// API to simulate sensor test
+app.post('/sensor/test', (req, res) => {
+  // For actual hardware: trigger test measurement or diagnostics here
+  // Here we simulate success
+  res.json({ message: "Sensor test triggered successfully." });
+});
+
+
 
 app.listen(8081 , () => {
     console.log("Server is running")
