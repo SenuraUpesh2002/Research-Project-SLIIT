@@ -25,6 +25,7 @@ import Sensor from './ComponentHome/Sensor';
 import Register from './ComponentHome/Register';
 import Login from './ComponentHome/Login';
 import Anomaly from './ComponentHome/Anomaly';
+import SensorHealth from './ComponentHome/SensorHealth';
 
 
 
@@ -48,11 +49,13 @@ function App() {
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/FuelDashboard' element={<FuelDashboard/>}></Route>
           <Route path='/StationInfo' element={<StationInfo/>}></Route>
-          
           <Route path='/sensor' element={<Sensor/>}></Route>
           {/* <Route path='/sensor' element={<Sensors/>} ></Route> */}
           <Route path='/register' element={<Register/>}></Route> 
           <Route path='/anomaly' element={<Anomaly/>}></Route> 
+          <Route path="/sensor-health" element={<SensorHealth />} />
+
+
           <Route path='/create' element={<CreateUsers/>} ></Route>
           <Route path='/update' element={<UpdateUsers/>} ></Route>
           <Route path='/forecasting' element={<ForecastingHome/>} ></Route>
