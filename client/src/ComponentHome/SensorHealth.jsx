@@ -77,10 +77,10 @@ function SensorHealth() {
     : 0;
 
   return (
-    <Paper elevation={6} sx={{ p: 4, maxWidth: 400, mx: "auto", mt: 6 }}>
-      <Typography variant="h4" gutterBottom align="center" fontWeight="bold">
+    <Paper elevation={6} sx={{ p: 4, maxWidth: 800, mx: "auto", mt: 6 }}>
+      <Typography variant="h5" gutterBottom align="center" fontWeight="bold">
         Sensor Health Status
-      </Typography>
+      </Typography>  <br></br>
 
       {loadingHealth ? (
         <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
@@ -105,7 +105,7 @@ function SensorHealth() {
                 {Math.round(health.diffMins)} minutes ago
               </Typography>
             </Tooltip>
-          </Stack>
+          </Stack> <br></br>
 
           <Box mb={3}>
             <Typography gutterBottom fontWeight="medium" color="text.secondary">
