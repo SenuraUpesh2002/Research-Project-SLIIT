@@ -93,9 +93,19 @@ function FuelDashboard() {
         </List>
         <Divider sx={{ bgcolor: "#fff" }} />
       </Drawer>
+
+      
       
       {/* Info panel right side (add your actual dashboard content here) */}
       <Box sx={{ flexGrow: 1, p: 4, marginLeft: 8 }}>
+
+        <Box sx={{ display: "flex", justifyContent: "left", alignItems: "center", mb: 2 }}>
+          <img
+            src="/fuelwatch_logo.png"
+            alt="FuelWatch Logo"
+            style={{ width: 90, height: "auto", marginRight: 16 }}
+          />
+        </Box>
         {/* Main heading */}
         <Typography variant="h5" fontWeight="bold" sx={{ mb: 4, color: "#351B65" }}>
           Real-Time Fuel Availability Monitoring
