@@ -18,6 +18,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import InfoIcon from '@mui/icons-material/Info';
 import SettingsIcon from '@mui/icons-material/Settings';
 
+
 function FuelDashboard() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -87,14 +88,49 @@ function FuelDashboard() {
       
       {/* Info panel right side (add your actual dashboard content here) */}
       <Box sx={{ flexGrow: 1, p: 4, marginLeft: 8 }}>
-        <Typography variant="h6" fontWeight="bold">
-          Logged in Email: {email}
+  <Card
+    elevation={6}
+    sx={{
+      maxWidth: 380,
+      background: "linear-gradient(90deg, #eceaff 0%, #e5d5fa 100%)",
+      borderRadius: 4,
+      p: 2,
+      boxShadow: "0 8px 24px -8px #9667d9"
+    }}
+  >
+    <CardHeader
+      avatar={
+        <Avatar sx={{ bgcolor: "#351B65", width: 56, height: 56 }}>
+          <PersonIcon fontSize="large" />
+        </Avatar>
+      }
+      title={
+        <Typography variant="h6" fontWeight="bold" color="#351B65">
+          {email || "No email"}
         </Typography>
-        <Typography variant="subtitle1" sx={{ mb: 2 }}>
-          User Role: {role}
-        </Typography>
-        {/* Add more dashboard content below */}
-      </Box>
+      }
+      subheader={
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <WorkIcon sx={{ color: "#8051c9" }} />
+          <Chip
+            label={role || "No role"}
+            sx={{
+              background: "#8051c9",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "1rem"
+            }}
+          />
+        </Stack>
+      }
+    />
+    <CardContent>
+      <Typography variant="body2" color="#351B65">
+        Welcome to your personalized dashboard. You are logged in with <b>{email}</b> as <b>{role}</b>.
+      </Typography>
+    </CardContent>
+  </Card>
+</Box>
       
       {/* Notification popup for user role */}
       <Snackbar
