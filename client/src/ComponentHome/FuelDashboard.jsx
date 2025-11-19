@@ -108,7 +108,7 @@ function FuelDashboard() {
           severity="success"
           sx={{ width: "100%", background: "#351B65", color: "#fff", fontWeight: "bold" }}
         >
-          {role && email ? `You are logged in as ${role} (${email})` : ""}
+          {role && email ? `You are logged in as ${role} ` : ""}
         </Alert>
       </Snackbar>
     </Box>
