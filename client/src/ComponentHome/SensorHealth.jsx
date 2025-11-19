@@ -93,7 +93,7 @@ function SensorHealth() {
 
       {loadingHealth ? (
         <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
-          <CircularProgress size={60} thickness={5} />
+          <CircularProgress size={60} thickness={2} />
         </Box>
       ) : (
         <>
@@ -107,7 +107,7 @@ function SensorHealth() {
               label={health.active ? "Sensor Active" : "Sensor Inactive"}
               color={health.active ? "success" : "error"}
               size="medium"
-              sx={{ fontWeight: "bold", fontSize: 16, px: 2, py: 1 }}
+              sx={{ fontWeight: "bold", fontSize: 14, px: 2, py: 1 }}
             />
             <Tooltip title="Minutes since last sensor reading">
               <Typography variant="subtitle1" color="text.secondary">
