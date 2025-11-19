@@ -9,7 +9,8 @@ import {
   ListItemText,
   Divider,
   Snackbar,
-  Alert
+  Alert,
+  Typography
 } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
@@ -21,6 +22,7 @@ function FuelDashboard() {
   const navigate = useNavigate();
   const location = useLocation();
   const role = location.state?.role || "";
+  const email = location.state?.email || "";
 
   const [open, setOpen] = useState(!!role);
 
@@ -83,6 +85,17 @@ function FuelDashboard() {
         <Divider sx={{ bgcolor: "#fff" }} />
       </Drawer>
       
+      {/* Info panel right side (add your actual dashboard content here) */}
+      <Box sx={{ flexGrow: 1, p: 4, marginLeft: 8 }}>
+        <Typography variant="h6" fontWeight="bold">
+          Logged in Email: {email}
+        </Typography>
+        <Typography variant="subtitle1" sx={{ mb: 2 }}>
+          User Role: {role}
+        </Typography>
+        {/* Add more dashboard content below */}
+      </Box>
+      
       {/* Notification popup for user role */}
       <Snackbar
         open={open}
@@ -95,7 +108,7 @@ function FuelDashboard() {
           severity="success"
           sx={{ width: "100%", background: "#351B65", color: "#fff", fontWeight: "bold" }}
         >
-          {role ? `You are logged in as a ${role}` : ""}
+          {role && email ? `You are logged in as ${role} (${email})` : ""}
         </Alert>
       </Snackbar>
     </Box>
