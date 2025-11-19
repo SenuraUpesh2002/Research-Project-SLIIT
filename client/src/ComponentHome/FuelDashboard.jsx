@@ -96,6 +96,10 @@ function FuelDashboard() {
       
       {/* Info panel right side (add your actual dashboard content here) */}
       <Box sx={{ flexGrow: 1, p: 4, marginLeft: 8 }}>
+        {/* Main heading */}
+        <Typography variant="h5" fontWeight="bold" sx={{ mb: 4, color: "#351B65" }}>
+          Real-Time Fuel Availability Monitoring
+        </Typography>
   <Card
     elevation={6}
     sx={{
@@ -134,7 +138,7 @@ function FuelDashboard() {
     />
     <CardContent>
       <Typography variant="body2" color="#351B65">
-        Welcome to your personalized dashboard. You are logged in with <b>{email}</b> as <b>{role}</b>.
+        Welcome to Fuelwatch-Real Time Fuel Availability Monitoring dashboard. You are logged in with <b>{email}</b> as <b>{role}</b>.
       </Typography>
     </CardContent>
   </Card>
