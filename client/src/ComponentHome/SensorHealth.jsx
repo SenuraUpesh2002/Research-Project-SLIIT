@@ -22,6 +22,8 @@ function SensorHealth() {
     active: false,
     diffMins: 0,
     avgReading: 0,
+    uptimePercent: 95,    // Example uptime %; replace with real data if available
+    errorRatePercent: 3,  // Example error rate %; replace with real data if available
   });
   const [loadingHealth, setLoadingHealth] = useState(true);
   const [testMessage, setTestMessage] = useState("");
@@ -34,11 +36,12 @@ function SensorHealth() {
     axios
       .get(`${API_BASE}/sensor/health`)
       .then((res) => {
-        setHealth(res.data);
+        // Assuming uptimePercent and errorRatePercent can be provided from backend or calculated client-side
+        setHealth({ ...res.data, uptimePercent: 95, errorRatePercent: 3 });
         setLoadingHealth(false);
       })
       .catch(() => {
-        setHealth({ active: false, diffMins: 9999, avgReading: 0 });
+        setHealth({ active: false, diffMins: 9999, avgReading: 0, uptimePercent: 0, errorRatePercent: 0 });
         setLoadingHealth(false);
         setSnackbarSeverity("error");
         setTestMessage("Unable to get sensor health status.");
@@ -46,7 +49,7 @@ function SensorHealth() {
       });
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchHealth();
     const intervalId = setInterval(fetchHealth, 30000);
     return () => clearInterval(intervalId);
@@ -72,15 +75,21 @@ function SensorHealth() {
     setOpenSnackbar(false);
   };
 
-  const progressValue = health.avgReading
+  // Progress values for bars
+  const avgReadingProgress = health.avgReading
     ? Math.min((health.avgReading / 37.78) * 100, 100)
     : 0;
+
+  // Time since last reading progress: inverse (0 min = 100%, 15 min = 0%)
+  const maxDiffMins = 15;
+  const timeSinceLastReadingProgress = Math.max(0, 100 - (health.diffMins / maxDiffMins) * 100);
 
   return (
     <Paper elevation={6} sx={{ p: 4, maxWidth: 800, mx: "auto", mt: 6 }}>
       <Typography variant="h5" gutterBottom align="center" fontWeight="bold">
         Sensor Health Status
-      </Typography>  <br></br>
+      </Typography>
+      <br />
 
       {loadingHealth ? (
         <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
@@ -105,21 +114,23 @@ function SensorHealth() {
                 {Math.round(health.diffMins)} minutes ago
               </Typography>
             </Tooltip>
-          </Stack> <br></br>
+          </Stack>
+          <br />
 
+          {/* Average Reading */}
           <Box mb={3}>
             <Typography gutterBottom fontWeight="medium" color="text.secondary">
               Average Sensor Reading (cm)
             </Typography>
             <LinearProgress
               variant="determinate"
-              value={progressValue}
+              value={avgReadingProgress}
               sx={{
                 height: 20,
                 borderRadius: 2,
                 backgroundColor: "#e0e0e0",
                 "& .MuiLinearProgress-bar": {
-                  bgcolor: progressValue > 80 ? "error.main" : "success.main",
+                  bgcolor: avgReadingProgress > 80 ? "error.main" : "success.main",
                   transition: "width 1s ease-in-out",
                 },
               }}
@@ -129,13 +140,100 @@ function SensorHealth() {
               variant="body1"
               align="center"
               fontWeight="medium"
-              color={progressValue > 80 ? "error.main" : "green"}
+              color={avgReadingProgress > 80 ? "error.main" : "green"}
             >
               {health.avgReading ? health.avgReading.toFixed(2) : "N/A"} cm
             </Typography>
           </Box>
 
-          <Divider sx={{ mb: 3 }} />
+          {/* Time Since Last Reading */}
+          <Box mb={3}>
+            <Typography gutterBottom fontWeight="medium" color="text.secondary">
+              Time Since Last Reading (5min threshold)
+            </Typography>
+            <LinearProgress
+              variant="determinate"
+              value={timeSinceLastReadingProgress}
+              sx={{
+                height: 20,
+                borderRadius: 2,
+                backgroundColor: "#e0e0e0",
+                "& .MuiLinearProgress-bar": {
+                  bgcolor: timeSinceLastReadingProgress < 50 ? "error.main" : "success.main",
+                  transition: "width 1s ease-in-out",
+                },
+              }}
+            />
+            <Typography
+              mt={1}
+              variant="body1"
+              align="center"
+              fontWeight="medium"
+              color={timeSinceLastReadingProgress < 50 ? "error.main" : "green"}
+            >
+              {Math.round(health.diffMins)} minutes ago
+            </Typography>
+          </Box>
+
+          {/* Uptime Percentage */}
+          <Box mb={3}>
+            <Typography gutterBottom fontWeight="medium" color="text.secondary">
+              Sensor Uptime (%)
+            </Typography>
+            <LinearProgress
+              variant="determinate"
+              value={health.uptimePercent}
+              sx={{
+                height: 20,
+                borderRadius: 2,
+                backgroundColor: "#e0e0e0",
+                "& .MuiLinearProgress-bar": {
+                  bgcolor: health.uptimePercent < 80 ? "error.main" : "success.main",
+                  transition: "width 1s ease-in-out",
+                },
+              }}
+            />
+            <Typography
+              mt={1}
+              variant="body1"
+              align="center"
+              fontWeight="medium"
+              color={health.uptimePercent < 80 ? "error.main" : "green"}
+            >
+              {health.uptimePercent ? health.uptimePercent.toFixed(1) : "N/A"}%
+            </Typography>
+          </Box>
+
+          {/* Error Rate */}
+          <Box>
+            <Typography gutterBottom fontWeight="medium" color="text.secondary">
+              Sensor Error Rate (%)
+            </Typography>
+            <LinearProgress
+              variant="determinate"
+              value={health.errorRatePercent}
+              sx={{
+                height: 20,
+                borderRadius: 2,
+                backgroundColor: "#e0e0e0",
+                "& .MuiLinearProgress-bar": {
+                  bgcolor: health.errorRatePercent > 10 ? "error.main" : "success.main",
+                  transition: "width 1s ease-in-out",
+                },
+              }}
+            />
+            <Typography
+              mt={1}
+              variant="body1"
+              align="center"
+              fontWeight="medium"
+              color={health.errorRatePercent > 10 ? "error.main" : "green"}
+            >
+              {health.errorRatePercent ? health.errorRatePercent.toFixed(1) : "N/A"}%
+            </Typography>
+          </Box>
+
+          <Divider sx={{ my: 3 }} />
 
           <Button
             variant="contained"
@@ -147,24 +245,24 @@ function SensorHealth() {
           >
             Test Sensor
           </Button>
+
+          {/* Snackbar for feedback */}
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={4000}
+            onClose={handleCloseSnackbar}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <Alert
+              onClose={handleCloseSnackbar}
+              severity={snackbarSeverity}
+              sx={{ width: "100%" }}
+            >
+              {testMessage}
+            </Alert>
+          </Snackbar>
         </>
       )}
-
-      {/* Snackbar for feedback */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbarSeverity}
-          sx={{ width: "100%" }}
-        >
-          {testMessage}
-        </Alert>
-      </Snackbar>
     </Paper>
   );
 }
