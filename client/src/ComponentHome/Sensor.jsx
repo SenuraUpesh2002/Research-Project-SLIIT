@@ -18,7 +18,7 @@ import {
 const SENSOR_TYPE = "JSN-SR04T-V3";
 const SENSOR_LOCATION = "Tank-1-Octane-92";
 
-const TANK_HEIGHT = 37.78;  // cm
+const TANK_HEIGHT = 60.96;  // cm
 const TANK_RADIUS = 16.51;  // cm
 
 function formatDateTime(ts) {
