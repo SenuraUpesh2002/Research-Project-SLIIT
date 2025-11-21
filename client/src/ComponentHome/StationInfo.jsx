@@ -1,108 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Paper, Typography, Box, Table, TableHead, TableBody, TableRow, TableCell, CircularProgress, Chip, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const StationInfo = ({ stationId }) => {
-  const [stationData, setStationData] = useState(null);
-  const [loading, setLoading] = useState(true);
+const StationInfo = () => {
+  const [proceeded, setProceeded] = useState(false);
   const navigate = useNavigate();
 
-  // Dummy fetch, replace with your actual API call
-  useEffect(() => {
-    // Simulate API
-    setTimeout(() => {
-      setStationData({
-        name: 'Colombo Main Station',
-        location: 'Colombo 07, Sri Lanka',
-        contact: '+94 11 1234567',
-        noOfTanks: 2,
-        status: 'Active',
-        tanks: [
-          { id: 1, type: 'Petrol 92', capacity: 20000, currentLevel: 12350, lastUpdated: '2025-10-14 11:30', sensorStatus: 'OK' },
-          { id: 2, type: 'Auto Diesel', capacity: 10000, currentLevel: 9750, lastUpdated: '2025-10-14 11:25', sensorStatus: 'OK' }
-        ]
-      });
-      setLoading(false);
-    }, 800);
-  }, [stationId]);
-
-  if (loading) return <Box display="flex" justifyContent="center" mt={4}><CircularProgress /></Box>;
-
+  // Show only the buttons, no data/cards/tables
   return (
-    <Container maxWidth="md" sx={{ mt: 4, position: 'relative' }}>
-      <Button
-  variant="contained"
-  sx={{
-    backgroundColor: "#351B65",
-    '&:hover': {
-      backgroundColor: "#2a154f"  // Slightly darker for hover
-    },
-    position: 'absolute',
-    top: 16,
-    right: 35
-  }}
-  onClick={() => navigate('/fs-view1')}
->
-  Proceed with your station
-</Button>
-
-      <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
-          {stationData.name}
-        </Typography>
-        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          Location: {stationData.location}
-        </Typography>
-        <Typography variant="subtitle2">Contact: {stationData.contact}</Typography>
-        <Typography variant="body2" sx={{ mt: 1, mb: 2 }}>
-          No of Tanks: {stationData.noOfTanks}{' '}
-          {stationData.status === 'Active'
-            ? <Chip label="Active" color="success" size="small" />
-            : <Chip label="Inactive" color="error" size="small" />}
-        </Typography>
-
-        <Box mt={4}>
-          <Typography variant="h6" gutterBottom>Tank Details</Typography>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Tank ID</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Capacity (L)</TableCell>
-                <TableCell>Current Level (L)</TableCell>
-                <TableCell>Last Updated</TableCell>
-                <TableCell>Sensor Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {stationData.tanks.map(tank => (
-                <TableRow key={tank.id}>
-                  <TableCell>{tank.id}</TableCell>
-                  <TableCell>{tank.type}</TableCell>
-                  <TableCell>{tank.capacity}</TableCell>
-                  <TableCell>
-                    {tank.currentLevel}
-                    <Chip
-                      label={`${Math.round((tank.currentLevel / tank.capacity) * 100)}%`}
-                      color={tank.currentLevel < tank.capacity * 0.2 ? 'error' : 'primary'}
-                      size="small"
-                      sx={{ ml: 1 }}
-                    />
-                  </TableCell>
-                  <TableCell>{tank.lastUpdated}</TableCell>
-                  <TableCell>
-                    <Chip
-                      label={tank.sensorStatus}
-                      color={tank.sensorStatus === 'OK' ? 'success' : 'error'}
-                      size="small"
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Box>
-      </Paper>
+    <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 10 }}>
+        {!proceeded ? (
+          <Button
+            variant="contained"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "1.1rem",
+              px: 4,
+              py: 2,
+              backgroundColor: "#351B65",
+              mb: 4,
+              '&:hover': { backgroundColor: "#2a154f" }
+            }}
+            onClick={() => {
+              setProceeded(true);
+              navigate('/fs-view1');
+            }}
+          >
+            PROCEED WITH YOUR STATION
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            sx={{
+              fontWeight: "bold",
+              px: 4,
+              py: 2,
+              color: "#351B65",
+              borderColor: "#351B65",
+              width: 300,
+              '&:hover': { borderColor: "#2a154f" }
+            }}
+            onClick={() => setProceeded(false)}
+          >
+            BACK
+          </Button>
+        )}
+      </Box>
     </Container>
   );
 };
