@@ -239,9 +239,10 @@ app.get('/sensor', (req, res) => {
 
 app.post('/sensor', (req, res) => {
   const { reading } = req.body;
+  const volume = calculateVolume(reading);
   connection.query(
-    'INSERT INTO jsnsr04t (reading) VALUES (?)',
-    [reading],
+    'INSERT INTO jsnsr04t (reading, volume) VALUES (?, ?)',
+    [reading, volume],
     (err, result) => {
       if (err) {
         console.error('DB Error: ', err);
