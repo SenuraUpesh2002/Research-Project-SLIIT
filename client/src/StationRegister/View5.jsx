@@ -44,7 +44,7 @@ function View5() {
 
   // Navigation handler
   const handleNavigate = () => {
-    navigate(`/`);
+    navigate(`/FuelDashboard`);
   };
 
   return (

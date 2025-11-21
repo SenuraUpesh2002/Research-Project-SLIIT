@@ -113,14 +113,8 @@ app.post("/fs-view4", (req, res) => {
 });
 
 
-// app.get("/fs-fuel-info/:stationId", (req, res) => {
-//   const { stationId } = req.params;
-//   const sql = "SELECT fuel_type, number_of_tanks FROM fs_fuel_information WHERE station_id = ?";
-//   connection.query(sql, [stationId], (err, rows) => {
-//     if (err) return res.status(500).json({ error: err.message });
-//     res.json(rows);
-//   });
-// });
+
+
 app.get("/fs_fuel_information/:stationId", (req, res) => {
   const { stationId } = req.params;
   const sql = "SELECT fuel_type, number_of_tanks FROM fs_fuel_information WHERE stationId = ?";

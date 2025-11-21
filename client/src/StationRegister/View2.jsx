@@ -15,7 +15,7 @@ function View2() {
   const [autoFillError, setAutoFillError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [submitError, setSubmitError] = useState("");
-  const purpleColor = "#9667D9";
+  const purpleColor = "#351B65";
 
   // Auto-fill handler when typing Station ID
   const handleIdChange = async (e) => {
