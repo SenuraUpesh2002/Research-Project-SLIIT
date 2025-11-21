@@ -14,10 +14,10 @@ const StationInfo = () => {
           <Button
             variant="contained"
             sx={{
-              fontWeight: "bold",
-              fontSize: "1.1rem",
+              
+              fontSize: "1rem",
               px: 4,
-              py: 2,
+              py: 1,
               backgroundColor: "#351B65",
               mb: 4,
               '&:hover': { backgroundColor: "#2a154f" }
