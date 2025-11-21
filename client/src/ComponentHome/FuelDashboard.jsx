@@ -46,7 +46,7 @@ function FuelDashboard() {
 
   const dashboardLinks = [
     { label: "Home", icon: <HomeIcon />, path: "/" },
-    { label: "Filling Station Information", icon: <InfoIcon />, path: "/StationInfo" },
+    { label: "Station Enrollment", icon: <InfoIcon />, path: "/StationInfo" },
     { label: "Fuel Level", icon: <LocalGasStationIcon />, path: "/fuel-level" },
     { label: "Sensor Health", icon: <LocalGasStationIcon />, path: "/sensor-health" },
     { label: "Sensor Readings", icon: <LocalGasStationIcon />, path: "/sensor" },
