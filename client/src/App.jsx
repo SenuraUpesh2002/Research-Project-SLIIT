@@ -19,7 +19,7 @@ import View4 from './StationRegister/View4';
 import View5 from './StationRegister/View5';
 import View6 from './StationRegister/View6';
 import FuelDashboard from './ComponentHome/FuelDashboard';
-//import FuelLevel from './ComponentHome/FuelLevel'; 
+import GeneralInformation from './ComponentHome/GeneralInformation'; 
 import StationInfo from './ComponentHome/StationInfo';
 import Sensor from './ComponentHome/Sensor';
 import Register from './ComponentHome/Register';
@@ -49,6 +49,7 @@ function App() {
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/FuelDashboard' element={<FuelDashboard/>}></Route>
           <Route path='/StationInfo' element={<StationInfo/>}></Route>
+          <Route path='/info' element={<GeneralInformation/>}></Route>
           <Route path='/sensor' element={<Sensor/>}></Route>
           {/* <Route path='/sensor' element={<Sensors/>} ></Route> */}
           <Route path='/register' element={<Register/>}></Route> 
