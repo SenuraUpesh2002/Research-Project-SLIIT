@@ -34,7 +34,7 @@ function DateTimeDisplay() {
 }
 
 
-function FuelLevel() {
+function GeneralInformation() {
   const { stationId } = useParams();
   const [tanks, setTanks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -154,4 +154,4 @@ function FuelLevel() {
   );
 }
 
-export default FuelLevel;
+export default GeneralInformation;
