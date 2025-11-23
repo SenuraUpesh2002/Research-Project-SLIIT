@@ -39,7 +39,6 @@ app.get("/",(req,res) => {
  */
 const connection = mysql.createConnection({
   host: '127.0.0.1',
-  port: 3308,
   user: 'root',
   password: '',
   database: 'fuelwatch'
@@ -51,6 +50,17 @@ connection.connect((err) => {
   }
   console.log('Connected to MySQL');
 });
+
+const TANK_HEIGHT = 37.78;  // cm
+const TANK_RADIUS = 16.51;  // cm
+
+function calculateVolumeLitres(distance) {
+  const h = TANK_HEIGHT - distance;
+  if (h <= 0) return 0;
+  if (h > TANK_HEIGHT) return Math.PI * Math.pow(TANK_RADIUS, 2) * TANK_HEIGHT / 1000;
+  const volumeCM3 = Math.PI * Math.pow(TANK_RADIUS, 2) * h;
+  return volumeCM3 / 1000;
+}
 
 
   app.post("/fs-view2", (req, res) => {
@@ -65,6 +75,7 @@ connection.connect((err) => {
         res.json({ message: "General informations added successfully", id: result.insertId });
     });
 });
+
 
 
 app.post("/fs-view3", (req, res) => {
@@ -231,21 +242,24 @@ app.get('/sensor', (req, res) => {
   });
 });
 
+
+
 app.post('/sensor', (req, res) => {
   const { reading } = req.body;
-  const volume = calculateVolume(reading);
+  const volume = calculateVolumeLitres(reading);
   connection.query(
-    'INSERT INTO jsnsr04t (reading, volume) VALUES (?, ?)',
-    [reading, volume],
+    'INSERT INTO jsnsr04t (reading, volume, reading_time) VALUES (?, ?, ?)',
+    [reading, volume, new Date()],
     (err, result) => {
       if (err) {
         console.error('DB Error: ', err);
         return res.status(500).send('DB Error');
       }
-      res.send('OK');
+      res.json({ message: 'Sensor reading stored', id: result.insertId, reading, volume });
     }
   );
 });
+
 
 
 // Registration endpoint using callbacks
