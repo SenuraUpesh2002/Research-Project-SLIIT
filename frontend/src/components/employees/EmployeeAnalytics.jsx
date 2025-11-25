@@ -1,163 +1,216 @@
-import { Users, UserCheck, Clock, TrendingUp } from 'lucide-react';
-import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+// src/components/employees/EmployeeAnalytics.jsx
+import { useState, useEffect } from 'react';
+import { Users, UserCheck, Clock, TrendingUp, Calendar, Loader2 } from 'lucide-react';
+import {
+  BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
+import employeesAPI from '../../services/api/employeesAPI';
+import attendanceAPI from '../../services/api/attendanceAPI';
+import { format } from 'date-fns';
 
-const attendanceData = [
-  { day: 'Mon', onTime: 8, late: 1 },
-  { day: 'Tue', onTime: 9, late: 0 },
-  { day: 'Wed', onTime: 7, late: 2 },
-  { day: 'Thu', onTime: 8, late: 1 },
-  { day: 'Fri', onTime: 9, late: 0 },
-  { day: 'Sat', onTime: 6, late: 1 },
-  { day: 'Sun', onTime: 5, late: 0 },
-];
+const COLORS = ['#10b981', '#6b7280']; // Green = Checked In, Gray = Checked Out
 
-const performanceData = [
-  { name: 'John Smith', daysPresent: 22, onTimePercent: 100, totalHours: 176, score: 98 },
-  { name: 'Sarah Johnson', daysPresent: 21, onTimePercent: 95, totalHours: 168, score: 95 },
-  { name: 'Mike Davis', daysPresent: 20, onTimePercent: 90, totalHours: 160, score: 90 },
-];
+export const EmployeeAnalytics = () => {
+  const [stats, setStats] = useState({
+    totalEmployees: 0,
+    currentlyCheckedIn: 0,
+    onTimeRate: 0,
+    avgHoursToday: 0,
+  });
+  const [weeklyData, setWeeklyData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-export const EmployeeAnalytics = ({ employees }) => {
-  const checkedIn = employees.filter(e => e.status === 'checked-in').length;
-  const totalEmployees = employees.length;
-  const onTimeRate = 94; // Can be calculated from real data later
-  const avgHoursToday = 6.5; // Can be dynamic
+  // Date range state
+  const today = new Date();
+  const [startDate, setStartDate] = useState(
+    format(new Date(today.setDate(today.getDate() - 6)), 'yyyy-MM-dd')
+  );
+  const [endDate, setEndDate] = useState(format(new Date(), 'yyyy-MM-dd'));
 
-  const statusData = [
-    { name: 'Checked In', value: checkedIn, color: '#10b981' },
-    { name: 'Checked Out', value: totalEmployees - checkedIn, color: '#6b7280' },
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      // Fetch employees
+      const empRes = await employeesAPI.getAll();
+      const employees = empRes.success ? empRes.data : [];
+
+      // Fetch attendance stats
+      const attRes = await attendanceAPI.getStatistics(startDate, endDate);
+      const attStats = attRes.success ? attRes.data : {};
+
+      // Fetch weekly breakdown
+      const weeklyRes = await attendanceAPI.getWeeklyBreakdown(startDate, endDate);
+      const weekly = weeklyRes.success ? weeklyRes.data : [];
+
+      // Update state
+      setStats({
+        totalEmployees: employees.length,
+        currentlyCheckedIn: attStats.currently_checked_in || 0,
+        onTimeRate: attStats.on_time_rate ? Math.round(attStats.on_time_rate) : 0,
+        avgHoursToday: attStats.avg_hours_today ? attStats.avg_hours_today.toFixed(1) : 0,
+      });
+
+      setWeeklyData(weekly.map(day => ({
+        day: format(new Date(day.date), 'EEE'),
+        onTime: day.on_time || 0,
+        late: day.late || 0,
+      })));
+
+    } catch (err) {
+      setError('Failed to load analytics');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [startDate, endDate]);
+
+  const pieData = [
+    { name: 'Checked In', value: stats.currentlyCheckedIn, color: '#10b981' },
+    { name: 'Checked Out', value: stats.totalEmployees - stats.currentlyCheckedIn, color: '#6b7280' },
   ];
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="animate-spin text-blue-500" size={48} />
+        <span className="ml-4 text-xl text-gray-400">Loading analytics...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-16 text-red-400">
+        <p className="text-xl">{error}</p>
+        <button onClick={fetchAnalytics} className="mt-4 text-blue-400 underline">
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+
+      {/* Date Range Filter */}
+      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Calendar className="text-blue-400" size={24} />
+            <h2 className="text-2xl font-bold text-white">Employee Analytics</h2>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <label className="text-sm text-gray-400">From:</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="bg-gray-700 text-white px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-sm text-gray-400">To:</label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                max={format(new Date(), 'yyyy-MM-dd')}
+                className="bg-gray-700 text-white px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg p-4 text-white">
-          <div className="flex items-center gap-2 mb-2">
-            <Users size={20} />
-            <span className="text-sm opacity-80">Total Employees</span>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl p-6 text-white shadow-lg">
+          <div className="flex items-center gap-3 mb-3">
+            <Users size={28} />
+            <span className="text-sm opacity-90">Total Employees</span>
           </div>
-          <p className="text-3xl font-bold">{totalEmployees}</p>
+          <p className="text-4xl font-bold">{stats.totalEmployees}</p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-900 to-green-800 rounded-lg p-4 text-white">
-          <div className="flex items-center gap-2 mb-2">
-            <UserCheck size={20} />
-            <span className="text-sm opacity-80">Currently Checked In</span>
+        <div className="bg-gradient-to-br from-green-900 to-green-800 rounded-xl p-6 text-white shadow-lg">
+          <div className="flex items-center gap-3 mb-3">
+            <UserCheck size={28} />
+            <span className="text-sm opacity-90">Currently Checked In</span>
           </div>
-          <p className="text-3xl font-bold">{checkedIn}</p>
+          <p className="text-4xl font-bold">{stats.currentlyCheckedIn}</p>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-lg p-4 text-white">
-          <div className="flex items-center gap-2 mb-2">
-            <TrendingUp size={20} />
-            <span className="text-sm opacity-80">On-Time Rate</span>
+        <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-6 text-white shadow-lg">
+          <div className="flex items-center gap-3 mb-3">
+            <TrendingUp size={28} />
+            <span className="text-sm opacity-90">On-Time Rate</span>
           </div>
-          <p className="text-3xl font-bold">{onTimeRate}%</p>
+          <p className="text-4xl font-bold">{stats.onTimeRate}%</p>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-900 to-orange-800 rounded-lg p-4 text-white">
-          <div className="flex items-center gap-2 mb-2">
-            <Clock size={20} />
-            <span className="text-sm opacity-80">Avg Hours Today</span>
+        <div className="bg-gradient-to-br from-orange-900 to-orange-800 rounded-xl p-6 text-white shadow-lg">
+          <div className="flex items-center gap-3 mb-3">
+            <Clock size={28} />
+            <span className="text-sm opacity-90">Avg Hours Today</span>
           </div>
-          <p className="text-3xl font-bold">{avgHoursToday}h</p>
+          <p className="text-4xl font-bold">{stats.avgHoursToday}h</p>
         </div>
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Weekly Attendance Bar Chart */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 shadow-lg border border-gray-700">
-          <h3 className="text-xl font-semibold text-white mb-6">Weekly Attendance</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={attendanceData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="day" stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
-              <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Weekly Attendance */}
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 shadow-xl border border-gray-700">
+          <h3 className="text-xl font-bold text-white mb-6">Weekly Attendance Trend</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={weeklyData}>
+              <CartesianGrid strokeDasharray="4 4" stroke="#374151" />
+              <XAxis dataKey="day" stroke="#9CA3AF" />
+              <YAxis stroke="#9CA3AF" />
               <Tooltip
-                contentStyle={{
-                  backgroundColor: '#1F2937',
-                  border: '1px solid #374151',
-                  borderRadius: '8px',
-                  color: '#fff',
-                }}
+                contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px' }}
+                labelStyle={{ color: '#9CA3AF' }}
               />
-              <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-              <Bar dataKey="onTime" fill="#10b981" name="On Time" />
-              <Bar dataKey="late" fill="#f59e0b" name="Late" />
+              <Legend />
+              <Bar dataKey="onTime" fill="#10b981" name="On Time" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="late" fill="#f59e0b" name="Late" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Employee Status Pie Chart */}
-        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 shadow-lg border border-gray-700">
-          <h3 className="text-xl font-semibold text-white mb-6">Employee Status</h3>
-          <ResponsiveContainer width="100%" height={250}>
+        {/* Current Status Pie */}
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 shadow-xl border border-gray-700">
+          <h3 className="text-xl font-bold text-white mb-6">Current Employee Status</h3>
+          <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={statusData}
+                data={pieData}
                 cx="50%"
                 cy="50%"
-                labelLine={false}
-                label={({ name, value }) => `${name}: ${value}`}
-                outerRadius={80}
-                fill="#8884d8"
+                innerRadius={60}
+                outerRadius={100}
+                paddingAngle={5}
                 dataKey="value"
+                label={({ name, value }) => `${name}: ${value}`}
+                labelStyle={{ fill: '#fff', fontSize: '14px' }}
               >
-                {statusData.map((entry, index) => (
+                {pieData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
               <Tooltip
-                contentStyle={{
-                  backgroundColor: '#1F2937',
-                  border: '1px solid #374151',
-                  borderRadius: '8px',
-                }}
+                contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151', borderRadius: '8px' }}
               />
             </PieChart>
           </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Performance Rankings Table */}
-      <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 shadow-lg border border-gray-700">
-        <h3 className="text-xl font-semibold text-white mb-6">Employee Performance Rankings</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-700">
-                <th className="text-left py-3 px-4 text-gray-400 font-medium">Rank</th>
-                <th className="text-left py-3 px-4 text-gray-400 font-medium">Name</th>
-                <th className="text-right py-3 px-4 text-gray-400 font-medium">Days Present</th>
-                <th className="text-right py-3 px-4 text-gray-400 font-medium">On-Time %</th>
-                <th className="text-right py-3 px-4 text-gray-400 font-medium">Total Hours</th>
-                <th className="text-right py-3 px-4 text-gray-400 font-medium">Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {performanceData.map((emp, idx) => (
-                <tr
-                  key={emp.name}
-                  className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors"
-                >
-                  <td className="py-4 px-4">
-                    <span className="text-2xl">
-                      {idx === 0 ? 'First' : idx === 1 ? 'Second' : idx === 2 ? 'Third' : idx + 1}
-                    </span>
-                  </td>
-                  <td className="py-4 px-4 text-white font-medium">{emp.name}</td>
-                  <td className="py-4 px-4 text-right text-gray-300">{emp.daysPresent}</td>
-                  <td className="py-4 px-4 text-right text-gray-300">{emp.onTimePercent}%</td>
-                  <td className="py-4 px-4 text-right text-gray-300">{emp.totalHours}h</td>
-                  <td className="py-4 px-4 text-right">
-                    <span className="text-green-400 font-bold">{emp.score}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

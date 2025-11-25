@@ -3,15 +3,46 @@ import { StationQRCode } from './StationQRCode';
 import { EmployeeTable } from './EmployeeTable';
 import { CheckInModal } from './CheckInModal';
 import { AddEmployeeModal } from './AddEmployeeModal';
+import { EditEmployeeModal } from './EditEmployeeModal';
 import { AttendanceLog } from './AttendanceLog';
 import { EmployeeAnalytics } from './EmployeeAnalytics';
 import { useEmployees } from '../../hooks/useEmployees';
 
 export const EmployeePanel = () => {
-  const { employees, attendance, addEmployee, checkIn, checkOut, deleteEmployee } = useEmployees();
+  const {
+    employees,
+    attendance,
+    addEmployee,
+    updateEmployeeLocally,
+    checkIn,
+    checkOut,
+    deleteEmployee,
+    fetchEmployees
+  } = useEmployees();
 
   const [showCheckInModal, setShowCheckInModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  const handleEditClick = (employee) => {
+    setSelectedEmployee(employee);
+    setShowEditModal(true);
+  };
+
+  const handleEmployeeUpdated = (updatedEmployee) => {
+    updateEmployeeLocally(updatedEmployee);
+    setShowEditModal(false);
+    setSelectedEmployee(null);
+  };
+
+  const handleEmployeeAdded = (newEmployee) => {
+    // Since AddEmployeeModal calls API directly, we just need to refresh or add locally
+    // fetchEmployees(); // Safest option
+    // OR if we want to use the data returned:
+    // But useEmployees doesn't have addEmployeeLocally exposed yet, so let's just fetch
+    fetchEmployees();
+  };
 
   return (
     <div className="space-y-6">
@@ -38,6 +69,7 @@ export const EmployeePanel = () => {
             onDelete={deleteEmployee}
             onCheckOut={checkOut}
             onAddClick={() => setShowAddModal(true)}
+            onEditClick={handleEditClick}
           />
         </div>
       </div>
@@ -55,7 +87,17 @@ export const EmployeePanel = () => {
       <AddEmployeeModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
-        onAdd={addEmployee}
+        onAdded={handleEmployeeAdded}
+      />
+
+      <EditEmployeeModal
+        isOpen={showEditModal}
+        onClose={() => {
+          setShowEditModal(false);
+          setSelectedEmployee(null);
+        }}
+        onUpdated={handleEmployeeUpdated}
+        employee={selectedEmployee}
       />
     </div>
   );

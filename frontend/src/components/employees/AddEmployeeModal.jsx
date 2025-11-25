@@ -1,156 +1,202 @@
+// components/modals/AddEmployeeModal.jsx
 import { useState } from 'react';
-import { X, User } from 'lucide-react';
+import { X } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { ROLES } from '../../utils/constants';
+import employeesAPI from '../../services/api/employeesAPI'; // Correct import
 
-export const AddEmployeeModal = ({ isOpen, onClose, onAdd }) => {
+export const AddEmployeeModal = ({ isOpen, onClose, onAdded }) => {
   const [formData, setFormData] = useState({
     name: '',
-    employeeId: '',
-    role: ROLES[0],
-    phone: '',
     email: '',
+    phone: '',
+    role: ROLES[0] || 'Cashier',
+    password: '',
+    station_id: import.meta.env.VITE_STATION_ID || 'GAM-0001-07', // optional
+    date_of_joining: new Date().toISOString().split('T')[0], // today
   });
+
   const [showQR, setShowQR] = useState(false);
+  const [addedEmployee, setAddedEmployee] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAdd(formData);
-    setShowQR(true);
+    setLoading(true);
+    setError('');
 
-    // Auto-close after 3 seconds
-    setTimeout(() => {
-      onClose();
-      setShowQR(false);
-      setFormData({
-        name: '',
-        employeeId: '',
-        role: ROLES[0],
-        phone: '',
-        email: '',
-      });
-    }, 3000);
+    try {
+      const response = await employeesAPI.create(formData);
+
+      // Backend returns: { success: true, data: { id, employee_id, qr_code, ... } }
+      if (response.success) {
+        const employee = response.data;
+
+        setAddedEmployee(employee);
+        setShowQR(true);
+
+        // Notify parent (e.g. EmployeeList to refresh)
+        onAdded?.(employee);
+
+        // Auto-close after 4 seconds
+        setTimeout(() => {
+          onClose();
+          resetForm();
+        }, 4000);
+      }
+    } catch (err) {
+      const msg =
+        err.response?.data?.error ||
+        err.message ||
+        'Failed to create employee. Please try again.';
+
+      // Specific backend validation messages
+      if (err.response?.status === 409) {
+        setError('This email is already registered.');
+      } else if (err.response?.status === 400) {
+        setError(msg.includes('password') ? 'Password must be at least 6 characters.' : msg);
+      } else {
+        setError(msg);
+      }
+
+      console.error('Add employee error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      role: ROLES[0],
+      password: '',
+      station_id: import.meta.env.VITE_STATION_ID,
+      date_of_joining: new Date().toISOString().split('T')[0],
+    });
+    setShowQR(false);
+    setAddedEmployee(null);
+    setError('');
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-xl p-6 max-w-md w-full shadow-2xl border border-gray-700 max-h-[90vh] overflow-y-auto">
-        {/* Header */}
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-gray-800 rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-700">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-semibold text-white">Add New Employee</h3>
+          <h3 className="text-2xl font-bold text-white">Add New Employee</h3>
           <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors"
+            onClick={() => {
+              onClose();
+              resetForm();
+            }}
+            className="text-gray-400 hover:text-white transition"
           >
-            <X size={24} />
+            <X size={28} />
           </button>
         </div>
 
-        {/* Form or QR */}
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-4 bg-red-900/30 border border-red-500/50 rounded-lg text-red-300 text-sm">
+            {error}
+          </div>
+        )}
+
+        {/* Form */}
         {!showQR ? (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Full Name */}
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Full Name</label>
-              <input
-                type="text"
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="John Doe"
-              />
-            </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <input
+              type="text"
+              required
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
 
-            {/* Employee ID */}
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Employee ID</label>
-              <input
-                type="text"
-                required
-                value={formData.employeeId}
-                onChange={(e) => setFormData({ ...formData, employeeId: e.target.value })}
-                className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="EMP001"
-              />
-            </div>
+            <input
+              type="email"
+              required
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value.trim() })}
+              className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
 
-            {/* Role */}
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Role</label>
-              <select
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {ROLES.map(role => (
-                  <option key={role} value={role}>{role}</option>
-                ))}
-              </select>
-            </div>
+            <input
+              type="tel"
+              placeholder="Phone (optional)"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
 
-            {/* Phone */}
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Phone</label>
-              <input
-                type="tel"
-                required
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="077 123 4567"
-              />
-            </div>
+            <select
+              required
+              value={formData.role}
+              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+              className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            >
+              {ROLES.map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
+            </select>
 
-            {/* Email */}
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Email</label>
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="john@fuelwatch.lk"
-              />
-            </div>
+            <input
+              type="password"
+              required
+              placeholder="Password (min 6 chars)"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              className="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
 
-            {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg transition-colors font-medium"
+              disabled={loading}
+              className={`w-full py-3.5 font-semibold text-white rounded-lg transition ${loading
+                  ? 'bg-blue-800 cursor-not-allowed opacity-70'
+                  : 'bg-blue-600 hover:bg-blue-700 active:scale-95'
+                }`}
             >
-              Save Employee
+              {loading ? 'Creating Employee...' : 'Create Employee'}
             </button>
           </form>
         ) : (
-          /* QR Success Screen */
-          <div className="text-center space-y-4">
-            <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
-              <User className="text-green-400" size={40} />
+          /* Success + QR Code */
+          <div className="text-center space-y-6 py-8">
+            <div className="w-20 h-20 mx-auto bg-green-500/20 rounded-full flex items-center justify-center">
+              <svg className="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
             </div>
-            <h4 className="text-xl font-semibold text-white">Employee Added!</h4>
-            <p className="text-gray-400 text-sm">Personal QR Code Generated</p>
 
-            {/* QR Code */}
-            <div className="bg-white p-4 rounded-lg inline-block">
+            <div>
+              <h4 className="text-2xl font-bold text-white mb-2">Employee Added!</h4>
+              <p className="text-gray-400">QR Code is ready for scanning</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl inline-block shadow-lg">
               <QRCodeSVG
-                value={JSON.stringify({
-                  employeeId: formData.employeeId,
-                  name: formData.name,
-                  station: 'Central Station',
-                  timestamp: new Date().toISOString(),
-                })}
-                size={150}
+                value={addedEmployee.qr_code} // This is the JSON string from backend
+                size={180}
                 level="H"
+                includeMargin
               />
             </div>
 
-            <p className="text-xs text-gray-500">
-              Save this QR code for employee check-ins
-            </p>
+            <div className="space-y-2">
+              <p className="text-xl font-mono text-blue-400">{addedEmployee.employee_id}</p>
+              <p className="text-sm text-gray-400">{addedEmployee.name}</p>
+            </div>
+
+            <p className="text-xs text-gray-500">Modal will close in 4 seconds...</p>
           </div>
         )}
       </div>
