@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import LiveStocksTab from '../tabs/LiveStocksTab';
 import EmployeeDetailsTab from '../tabs/EmployeeDetailsTab';
@@ -8,63 +11,121 @@ import QRCodeDisplay from '../components/QRCodeDisplay';
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('stocks');
 
+    const tabs = [
+        { id: 'stocks', label: 'Live Stocks' },
+        { id: 'employees', label: 'Employee Details' },
+        { id: 'predictions', label: 'AI Predictions' },
+    ];
+
     return (
-        <div className="min-h-screen bg-slate-50">
-            <Navbar />
+        <>
+            {/* Global Smooth Scroll & Font */}
+            <div className="min-h-screen bg-gradient-to-b from-white to-[#F5F5F7] font-['-apple-system',_system-ui,_BlinkMacSystemFont,'Segoe_UI',_Roboto,_sans-serif] antialiased">
 
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Top Section: QR & Welcome */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="md:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-slate-200">
-                        <h1 className="text-2xl font-bold text-slate-800 mb-2">Dashboard Overview</h1>
-                        <p className="text-slate-600">Welcome back. Here's what's happening at the station today.</p>
+                <Navbar />
+
+                <main className="max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-32">
+
+                    {/* HERO SECTION – Equal Height Cards */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-24 h-[380px] lg:h-[420px]">
+
+                        {/* Dashboard Overview Card – Full Height */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.9, ease: "easeOut" }}
+                            className="lg:col-span-2 h-full"
+                        >
+                            <div className="relative h-full overflow-hidden rounded-3xl bg-white/75 backdrop-blur-2xl border border-white/50 shadow-2xl flex items-center">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent" />
+                                <div className="relative p-12 lg:p-16 w-full">
+                                    <h1 className="text-5xl lg:text-7xl font-black text-[#1D1D1F] tracking-tight leading-none">
+                                        Dashboard Overview
+                                    </h1>
+                                    <p className="mt-6 text-lg lg:text-2xl text-[#515154] leading-relaxed max-w-4xl">
+                                        Welcome back. Real-time insights, intelligent predictions, and full control — all in one place.
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* QR Code Card – Full Height & Perfectly Aligned */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
+                            className="h-full flex items-center justify-center"
+                        >
+                            <div className="w-full h-full max-w-sm flex flex-col justify-center items-center p-10 bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/60 shadow-2xl hover:shadow-3xl hover:-translate-y-2 transition-all duration-700">
+
+                                <div className="p-8 bg-white/90 backdrop-blur-xl rounded-2xl shadow-inner border border-white/70 mb-8">
+                                    <QRCodeDisplay />
+                                </div>
+
+                                <div className="text-center space-y-3">
+                                    <p className="text-sm font-semibold text-[#1D1D1F]/90 tracking-wide">
+                                        Daily Staff Check-in
+                                    </p>
+                                    <p className="text-xs text-[#86868B] uppercase tracking-wider">
+                                        Scan to Access Station
+                                    </p>
+                                    <p className="text-xs font-mono text-[#515154] bg-[#F2F2F7] px-3 py-1 rounded-full inline-block">
+                                        25/11/2025
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
-                    <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 flex flex-col items-center justify-center">
-                        <QRCodeDisplay />
+
+                    {/* Elegant Floating Tab Navigation */}
+                    <div className="flex justify-center mb-16">
+                        <nav className="inline-flex bg-white/70 backdrop-blur-2xl rounded-full border border-white/50 shadow-2xl p-3">
+                            {tabs.map((tab) => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className="relative px-10 py-5 rounded-full text-lg font-medium transition-all duration-500"
+                                >
+                                    {activeTab === tab.id && (
+                                        <motion.div
+                                            layoutId="activePill"
+                                            className="absolute inset-0 bg-black rounded-full"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                    <span
+                                        className={`relative z-10 transition-colors duration-500 ${activeTab === tab.id ? 'text-white' : 'text-[#1D1D1F]'
+                                            }`}
+                                    >
+                                        {tab.label}
+                                    </span>
+                                </button>
+                            ))}
+                        </nav>
                     </div>
-                </div>
 
-                {/* Tabs Navigation */}
-                <div className="border-b border-slate-200 mb-6">
-                    <nav className="-mb-px flex space-x-8">
-                        <button
-                            onClick={() => setActiveTab('stocks')}
-                            className={`${activeTab === 'stocks'
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-                                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
+                    {/* Tab Content – Glass Container */}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeTab}
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -30 }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
                         >
-                            Live Stocks
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('employees')}
-                            className={`${activeTab === 'employees'
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-                                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
-                        >
-                            Employee Details
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('predictions')}
-                            className={`${activeTab === 'predictions'
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-                                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
-                        >
-                            AI Predictions
-                        </button>
-                    </nav>
-                </div>
+                            <div className="bg-white/75 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-2xl overflow-hidden">
+                                <div className="p-10 lg:p-16 min-h-[500px]">
+                                    {activeTab === 'stocks' && <LiveStocksTab />}
+                                    {activeTab === 'employees' && <EmployeeDetailsTab />}
+                                    {activeTab === 'predictions' && <PredictionsTab />}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
 
-                {/* Tab Content */}
-                <div className="bg-white rounded-lg shadow-sm border border-slate-200 min-h-[400px] p-6">
-                    {activeTab === 'stocks' && <LiveStocksTab />}
-                    {activeTab === 'employees' && <EmployeeDetailsTab />}
-                    {activeTab === 'predictions' && <PredictionsTab />}
-                </div>
-            </main>
-        </div>
+                </main>
+            </div>
+        </>
     );
 };
 
