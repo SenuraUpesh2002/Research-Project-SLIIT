@@ -180,8 +180,8 @@ const EmployeeDetailsTab = () => {
                                     key={f}
                                     onClick={() => setFilter(f)}
                                     className={`px-6 py-3 rounded-xl text-sm font-medium capitalize transition-all ${filter === f
-                                            ? 'bg-black text-white shadow-lg'
-                                            : 'bg-white/70 text-[#515154] hover:text-[#1D1D1F] border border-white/60'
+                                        ? 'bg-black text-white shadow-lg'
+                                        : 'bg-white/70 text-[#515154] hover:text-[#1D1D1F] border border-white/60'
                                         }`}
                                 >
                                     {f}
@@ -278,17 +278,90 @@ const EmployeeDetailsTab = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 bg-black/50 backdrop-blur-xl flex items-center justify-center z-50 p-6"
-                        onClick={() => setShowEditModal(false)}
+                        onClick={(e) => {
+                            if (e.target === e.currentTarget) setShowEditModal(false);
+                        }}
                     >
                         <motion.div
-                            initial={{ scale: 0.9, y: 20 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.9, y: 20 }}
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-white/90 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/60 p-10 max-w-lg w-full"
+                            className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full relative z-50"
                         >
-                            {/* ... modal content exactly the same as before ... */}
-                            {/* (kept for brevity – it's identical to previous version) */}
+                            <div className="flex justify-between items-center mb-8">
+                                <h3 className="text-2xl font-light text-[#1D1D1F]">Edit Employee</h3>
+                                <button
+                                    onClick={() => setShowEditModal(false)}
+                                    className="p-2 rounded-full hover:bg-gray-100 transition"
+                                >
+                                    <X className="w-6 h-6 text-[#515154]" />
+                                </button>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-[#515154] mb-2">Full Name</label>
+                                    <input
+                                        type="text"
+                                        value={editingEmployee.name}
+                                        onChange={(e) => setEditingEmployee({ ...editingEmployee, name: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-[#515154] mb-2">Email Address</label>
+                                    <input
+                                        type="email"
+                                        value={editingEmployee.email}
+                                        onChange={(e) => setEditingEmployee({ ...editingEmployee, email: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-[#515154] mb-2">Role</label>
+                                        <select
+                                            value={editingEmployee.role}
+                                            onChange={(e) => setEditingEmployee({ ...editingEmployee, role: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
+                                        >
+                                            <option value="staff">Staff</option>
+                                            <option value="manager">Manager</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-[#515154] mb-2">Status</label>
+                                        <select
+                                            value={editingEmployee.status}
+                                            onChange={(e) => setEditingEmployee({ ...editingEmployee, status: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
+                                        >
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="pt-4 flex gap-3">
+                                    <button
+                                        onClick={() => setShowEditModal(false)}
+                                        className="flex-1 py-3 rounded-xl font-medium text-[#515154] hover:bg-gray-100 transition"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={handleUpdate}
+                                        className="flex-1 py-3 rounded-xl font-medium bg-black text-white hover:bg-gray-900 transition shadow-lg"
+                                    >
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}

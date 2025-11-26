@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion';
-import LiveStockCard from '../components/LiveStockCard';
-import { Fuel, RefreshCw, Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
+import ExpandableFuelGrid from '../components/ExpandableFuelGrid';
+import { Fuel, RefreshCw } from 'lucide-react';
 
 const LiveStocksTab = () => {
     const [stocks, setStocks] = useState([]);
@@ -100,26 +100,8 @@ const LiveStocksTab = () => {
                 </div>
             </motion.div>
 
-            {/* Live Grid */}
-            <motion.div
-                layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-            >
-                <AnimatePresence mode="popLayout">
-                    {stocks.map((stock, index) => (
-                        <motion.div
-                            key={stock.id}
-                            layout
-                            initial={{ opacity: 0, y: 40, scale: 0.9 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                        >
-                            <LiveStockCard stock={stock} />
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
-            </motion.div>
+            {/* Expandable Fuel Grid */}
+            <ExpandableFuelGrid stocks={stocks} />
 
             {/* Live Indicator Footer */}
             <div className="mt-16 flex items-center justify-center gap-4 text-sm text-[#86868B]">
