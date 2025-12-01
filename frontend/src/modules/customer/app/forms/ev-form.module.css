@@ -1,0 +1,183 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #f8fafc;
+  height: 100vh;
+}
+
+.header {
+  background-color: #ffffff;
+  padding: 20px;
+  padding-top: 60px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.backButton {
+  margin-bottom: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #64748b;
+}
+
+.form {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.infoCard {
+  background-color: #eff6ff;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 24px;
+  border-left: 4px solid #1e40af;
+}
+
+.infoText {
+  font-size: 14px;
+  color: #1e40af;
+  margin-left: 12px;
+  flex: 1;
+  line-height: 20px;
+}
+
+.inputContainer {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.dropdownText {
+  font-size: 16px;
+  color: #374151;
+  flex: 1;
+}
+
+.placeholderText {
+  color: #9ca3af;
+}
+
+.dropdownList {
+  background-color: #ffffff;
+  border-radius: 12px;
+  margin-top: 4px;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdownItem {
+  padding: 16px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItemText {
+  font-size: 16px;
+  color: #374151;
+}
+
+.chargerInfo {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chargerInfoTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16px;
+}
+
+.chargerTypeItem {
+  margin-bottom: 12px;
+}
+
+.chargerTypeName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 4px;
+}
+
+.chargerTypeDesc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 18px;
+}
+
+.footer {
+  background-color: #ffffff;
+  padding: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.findButton {
+  background-color: #f59e0b;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonDisabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.findButtonText {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 8px;
+}

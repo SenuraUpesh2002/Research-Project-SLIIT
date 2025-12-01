@@ -1,0 +1,118 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fafc;
+  padding: 20px;
+  min-height: 100vh; /* Ensure it takes full viewport height */
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #64748b;
+  text-align: center;
+  line-height: 22px;
+}
+
+.vehicleOptions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.vehicleCard {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.vehicleCard:hover {
+  border-color: #1e40af; /* Highlight on hover */
+}
+
+.iconContainer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  background-color: #f1f5f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.vehicleTitle {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 12px;
+}
+
+.vehicleDescription {
+  font-size: 16px;
+  color: #64748b;
+  text-align: center;
+  line-height: 22px;
+  margin-bottom: 20px;
+}
+
+.features {
+  width: 100%;
+}
+
+.featureItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.featureText {
+  font-size: 14px;
+  color: #374151;
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.backButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.backButtonText {
+  font-size: 16px;
+  color: #64748b;
+  margin-left: 8px;
+  font-weight: 500;
+}

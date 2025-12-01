@@ -1,0 +1,199 @@
+.container {
+  flex: 1;
+  background-color: #f8fafc;
+}
+
+.header {
+  background-color: #ffffff;
+  padding: 20px;
+  padding-top: 60px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.backButton {
+  margin-bottom: 20px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #64748b;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.stationCard {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stationHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.stationInfo {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.stationName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 4px;
+}
+
+.stationAddress {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 20px;
+}
+
+.stationIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: #f1f5f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stationDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.detailText {
+  font-size: 14px;
+  color: #374151;
+  margin-left: 6px;
+  font-weight: 500;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+
+.stationActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.actionButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #f1f5f9;
+  padding: 8px 16px;
+  border-radius: 20px;
+  flex: 0.48;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}
+
+.actionButtonText {
+  font-size: 14px;
+  color: #1e40af;
+  margin-left: 6px;
+  font-weight: 500;
+}
+
+.noResultsCard {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.noResultsTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.noResultsText {
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+  line-height: 20px;
+  margin-bottom: 24px;
+}
+
+.searchAgainButton {
+  background-color: #1e40af;
+  padding: 12px 24px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.searchAgainText {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.statusAvailable {
+  background-color: #10b981;
+}
+
+.statusPending {
+  background-color: #f59e0b;
+}
+
+.statusLow {
+  background-color: #10b981;
+}
+
+.statusMedium {
+  background-color: #f59e0b;
+}
+
+.statusHigh {
+  background-color: #ef4444;
+}
+
+.statusDefault {
+  background-color: #64748b;
+}

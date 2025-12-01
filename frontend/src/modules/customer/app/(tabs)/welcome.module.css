@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #ffffff;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.iconContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.evIcon {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+.appName {
+  font-size: 36px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  font-size: 18px;
+  color: #64748b;
+  text-align: center;
+  line-height: 24px;
+}
+
+.features {
+  width: 100%;
+  max-width: 300px;
+}
+
+.feature {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.featureText {
+  font-size: 16px;
+  color: #374151;
+  margin-left: 16px;
+  font-weight: 500;
+}
+
+.footer {
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+.getStartedButton {
+  background-color: #1e40af;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(30, 64, 175, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.getStartedText {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 8px;
+}

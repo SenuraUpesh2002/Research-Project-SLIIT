@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+}

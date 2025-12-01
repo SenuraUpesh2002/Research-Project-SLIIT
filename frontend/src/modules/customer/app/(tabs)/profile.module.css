@@ -1,0 +1,267 @@
+.container {
+  flex: 1;
+  background-color: #f8fafc;
+}
+
+.scrollContent {
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sectionHeader {
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-bottom: 5px;
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.preferenceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.preferenceCard {
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.preferenceIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #e0e7ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.preferenceLabel {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+.preferenceValue {
+  font-size: 16px;
+  font-weight: bold;
+  color: #334155;
+}
+
+.secondaryButton {
+  background-color: #e0e7ff;
+  border-radius: 8px;
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.secondaryButton:hover {
+  background-color: #c7d2fe;
+}
+
+.secondaryButtonText {
+  font-size: 16px;
+  color: #1e40af;
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.stationCard {
+  background-color: #f9fafb;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+.stationHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.stationName {
+  font-size: 18px;
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 2px;
+}
+
+.stationAddress {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.statusPill {
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+.statusAvailable {
+  background-color: #d1fae5; /* Green-ish */
+}
+
+.statusPending {
+  background-color: #fee2e2; /* Red-ish */
+}
+
+.statusText {
+  font-size: 12px;
+  font-weight: bold;
+  color: #065f46; /* Darker green */
+}
+
+.statusPending .statusText {
+  color: #991b1b; /* Darker red */
+}
+
+.stationMetaRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.stationMeta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.stationMetaText {
+  font-size: 14px;
+  color: #64748b;
+  margin-left: 5px;
+}
+
+.fuelTag {
+  background-color: #e0e7ff;
+  border-radius: 15px;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.fuelTagText {
+  font-size: 12px;
+  color: #1e40af;
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+.cardActions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.alertCard {
+  background-color: #f9fafb;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+.alertHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.alertStatus {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1e40af;
+  margin-left: 8px;
+}
+
+.alertStation {
+  font-size: 16px;
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 5px;
+}
+
+.alertMessage {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 5px;
+}
+
+.alertTime {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.historyCard {
+  background-color: #f9fafb;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.historyName {
+  font-size: 16px;
+  font-weight: bold;
+  color: #334155;
+}
+
+.historyType {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.historyStatus {
+  font-size: 14px;
+  font-weight: 500;
+  color: #10b981;
+  text-align: right;
+}
+
+.historyTime {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: right;
+}
