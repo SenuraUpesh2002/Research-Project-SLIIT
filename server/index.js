@@ -264,10 +264,10 @@ app.post('/sensor', (req, res) => {
 
 // Registration endpoint using callbacks
 app.post('/register', (req, res) => {
-  const { email, role, password } = req.body;
+  const { uniqueid, email, role, password } = req.body;
 
-  if (!email || !role || !password) {
-    return res.status(400).json({ error: 'Please provide email, role, and password' });
+  if (!uniqueid || !email || !role || !password) {
+    return res.status(400).json({ error: 'Please provide unique ID email, role, and password' });
   }
 
   // Check if email exists
@@ -281,7 +281,7 @@ app.post('/register', (req, res) => {
     }
 
     // Insert new user record
-    connection.query('INSERT INTO registration (email, role, password) VALUES (?, ?, ?)', [email, role, password], (err, result) => {
+    connection.query('INSERT INTO registration (uniqueid, email, role, password) VALUES (?, ?, ?, ?)', [uniqueid, email, role, password], (err, result) => {
       if (err) {
         console.error('DB Error on insert:', err);
         return res.status(500).json({ error: 'Internal Server Error' });
