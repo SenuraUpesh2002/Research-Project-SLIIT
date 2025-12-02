@@ -1,34 +1,51 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Box, TextField, Button, Paper, Typography
+  Box, TextField, Button, Paper, Typography, Snackbar, Alert
 } from "@mui/material";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [severity, setSeverity] = useState("info"); // "success" | "error" | "warning" | "info"
+
   const navigate = useNavigate();
+
+  const handleClose = (_, reason) => {
+    if (reason === "clickaway") return;
+    setOpen(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError("");
     try {
       const response = await fetch("http://localhost:8081/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+
       const result = await response.json();
+
       if (response.ok) {
-        alert("Login successful");
-        navigate("/FuelDashboard", { state: { role: result.user.role, email: result.user.email } });
-        // Redirect or store user info/token as needed
+        setMsg("Login successful");
+        setSeverity("success");
+        setOpen(true);
+        navigate("/FuelDashboard", {
+          state: { role: result.user.role, email: result.user.email }
+        });
       } else {
-        setError(result.error || "Login failed");
+        setMsg(result.error || "Login failed");
+        setSeverity("error");
+        setOpen(true);
       }
     } catch (err) {
-      setError("Error: " + err.message);
+      setMsg("Error: " + err.message);
+      setSeverity("error");
+      setOpen(true);
     }
   };
 
@@ -58,22 +75,44 @@ function Login() {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        {error && (
-          <Typography color="error" mt={1} align="center">
-            {error}
-          </Typography>
-        )}
+
         <Button
           type="submit"
           variant="contained"
           fullWidth
-          sx={{ mt: 3, fontWeight: "bold", backgroundColor: "#351B65",
+          sx={{
+            mt: 3,
+            fontWeight: "bold",
+            backgroundColor: "#351B65",
             "&:hover": { backgroundColor: "#2a144d" }
           }}
         >
           Login
         </Button>
       </Box>
+
+      <Snackbar
+        open={open}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          variant="filled"
+          sx={{
+            bgcolor: severity === "success" ? "#2e7d32" : "#ff0019ff",
+            color: "#fff",
+            fontWeight: 600,
+            borderRadius: 2,
+            boxShadow: 3,
+            "& .MuiAlert-icon": { color: "#fff" }
+          }}
+        >
+          {msg}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 }

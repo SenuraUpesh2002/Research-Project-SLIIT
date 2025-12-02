@@ -20,6 +20,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 const roles = ["Admin", "Station Manager", "Data Analyst"];
 
 function Register() {
+  const [stationId, setStationId] = useState("");          // NEW
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +28,7 @@ function Register() {
 
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
-  const [severity, setSeverity] = useState("error"); // "success" | "error" | "warning" | "info"
+  const [severity, setSeverity] = useState("error");
 
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ function Register() {
       const response = await fetch("http://localhost:8081/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, role, password }),
+        body: JSON.stringify({ stationId, email, role, password }), // include stationId
       });
 
       const result = await response.json();
@@ -85,6 +86,17 @@ function Register() {
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} noValidate>
+        {/* NEW field before Email Address */}
+        <TextField
+          label="Unique Station ID"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          required
+          value={stationId}
+          onChange={(e) => setStationId(e.target.value)}
+        />
+
         <TextField
           label="Email Address"
           variant="outlined"
