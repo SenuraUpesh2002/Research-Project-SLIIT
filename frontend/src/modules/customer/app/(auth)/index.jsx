@@ -105,7 +105,7 @@ export default function Login() {
             onClick={() => navigate("/auth/register")}
           >
             <p className={styles.linkText}>
-              Don't have an account? <span className={styles.linkTextBold}>Sign Up</span>
+              Don&apos;t have an account? <span className={styles.linkTextBold}>Sign Up</span>
             </p>
           </button>
         </div>

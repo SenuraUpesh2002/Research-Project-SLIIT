@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './results.module.css';
 
@@ -73,7 +72,7 @@ export default function ResultsScreen() {
       </div>
 
       <div className={styles.content}>
-        {mockStations.map((station, index) => (
+        {mockStations.map((station, index) => ( // eslint-disable-line no-unused-vars
           <div key={station.id} className={styles.stationCard}>
             <div className={styles.stationHeader}>
               <div className={styles.stationInfo}>
