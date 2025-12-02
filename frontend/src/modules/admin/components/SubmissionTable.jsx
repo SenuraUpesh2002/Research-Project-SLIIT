@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SubmissionTable = () => {
+const SubmissionTable = ({ submissions }) => {
   return (
     <div>
       <h3>Submission Table Component</h3>

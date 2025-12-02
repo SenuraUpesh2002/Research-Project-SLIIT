@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ReportCharts = () => {
+const ReportCharts = ({ data, chartType, dataKey, nameKey }) => {
   return (
     <div>
       <h3>Report Charts Component</h3>

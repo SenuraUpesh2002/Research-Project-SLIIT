@@ -1,0 +1,39 @@
+.container {
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: calc(100vh - 60px); /* Adjust based on header/footer height */
+}
+
+.header {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2em;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.chartCard {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.chartCard h2 {
+  color: #555;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.error {
+  color: #d32f2f;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}

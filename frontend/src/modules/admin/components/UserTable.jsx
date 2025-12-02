@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserTable = () => {
+const UserTable = ({ users }) => {
   return (
     <div>
       <h3>User Table Component</h3>

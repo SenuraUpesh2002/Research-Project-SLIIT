@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AlertCard = () => {
+const AlertCard = ({ message, type, date }) => {
   return (
     <div>
       <h3>Alert Card Component</h3>

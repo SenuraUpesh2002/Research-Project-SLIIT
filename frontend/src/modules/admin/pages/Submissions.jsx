@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Submissions.module.css';
 import SubmissionTable from '../components/SubmissionTable'; // Assuming this component exists
 

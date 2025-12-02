@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Alerts.module.css';
 import AlertCard from '../components/AlertCard'; // Assuming this component exists
 

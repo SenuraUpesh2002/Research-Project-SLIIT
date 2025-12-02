@@ -1,0 +1,42 @@
+.container {
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: calc(100vh - 60px); /* Adjust based on header/footer height */
+}
+
+.header {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2em;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex-grow: 1;
+  max-width: 300px;
+}
+
+.filterSelect {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.error {
+  color: #d32f2f;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
