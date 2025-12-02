@@ -28,6 +28,11 @@ function Register() {
   const [msg, setMsg] = useState("");
   const [severity, setSeverity] = useState("error"); // "success" | "error" | "warning" |  "info"
 
+  const handleClose = (_, reason) => {
+  if (reason === "clickaway") return;
+  setOpen(false);
+};
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
