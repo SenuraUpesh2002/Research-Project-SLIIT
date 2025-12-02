@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Snackbar, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -23,6 +24,9 @@ function Register() {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [severity, setSeverity] = useState("error"); // "success" | "error" | "warning" | "info"
 
   const navigate = useNavigate();
 
