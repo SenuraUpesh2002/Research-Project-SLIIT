@@ -1,0 +1,45 @@
+.sidebar {
+  width: 250px;
+  background-color: #222;
+  color: white;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: -250px; /* Hidden by default */
+  transition: left 0.3s ease;
+  padding-top: 60px; /* Space for a potential top bar */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+}
+
+.navList li a {
+  display: block;
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.navList li a:hover {
+  background-color: #444;
+}
