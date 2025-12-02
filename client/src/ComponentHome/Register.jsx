@@ -162,6 +162,29 @@ setOpen(true);
 
 
       </Box>
+
+      <Snackbar
+      open={open}
+      autoHideDuration={4000}
+      onClose={handleClose}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    >
+      <Alert
+        onClose={handleClose}
+        severity={severity}
+        variant="filled"
+        sx={{
+          bgcolor: "#ff4b5c",
+          color: "#fff",
+          fontWeight: 600,
+          borderRadius: 2,
+          boxShadow: 3,
+          "& .MuiAlert-icon": { color: "#fff" }
+        }}
+      >
+        {msg}
+      </Alert>
+    </Snackbar>
     </Paper>
   );
 }
