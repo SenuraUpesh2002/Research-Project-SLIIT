@@ -1,5 +1,4 @@
-import React from 'react';
-
+// eslint-disable-next-line react/prop-types, no-unused-vars
 const SubmissionTable = ({ submissions }) => {
   return (
     <div>
