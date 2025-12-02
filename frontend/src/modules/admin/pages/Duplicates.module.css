@@ -1,0 +1,100 @@
+.container {
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteSelectedButton,
+.autoRemoveButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.deleteSelectedButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deleteSelectedButton:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.deleteSelectedButton:disabled {
+  background-color: #e0a8b0;
+  cursor: not-allowed;
+}
+
+.autoRemoveButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.autoRemoveButton:hover {
+  background-color: #0056b3;
+}
+
+.loading,
+.error,
+.noDuplicates {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin-top: 50px;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.duplicateList {
+  display: grid;
+  gap: 15px;
+}
+
+.duplicateItem {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.duplicateItem input[type="checkbox"] {
+  transform: scale(1.5);
+}
+
+.duplicateDetails {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.duplicateDetails p {
+  margin: 5px 0;
+  color: #333;
+}
+
+.duplicateDetails strong {
+  color: #000;
+}
