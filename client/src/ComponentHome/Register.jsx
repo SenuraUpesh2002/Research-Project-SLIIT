@@ -26,7 +26,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
-  const [severity, setSeverity] = useState("error"); // "success" | "error" | "warning" | "info"
+  const [severity, setSeverity] = useState("error"); // "success" | "error" | "warning" |  "info"
 
   const navigate = useNavigate();
 
