@@ -33,6 +33,10 @@ function Register() {
   setOpen(false);
 };
 
+setMsg("Email already exists");
+setSeverity("error");
+setOpen(true);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
