@@ -5,16 +5,92 @@
 }
 
 .header {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .title {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 32px;
   color: #333;
+  margin-bottom: 10px;
 }
 
 .subtitle {
   font-size: 16px;
   color: #666;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.statCard {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.statCard h3 {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.statCard p {
+  font-size: 36px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.quickLinks {
+  margin-bottom: 40px;
+}
+
+.quickLinks h2 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.quickLinkCard {
+  display: block;
+  background-color: #e9ecef;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.quickLinkCard:hover {
+  background-color: #dee2e6;
+  transform: translateY(-3px);
+}
+
+.chartsSection {
+  text-align: center;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.chartsSection h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
 }
