@@ -9,7 +9,7 @@ import { faCar, faFire, faShieldAlt, faMapMarkerAlt, faCity, faBell, faCog, faMa
 // import COLORS from "../../constants/colors"; // Not directly used in web components, styles handle colors
 // import { useAuthStore } from "../../store/authStore"; // To be adapted for web authentication
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 
 const mockFavorites = [
   {

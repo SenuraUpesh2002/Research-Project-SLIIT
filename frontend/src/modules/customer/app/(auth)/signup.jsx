@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For web navigation
 import { useAuth } from "../../context/AuthContext";
 import styles from "./signup.module.css"; // Import CSS module
