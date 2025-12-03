@@ -262,60 +262,97 @@ app.post('/sensor', (req, res) => {
 
 
 
-// Registration endpoint using callbacks
-app.post('/register', (req, res) => {
+// REGISTER
+app.post("/register", (req, res) => {
   const { uniqueid, email, role, password } = req.body;
 
   if (!uniqueid || !email || !role || !password) {
-    return res.status(400).json({ error: 'Please provide unique ID email, role, and password' });
+    return res
+      .status(400)
+      .json({ error: "Unique Station ID, email, role and password are required" });
   }
 
-  // Check if email exists
-  connection.query('SELECT * FROM registration WHERE email = ?', [email], (err, results) => {
+  // 1) Check that station exists in fs_ceypetco
+  const stationSql = "SELECT 1 FROM fs_ceypetco WHERE stationId = ? LIMIT 1";
+  connection.query(stationSql, [uniqueid], (err, stationRows) => {
     if (err) {
-      console.error('DB Error:', err);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      console.error("DB Error (station check):", err);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-    if (results.length > 0) {
-      return res.status(409).json({ error: 'Email already exists' });
+    if (stationRows.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Invalid Unique Station ID. Station not found." });
     }
 
-    // Insert new user record
-    connection.query('INSERT INTO registration (uniqueid, email, role, password) VALUES (?, ?, ?, ?)', [uniqueid, email, role, password], (err, result) => {
-      if (err) {
-        console.error('DB Error on insert:', err);
-        return res.status(500).json({ error: 'Internal Server Error' });
+    // 2) Check duplicate email or uniqueid in registration
+    const dupSql =
+      "SELECT 1 FROM registration WHERE email = ? OR uniqueid = ? LIMIT 1";
+    connection.query(dupSql, [email, uniqueid], (err2, dupRows) => {
+      if (err2) {
+        console.error("DB Error (duplicate check):", err2);
+        return res.status(500).json({ error: "Internal Server Error" });
       }
-      res.status(201).json({ message: 'User registered successfully', id: result.insertId });
+      if (dupRows.length > 0) {
+        return res
+          .status(409)
+          .json({ error: "Email or Unique Station ID already registered" });
+      }
+
+      // 3) Insert user
+      const insertSql =
+        "INSERT INTO registration (uniqueid, email, role, password) VALUES (?, ?, ?, ?)";
+      connection.query(
+        insertSql,
+        [uniqueid, email, role, password],
+        (err3, result) => {
+          if (err3) {
+            console.error("DB Error (insert):", err3);
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
+          return res
+            .status(201)
+            .json({ message: "User registered successfully", id: result.insertId });
+        }
+      );
     });
   });
 });
 
 
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
+
+app.post("/login", (req, res) => {
+  const {email, uniqueid, password } = req.body;
+
+  if (!email || !uniqueid || !password) {
+    return res
+      .status(400)
+      .json({ error: "Unique Station ID, Email and Password are required" });
   }
-  // Authenticate: match email and password
-  connection.query(
-    'SELECT * FROM registration WHERE email = ? AND password = ?',
-    [email, password],
-    (err, results) => {
-      if (err) {
-        console.error('DB Error:', err);
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
-      if (results.length === 1) {
-        // Authentication success
-        res.json({ message: 'Login successful', user: results[0] });
-      } else {
-        // Wrong credentials
-        res.status(401).json({ error: 'Invalid email or password' });
-      }
+
+  const sql =
+    "SELECT * FROM registration WHERE email = ? AND uniqueid = ? AND password = ?";
+
+  connection.query(sql, [email, uniqueid, password], (err, results) => {
+    if (err) {
+      console.error("DB Error:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-  );
+
+    if (results.length === 1) {
+      return res.json({
+        message: "Login successful",
+        user: results[0],
+      });
+    } else {
+      return res
+        .status(401)
+        .json({ error: "Invalid Unique Station ID, email or password" });
+    }
+  });
 });
+
+
 
 
 

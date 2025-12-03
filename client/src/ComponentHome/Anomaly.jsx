@@ -1,37 +1,73 @@
-import React, { useEffect, useState } from 'react';
+// src/pages/Anomaly.jsx
+import React, { useEffect, useState, useMemo } from "react";
 import {
   Box,
   Typography,
+  Paper,
+  Grid,
+  Chip,
+  IconButton,
+  Tooltip,
+  TextField,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  TableSortLabel,
+  TablePagination,
+  Drawer,
+  Divider,
   Button,
   CircularProgress
-} from '@mui/material';
+} from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-// Sample API endpoint to get anomaly results
-const ANOMALY_API = 'http://localhost:8081/api/anomaly';
+const ANOMALY_API = "http://localhost:8081/api/anomaly";
+
+// helper for table sort
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) return -1;
+  if (b[orderBy] > a[orderBy]) return 1;
+  return 0;
+}
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
 
 function Anomaly() {
   const [anomalies, setAnomalies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch anomaly data from backend
+  const [fuelFilter, setFuelFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [searchId, setSearchId] = useState("");
+
+  const [order, setOrder] = useState("desc");
+  const [orderBy, setOrderBy] = useState("score");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [selected, setSelected] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const fetchAnomalies = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(ANOMALY_API);
-      if (!response.ok) {
-        throw new Error('Failed to fetch anomaly data');
-      }
-      const data = await response.json();
-      setAnomalies(data);
+      const res = await fetch(ANOMALY_API);
+      if (!res.ok) throw new Error("Failed to fetch anomaly data");
+      const data = await res.json();
+      setAnomalies(data || []);
     } catch (err) {
       setError(err.message);
     }
@@ -42,50 +78,390 @@ function Anomaly() {
     fetchAnomalies();
   }, []);
 
-  return (
-    <Box sx={{ padding: 4 }}>
-      <Typography variant="h4" mb={3}>
-        Fuel Anomaly Detection
-      </Typography>
+  // unique fuel types from data
+  const fuelTypes = useMemo(
+    () => ["All", ...Array.from(new Set(anomalies.map(a => a.fuelType)))],
+    [anomalies]
+  );
 
-      {loading ? (
-        <CircularProgress />
+  // apply filters + search
+  const filtered = useMemo(
+    () =>
+      anomalies.filter(a => {
+        const fuelOk =
+          fuelFilter === "All" || a.fuelType === fuelFilter;
+        const statusOk =
+          statusFilter === "All" || a.status === statusFilter;
+        const idOk =
+          !searchId || String(a.id).toLowerCase().includes(searchId.toLowerCase());
+        return fuelOk && statusOk && idOk;
+      }),
+    [anomalies, fuelFilter, statusFilter, searchId]
+  );
+
+  const sorted = useMemo(
+    () => filtered.slice().sort(getComparator(order, orderBy)),
+    [filtered, order, orderBy]
+  );
+
+  const paginated = useMemo(
+    () =>
+      sorted.slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+      ),
+    [sorted, page, rowsPerPage]
+  );
+
+  const handleRequestSort = property => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  const handleChangePage = (_, newPage) => setPage(newPage);
+  const handleChangeRowsPerPage = e => {
+    setRowsPerPage(parseInt(e.target.value, 10));
+    setPage(0);
+  };
+
+  const openDetails = row => {
+    setSelected(row);
+    setDrawerOpen(true);
+  };
+
+  const severityChip = status => {
+    if (status === "Critical") {
+      return (
+        <Chip
+          label="Critical"
+          color="error"
+          size="small"
+          icon={<ErrorOutlineIcon />}
+        />
+      );
+    }
+    if (status === "Warning") {
+      return (
+        <Chip
+          label="Warning"
+          color="warning"
+          size="small"
+          icon={<WarningAmberIcon />}
+        />
+      );
+    }
+    if (status === "Resolved") {
+      return (
+        <Chip
+          label="Resolved"
+          color="success"
+          size="small"
+          icon={<CheckCircleOutlineIcon />}
+        />
+      );
+    }
+    return (
+      <Chip
+        label={status || "Info"}
+        color="info"
+        size="small"
+        icon={<InfoOutlinedIcon />}
+      />
+    );
+  };
+
+  // summary KPIs
+  const total = anomalies.length;
+  const criticalCount = anomalies.filter(a => a.status === "Critical").length;
+  const warningCount = anomalies.filter(a => a.status === "Warning").length;
+  const resolvedCount = anomalies.filter(a => a.status === "Resolved").length;
+
+  return (
+    <Box sx={{ p: 4 }}>
+      {/* Header + refresh */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 3
+        }}
+      >
+        <Box>
+          <Typography variant="h4" fontWeight="bold" color="#351B65">
+            Fuel Anomaly Detection
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Live view of abnormal fuel events across all monitored stations
+          </Typography>
+        </Box>
+        <Tooltip title="Refresh anomaly data">
+          <span>
+            <IconButton
+              color="primary"
+              onClick={fetchAnomalies}
+              disabled={loading}
+              sx={{
+                bgcolor: "#ECEAF7",
+                "&:hover": { bgcolor: "#d4c9ff" }
+              }}
+            >
+              {loading ? <CircularProgress size={22} /> : <RefreshIcon />}
+            </IconButton>
+          </span>
+        </Tooltip>
+      </Box>
+
+      {/* Summary cards */}
+      <Grid container spacing={2} mb={3}>
+        <Grid item xs={12} sm={6} md={3}>
+          <Paper sx={{ p: 2, borderLeft: "4px solid #351B65" }}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Total anomalies
+            </Typography>
+            <Typography variant="h5" fontWeight="bold">
+              {total}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Paper sx={{ p: 2, borderLeft: "4px solid #d32f2f" }}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Critical
+            </Typography>
+            <Typography variant="h5" fontWeight="bold" color="error.main">
+              {criticalCount}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Paper sx={{ p: 2, borderLeft: "4px solid #ed6c02" }}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Warnings
+            </Typography>
+            <Typography variant="h5" fontWeight="bold" color="warning.main">
+              {warningCount}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Paper sx={{ p: 2, borderLeft: "4px solid #2e7d32" }}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Resolved
+            </Typography>
+            <Typography variant="h5" fontWeight="bold" color="success.main">
+              {resolvedCount}
+            </Typography>
+          </Paper>
+        </Grid>
+      </Grid>
+
+      {/* Filters */}
+      <Paper sx={{ p: 2, mb: 3 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Search by Anomaly ID"
+              variant="outlined"
+              fullWidth
+              size="small"
+              value={searchId}
+              onChange={e => setSearchId(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Fuel type"
+              select
+              fullWidth
+              size="small"
+              value={fuelFilter}
+              onChange={e => setFuelFilter(e.target.value)}
+            >
+              {fuelTypes.map(ft => (
+                <MenuItem key={ft} value={ft}>
+                  {ft}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Status"
+              select
+              fullWidth
+              size="small"
+              value={statusFilter}
+              onChange={e => setStatusFilter(e.target.value)}
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="Critical">Critical</MenuItem>
+              <MenuItem value="Warning">Warning</MenuItem>
+              <MenuItem value="Resolved">Resolved</MenuItem>
+            </TextField>
+          </Grid>
+        </Grid>
+      </Paper>
+
+      {/* Table / states */}
+      {loading && anomalies.length === 0 ? (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+          <CircularProgress />
+        </Box>
       ) : error ? (
         <Typography color="error">Error: {error}</Typography>
-      ) : anomalies.length === 0 ? (
-        <Typography>No anomalies detected</Typography>
+      ) : filtered.length === 0 ? (
+        <Typography>No anomalies found for current filters.</Typography>
       ) : (
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Fuel Type</TableCell>
-                <TableCell>Dispensed Volume</TableCell>
-                <TableCell>Anomaly Score</TableCell>
-                <TableCell>Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {anomalies.map(({ id, date, fuelType, volume, score, status }) => (
-                <TableRow key={id}>
-                  <TableCell>{date}</TableCell>
-                  <TableCell>{fuelType}</TableCell>
-                  <TableCell>{volume}</TableCell>
-                  <TableCell>{score.toFixed(3)}</TableCell>
-                  <TableCell>{status}</TableCell>
+        <Paper>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell sortDirection={orderBy === "id" ? order : false}>
+                    <TableSortLabel
+                      active={orderBy === "id"}
+                      direction={orderBy === "id" ? order : "asc"}
+                      onClick={() => handleRequestSort("id")}
+                    >
+                      ID
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>Date / Time</TableCell>
+                  <TableCell>Station</TableCell>
+                  <TableCell>Fuel type</TableCell>
+                  <TableCell>Volume (L)</TableCell>
+                  <TableCell sortDirection={orderBy === "score" ? order : false}>
+                    <TableSortLabel
+                      active={orderBy === "score"}
+                      direction={orderBy === "score" ? order : "desc"}
+                      onClick={() => handleRequestSort("score")}
+                    >
+                      Anomaly score
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell align="right">Actions</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {paginated.map(row => (
+                  <TableRow
+                    key={row.id}
+                    hover
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => openDetails(row)}
+                  >
+                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row.date}</TableCell>
+                    <TableCell>{row.stationName || row.stationId}</TableCell>
+                    <TableCell>{row.fuelType}</TableCell>
+                    <TableCell>{row.volume}</TableCell>
+                    <TableCell>{Number(row.score).toFixed(3)}</TableCell>
+                    <TableCell>{severityChip(row.status)}</TableCell>
+                    <TableCell align="right">
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={e => {
+                          e.stopPropagation();
+                          openDetails(row);
+                        }}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <TablePagination
+            component="div"
+            count={sorted.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPageOptions={[5, 10, 25]}
+          />
+        </Paper>
       )}
 
-      <Box sx={{ mt: 3 }}>
-        <Button variant="contained" color="primary" onClick={fetchAnomalies} disabled={loading}>
-          Refresh Anomaly Data
-        </Button>
-      </Box>
+      {/* Details drawer */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        PaperProps={{ sx: { width: 360 } }}
+      >
+        <Box sx={{ p: 2 }}>
+          <Typography variant="h6" fontWeight="bold" mb={1}>
+            Anomaly details
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            ID: {selected?.id}
+          </Typography>
+        </Box>
+        <Divider />
+        {selected && (
+          <Box sx={{ p: 2 }}>
+            <Typography variant="subtitle2" color="text.secondary">
+              Station
+            </Typography>
+            <Typography mb={1}>
+              {selected.stationName || selected.stationId || "-"}
+            </Typography>
+
+            <Typography variant="subtitle2" color="text.secondary">
+              Date / Time
+            </Typography>
+            <Typography mb={1}>{selected.date}</Typography>
+
+            <Typography variant="subtitle2" color="text.secondary">
+              Fuel type
+            </Typography>
+            <Typography mb={1}>{selected.fuelType}</Typography>
+
+            <Typography variant="subtitle2" color="text.secondary">
+              Volume change
+            </Typography>
+            <Typography mb={1}>{selected.volume} L</Typography>
+
+            <Typography variant="subtitle2" color="text.secondary">
+              Anomaly score
+            </Typography>
+            <Typography mb={1}>{Number(selected.score).toFixed(3)}</Typography>
+
+            <Typography variant="subtitle2" color="text.secondary">
+              Status
+            </Typography>
+            <Box mb={2}>{severityChip(selected.status)}</Box>
+
+            <Typography variant="subtitle2" color="text.secondary">
+              Explanation / notes
+            </Typography>
+            <Typography variant="body2" mb={2}>
+              {selected.reason ||
+                "Model detected an unusual change in fuel level compared to expected pattern."}
+            </Typography>
+
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{
+                mt: 1,
+                backgroundColor: "#351B65",
+                "&:hover": { backgroundColor: "#2a144d" }
+              }}
+            >
+              Mark as resolved
+            </Button>
+          </Box>
+        )}
+      </Drawer>
     </Box>
   );
 }

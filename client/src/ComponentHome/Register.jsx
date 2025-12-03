@@ -20,7 +20,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 const roles = ["Admin", "Station Manager", "Data Analyst"];
 
 function Register() {
-  const [stationId, setStationId] = useState("");          // NEW
+  const [uniqueid, setUniqueId] = useState("");          // NEW
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +43,7 @@ function Register() {
       const response = await fetch("http://localhost:8081/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ stationId, email, role, password }), // include stationId
+        body: JSON.stringify({ uniqueid, email, role, password }), // include stationId
       });
 
       const result = await response.json();
@@ -93,8 +93,8 @@ function Register() {
           fullWidth
           margin="normal"
           required
-          value={stationId}
-          onChange={(e) => setStationId(e.target.value)}
+          value={uniqueid}
+          onChange={(e) => setUniqueId(e.target.value)}
         />
 
         <TextField

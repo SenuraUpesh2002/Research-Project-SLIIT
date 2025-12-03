@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 
 function Login() {
+  const [uniqueid, setUniqueId] = useState("");          // NEW
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +26,7 @@ function Login() {
       const response = await fetch("http://localhost:8081/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ uniqueid, email, password }),   // include uniqueId
       });
 
       const result = await response.json();
@@ -55,6 +56,18 @@ function Login() {
         Login
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate>
+
+        {/* New Unique ID field before Email */}
+        <TextField
+          label="Unique Station ID"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          required
+          value={uniqueid}
+          onChange={e => setUniqueId(e.target.value)}
+        />
+
         <TextField
           label="Email Address"
           variant="outlined"
