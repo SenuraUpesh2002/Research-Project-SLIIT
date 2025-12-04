@@ -263,6 +263,7 @@ app.post('/sensor', (req, res) => {
 
 
 // REGISTER
+// POST /register
 app.post("/register", (req, res) => {
   const { uniqueid, email, role, password } = req.body;
 
@@ -272,20 +273,22 @@ app.post("/register", (req, res) => {
       .json({ error: "Unique Station ID, email, role and password are required" });
   }
 
-  // 1) Check that station exists in fs_ceypetco
-  const stationSql = "SELECT 1 FROM fs_ceypetco WHERE stationId = ? LIMIT 1";
-  connection.query(stationSql, [uniqueid], (err, stationRows) => {
+  // 1) Check that this Unique Station ID exists in fs_ceypetco
+  const checkStationSql = "SELECT 1 FROM fs_ceypetco WHERE stationId = ? LIMIT 1";
+  connection.query(checkStationSql, [uniqueid], (err, stationRows) => {
     if (err) {
       console.error("DB Error (station check):", err);
       return res.status(500).json({ error: "Internal Server Error" });
     }
+
+    // If station does NOT exist -> STOP here, do NOT insert into registration
     if (stationRows.length === 0) {
       return res
         .status(400)
-        .json({ error: "Invalid Unique Station ID. Station not found." });
+        .json({ error: "Invalid Unique Station ID. This station is not registered." });
     }
 
-    // 2) Check duplicate email or uniqueid in registration
+    // 2) Station is valid. Now check duplicates in registration
     const dupSql =
       "SELECT 1 FROM registration WHERE email = ? OR uniqueid = ? LIMIT 1";
     connection.query(dupSql, [email, uniqueid], (err2, dupRows) => {
@@ -299,7 +302,7 @@ app.post("/register", (req, res) => {
           .json({ error: "Email or Unique Station ID already registered" });
       }
 
-      // 3) Insert user
+      // 3) Finally insert into registration (only for valid station IDs)
       const insertSql =
         "INSERT INTO registration (uniqueid, email, role, password) VALUES (?, ?, ?, ?)";
       connection.query(
@@ -321,36 +324,51 @@ app.post("/register", (req, res) => {
 
 
 
-app.post("/login", (req, res) => {
-  const {email, uniqueid, password } = req.body;
 
-  if (!email || !uniqueid || !password) {
+
+
+// LOGIN
+app.post("/login", (req, res) => {
+  const { uniqueid, email, password } = req.body;
+
+  if (!uniqueid || !email || !password) {
     return res
       .status(400)
-      .json({ error: "Unique Station ID, Email and Password are required" });
+      .json({ error: "Unique Station ID, email and password are required" });
   }
 
-  const sql =
-    "SELECT * FROM registration WHERE email = ? AND uniqueid = ? AND password = ?";
-
-  connection.query(sql, [email, uniqueid, password], (err, results) => {
+  // A) Ensure this uniqueid exists in fs_ceypetco
+  const stationSql = "SELECT 1 FROM fs_ceypetco WHERE stationId = ? LIMIT 1";
+  connection.query(stationSql, [uniqueid], (err, stationRows) => {
     if (err) {
-      console.error("DB Error:", err);
+      console.error("DB Error (station check):", err);
       return res.status(500).json({ error: "Internal Server Error" });
     }
+    if (stationRows.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Invalid Unique Station ID. Station not found." });
+    }
 
-    if (results.length === 1) {
-      return res.json({
-        message: "Login successful",
-        user: results[0],
-      });
-    } else {
+    // B) Authenticate user with this uniqueid + email + password
+    const authSql =
+      "SELECT * FROM registration WHERE uniqueid = ? AND email = ? AND password = ? LIMIT 1";
+    connection.query(authSql, [uniqueid, email, password], (err2, rows) => {
+      if (err2) {
+        console.error("DB Error (login):", err2);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+      if (rows.length === 1) {
+        return res.json({ message: "Login successful", user: rows[0] });
+      }
       return res
         .status(401)
         .json({ error: "Invalid Unique Station ID, email or password" });
-    }
+    });
   });
 });
+
+
 
 
 

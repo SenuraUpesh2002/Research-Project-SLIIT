@@ -190,10 +190,10 @@ function Anomaly() {
       >
         <Box>
           <Typography variant="h4" fontWeight="bold" color="#351B65">
-            Fuel Anomaly Detection
+            Real Time Fuel Availability - Fuel Anomaly Detection
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Live view of abnormal fuel events across all monitored stations
+            Live view of abnormal fuel events across all monitored conditions
           </Typography>
         </Box>
         <Tooltip title="Refresh anomaly data">
