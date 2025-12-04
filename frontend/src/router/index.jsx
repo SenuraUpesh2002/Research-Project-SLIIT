@@ -3,13 +3,12 @@ import { Routes, Route } from 'react-router-dom';
 import AdminRoutes from '../modules/admin/routes/admin.routes';
 import ProtectedRoute from './ProtectedRoute';
 
+import Welcome from '../modules/customer/app/(tabs)/welcome';
+import Profile from '../modules/customer/app/(tabs)/profile';
+import Results from '../modules/customer/app/(tabs)/results';
+import UserType from '../modules/customer/app/(tabs)/user-type';
+
 // Public Pages (assuming these will be created)
-const HomePage = () => (
-  <div>
-    <h1>Welcome to the Home Page!</h1>
-    <p>If you see this, the routing is working correctly.</p>
-  </div>
-);
 const LoginPage = () => (
   <div>
     <h1>Login</h1>
@@ -22,8 +21,34 @@ const AppRouter = () => {
   return (
     <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<LoginPage />} />
+
+        {/* Protected Customer Routes */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute roles={['customer', 'admin']}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/results"
+          element={
+            <ProtectedRoute roles={['customer', 'admin']}>
+              <Results />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user-type"
+          element={
+            <ProtectedRoute roles={['customer', 'admin']}>
+              <UserType />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Protected Admin Routes */}
         <Route

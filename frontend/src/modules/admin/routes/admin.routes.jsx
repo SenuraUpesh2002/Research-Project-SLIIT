@@ -2,23 +2,25 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Import admin components
-import AdminDashboard from '../pages/AdminDashboard'; // Assuming this will be created
-import AdminLayout from '../components/AdminLayout'; // Assuming this will be created
-import AlertCard from '../components/AlertCard';
-import ReportCharts from '../components/ReportCharts';
-import SubmissionTable from '../components/SubmissionTable';
-import UserTable from '../components/UserTable';
+import Dashboard from '../pages/Dashboard';
+import Alerts from '../pages/Alerts';
+import Reports from '../pages/Reports';
+import Submissions from '../pages/Submissions';
+import Users from '../pages/Users';
+import Duplicates from '../pages/Duplicates';
+import AdminLayout from '../components/AdminLayout';
 
 const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashboard />} />
-        <Route path="dashboard" element={<AdminDashboard />} />
-        <Route path="alerts" element={<AlertCard />} />
-        <Route path="reports" element={<ReportCharts />} />
-        <Route path="submissions" element={<SubmissionTable />} />
-        <Route path="users" element={<UserTable />} />
+        <Route index element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="alerts" element={<Alerts />} />
+        <Route path="reports" element={<Reports />} />
+        <Route path="submissions" element={<Submissions />} />
+        <Route path="users" element={<Users />} />
+        <Route path="duplicates" element={<Duplicates />} />
         {/* Add other admin-specific routes here */}
       </Route>
     </Routes>
