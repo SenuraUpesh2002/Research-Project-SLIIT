@@ -9,7 +9,9 @@ const app = express();
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 app.use('/api/auth', authRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Middleware
 app.use(cors());
