@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./fuel-form.module.css";
+import { API_ENDPOINTS } from "../../../../constants/api";
+
+// Placeholder for a station ID, in a real app this would come from user selection or context
+const MOCK_STATION_ID = "60d0fe4f5311236168a109ca"; // Example ID, replace with actual logic
 
 const SRI_LANKAN_PROVINCES = [
   "Western Province",
@@ -38,6 +42,7 @@ export default function FuelFormScreen() {
     preferredBrand: "",
     province: "",
     town: "",
+    stationId: MOCK_STATION_ID, // Add stationId to form data
   });
 
   const [showDropdowns, setShowDropdowns] = useState({
@@ -77,10 +82,51 @@ export default function FuelFormScreen() {
     return true;
   };
 
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    try {
+      const submissionData = {
+        station: formData.stationId,
+        submissionType: "FUEL_REPORT", // Differentiate submission type
+        data: {
+          vehicleType: formData.vehicleType,
+          fuelType: formData.fuelType,
+          preferredBrand: formData.preferredBrand,
+          province: formData.province,
+          town: formData.town,
+        },
+      };
+
+      const response = await fetch(API_ENDPOINTS.SUBMISSION.CREATE,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include auth token
+          },
+          body: JSON.stringify(submissionData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to submit Fuel form");
+      }
+
+      alert("Fuel form submitted successfully!");
+      navigate("/app/welcome"); // Navigate after successful submission
+    } catch (error) {
+      console.error("Fuel form submission error:", error);
+      alert(`Submission failed: ${error.message}`);
+    }
+  };
+
   const handleFindStations = () => {
     if (!validateForm()) return;
 
-    navigate(`/results?type=fuel&vehicleType=${formData.vehicleType}&fuelType=${formData.fuelType}&preferredBrand=${formData.preferredBrand}&province=${formData.province}&town=${formData.town}`);
+    // Instead of navigating directly, call handleSubmit
+    handleSubmit();
   };
 
   const renderDropdown = (field, options, label) => (

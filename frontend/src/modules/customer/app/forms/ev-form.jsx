@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ev-form.module.css";
+import { API_ENDPOINTS } from "../../../../constants/api";
+
+// Placeholder for a station ID, in a real app this would come from user selection or context
+const MOCK_STATION_ID = "60d0fe4f5311236168a109ca"; // Example ID, replace with actual logic
 
 const SRI_LANKAN_PROVINCES = [
   "Western Province",
@@ -36,6 +40,7 @@ export default function EVFormScreen() {
     powerRating: "",
     province: "",
     town: "",
+    stationId: MOCK_STATION_ID, // Add stationId to form data
   });
 
   const [showDropdowns, setShowDropdowns] = useState({
@@ -66,10 +71,50 @@ export default function EVFormScreen() {
     return true;
   };
 
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    try {
+      const submissionData = {
+        station: formData.stationId,
+        submissionType: "EV_CHARGE", // Differentiate submission type
+        data: {
+          chargerType: formData.chargerType,
+          powerRating: formData.powerRating,
+          province: formData.province,
+          town: formData.town,
+        },
+      };
+
+      const response = await fetch(API_ENDPOINTS.SUBMISSION.CREATE,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include auth token
+          },
+          body: JSON.stringify(submissionData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to submit EV form");
+      }
+
+      alert("EV form submitted successfully!");
+      navigate("/app/welcome"); // Navigate after successful submission
+    } catch (error) {
+      console.error("EV form submission error:", error);
+      alert(`Submission failed: ${error.message}`);
+    }
+  };
+
   const handleFindStations = () => {
     if (!validateForm()) return;
 
-    navigate(`/results?type=ev&chargerType=${formData.chargerType}&powerRating=${formData.powerRating}&province=${formData.province}&town=${formData.town}`);
+    // Instead of navigating directly, call handleSubmit
+    handleSubmit();
   };
 
   const renderDropdown = (field, options, label) => (

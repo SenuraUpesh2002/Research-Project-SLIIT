@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { API_ENDPOINTS } from "../../../../constants/api";
 import styles from './results.module.css';
 
 export default function ResultsScreen() {
