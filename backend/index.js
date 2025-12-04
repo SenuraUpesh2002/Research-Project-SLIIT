@@ -11,9 +11,11 @@ const app = express();
 const authRoutes = require('./routes/authRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const stationRoutes = require('./routes/stationRoutes');
+const submissionRoutes = require('./routes/submissionRoutes');
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/stations', stationRoutes);
+app.use('/api/submissions', submissionRoutes);
 
 // Middleware
 app.use(cors());
