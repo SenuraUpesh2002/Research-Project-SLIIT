@@ -1,17 +1,26 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import AdminRoutes from '../modules/admin/routes/admin.routes';
 import ProtectedRoute from './ProtectedRoute';
 
 // Public Pages (assuming these will be created)
-const HomePage = () => <div>Home Page</div>;
-const LoginPage = () => <div>Login Page</div>;
+const HomePage = () => (
+  <div>
+    <h1>Welcome to the Home Page!</h1>
+    <p>If you see this, the routing is working correctly.</p>
+  </div>
+);
+const LoginPage = () => (
+  <div>
+    <h1>Login</h1>
+    <p>Please log in to access the application.</p>
+  </div>
+);
 const NotFoundPage = () => <div>404 Not Found</div>;
 
 const AppRouter = () => {
   return (
-    <Router>
-      <Routes>
+    <Routes>
         {/* Public Routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -29,7 +38,6 @@ const AppRouter = () => {
         {/* Catch-all for 404 */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </Router>
   );
 };
 
