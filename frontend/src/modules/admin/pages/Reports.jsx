@@ -12,28 +12,16 @@ const Reports = () => {
     // Simulate fetching report data
     const fetchReportData = async () => {
       try {
-        // In a real application, you would call report.service.js here
-        // const data = await reportService.getReportData();
-        // setReportData(data);
-        
-        // Mock data for now
-        const mockData = {
-          submissionTrends: [
-            { month: 'Jan', count: 10 },
-            { month: 'Feb', count: 15 },
-            { month: 'Mar', count: 20 },
-            { month: 'Apr', count: 12 },
-            { month: 'May', count: 18 },
-          ],
-          userActivity: [
-            { day: 'Mon', activeUsers: 5 },
-            { day: 'Tue', activeUsers: 8 },
-            { day: 'Wed', activeUsers: 12 },
-            { day: 'Thu', activeUsers: 7 },
-            { day: 'Fri', activeUsers: 10 },
-          ],
-        };
-        setReportData(mockData);
+        const response = await fetch(API_ENDPOINTS.REPORTS.GET_ALL, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to fetch report data: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setReportData(data);
       } catch (err) {
         setError('Failed to load report data.');
         console.error('Error fetching report data:', err);

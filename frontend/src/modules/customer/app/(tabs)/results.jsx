@@ -7,45 +7,46 @@ export default function ResultsScreen() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
-  const type = params.get('type');
-  const town = params.get('town');
+  const [stations, setStations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data for demonstration
-  const mockStations = [
-    {
-      id: 1,
-      name: 'Ceylon Petroleum Corporation',
-      type: type || 'fuel',
-      address: '123 Main Street, ' + (town || 'Colombo'),
-      distance: '2.5 km',
-      rating: 4.2,
-      availability: 'Available',
-      queueStatus: 'Low',
-      brand: 'CPC',
-    },
-    {
-      id: 2,
-      name: 'Indian Oil Station',
-      type: type || 'fuel',
-      address: '456 Galle Road, ' + (town || 'Colombo'),
-      distance: '3.8 km',
-      rating: 4.0,
-      availability: 'Available',
-      queueStatus: 'Medium',
-      brand: 'IOC',
-    },
-    {
-      id: 3,
-      name: 'Shell Station',
-      type: type || 'fuel',
-      address: '789 Kandy Road, ' + (town || 'Colombo'),
-      distance: '5.2 km',
-      rating: 4.5,
-      availability: 'Available',
-      queueStatus: 'Low',
-      brand: 'Shell',
-    },
-  ];
+  useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        const queryParams = new URLSearchParams();
+        if (type) queryParams.append('type', type);
+        if (town) queryParams.append('town', town);
+
+        const response = await fetch(`${API_ENDPOINTS.STATIONS.GET_ALL}?${queryParams.toString()}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch stations: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setStations(data);
+      } catch (err) {
+        setError(err.message);
+        console.error("Error fetching stations:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStations();
+  }, [type, town]);
+
+  if (loading) {
+    return <div className={styles.container}>Loading stations...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
+  }
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
@@ -68,12 +69,12 @@ export default function ResultsScreen() {
         </button>
         <p className={styles.title}>Recommended Stations</p>
         <p className={styles.subtitle}>
-          Found {mockStations.length} stations near {town || 'your location'}
+          Found {stations.length} stations near {town || 'your location'}
         </p>
       </div>
 
       <div className={styles.content}>
-        {mockStations.map((station, index) => ( // eslint-disable-line no-unused-vars
+        {stations.map((station, index) => ( // eslint-disable-line no-unused-vars
           <div key={station.id} className={styles.stationCard}>
             <div className={styles.stationHeader}>
               <div className={styles.stationInfo}>

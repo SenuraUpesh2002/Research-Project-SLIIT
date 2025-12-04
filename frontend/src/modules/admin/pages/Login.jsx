@@ -13,16 +13,27 @@ const Login = () => {
     e.preventDefault();
     setError(''); // Clear previous errors
 
-    // Placeholder for actual authentication logic
-    // In a real application, this would involve an API call to a backend service
-    if (email === 'admin@example.com' && password === 'password') {
-      // Simulate successful login
-      console.log('Admin login successful!');
-      // Here, you would typically store a token or session information
-      // For now, redirect to the admin dashboard
-      navigate('/admin/dashboard'); // Assuming '/admin/dashboard' is the route for the admin dashboard
-    } else {
-      setError('Invalid email or password.');
+    try {
+      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('authToken', data.token);
+        console.log('Admin login successful!');
+        navigate('/admin/dashboard');
+      } else {
+        setError(data.message || 'Login failed.');
+      }
+    } catch (err) {
+      setError('Network error or server is unreachable.');
+      console.error('Login error:', err);
     }
   };
 

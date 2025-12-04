@@ -1,14 +1,42 @@
+import { useState, useEffect } from 'react';
 import { API_ENDPOINTS } from "../../../../constants/api";
 import styles from './Dashboard.module.css';
 
 export default function Dashboard() {
-  // Mock data for demonstration
-  const stats = {
-    totalSubmissions: 1250,
-    duplicateSubmissions: 45,
-    alertsSent: 12,
-    activeUsers: 340,
-  };
+  const [stats, setStats] = useState({
+    totalSubmissions: 0,
+    duplicateSubmissions: 0,
+    alertsSent: 0,
+    activeUsers: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDashboardStats = async () => {
+      try {
+        const response = await fetch(API_ENDPOINTS.REPORTS.GET_ALL, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch dashboard stats');
+        }
+        const data = await response.json();
+        // Assuming the API returns data in a format like:
+        // { totalSubmissions: 1250, duplicateSubmissions: 45, alertsSent: 12, activeUsers: 340 }
+        setStats(data);
+      } catch (err) {
+        setError(err.message);
+        console.error("Error fetching dashboard stats:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardStats();
+  }, []);
 
   const quickLinks = [
     { name: 'View Submissions', path: '/admin/submissions' },
@@ -16,6 +44,14 @@ export default function Dashboard() {
     { name: 'Review Duplicates', path: '/admin/duplicates' },
     { name: 'User Management', path: '/admin/users' },
   ];
+
+  if (loading) {
+    return <div className={styles.container}>Loading dashboard...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
+  }
 
   return (
     <div className={styles.container}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import ProfileHeader from "../../components/ProfileHeader";
 import LogoutButton from "../../components/LogoutButton";
@@ -6,74 +6,48 @@ import Loader from "../../components/Loader";
 import styles from "./profile.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCar, faFire, faShieldAlt, faMapMarkerAlt, faCity, faBell, faCog, faMap, faClock, faUsers, faPlus } from '@fortawesome/free-solid-svg-icons';
-// import COLORS from "../../constants/colors"; // Not directly used in web components, styles handle colors
-// import { useAuthStore } from "../../store/authStore"; // To be adapted for web authentication
-
-
-
-const mockFavorites = [
-  {
-    id: "fav-1",
-    name: "Lanka IOC – Galle",
-    address: "38 Colombo Rd, Galle",
-    status: "Available",
-    distance: "2.4 km",
-    fuel: "Petrol 92",
-    queue: "Low",
-    lastUpdated: "5 mins ago",
-  },
-  {
-    id: "fav-2",
-    name: "CPC – Kottawa",
-    address: "High Level Rd, Kottawa",
-    status: "Restocking",
-    distance: "6.1 km",
-    fuel: "Auto Diesel",
-    queue: "Medium",
-    lastUpdated: "25 mins ago",
-  },
-];
-
-const mockAlerts = [
-  {
-    id: "alert-1",
-    station: "Lanka IOC – Matara",
-    message: "Petrol 92 arriving in 20 minutes",
-    time: "Today • 4:10 PM",
-    status: "Active",
-  },
-  {
-    id: "alert-2",
-    station: "EV Plug Lanka – Boralesgamuwa",
-    message: "Fast DC charger available now",
-    time: "Today • 3:40 PM",
-    status: "Triggered",
-  },
-];
-
-const mockHistory = [
-  {
-    id: "history-1",
-    name: "EV Plug Lanka – Colombo 07",
-    type: "EV Station",
-    status: "Visited",
-    time: "Yesterday • 6:30 PM",
-  },
-  {
-    id: "history-2",
-    name: "CPC – Dematagoda",
-    type: "Fuel Station",
-    status: "Checked availability",
-    time: "Yesterday • 11:20 AM",
-  },
-];
+import { API_ENDPOINTS } from "../../../../constants/api";
 
 export default function Profile() {
   const { user } = useAuth();
-  const [favorites] = useState(mockFavorites);
-  const [alerts] = useState(mockAlerts);
-  const [history] = useState(mockHistory);
+  const [favorites, setFavorites] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      if (!user) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await fetch(API_ENDPOINTS.AUTH.PROFILE, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to fetch profile data: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setFavorites(data.favorites || []);
+        setAlerts(data.alerts || []);
+        setHistory(data.history || []);
+      } catch (err) {
+        setError(err.message);
+        console.error("Error fetching profile data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfileData();
+  }, [user]);
+
+  if (loading) return <Loader />;
+  if (error) return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
   if (!user) return <Loader />;
 
   const vehiclePreferences = [

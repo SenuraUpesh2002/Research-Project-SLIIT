@@ -13,17 +13,16 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        // In a real application, you would call a user service here
-        // const data = await userService.getUsers();
-        
-        // Mock data for now
-        const mockUsers = [
-          { id: 'user1', name: 'Alice Smith', email: 'alice@example.com', role: 'admin', status: 'active' },
-          { id: 'user2', name: 'Bob Johnson', email: 'bob@example.com', role: 'user', status: 'active' },
-          { id: 'user3', name: 'Charlie Brown', email: 'charlie@example.com', role: 'user', status: 'inactive' },
-          { id: 'user4', name: 'Diana Prince', email: 'diana@example.com', role: 'admin', status: 'active' },
-        ];
-        setUsers(mockUsers);
+        const response = await fetch(API_ENDPOINTS.USERS.GET_ALL, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to fetch users: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setUsers(data);
       } catch (err) {
         setError('Failed to load users.');
         console.error('Error fetching users:', err);

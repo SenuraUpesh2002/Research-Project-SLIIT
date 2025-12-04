@@ -15,13 +15,16 @@ const Submissions = () => {
     // Placeholder for fetching submissions from an API
     const fetchSubmissions = async () => {
       try {
-        // Simulate API call
-        const mockSubmissions = [
-          { id: '1', name: 'John Doe', email: 'john@example.com', vehicleType: 'EV', province: 'Western', town: 'Colombo', date: '2023-10-26' },
-          { id: '2', name: 'Jane Smith', email: 'jane@example.com', vehicleType: 'ICE', province: 'Southern', town: 'Galle', date: '2023-10-25' },
-          { id: '3', name: 'Peter Jones', email: 'peter@example.com', vehicleType: 'EV', province: 'Central', town: 'Kandy', date: '2023-10-24' },
-        ];
-        setSubmissions(mockSubmissions);
+        const response = await fetch(API_ENDPOINTS.SUBMISSIONS.GET_ALL, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to fetch submissions: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setSubmissions(data);
       } catch (err) {
         setError('Failed to fetch submissions.');
       } finally {

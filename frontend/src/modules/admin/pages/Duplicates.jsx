@@ -12,14 +12,35 @@ const Duplicates = () => {
     // Placeholder for fetching duplicate submissions from an API
     const fetchDuplicates = async () => {
       try {
-        // Simulate API call
-        const mockDuplicates = [
-          { id: 'dup1', userId: 'user1', formData: 'dataA', date: '2023-10-20', originalId: '1' },
-          { id: 'dup2', userId: 'user1', formData: 'dataA', date: '2023-10-21', originalId: '1' },
-          { id: 'dup3', userId: 'user2', formData: 'dataB', date: '2023-10-19', originalId: '2' },
-          { id: 'dup4', userId: 'user2', formData: 'dataB', date: '2023-10-22', originalId: '2' },
-        ];
-        setDuplicateSubmissions(mockDuplicates);
+        const response = await fetch(API_ENDPOINTS.SUBMISSIONS.GET_ALL, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to fetch submissions: ${response.statusText}`);
+        }
+        const allSubmissions = await response.json();
+
+        // Simple client-side duplicate detection based on formData (for demonstration)
+        // In a real scenario, duplicates would ideally be flagged by the backend
+        const submissionMap = new Map();
+        const detectedDuplicates = [];
+
+        allSubmissions.forEach(submission => {
+          const formDataString = JSON.stringify(submission.formData); // Assuming formData is an object
+          if (submissionMap.has(formDataString)) {
+            // If this formData has been seen before, mark both as duplicates
+            const existingSubmission = submissionMap.get(formDataString);
+            if (!detectedDuplicates.includes(existingSubmission)) {
+              detectedDuplicates.push(existingSubmission);
+            }
+            detectedDuplicates.push(submission);
+          } else {
+            submissionMap.set(formDataString, submission);
+          }
+        });
+        setDuplicateSubmissions(detectedDuplicates);
       } catch (err) {
         setError('Failed to fetch duplicate submissions.');
       } finally {
