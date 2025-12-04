@@ -10,8 +10,10 @@ const app = express();
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const reportRoutes = require('./routes/reportRoutes');
+const stationRoutes = require('./routes/stationRoutes');
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/stations', stationRoutes);
 
 // Middleware
 app.use(cors());
