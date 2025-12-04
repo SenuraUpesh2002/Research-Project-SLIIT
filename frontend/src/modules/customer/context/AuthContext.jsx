@@ -1,49 +1,72 @@
 import { createContext, useState, useContext } from 'react';
+import { API_ENDPOINTS } from '../../../constants/api';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // In a real app, this would come from an API or local storage
   const [isLoading, setIsLoading] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('authToken') || null);
 
   const login = async (email, password) => {
     setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsLoading(false);
-
-    if (email === "test@example.com" && password === "password") {
-      const userData = { email: email, name: "Test User" }; // Mock user data
-      setUser(userData);
-      console.log("Simulated login success:", userData);
-      return { success: true };
-    } else {
-      return { success: false, error: "Invalid credentials" };
+    try {
+      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('authToken', data.token);
+        setToken(data.token);
+        setUser(data.user);
+        return { success: true };
+      } else {
+        return { success: false, error: data.message || 'Login failed' };
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      return { success: false, error: 'Network error or server unavailable' };
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const register = async (fullName, email, password, confirmPassword) => {
     setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsLoading(false);
-
-    if (fullName && email && password === confirmPassword) {
-      // In a real app, you'd send data to your backend and get a response
-      console.log("Simulated registration success:", { fullName, email });
-      return { success: true };
-    } else {
-      return { success: false, error: "Invalid registration data" };
+    try {
+      const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: fullName, email, password, confirmPassword }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        return { success: true };
+      } else {
+        return { success: false, error: data.message || 'Registration failed' };
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      return { success: false, error: 'Network error or server unavailable' };
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const logout = () => {
+    localStorage.removeItem('authToken');
+    setToken(null);
     setUser(null);
-    // In a real app, you'd clear tokens, session, etc.
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout, register, isLoading, token }}>
       {children}
     </AuthContext.Provider>
   );
