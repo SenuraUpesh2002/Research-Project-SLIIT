@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from "../../../../constants/api";
 import styles from './Dashboard.module.css';
 
 export default function Dashboard() {

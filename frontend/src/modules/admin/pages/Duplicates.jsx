@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from "../../../../constants/api";
 import styles from './Duplicates.module.css';
 
 const Duplicates = () => {
