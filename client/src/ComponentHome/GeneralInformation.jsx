@@ -39,6 +39,7 @@ function GeneralInformation() {
         setInfo(Array.isArray(data) ? data[0] : data);
       }
     } catch (err) {
+      console.error("fetch error", err);
       setErrorMsg("Error loading data. Please try again.");
       setInfo(null);
     }
@@ -54,13 +55,12 @@ function GeneralInformation() {
           maxWidth: 900,
           margin: "auto",
           background:
-            "linear-gradient(135deg, #351B65 30%, #351B65 40%, #ffffff 40%, #ffffff 100%)",
+            "linear-gradient(135deg, #351B65 20%, #5C3FA3 40%, #ffffff 40%, #ffffff 100%)",
         }}
       >
         <Grid container spacing={3}>
           {/* Left side: form */}
           <Grid item xs={12} md={4}>
-            {/* Logo */}
             <Box
               component="img"
               src="/fuelwatch_logo.png"
@@ -83,7 +83,7 @@ function GeneralInformation() {
               General Station Information
             </Typography>
             <Typography variant="body2" color="#E0D7FF" gutterBottom>
-              Enter the Unique Station ID to view stored general information.
+              Enter the Unique Station ID to view stored information.
             </Typography>
 
             <TextField
@@ -115,7 +115,7 @@ function GeneralInformation() {
             <Button
               variant="contained"
               fullWidth
-              sx={{ mt: 3, backgroundColor: "#9667D9", fontWeight: "bold" }}
+              sx={{ mt: 3, backgroundColor: "#FFB300", fontWeight: "bold" }}
               onClick={handleSearch}
               disabled={loading}
             >
@@ -155,6 +155,7 @@ function GeneralInformation() {
 
                 {info && !loading && (
                   <>
+                    {/* General block */}
                     <Typography
                       variant="h6"
                       fontWeight="bold"
@@ -181,7 +182,7 @@ function GeneralInformation() {
                         </Typography>
                       </Grid>
 
-                      <Grid item xs={12} sm={12}>
+                      <Grid item xs={12}>
                         <Typography variant="subtitle2" color="text.secondary">
                           Location
                         </Typography>
@@ -193,12 +194,78 @@ function GeneralInformation() {
 
                     <Divider sx={{ my: 3 }} />
 
+                    {/* Contact block from fs_contact_information */}
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      sx={{ mb: 2, color: "#351B65" }}
+                    >
+                      Contact Information
+                    </Typography>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                          Person Name
+                        </Typography>
+                        <Typography variant="body1" fontWeight="600">
+                          {info.PersonName || "-"}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                          Designation
+                        </Typography>
+                        <Typography variant="body1" fontWeight="600">
+                          {info.PersonDesignation || "-"}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                          Email
+                        </Typography>
+                        <Typography variant="body1" fontWeight="600">
+                          {info.PersonEmail || "-"}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                          Contact Number
+                        </Typography>
+                        <Typography variant="body1" fontWeight="600">
+                          {info.ContactNumber || "-"}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                          Start Time
+                        </Typography>
+                        <Typography variant="body1" fontWeight="600">
+                          {info.StartTime || "-"}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                          End Time
+                        </Typography>
+                        <Typography variant="body1" fontWeight="600">
+                          {info.EndTime || "-"}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+
+                    <Divider sx={{ my: 3 }} />
+
                     <Typography
                       variant="body2"
                       color="text.secondary"
                       sx={{ fontStyle: "italic" }}
                     >
-                      Data source: fs_general_information table.
+                      Data source: fs_general_information &amp; fs_contact_information tables.
                     </Typography>
                   </>
                 )}

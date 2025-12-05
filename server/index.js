@@ -119,6 +119,41 @@ app.post("/fs-view3", (req, res) => {
 });
 
 
+
+// GET station general + contact info by Id
+app.get("/fs-view2/:stationId", (req, res) => {
+  const { stationId } = req.params;
+
+  const sql = `
+    SELECT 
+      g.Id,
+      g.Name,
+      g.Location,
+      c.PersonName,
+      c.PersonDesignation,
+      c.PersonEmail,
+      c.ContactNumber,
+      c.StartTime,
+      c.EndTime
+    FROM fs_general_information AS g
+    LEFT JOIN fs_contact_information AS c
+      ON g.Id = c.Id
+    WHERE g.Id = ?
+  `;
+
+  connection.query(sql, [stationId], (err, result) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+    if (!result || result.length === 0) {
+      return res.status(404).json([]);
+    }
+    res.json(result);           // array; frontend takes [0]
+  });
+});
+
+
 app.post("/fs-view4", (req, res) => {
   const { StationId, FuelInfo } = req.body;
   if (!StationId || !Array.isArray(FuelInfo) || FuelInfo.length === 0) {
