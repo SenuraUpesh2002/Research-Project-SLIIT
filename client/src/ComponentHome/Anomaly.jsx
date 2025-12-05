@@ -31,6 +31,98 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 const ANOMALY_API = "http://localhost:8081/api/anomaly";
 
+// Sample data for single station ST001 - replace with real API data
+const SAMPLE_ANOMALIES = [
+  {
+    id: 1,
+    date: "2025-12-04 10:45 AM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Petrol 92",
+    volume: -1250,
+    score: 0.945,
+    status: "Critical",
+    reason: "Sudden drop of 1250L (92% of tank) detected within 15 minutes - potential theft/leakage"
+  },
+  {
+    id: 2,
+    date: "2025-12-04 09:30 AM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Diesel",
+    volume: 850,
+    score: 0.823,
+    status: "Warning",
+    reason: "Unusually rapid refill (850L in 8 minutes) outside normal delivery hours"
+  },
+  {
+    id: 3,
+    date: "2025-12-04 08:15 AM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Petrol 95",
+    volume: -45,
+    score: 0.712,
+    status: "Warning",
+    reason: "High consumption rate detected during low-traffic morning hours"
+  },
+  {
+    id: 4,
+    date: "2025-12-04 07:22 AM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Petrol 92",
+    volume: 320,
+    score: 0.456,
+    status: "Resolved",
+    reason: "Previously flagged rapid refill confirmed as legitimate delivery"
+  },
+  {
+    id: 5,
+    date: "2025-12-03 11:10 PM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Diesel",
+    volume: -210,
+    score: 0.678,
+    status: "Warning",
+    reason: "Nighttime consumption spike detected - verify CCTV footage"
+  },
+  {
+    id: 6,
+    date: "2025-12-03 06:45 PM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Petrol 95",
+    volume: -78,
+    score: 0.389,
+    status: "Info",
+    reason: "Moderate deviation from expected evening consumption pattern"
+  },
+  {
+    id: 7,
+    date: "2025-12-03 03:20 PM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Petrol 92",
+    volume: -950,
+    score: 0.891,
+    status: "Critical",
+    reason: "Extreme drop detected (950L in 20 minutes) - immediate investigation required"
+  },
+  {
+    id: 8,
+    date: "2025-12-03 01:15 PM",
+    stationId: "ST001",
+    stationName: "Ceypetco - Colombo 7",
+    fuelType: "Diesel",
+    volume: 420,
+    score: 0.521,
+    status: "Warning",
+    reason: "Accelerated refill rate detected during peak lunch hours"
+  }
+];
+
 // helper for table sort
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -44,9 +136,10 @@ function getComparator(order, orderBy) {
 }
 
 function Anomaly() {
-  const [anomalies, setAnomalies] = useState([]);
+  const [anomalies, setAnomalies] = useState(SAMPLE_ANOMALIES); // Use sample data initially
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [useSampleData, setUseSampleData] = useState(true); // Toggle for demo
 
   const [fuelFilter, setFuelFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -64,19 +157,25 @@ function Anomaly() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(ANOMALY_API);
-      if (!res.ok) throw new Error("Failed to fetch anomaly data");
-      const data = await res.json();
-      setAnomalies(data || []);
+      if (useSampleData) {
+        setAnomalies(SAMPLE_ANOMALIES);
+      } else {
+        const res = await fetch(ANOMALY_API);
+        if (!res.ok) throw new Error("Failed to fetch anomaly data");
+        const data = await res.json();
+        setAnomalies(data || []);
+      }
     } catch (err) {
       setError(err.message);
+      // Fallback to sample data on API error
+      setAnomalies(SAMPLE_ANOMALIES);
     }
     setLoading(false);
   };
 
   useEffect(() => {
     fetchAnomalies();
-  }, []);
+  }, [useSampleData]);
 
   // unique fuel types from data
   const fuelTypes = useMemo(
@@ -88,12 +187,9 @@ function Anomaly() {
   const filtered = useMemo(
     () =>
       anomalies.filter(a => {
-        const fuelOk =
-          fuelFilter === "All" || a.fuelType === fuelFilter;
-        const statusOk =
-          statusFilter === "All" || a.status === statusFilter;
-        const idOk =
-          !searchId || String(a.id).toLowerCase().includes(searchId.toLowerCase());
+        const fuelOk = fuelFilter === "All" || a.fuelType === fuelFilter;
+        const statusOk = statusFilter === "All" || a.status === statusFilter;
+        const idOk = !searchId || String(a.id).toLowerCase().includes(searchId.toLowerCase());
         return fuelOk && statusOk && idOk;
       }),
     [anomalies, fuelFilter, statusFilter, searchId]
@@ -179,13 +275,15 @@ function Anomaly() {
 
   return (
     <Box sx={{ p: 4 }}>
-      {/* Header + refresh */}
+      {/* Header + refresh + sample toggle */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 3
+          mb: 3,
+          flexWrap: "wrap",
+          gap: 2
         }}
       >
         <Box>
@@ -193,24 +291,35 @@ function Anomaly() {
             Real Time Fuel Availability - Fuel Anomaly Detection
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Live view of abnormal fuel events across all monitored conditions
+            Live view of abnormal fuel events - 8 anomalies detected today
           </Typography>
         </Box>
-        <Tooltip title="Refresh anomaly data">
-          <span>
-            <IconButton
-              color="primary"
-              onClick={fetchAnomalies}
-              disabled={loading}
-              sx={{
-                bgcolor: "#ECEAF7",
-                "&:hover": { bgcolor: "#d4c9ff" }
-              }}
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Tooltip title="Toggle sample data">
+            <Button
+              variant={useSampleData ? "contained" : "outlined"}
+              size="small"
+              onClick={() => setUseSampleData(!useSampleData)}
             >
-              {loading ? <CircularProgress size={22} /> : <RefreshIcon />}
-            </IconButton>
-          </span>
-        </Tooltip>
+              {useSampleData ? "Sample" : "Live"}
+            </Button>
+          </Tooltip>
+          <Tooltip title="Refresh anomaly data">
+            <span>
+              <IconButton
+                color="primary"
+                onClick={fetchAnomalies}
+                disabled={loading}
+                sx={{
+                  bgcolor: "#ECEAF7",
+                  "&:hover": { bgcolor: "#d4c9ff" }
+                }}
+              >
+                {loading ? <CircularProgress size={22} /> : <RefreshIcon />}
+              </IconButton>
+            </span>
+          </Tooltip>
+        </Box>
       </Box>
 
       {/* Summary cards */}
@@ -315,8 +424,8 @@ function Anomaly() {
         <Typography>No anomalies found for current filters.</Typography>
       ) : (
         <Paper>
-          <TableContainer>
-            <Table>
+          <TableContainer sx={{ maxHeight: 600 }}>
+            <Table stickyHeader>
               <TableHead>
                 <TableRow>
                   <TableCell sortDirection={orderBy === "id" ? order : false}>
@@ -357,7 +466,9 @@ function Anomaly() {
                     <TableCell>{row.date}</TableCell>
                     <TableCell>{row.stationName || row.stationId}</TableCell>
                     <TableCell>{row.fuelType}</TableCell>
-                    <TableCell>{row.volume}</TableCell>
+                    <TableCell style={{ color: row.volume < 0 ? '#d32f2f' : '#2e7d32' }}>
+                      {row.volume} L
+                    </TableCell>
                     <TableCell>{Number(row.score).toFixed(3)}</TableCell>
                     <TableCell>{severityChip(row.status)}</TableCell>
                     <TableCell align="right">
@@ -428,7 +539,9 @@ function Anomaly() {
             <Typography variant="subtitle2" color="text.secondary">
               Volume change
             </Typography>
-            <Typography mb={1}>{selected.volume} L</Typography>
+            <Typography mb={1} style={{ color: selected.volume < 0 ? '#d32f2f' : '#2e7d32' }}>
+              {selected.volume} L
+            </Typography>
 
             <Typography variant="subtitle2" color="text.secondary">
               Anomaly score
