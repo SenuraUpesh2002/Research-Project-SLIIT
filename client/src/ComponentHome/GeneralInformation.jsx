@@ -260,13 +260,7 @@ function GeneralInformation() {
 
                     <Divider sx={{ my: 3 }} />
 
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ fontStyle: "italic" }}
-                    >
-                      Data source: fs_general_information &amp; fs_contact_information tables.
-                    </Typography>
+                    
                   </>
                 )}
 
