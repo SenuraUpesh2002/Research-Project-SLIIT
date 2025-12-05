@@ -78,6 +78,34 @@ function calculateVolumeLitres(distance) {
 
 
 
+app.get("/", (req, res) => {
+  res.json({ message: "API is running" });
+});
+
+// GET general info by Id
+app.get("/fs-view2/:stationId", (req, res) => {
+  const { stationId } = req.params;
+  console.log("GET /fs-view2/", stationId);
+
+  const sql = "SELECT Id, Name, Location FROM fs_general_information WHERE Id = ?";
+
+  connection.query(sql, [stationId], (err, result) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ message: "Database error" });
+    }
+
+    if (!result || result.length === 0) {
+      return res.status(404).json([]);
+    }
+
+    // send rows as array; frontend takes data[0]
+    res.json(result);
+  });
+});
+
+
+
 app.post("/fs-view3", (req, res) => {
     const { Id, PersonName, PersonDesignation, PersonEmail, ContactNumber, StartTime, EndTime } = req.body;
     const sql = "INSERT INTO fs_contact_information (Id, PersonName, PersonDesignation, PersonEmail, ContactNumber, StartTime, EndTime) VALUES (?, ?, ?, ?, ?, ?, ?)";

@@ -29,16 +29,13 @@ function GeneralInformation() {
     setLoading(true);
     setInfo(null);
     try {
-      const res = await fetch(`http://localhost:8081/fs-general/${stationId}`);
-      if (!res.ok) {
-        throw new Error("Request failed");
-      }
+      const res = await fetch(`http://localhost:8081/fs-view2/${stationId}`);
+      if (!res.ok) throw new Error("Request failed");
       const data = await res.json();
       if (!data || data.length === 0) {
         setErrorMsg("No information found for this station ID");
         setInfo(null);
       } else {
-        // if backend returns an array, take first row
         setInfo(Array.isArray(data) ? data[0] : data);
       }
     } catch (err) {
@@ -57,12 +54,26 @@ function GeneralInformation() {
           maxWidth: 900,
           margin: "auto",
           background:
-            "linear-gradient(135deg, #351B65 0%, #5C3FA3 40%, #ffffff 40%, #ffffff 100%)",
+            "linear-gradient(135deg, #351B65 30%, #351B65 40%, #ffffff 40%, #ffffff 100%)",
         }}
       >
         <Grid container spacing={3}>
           {/* Left side: form */}
           <Grid item xs={12} md={4}>
+            {/* Logo */}
+            <Box
+              component="img"
+              src="/fuelwatch_logo.png"
+              alt="FuelWatch Logo"
+              sx={{
+                width: 80,
+                height: 80,
+                mb: 2,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+
             <Typography
               variant="h5"
               fontWeight="bold"
@@ -104,11 +115,15 @@ function GeneralInformation() {
             <Button
               variant="contained"
               fullWidth
-              sx={{ mt: 3, backgroundColor: "#FFB300", fontWeight: "bold" }}
+              sx={{ mt: 3, backgroundColor: "#9667D9", fontWeight: "bold" }}
               onClick={handleSearch}
               disabled={loading}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : "View Information"}
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "View Information"
+              )}
             </Button>
           </Grid>
 
@@ -150,7 +165,7 @@ function GeneralInformation() {
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
                         <Typography variant="subtitle2" color="text.secondary">
-                          Unique Station ID
+                          Id
                         </Typography>
                         <Typography variant="body1" fontWeight="600">
                           {info.Id}
@@ -159,14 +174,14 @@ function GeneralInformation() {
 
                       <Grid item xs={12} sm={6}>
                         <Typography variant="subtitle2" color="text.secondary">
-                          Station Name
+                          Name
                         </Typography>
                         <Typography variant="body1" fontWeight="600">
                           {info.Name}
                         </Typography>
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={12}>
                         <Typography variant="subtitle2" color="text.secondary">
                           Location
                         </Typography>
@@ -174,35 +189,6 @@ function GeneralInformation() {
                           {info.Location}
                         </Typography>
                       </Grid>
-
-                      {/* Add more fields from fs_general_information as needed */}
-                      {info.ContactNumber && (
-                        <Grid item xs={12} sm={6}>
-                          <Typography
-                            variant="subtitle2"
-                            color="text.secondary"
-                          >
-                            Contact Number
-                          </Typography>
-                          <Typography variant="body1" fontWeight="600">
-                            {info.ContactNumber}
-                          </Typography>
-                        </Grid>
-                      )}
-
-                      {info.OwnerName && (
-                        <Grid item xs={12} sm={6}>
-                          <Typography
-                            variant="subtitle2"
-                            color="text.secondary"
-                          >
-                            Owner Name
-                          </Typography>
-                          <Typography variant="body1" fontWeight="600">
-                            {info.OwnerName}
-                          </Typography>
-                        </Grid>
-                      )}
                     </Grid>
 
                     <Divider sx={{ my: 3 }} />
@@ -231,4 +217,4 @@ function GeneralInformation() {
   );
 }
 
-export default GeneralInformation
+export default GeneralInformation;
