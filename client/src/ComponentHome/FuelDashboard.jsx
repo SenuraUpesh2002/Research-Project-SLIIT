@@ -51,6 +51,7 @@ function FuelDashboard() {
     { label: "Sensor Health", icon: <LocalGasStationIcon />, path: "/sensor-health" },
     { label: "Sensor Readings", icon: <LocalGasStationIcon />, path: "/sensor" },
     { label: "Behavior Identification", icon: <LocalGasStationIcon />, path: "/anomaly" },
+    { label: "Demand Forecasting", icon: <LocalGasStationIcon />, path: "/demand" },
     { label: "Notifications", icon: <NotificationsActiveIcon />, path: "/notifications" },
     { label: "Settings", icon: <SettingsIcon />, path: "/settings" }
   ];
