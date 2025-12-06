@@ -26,7 +26,10 @@ import Register from './ComponentHome/Register';
 import Login from './ComponentHome/Login';
 import Anomaly from './ComponentHome/Anomaly';
 import SensorHealth from './ComponentHome/SensorHealth';
-import DemandDashboard from "./ComponentHome/DemandDashboard";
+
+
+
+
 
 
 function App() {
@@ -55,7 +58,8 @@ function App() {
           <Route path='/register' element={<Register/>}></Route> 
           <Route path='/anomaly' element={<Anomaly/>}></Route> 
           <Route path="/sensor-health" element={<SensorHealth />} />
-          <Route path="/demand" element={<DemandDashboard />} />
+
+
 
 
           <Route path='/create' element={<CreateUsers/>} ></Route>
