@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
         }
 
         // Check password
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
             token,
             user: {
                 id: user.id,
-                name: user.name,
+                name: user.full_name,
                 email: user.email,
                 role: user.role
             }

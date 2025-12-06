@@ -8,6 +8,7 @@ const StaffingRecommendation = ({ recommendation }) => {
 
     return (
         <motion.div
+            key={shift} // Re-animate when shift changes
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}

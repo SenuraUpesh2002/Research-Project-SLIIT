@@ -35,8 +35,8 @@ const seedAdmin = async () => {
 
         const sql = `
       INSERT INTO employees 
-      (employee_id, name, email, phone, role, password, device_id, station_id) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      (employee_id, full_name, email, phone, role, password_hash, device_fingerprint) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
         await connection.execute(sql, [
@@ -46,8 +46,7 @@ const seedAdmin = async () => {
             '0000000000',
             'manager',
             hashedPassword,
-            'system-seed',
-            process.env.DEFAULT_STATION_ID || 'GAM-0001-07'
+            'system-seed'
         ]);
 
         console.log('✓ Admin user created successfully!');

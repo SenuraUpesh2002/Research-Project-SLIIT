@@ -1,0 +1,22 @@
+{
+  "training_date": "2025-12-03T13:28:35.609396",
+  "dataset_size": 63960,
+  "models_trained": [
+    "arima",
+    "random_forest"
+  ],
+  "metrics": {
+    "arima": {
+      "mae": 960.7637552663128,
+      "rmse": 1061.5461913970978,
+      "r2": -2.7806646009945717,
+      "mape": 52.6356726798481
+    },
+    "random_forest": {
+      "mae": 0.0,
+      "rmse": 0.0,
+      "r2": 1.0,
+      "accuracy": 100.0
+    }
+  }
+}

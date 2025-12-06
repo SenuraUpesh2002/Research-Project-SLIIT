@@ -3,7 +3,14 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion } from 'framer-motion';
 
-const PredictionChart = ({ data }) => {
+const PredictionChart = ({ data, onDayClick, selectedDayIndex = 0 }) => {
+    // Handle chart click
+    const handleClick = (chartData) => {
+        if (chartData && chartData.activeTooltipIndex !== undefined && onDayClick) {
+            onDayClick(chartData.activeTooltipIndex);
+        }
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -41,6 +48,8 @@ const PredictionChart = ({ data }) => {
                         <AreaChart
                             data={data}
                             margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                            onClick={handleClick}
+                            style={{ cursor: 'pointer' }}
                         >
                             {/* Gradient Definition */}
                             <defs>
@@ -118,7 +127,25 @@ const PredictionChart = ({ data }) => {
                                 strokeWidth={4}
                                 fillOpacity={1}
                                 fill="url(#premiumDemand)"
-                                dot={false}
+                                dot={(props) => {
+                                    const isSelected = props.index === selectedDayIndex;
+                                    return (
+                                        <circle
+                                            key={props.index}
+                                            cx={props.cx}
+                                            cy={props.cy}
+                                            r={isSelected ? 10 : 5}
+                                            fill={isSelected ? '#3B82F6' : '#fff'}
+                                            stroke="#3B82F6"
+                                            strokeWidth={isSelected ? 4 : 2}
+                                            style={{
+                                                cursor: 'pointer',
+                                                filter: isSelected ? 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.6))' : 'none',
+                                                transition: 'all 0.3s ease'
+                                            }}
+                                        />
+                                    );
+                                }}
                                 activeDot={{
                                     r: 8,
                                     stroke: '#3B82F6',

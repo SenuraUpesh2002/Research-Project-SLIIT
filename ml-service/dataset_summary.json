@@ -1,0 +1,28 @@
+{
+  "total_records": 65760,
+  "date_range": {
+    "start": "2022-01-01",
+    "end": "2024-12-31"
+  },
+  "fuel_types": [
+    "Petrol_92",
+    "Petrol_95",
+    "Diesel",
+    "Super_Diesel"
+  ],
+  "shifts": [
+    "morning",
+    "afternoon",
+    "evening"
+  ],
+  "stations": [
+    "Station_A",
+    "Station_B",
+    "Station_C",
+    "Station_D",
+    "Station_E"
+  ],
+  "total_demand_liters": 90994885.33999999,
+  "total_revenue_lkr": 35599219566.21,
+  "avg_demand_accuracy": 87.99658911192213
+}

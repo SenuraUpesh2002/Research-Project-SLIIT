@@ -4,20 +4,31 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import EmployeeCard from '../components/EmployeeCard';
-import { Users, UserCheck, Edit3, Trash2, X, Search } from 'lucide-react';
+import {
+    Users, UserCheck, Search, Filter, Plus,
+    MoreVertical, Clock, Mail, Phone,
+    Briefcase, Calendar, Shield, Activity
+} from 'lucide-react';
 
 const EmployeeDetailsTab = () => {
-    // Fixed: plain JavaScript (no TypeScript syntax)
     const [employees, setEmployees] = useState([]);
     const [allEmployees, setAllEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [viewMode, setViewMode] = useState('active');        // string, not 'active' | 'registered'
+    const [viewMode, setViewMode] = useState('active');
     const [filter, setFilter] = useState('all');
-    const [editingEmployee, setEditingEmployee] = useState(null);
-    const [showEditModal, setShowEditModal] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [stats, setStats] = useState({
+        active: 0,
+        registered: 0,
+        managers: 0,
+        morning: 0,
+        afternoon: 0,
+        evening: 0
+    });
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [showEmployeeModal, setShowEmployeeModal] = useState(false);
 
-    // Safe user parsing – no more crashes
+    // Safe user parsing
     let user = null;
     try {
         const userJson = localStorage.getItem('user');
@@ -28,6 +39,25 @@ const EmployeeDetailsTab = () => {
         console.warn('Failed to parse user from localStorage');
     }
     const isAdmin = user?.role === 'manager';
+
+    // Calculate statistics
+    const calculateStats = () => {
+        const active = employees.length;
+        const registered = allEmployees.length;
+        const managers = allEmployees.filter(e => e.role === 'manager').length;
+        const morning = employees.filter(e => e.shift_type === 'morning').length;
+        const afternoon = employees.filter(e => e.shift_type === 'afternoon').length;
+        const evening = employees.filter(e => e.shift_type === 'evening').length;
+
+        setStats({
+            active,
+            registered,
+            managers,
+            morning,
+            afternoon,
+            evening
+        });
+    };
 
     // Data fetching
     const fetchActiveEmployees = async () => {
@@ -54,319 +84,522 @@ const EmployeeDetailsTab = () => {
         }
     };
 
-    useEffect(() => {
-        const load = async () => {
-            await Promise.all([fetchActiveEmployees(), fetchAllEmployees()]);
-            setLoading(false);
-        };
-        load();
+    const fetchData = async () => {
+        await Promise.all([fetchActiveEmployees(), fetchAllEmployees()]);
+        setLoading(false);
+    };
 
+    useEffect(() => {
+        fetchData();
         const interval = setInterval(fetchActiveEmployees, 60000);
         return () => clearInterval(interval);
     }, []);
 
-    // CRUD handlers
-    const handleEdit = (emp) => {
-        setEditingEmployee({ ...emp });
-        setShowEditModal(true);
-    };
-
-    const handleUpdate = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            await axios.put(
-                `http://localhost:3001/api/employees/${editingEmployee.id}`,
-                {
-                    name: editingEmployee.name,
-                    email: editingEmployee.email,
-                    role: editingEmployee.role,
-                    status: editingEmployee.status,
-                },
-                { headers: { 'x-auth-token': token } }
-            );
-            setShowEditModal(false);
-            fetchAllEmployees();
-            alert('Employee updated!');
-        } catch (err) {
-            alert(err.response?.data?.message || 'Update failed');
-        }
-    };
-
-    const handleDelete = async (id, name) => {
-        if (!confirm(`Delete ${name}?`)) return;
-        try {
-            const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:3001/api/employees/${id}`, {
-                headers: { 'x-auth-token': token },
-            });
-            fetchAllEmployees();
-            alert('Employee deleted');
-        } catch (err) {
-            alert(err.response?.data?.message || 'Delete failed');
-        }
-    };
+    useEffect(() => {
+        calculateStats();
+    }, [employees, allEmployees]);
 
     // Filters
     const filteredActive = employees.filter((emp) => {
         const matchFilter = filter === 'all' || emp.shift_type === filter;
-        const matchSearch = emp.full_name?.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchSearch = emp.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            emp.email?.toLowerCase().includes(searchQuery.toLowerCase());
         return matchFilter && matchSearch;
     });
 
     const filteredAll = allEmployees.filter((emp) =>
-        emp.name?.toLowerCase().includes(searchQuery.toLowerCase())
+        emp.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        emp.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        emp.employee_id?.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const handleEmployeeSelect = (emp) => {
+        setSelectedEmployee(emp);
+        setShowEmployeeModal(true);
+    };
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-96">
-                <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-                    className="w-16 h-16 rounded-full border-4 border-t-indigo-600 border-r-purple-600 border-b-pink-600 border-l-transparent"
-                />
-                <p className="ml-6 text-xl font-light text-[#515154]">Loading workforce...</p>
+            <div className="flex items-center justify-center min-h-[600px]">
+                <div className="text-center">
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
+                        className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-t-indigo-600 border-r-purple-600 border-b-pink-600 border-l-transparent"
+                    />
+                    <p className="text-lg font-light text-gray-500">Loading workforce data...</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <>
-            {/* Header */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-                <h2 className="text-5xl font-light tracking-tight text-[#1D1D1F]">Workforce Intelligence</h2>
-                <p className="text-xl text-[#515154] mt-3">
-                    Real-time staff visibility • Access control • Performance sync
-                </p>
-            </motion.div>
-
-            {/* Controls */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-10">
-                <div className="inline-flex bg-white/70 backdrop-blur-2xl rounded-2xl border border-white/60 shadow-xl p-2">
-                    <button
-                        onClick={() => setViewMode('active')}
-                        className={`flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-medium transition-all ${viewMode === 'active' ? 'bg-black text-white shadow-lg' : 'text-[#515154] hover:text-[#1D1D1F]'
-                            }`}
-                    >
-                        <UserCheck className="w-5 h-5" />
-                        Active ({employees.length})
-                    </button>
-                    <button
-                        onClick={() => setViewMode('registered')}
-                        className={`flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-medium transition-all ${viewMode === 'registered' ? 'bg-black text-white shadow-lg' : 'text-[#515154] hover:text-[#1D1D1F]'
-                            }`}
-                    >
-                        <Users className="w-5 h-5" />
-                        All Staff ({allEmployees.length})
-                    </button>
+        <div className="space-y-10">
+            {/* Header with Stats */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-8"
+            >
+                <div>
+                    <h1 className="text-5xl font-light tracking-tight text-gray-900">Workforce Management</h1>
+                    <p className="text-xl text-gray-500 mt-3">
+                        Real-time staff visibility • Performance tracking • Resource optimization
+                    </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                    <div className="relative">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#86868B]" />
-                        <input
-                            type="text"
-                            placeholder="Search employees..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-12 pr-6 py-4 bg-white/70 backdrop-blur-2xl rounded-2xl border border-white/60 shadow-xl focus:outline-none focus:ring-2 focus:ring-black/20 w-full sm:w-80 text-lg"
-                        />
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+                    <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center">
+                                <UserCheck className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                                <p className="text-sm text-blue-600 font-medium">Active Now</p>
+                                <p className="text-2xl font-semibold text-gray-900">{stats.active}</p>
+                            </div>
+                        </div>
                     </div>
 
-                    {viewMode === 'active' && (
-                        <div className="flex gap-3">
-                            {['all', 'morning', 'afternoon', 'evening'].map((f) => (
-                                <button
-                                    key={f}
-                                    onClick={() => setFilter(f)}
-                                    className={`px-6 py-3 rounded-xl text-sm font-medium capitalize transition-all ${filter === f
-                                        ? 'bg-black text-white shadow-lg'
-                                        : 'bg-white/70 text-[#515154] hover:text-[#1D1D1F] border border-white/60'
-                                        }`}
-                                >
-                                    {f}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
-
-            {/* Content */}
-            <motion.div layout className="space-y-6">
-                <AnimatePresence mode="popLayout">
-                    {viewMode === 'active' ? (
-                        filteredActive.length ? (
-                            filteredActive.map((emp) => (
-                                <motion.div
-                                    key={emp.id}
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                >
-                                    <EmployeeCard checkIn={emp} />
-                                </motion.div>
-                            ))
-                        ) : (
-                            <div className="text-center py-20 bg-white/50 backdrop-blur-xl rounded-3xl border border-white/60">
-                                <Users className="w-20 h-20 mx-auto text-[#86868B]/30 mb-6" />
-                                <p className="text-xl font-light text-[#86868B]">No active staff</p>
+                    <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-2xl p-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center">
+                                <Users className="w-5 h-5 text-white" />
                             </div>
-                        )
-                    ) : (
-                        /* All Employees List */
-                        <div className="bg-white/75 backdrop-blur-2xl rounded-3xl border border-white/60 shadow-2xl overflow-hidden">
-                            {filteredAll.map((emp) => (
-                                <motion.div
-                                    key={emp.id}
-                                    initial={{ opacity: 0, x: -40 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    className="flex items-center justify-between p-8 border-b border-white/40 last:border-b-0 hover:bg-white/40 transition"
-                                >
-                                    <div className="flex items-center gap-6">
-                                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-inner">
-                                            <span className="text-2xl font-light text-[#1D1D1F]">{emp.name.charAt(0)}</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="text-xl font-medium text-[#1D1D1F]">{emp.name}</h4>
-                                            <p className="text-sm text-[#86868B]">{emp.employee_id} • {emp.email}</p>
-                                        </div>
-                                    </div>
+                            <div>
+                                <p className="text-sm text-emerald-600 font-medium">Total Staff</p>
+                                <p className="text-2xl font-semibold text-gray-900">{stats.registered}</p>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <div className="flex items-center gap-8">
-                                        <div className="text-right">
-                                            <p className="text-sm text-[#86868B] uppercase tracking-wider">Role</p>
-                                            <p className="text-lg font-medium text-[#1D1D1F] capitalize">{emp.role}</p>
-                                        </div>
-                                        <div
-                                            className={`px-5 py-2 rounded-full text-sm font-medium ${emp.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-600'
+                    <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-2xl p-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center">
+                                <Shield className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                                <p className="text-sm text-purple-600 font-medium">Managers</p>
+                                <p className="text-2xl font-semibold text-gray-900">{stats.managers}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-2xl p-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center">
+                                <Clock className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                                <p className="text-sm text-amber-600 font-medium">Morning Shift</p>
+                                <p className="text-2xl font-semibold text-gray-900">{stats.morning}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-200 rounded-2xl p-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center">
+                                <Clock className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                                <p className="text-sm text-rose-600 font-medium">Afternoon Shift</p>
+                                <p className="text-2xl font-semibold text-gray-900">{stats.afternoon}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-2xl p-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center">
+                                <Clock className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                                <p className="text-sm text-indigo-600 font-medium">Evening Shift</p>
+                                <p className="text-2xl font-semibold text-gray-900">{stats.evening}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* Controls Bar */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-white rounded-3xl border border-gray-200 p-6"
+            >
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+                    {/* View Mode Toggle */}
+                    <div className="inline-flex bg-gray-100 rounded-xl p-1">
+                        <button
+                            onClick={() => setViewMode('active')}
+                            className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all ${viewMode === 'active'
+                                ? 'bg-white shadow-sm text-gray-900'
+                                : 'text-gray-500 hover:text-gray-700'
+                                }`}
+                        >
+                            <Activity className="w-4 h-4" />
+                            <span className="font-medium">Live Active</span>
+                            <span className="ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded-full">
+                                {employees.length}
+                            </span>
+                        </button>
+                        <button
+                            onClick={() => setViewMode('registered')}
+                            className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all ${viewMode === 'registered'
+                                ? 'bg-white shadow-sm text-gray-900'
+                                : 'text-gray-500 hover:text-gray-700'
+                                }`}
+                        >
+                            <Users className="w-4 h-4" />
+                            <span className="font-medium">All Employees</span>
+                            <span className="ml-2 px-2 py-1 text-xs bg-gray-200 text-gray-600 rounded-full">
+                                {allEmployees.length}
+                            </span>
+                        </button>
+                    </div>
+
+                    {/* Search and Filters */}
+                    <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+                        <div className="relative w-full sm:w-72">
+                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                            <input
+                                type="text"
+                                placeholder="Search by name, email, or ID..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+                        </div>
+
+                        {viewMode === 'active' && (
+                            <div className="flex items-center gap-2">
+                                <Filter className="w-5 h-5 text-gray-400" />
+                                <div className="flex gap-2">
+                                    {['all', 'morning', 'afternoon', 'evening'].map((f) => (
+                                        <button
+                                            key={f}
+                                            onClick={() => setFilter(f)}
+                                            className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${filter === f
+                                                ? 'bg-blue-500 text-white'
+                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                                 }`}
                                         >
-                                            {emp.status}
-                                        </div>
+                                            {f === 'all' ? 'All Shifts' : f}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </motion.div>
 
-                                        {isAdmin && (
-                                            <div className="flex gap-3">
-                                                <button
-                                                    onClick={() => handleEdit(emp)}
-                                                    className="p-3 rounded-xl bg-white/80 backdrop-blur-xl hover:bg-black hover:text-white transition group"
-                                                >
-                                                    <Edit3 className="w-5 h-5 group-hover:scale-110 transition" />
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(emp.id, emp.name)}
-                                                    className="p-3 rounded-xl bg-white/80 backdrop-blur-xl hover:bg-rose-600 hover:text-white transition group"
-                                                >
-                                                    <Trash2 className="w-5 h-5 group-hover:scale-110 transition" />
-                                                </button>
+            {/* Content Area */}
+            <motion.div
+                layout
+                className="space-y-6"
+            >
+                <AnimatePresence mode="popLayout">
+                    {viewMode === 'active' ? (
+                        // Active Employees Grid
+                        <motion.div
+                            layout
+                            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                        >
+                            {filteredActive.length ? (
+                                filteredActive.map((emp) => (
+                                    <motion.div
+                                        key={emp.id}
+                                        layout
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        whileHover={{ y: -4 }}
+                                        onClick={() => handleEmployeeSelect(emp)}
+                                        className="cursor-pointer"
+                                    >
+                                        <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:border-blue-300 hover:shadow-lg transition-all">
+                                            <div className="flex items-start justify-between mb-4">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                                                        <span className="text-xl font-semibold text-blue-600">
+                                                            {emp.full_name.charAt(0)}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="text-lg font-semibold text-gray-900">{emp.full_name}</h3>
+                                                        <p className="text-sm text-gray-500">{emp.email}</p>
+                                                    </div>
+                                                </div>
+                                                <div className={`px-3 py-1 rounded-full text-xs font-medium ${emp.shift_type === 'morning' ? 'bg-amber-100 text-amber-700' :
+                                                    emp.shift_type === 'afternoon' ? 'bg-rose-100 text-rose-700' :
+                                                        'bg-indigo-100 text-indigo-700'
+                                                    }`}>
+                                                    {emp.shift_type}
+                                                </div>
                                             </div>
-                                        )}
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
+
+                                            <div className="grid grid-cols-2 gap-4 mt-4">
+                                                <div className="flex items-center gap-2">
+                                                    <Briefcase className="w-4 h-4 text-gray-400" />
+                                                    <span className="text-sm text-gray-600">{emp.role}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <Calendar className="w-4 h-4 text-gray-400" />
+                                                    <span className="text-sm text-gray-600">
+                                                        {new Date(emp.checkin_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <div className="col-span-2 text-center py-16 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200">
+                                    <Users className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+                                    <h3 className="text-lg font-medium text-gray-600 mb-2">No active employees</h3>
+                                    <p className="text-gray-400">Try changing your filter or search query</p>
+                                </div>
+                            )}
+                        </motion.div>
+                    ) : (
+                        // All Employees Table
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="bg-white rounded-2xl border border-gray-200 overflow-hidden"
+                        >
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="bg-gray-50 border-b border-gray-200">
+                                            <th className="text-left py-4 px-6 text-sm font-medium text-gray-600">Employee</th>
+                                            <th className="text-left py-4 px-6 text-sm font-medium text-gray-600">Role</th>
+                                            <th className="text-left py-4 px-6 text-sm font-medium text-gray-600">Status</th>
+                                            <th className="text-left py-4 px-6 text-sm font-medium text-gray-600">Contact</th>
+                                            <th className="text-left py-4 px-6 text-sm font-medium text-gray-600">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {filteredAll.map((emp) => (
+                                            <motion.tr
+                                                key={emp.id}
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                whileHover={{ backgroundColor: 'rgba(249, 250, 251, 1)' }}
+                                                className="border-b border-gray-100 last:border-b-0"
+                                            >
+                                                <td className="py-4 px-6">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                                            <span className="font-medium text-gray-700">{emp.full_name.charAt(0)}</span>
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-medium text-gray-900">{emp.full_name}</p>
+                                                            <p className="text-sm text-gray-500">{emp.employee_id}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${emp.role === 'manager' ? 'bg-purple-100 text-purple-700' :
+                                                        emp.role === 'admin' ? 'bg-red-100 text-red-700' :
+                                                            'bg-blue-100 text-blue-700'
+                                                        }`}>
+                                                        <Briefcase className="w-3 h-3" />
+                                                        {emp.role}
+                                                    </span>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${emp.is_active
+                                                        ? 'bg-emerald-100 text-emerald-700'
+                                                        : 'bg-gray-100 text-gray-600'
+                                                        }`}>
+                                                        <div className={`w-1.5 h-1.5 rounded-full ${emp.is_active ? 'bg-emerald-500' : 'bg-gray-400'}`} />
+                                                        {emp.is_active ? 'Active' : 'Inactive'}
+                                                    </span>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="space-y-1">
+                                                        <div className="flex items-center gap-2">
+                                                            <Mail className="w-3 h-3 text-gray-400" />
+                                                            <span className="text-sm text-gray-600">{emp.email}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="flex items-center gap-2">
+                                                        <button
+                                                            onClick={() => handleEmployeeSelect(emp)}
+                                                            className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+                                                        >
+                                                            View
+                                                        </button>
+                                                        {isAdmin && (
+                                                            <>
+                                                                <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                                                    <MoreVertical className="w-4 h-4" />
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </motion.tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {filteredAll.length === 0 && (
+                                <div className="text-center py-16">
+                                    <Users className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+                                    <h3 className="text-lg font-medium text-gray-600 mb-2">No employees found</h3>
+                                    <p className="text-gray-400">Try a different search term</p>
+                                </div>
+                            )}
+                        </motion.div>
                     )}
                 </AnimatePresence>
             </motion.div>
 
-            {/* Edit Modal – unchanged, beautiful */}
+            {/* Employee Detail Modal */}
             <AnimatePresence>
-                {showEditModal && editingEmployee && (
+                {showEmployeeModal && selectedEmployee && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/50 backdrop-blur-xl flex items-center justify-center z-50 p-6"
-                        onClick={(e) => {
-                            if (e.target === e.currentTarget) setShowEditModal(false);
-                        }}
+                        className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+                        onClick={() => setShowEmployeeModal(false)}
                     >
                         <motion.div
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full relative z-50"
+                            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                         >
-                            <div className="flex justify-between items-center mb-8">
-                                <h3 className="text-2xl font-light text-[#1D1D1F]">Edit Employee</h3>
-                                <button
-                                    onClick={() => setShowEditModal(false)}
-                                    className="p-2 rounded-full hover:bg-gray-100 transition"
-                                >
-                                    <X className="w-6 h-6 text-[#515154]" />
-                                </button>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-[#515154] mb-2">Full Name</label>
-                                    <input
-                                        type="text"
-                                        value={editingEmployee.name}
-                                        onChange={(e) => setEditingEmployee({ ...editingEmployee, name: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-[#515154] mb-2">Email Address</label>
-                                    <input
-                                        type="email"
-                                        value={editingEmployee.email}
-                                        onChange={(e) => setEditingEmployee({ ...editingEmployee, email: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-[#515154] mb-2">Role</label>
-                                        <select
-                                            value={editingEmployee.role}
-                                            onChange={(e) => setEditingEmployee({ ...editingEmployee, role: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
-                                        >
-                                            <option value="staff">Staff</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
+                            {/* Modal content */}
+                            <div className="p-8">
+                                <div className="flex items-start justify-between mb-8">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                                            <span className="text-2xl font-bold text-blue-600">
+                                                {selectedEmployee.full_name.charAt(0)}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-bold text-gray-900">{selectedEmployee.full_name}</h2>
+                                            <p className="text-gray-500">{selectedEmployee.employee_id}</p>
+                                        </div>
                                     </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-[#515154] mb-2">Status</label>
-                                        <select
-                                            value={editingEmployee.status}
-                                            onChange={(e) => setEditingEmployee({ ...editingEmployee, status: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10"
-                                        >
-                                            <option value="active">Active</option>
-                                            <option value="inactive">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="pt-4 flex gap-3">
                                     <button
-                                        onClick={() => setShowEditModal(false)}
-                                        className="flex-1 py-3 rounded-xl font-medium text-[#515154] hover:bg-gray-100 transition"
+                                        onClick={() => setShowEmployeeModal(false)}
+                                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                                     >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        onClick={handleUpdate}
-                                        className="flex-1 py-3 rounded-xl font-medium bg-black text-white hover:bg-gray-900 transition shadow-lg"
-                                    >
-                                        Save Changes
+                                        <span className="sr-only">Close</span>
+                                        <span className="text-gray-400 hover:text-gray-600">✕</span>
                                     </button>
                                 </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="space-y-6">
+                                        <div>
+                                            <h3 className="text-sm font-medium text-gray-500 mb-3">CONTACT INFORMATION</h3>
+                                            <div className="space-y-3">
+                                                <div className="flex items-center gap-3">
+                                                    <Mail className="w-5 h-5 text-gray-400" />
+                                                    <span className="text-gray-700">{selectedEmployee.email}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-sm font-medium text-gray-500 mb-3">EMPLOYMENT DETAILS</h3>
+                                            <div className="space-y-3">
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-gray-600">Role</span>
+                                                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${selectedEmployee.role === 'manager' ? 'bg-purple-100 text-purple-700' :
+                                                        selectedEmployee.role === 'admin' ? 'bg-red-100 text-red-700' :
+                                                            'bg-blue-100 text-blue-700'
+                                                        }`}>
+                                                        {selectedEmployee.role}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-gray-600">Status</span>
+                                                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${selectedEmployee.is_active
+                                                        ? 'bg-emerald-100 text-emerald-700'
+                                                        : 'bg-gray-100 text-gray-600'
+                                                        }`}>
+                                                        {selectedEmployee.is_active ? 'Active' : 'Inactive'}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        {selectedEmployee.checkin_time && (
+                                            <div>
+                                                <h3 className="text-sm font-medium text-gray-500 mb-3">CURRENT SESSION</h3>
+                                                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4">
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <span className="text-sm font-medium text-blue-700">Checked In</span>
+                                                        <span className="text-xs text-blue-600">
+                                                            {new Date(selectedEmployee.checkin_time).toLocaleTimeString()}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-sm text-blue-600">Shift</span>
+                                                        <span className={`px-2 py-1 rounded text-xs font-medium ${selectedEmployee.shift_type === 'morning' ? 'bg-amber-200 text-amber-700' :
+                                                            selectedEmployee.shift_type === 'afternoon' ? 'bg-rose-200 text-rose-700' :
+                                                                'bg-indigo-200 text-indigo-700'
+                                                            }`}>
+                                                            {selectedEmployee.shift_type}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div>
+                                            <h3 className="text-sm font-medium text-gray-500 mb-3">PERFORMANCE METRICS</h3>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <div className="bg-gray-50 rounded-lg p-3">
+                                                    <p className="text-xs text-gray-500">Avg. Hours</p>
+                                                    <p className="text-lg font-semibold text-gray-900">8.2</p>
+                                                </div>
+                                                <div className="bg-gray-50 rounded-lg p-3">
+                                                    <p className="text-xs text-gray-500">Productivity</p>
+                                                    <p className="text-lg font-semibold text-emerald-600">94%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {isAdmin && (
+                                    <div className="mt-8 pt-8 border-t border-gray-200">
+                                        <div className="flex justify-end gap-3">
+                                            <button className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                                Edit Profile
+                                            </button>
+                                            <button className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                                Send Message
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </>
+        </div>
     );
 };
 
