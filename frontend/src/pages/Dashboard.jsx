@@ -27,55 +27,56 @@ const Dashboard = () => {
                 <main className="max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-32">
 
                     {/* HERO SECTION – Equal Height Cards */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-24 h-[380px] lg:h-[420px]">
+                    <AnimatePresence>
+                        {activeTab === 'stocks' && (
+                            <motion.div
+                                key="hero"
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-24 h-[380px] lg:h-[420px]"
+                            >
 
-                        {/* Dashboard Overview Card – Full Height */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.9, ease: "easeOut" }}
-                            className="lg:col-span-2 h-full"
-                        >
-                            <div className="relative h-full overflow-hidden rounded-3xl bg-white/75 backdrop-blur-2xl border border-white/50 shadow-2xl flex items-center">
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent" />
-                                <div className="relative p-12 lg:p-16 w-full">
-                                    <h1 className="text-5xl lg:text-7xl font-black text-[#1D1D1F] tracking-tight leading-none">
-                                        Dashboard Overview
-                                    </h1>
-                                    <p className="mt-6 text-lg lg:text-2xl text-[#515154] leading-relaxed max-w-4xl">
-                                        Welcome back. Real-time insights, intelligent predictions, and full control — all in one place.
-                                    </p>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* QR Code Card – Full Height & Perfectly Aligned */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.9, delay: 0.15, ease: "easeOut" }}
-                            className="h-full flex items-center justify-center"
-                        >
-                            <div className="w-full h-full max-w-sm flex flex-col justify-center items-center p-10 bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/60 shadow-2xl hover:shadow-3xl hover:-translate-y-2 transition-all duration-700">
-
-                                <div className="p-8 bg-white/90 backdrop-blur-xl rounded-2xl shadow-inner border border-white/70 mb-8">
-                                    <QRCodeDisplay />
+                                {/* Dashboard Overview Card – Full Height */}
+                                <div className="lg:col-span-2 h-full">
+                                    <div className="relative h-full overflow-hidden rounded-3xl bg-white/75 backdrop-blur-2xl border border-white/50 shadow-2xl flex items-center">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent" />
+                                        <div className="relative p-12 lg:p-16 w-full">
+                                            <h1 className="text-5xl lg:text-7xl font-black text-[#1D1D1F] tracking-tight leading-none">
+                                                Dashboard Overview
+                                            </h1>
+                                            <p className="mt-6 text-lg lg:text-2xl text-[#515154] leading-relaxed max-w-4xl">
+                                                Welcome back. Real-time insights, intelligent predictions, and full control — all in one place.
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="text-center space-y-3">
-                                    <p className="text-sm font-semibold text-[#1D1D1F]/90 tracking-wide">
-                                        Daily Staff Check-in
-                                    </p>
-                                    <p className="text-xs text-[#86868B] uppercase tracking-wider">
-                                        Scan to Access Station
-                                    </p>
-                                    <p className="text-xs font-mono text-[#515154] bg-[#F2F2F7] px-3 py-1 rounded-full inline-block">
-                                        25/11/2025
-                                    </p>
+                                {/* QR Code Card – Full Height & Perfectly Aligned */}
+                                <div className="h-full flex items-center justify-center">
+                                    <div className="w-full h-full max-w-sm flex flex-col justify-center items-center p-10 bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/60 shadow-2xl hover:shadow-3xl hover:-translate-y-2 transition-all duration-700">
+
+                                        <div className="p-8 bg-white/90 backdrop-blur-xl rounded-2xl shadow-inner border border-white/70 mb-8">
+                                            <QRCodeDisplay />
+                                        </div>
+
+                                        <div className="text-center space-y-3">
+                                            <p className="text-sm font-semibold text-[#1D1D1F]/90 tracking-wide">
+                                                Daily Staff Check-in
+                                            </p>
+                                            <p className="text-xs text-[#86868B] uppercase tracking-wider">
+                                                Scan to Access Station
+                                            </p>
+                                            <p className="text-xs font-mono text-[#515154] bg-[#F2F2F7] px-3 py-1 rounded-full inline-block">
+                                                25/11/2025
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Elegant Floating Tab Navigation */}
                     <div className="flex justify-center mb-16">

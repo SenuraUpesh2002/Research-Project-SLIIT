@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import PredictionChart from '../components/PredictionChart';
+// import PredictionChart from '../components/PredictionChart';
 import StaffingRecommendation from '../components/StaffingRecommendation';
+import WeatherWidget from '../components/WeatherWidget';
+import HolidayCalendar from '../components/HolidayCalendar';
+import BusyTimeHeatmap from '../components/BusyTimeHeatmap';
 import { Activity } from 'lucide-react';
 
 const PredictionsTab = () => {
@@ -35,7 +39,11 @@ const PredictionsTab = () => {
                 'http://localhost:3001/api/predictions/staffing',
                 {
                     predicted_demand: selectedDay.demand,
-                    date: selectedDay.date
+                    date: selectedDay.date,
+                    shift: 'morning', // default
+                    include_weather: true,
+                    include_holidays: true,
+                    include_busy_times: true
                 },
                 config
             );
@@ -66,7 +74,9 @@ const PredictionsTab = () => {
 
                 const [forecastRes, staffingRes] = await Promise.all([
                     axios.get('http://localhost:3001/api/predictions/forecast', config),
-                    axios.post('http://localhost:3001/api/predictions/staffing', {}, config),
+                    axios.post('http://localhost:3001/api/predictions/staffing', {
+                        include_weather: true
+                    }, config),
                 ]);
 
                 setForecast(forecastRes.data);
@@ -108,209 +118,129 @@ const PredictionsTab = () => {
     const trend = forecast.length > 1 ? forecast[forecast.length - 1].demand - forecast[0].demand : 0;
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            {/* Left: Forecast + Stats */}
-            <div className="lg:col-span-8 space-y-10">
-
-                {/* Title with integrated stats */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-left space-y-8"
-                >
-                    <div>
-                        <h2 className="text-5xl font-light tracking-tight text-[#1D1D1F]">
-                            AI Demand Intelligence
-                        </h2>
-                        <p className="text-xl text-[#515154] mt-3">
-                            7-day forecast with 94% accuracy
-                        </p>
-                    </div>
-
-                    {/* Integrated stats grid */}
-                    <div className="grid grid-cols-4 gap-4">
-                        <div className="col-span-2">
-                            <div className="bg-gradient-to-r from-blue-400/5 to-blue-400/10 border border-blue-200/30 rounded-2xl p-6 backdrop-blur-sm">
-                                <p className="text-sm text-blue-600 font-medium mb-2">TOMORROW'S PEAK</p>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="text-4xl font-light text-[#1D1D1F]">
-                                        {tomorrowDemand.toLocaleString()}
-                                    </span>
-                                    <span className="text-lg text-blue-600">liters</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div className="bg-gradient-to-r from-emerald-400/5 to-emerald-400/10 border border-emerald-200/30 rounded-2xl p-6 backdrop-blur-sm">
-                                <p className="text-sm text-emerald-600 font-medium mb-2">WEEKLY AVG</p>
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-3xl font-light text-[#1D1D1F]">
-                                        {weeklyAvg.toLocaleString()}
-                                    </span>
-                                    <span className="text-sm text-emerald-600">L</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div className={`bg-gradient-to-r ${trend >= 0 ? 'from-green-400/5 to-green-400/10 border-green-200/30' : 'from-rose-400/5 to-rose-400/10 border-rose-200/30'} rounded-2xl p-6 backdrop-blur-sm border`}>
-                                <p className="text-sm font-medium mb-2" style={{ color: trend >= 0 ? '#059669' : '#e11d48' }}>
-                                    WEEKLY TREND
-                                </p>
-                                <div className="flex items-baseline gap-1">
-                                    <span className={`text-3xl font-light ${trend >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
-                                        {trend >= 0 ? '+' : ''}{trend.toLocaleString()}
-                                    </span>
-                                    <span className="text-sm" style={{ color: trend >= 0 ? '#059669' : '#e11d48' }}>
-                                        L
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* Premium Chart Card */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="relative"
-                >
-                    <PredictionChart
-                        data={forecast}
-                        onDayClick={handleDayClick}
-                        selectedDayIndex={selectedDayIndex}
-                    />
-                </motion.div>
-
-                {/* Range indicators */}
-                <div className="grid grid-cols-2 gap-6">
-                    <div className="bg-gradient-to-r from-slate-50 to-white border border-slate-100 rounded-2xl p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-slate-500 font-medium mb-1">PEAK DEMAND</p>
-                                <p className="text-2xl font-light text-slate-800">
-                                    {maxDemand.toLocaleString()} <span className="text-sm text-slate-400">liters</span>
-                                </p>
-                            </div>
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-500/10 border border-amber-200/30 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-gradient-to-r from-slate-50 to-white border border-slate-100 rounded-2xl p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-slate-500 font-medium mb-1">LOWEST DEMAND</p>
-                                <p className="text-2xl font-light text-slate-800">
-                                    {minDemand.toLocaleString()} <span className="text-sm text-slate-400">liters</span>
-                                </p>
-                            </div>
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400/20 to-blue-500/10 border border-blue-200/30 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                </svg>
-                            </div>
-                        </div>
+        <div className="space-y-8">
+            {/* Header */}
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-end justify-between"
+            >
+                <div>
+                    <h2 className="text-4xl font-semibold tracking-tight text-[#1D1D1F]">
+                        AI Demand Intelligence
+                    </h2>
+                    <p className="text-lg text-[#86868B] mt-2 font-light">
+                        Predictive insights for smarter station management.
+                    </p>
+                </div>
+                <div className="flex gap-4">
+                    <div className="bg-white/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 text-xs font-medium text-gray-500 shadow-sm flex items-center">
+                        <Activity className="w-3 h-3 mr-1.5 text-blue-500" />
+                        Model Accuracy: 94%
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
-            {/* Right: Staffing Intelligence */}
-            <div className="lg:col-span-4 space-y-10">
+            {/* Bento Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-                {/* Title */}
+                {/* 1. Main Prediction Chart (Span 3) */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="space-y-6"
+                    className="lg:col-span-3 bg-white rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col justify-between"
                 >
-                    <div>
-                        <h2 className="text-4xl font-light tracking-tight text-[#1D1D1F]">
-                            Staffing Optimization
-                        </h2>
-                        <p className="text-lg text-[#515154] mt-3">
-                            AI-recommended workforce allocation
-                        </p>
-                    </div>
-
-                    {/* Selected Day Preview */}
-                    <div className="bg-gradient-to-r from-violet-50 to-white border border-violet-100 rounded-2xl p-5">
-                        <div className="flex items-center justify-between">
+                    <div className="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 className="text-xl font-medium text-[#1D1D1F]">Weekly Forecast</h3>
+                            <p className="text-sm text-gray-500 mt-1">Projected fuel demand for the next 7 days</p>
+                        </div>
+                        {/* Integrated Stats */}
+                        <div className="flex gap-8">
                             <div>
-                                <p className="text-sm text-violet-600 font-medium mb-1">SELECTED DAY</p>
-                                <p className="text-lg font-medium text-[#1D1D1F]">
-                                    {getDayLabel(forecast[selectedDayIndex]?.date)}
-                                </p>
+                                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Tommorow</p>
+                                <p className="text-2xl font-light text-[#1D1D1F] mt-1">{tomorrowDemand.toLocaleString()} L</p>
                             </div>
-                            <div className="text-right">
-                                <p className="text-sm text-slate-500">Predicted Demand</p>
-                                <p className="text-2xl font-light text-violet-700">
-                                    {forecast[selectedDayIndex]?.demand?.toLocaleString() || '0'}L
+                            <div>
+                                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Trend</p>
+                                <p className={`text-2xl font-light mt-1 ${trend >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                    {trend >= 0 ? '+' : ''}{trend}%
                                 </p>
                             </div>
                         </div>
                     </div>
+                    <div className="flex-1 min-h-[300px]">
+                        <PredictionChart
+                            data={forecast}
+                            onDayClick={handleDayClick}
+                            selectedDayIndex={selectedDayIndex}
+                        />
+                    </div>
                 </motion.div>
 
-                {/* Staffing Recommendation Card */}
+                {/* 2. Staffing Recommendation (Span 1, Row 1-2 Vertical) */}
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="lg:col-span-1 bg-gradient-to-b from-blue-50/50 to-white rounded-[32px] p-1 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-blue-100/50 flex flex-col"
+                >
+                    <div className="h-full bg-white/60 backdrop-blur-xl rounded-[28px] p-6 flex flex-col">
+                        <div className="mb-6">
+                            <h3 className="text-lg font-medium text-[#1D1D1F] flex items-center gap-2">
+                                <span className="p-1.5 bg-blue-100 text-blue-600 rounded-lg">
+                                    <Activity className="w-4 h-4" />
+                                </span>
+                                Staffing
+                            </h3>
+                            <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                                Recommended staff allocation for {getDayLabel(forecast[selectedDayIndex]?.date)}
+                            </p>
+                        </div>
+
+                        <div className="flex-1 flex flex-col justify-end">
+                            {staffing ? (
+                                <StaffingRecommendation recommendation={staffing} />
+                            ) : (
+                                <div className="animate-pulse bg-gray-100 rounded-2xl h-48 w-full" />
+                            )}
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* 3. Weather Widget (Span 1) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
+                    className="lg:col-span-1 overflow-hidden rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
                 >
-                    {staffing && <StaffingRecommendation recommendation={staffing} />}
+                    <WeatherWidget />
                 </motion.div>
 
-                {/* Insight Panel */}
-                {/* <motion.div
-                    key={selectedDayIndex}
+                {/* 4. Busy Time Heatmap (Span 2) */}
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/60 shadow-2xl ring-1 ring-white/50 p-8"
+                    transition={{ delay: 0.4 }}
+                    className="lg:col-span-2 bg-white rounded-[32px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100"
                 >
-                    <h4 className="text-xl font-medium text-[#1D1D1F] mb-6 flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center shadow-lg">
-                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        AI Reasoning
-                        {staffing?.date && (
-                            <span className="text-sm font-normal text-gray-500 ml-auto">
-                                {new Date(staffing.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                            </span>
-                        )}
-                    </h4>
-                    <ul className="space-y-4 text-[#515154]">
-                        {staffing?.insights && staffing.insights.length > 0 ? (
-                            staffing.insights.map((insight, i) => (
-                                <motion.li
-                                    key={i}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.5 + i * 0.1 }}
-                                    className="flex items-start gap-3"
-                                >
-                                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 mt-2 flex-shrink-0" />
-                                    <span className="text-sm font-light leading-relaxed">{insight}</span>
-                                </motion.li>
-                            ))
-                        ) : (
-                            <motion.li
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="text-sm text-gray-400 italic"
-                            >
-                                Analyzing real-time data...
-                            </motion.li>
-                        )}
-                    </ul>
-                </motion.div> */}
+                    <div className="h-full">
+                        <BusyTimeHeatmap />
+                    </div>
+                </motion.div>
+
+                {/* 5. Holiday Calendar (Span 1) */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="lg:col-span-1 bg-white rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden"
+                >
+                    <HolidayCalendar />
+                </motion.div>
+
             </div>
         </div>
     );

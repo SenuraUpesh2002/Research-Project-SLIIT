@@ -19,6 +19,9 @@ app.use('/api/checkin', require('./routes/checkin'));
 app.use('/api/fuel', require('./routes/fuelStock'));
 app.use('/api/predictions', require('./routes/prediction'));
 app.use('/api/attendance', require('./routes/attendance'));
+app.use('/api/weather', require('./routes/weather'));
+app.use('/api/holidays', require('./routes/holidays'));
+app.use('/api/busy-times', require('./routes/busyTimes'));
 
 // Test DB Connection
 db.getConnection()
