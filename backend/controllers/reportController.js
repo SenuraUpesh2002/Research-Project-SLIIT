@@ -7,14 +7,12 @@ const Report = require('../models/Report');
 const createReport = asyncHandler(async (req, res) => {
   const { station, reportType, description } = req.body;
 
-  const report = new Report({
-    user: req.user._id,
+  const createdReport = await Report.create(
+    req.user.id,
     station,
     reportType,
-    description,
-  });
-
-  const createdReport = await report.save();
+    description
+  );
   res.status(201).json(createdReport);
 });
 
@@ -22,7 +20,7 @@ const createReport = asyncHandler(async (req, res) => {
 // @route   GET /api/reports
 // @access  Private/Admin
 const getReports = asyncHandler(async (req, res) => {
-  const reports = await Report.find({}).populate('user', 'name email').populate('station', 'name location');
+  const reports = await Report.findAll();
   res.json(reports);
 });
 
@@ -30,7 +28,7 @@ const getReports = asyncHandler(async (req, res) => {
 // @route   GET /api/reports/:id
 // @access  Private
 const getReportById = asyncHandler(async (req, res) => {
-  const report = await Report.findById(req.params.id).populate('user', 'name email').populate('station', 'name location');
+  const report = await Report.findById(req.params.id);
 
   if (report) {
     res.json(report);
@@ -46,12 +44,9 @@ const getReportById = asyncHandler(async (req, res) => {
 const updateReport = asyncHandler(async (req, res) => {
   const { status } = req.body;
 
-  const report = await Report.findById(req.params.id);
+  const updatedReport = await Report.updateStatus(req.params.id, status);
 
-  if (report) {
-    report.status = status || report.status;
-
-    const updatedReport = await report.save();
+  if (updatedReport) {
     res.json(updatedReport);
   } else {
     res.status(404);
@@ -63,10 +58,9 @@ const updateReport = asyncHandler(async (req, res) => {
 // @route   DELETE /api/reports/:id
 // @access  Private/Admin
 const deleteReport = asyncHandler(async (req, res) => {
-  const report = await Report.findById(req.params.id);
+  const deleted = await Report.delete(req.params.id);
 
-  if (report) {
-    await report.deleteOne();
+  if (deleted) {
     res.json({ message: 'Report removed' });
   } else {
     res.status(404);

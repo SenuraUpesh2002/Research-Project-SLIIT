@@ -5,23 +5,16 @@ const Station = require('../models/Station');
 // @route   POST /api/stations
 // @access  Private/Admin
 const createStation = asyncHandler(async (req, res) => {
-  const { name, location, capacity, currentUsage } = req.body;
+  const { name, location, fuelTypesAvailable } = req.body;
 
-  const stationExists = await Station.findOne({ name });
+  const stationExists = await Station.findByName(name);
 
   if (stationExists) {
     res.status(400);
     throw new Error('Station with this name already exists');
   }
 
-  const station = new Station({
-    name,
-    location,
-    capacity,
-    currentUsage,
-  });
-
-  const createdStation = await station.save();
+  const createdStation = await Station.create(name, location, fuelTypesAvailable);
   res.status(201).json(createdStation);
 });
 
@@ -29,7 +22,7 @@ const createStation = asyncHandler(async (req, res) => {
 // @route   GET /api/stations
 // @access  Private
 const getStations = asyncHandler(async (req, res) => {
-  const stations = await Station.find({});
+  const stations = await Station.findAll();
   res.json(stations);
 });
 
@@ -51,17 +44,11 @@ const getStationById = asyncHandler(async (req, res) => {
 // @route   PUT /api/stations/:id
 // @access  Private/Admin
 const updateStation = asyncHandler(async (req, res) => {
-  const { name, location, capacity, currentUsage } = req.body;
+  const { name, location, fuelTypesAvailable } = req.body;
 
-  const station = await Station.findById(req.params.id);
+  const updatedStation = await Station.update(req.params.id, name, location, fuelTypesAvailable);
 
-  if (station) {
-    station.name = name || station.name;
-    station.location = location || station.location;
-    station.capacity = capacity || station.capacity;
-    station.currentUsage = currentUsage || station.currentUsage;
-
-    const updatedStation = await station.save();
+  if (updatedStation) {
     res.json(updatedStation);
   } else {
     res.status(404);
@@ -73,10 +60,9 @@ const updateStation = asyncHandler(async (req, res) => {
 // @route   DELETE /api/stations/:id
 // @access  Private/Admin
 const deleteStation = asyncHandler(async (req, res) => {
-  const station = await Station.findById(req.params.id);
+  const deleted = await Station.delete(req.params.id);
 
-  if (station) {
-    await station.deleteOne();
+  if (deleted) {
     res.json({ message: 'Station removed' });
   } else {
     res.status(404);

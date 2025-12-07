@@ -7,14 +7,12 @@ const Submission = require('../models/Submission');
 const createSubmission = asyncHandler(async (req, res) => {
   const { station, submissionType, data } = req.body;
 
-  const submission = new Submission({
-    user: req.user._id,
+  const createdSubmission = await Submission.create(
+    req.user.id,
     station,
     submissionType,
-    data,
-  });
-
-  const createdSubmission = await submission.save();
+    data
+  );
   res.status(201).json(createdSubmission);
 });
 
@@ -22,7 +20,7 @@ const createSubmission = asyncHandler(async (req, res) => {
 // @route   GET /api/submissions
 // @access  Private/Admin
 const getSubmissions = asyncHandler(async (req, res) => {
-  const submissions = await Submission.find({}).populate('user', 'name email').populate('station', 'name location');
+  const submissions = await Submission.findAll(); // Assuming a findAll method in your MySQL model
   res.json(submissions);
 });
 
@@ -30,7 +28,7 @@ const getSubmissions = asyncHandler(async (req, res) => {
 // @route   GET /api/submissions/:id
 // @access  Private
 const getSubmissionById = asyncHandler(async (req, res) => {
-  const submission = await Submission.findById(req.params.id).populate('user', 'name email').populate('station', 'name location');
+  const submission = await Submission.findById(req.params.id);
 
   if (submission) {
     res.json(submission);
@@ -46,13 +44,10 @@ const getSubmissionById = asyncHandler(async (req, res) => {
 const updateSubmission = asyncHandler(async (req, res) => {
   const { status } = req.body;
 
-  const submission = await Submission.findById(req.params.id);
+  const submission = await Submission.updateStatus(req.params.id, status);
 
   if (submission) {
-    submission.status = status || submission.status;
-
-    const updatedSubmission = await submission.save();
-    res.json(updatedSubmission);
+    res.json(submission);
   } else {
     res.status(404);
     throw new Error('Submission not found');
@@ -63,10 +58,9 @@ const updateSubmission = asyncHandler(async (req, res) => {
 // @route   DELETE /api/submissions/:id
 // @access  Private/Admin
 const deleteSubmission = asyncHandler(async (req, res) => {
-  const submission = await Submission.findById(req.params.id);
+  const deleted = await Submission.delete(req.params.id);
 
-  if (submission) {
-    await submission.deleteOne();
+  if (deleted) {
     res.json({ message: 'Submission removed' });
   } else {
     res.status(404);
