@@ -29,7 +29,7 @@ export default function Login() {
   const handleLogin = async () => {
     if (!validateForm()) return;
     
-    const result = await login(email, password);
+    const result = await login({ email, password });
 
     if (!result.success) {
       window.alert("Error", result.error);
