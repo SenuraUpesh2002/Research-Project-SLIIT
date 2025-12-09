@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For web navigation
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../../hooks/useAuth";
 import styles from "./index.module.css"; // Import CSS module
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { isLoading, login } = useAuth();
+  const { loading, login } = useAuth();
 
   const validateForm = () => {
     if (!email.trim()) {
@@ -89,11 +89,11 @@ export default function Login() {
           </div>
 
           <button
-            className={`${styles.button} ${isLoading ? styles.buttonDisabled : ""}`}
+            className={`${styles.button} ${loading ? styles.buttonDisabled : ""}`}
             onClick={handleLogin}
-            disabled={isLoading}
+            disabled={loading}
           >
-            {isLoading ? (
+            {loading ? (
               <span>Loading...</span> // Simple text loading indicator
             ) : (
               <span className={styles.buttonText}>Sign In</span>

@@ -7,6 +7,10 @@ connectDB();
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const reportRoutes = require('./routes/reportRoutes');
@@ -16,11 +20,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/stations', stationRoutes);
 app.use('/api/submissions', submissionRoutes);
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Basic route
 app.get('/', (req, res) => {

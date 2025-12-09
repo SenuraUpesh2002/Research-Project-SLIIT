@@ -12,8 +12,8 @@ const connectDB = async () => {
     console.log('MySQL Connected: ' + connection.threadId);
     return connection;
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    console.error(`Error: ${error}`);
+    // process.exit(1);
   }
 };
 

@@ -7,9 +7,4 @@ export default defineConfig({
   server: {
     open: true,
   },
-  esbuild: {
-    loader: {
-      '.js': 'jsx',
-    },
-  },
 })

@@ -7,11 +7,11 @@ import { UiProvider } from './hooks/useUiStore'; // Assuming you'll create this
 function App() {
   return (
     <AuthProvider>
-      {/* <UiProvider> */}
+      <UiProvider>
         <Router>
           <AppRoutes />
         </Router>
-      {/* </UiProvider> */}
+      </UiProvider>
     </AuthProvider>
   );
 }
