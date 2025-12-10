@@ -14,9 +14,18 @@ const authService = {
     }
   },
 
+  register: async (userData) => {
+    try {
+      const response = await apiClient.post('/auth/register', userData);
+      return response.data;
+    } catch (error) {
+      console.error('Registration failed:', error);
+      throw error;
+    }
+  },
+
   logout: () => {
     localStorage.removeItem('authToken');
-    // Optionally, invalidate token on the backend
   },
 
   getProfile: async () => {

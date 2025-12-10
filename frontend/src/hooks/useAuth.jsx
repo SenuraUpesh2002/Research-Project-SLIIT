@@ -1,3 +1,4 @@
+// frontend/src/hooks/useAuth.jsx
 import { useState, useEffect, useContext, createContext } from 'react';
 import { API_ENDPOINTS } from '../constants/api';
 
@@ -6,18 +7,16 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('authToken'));
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
+  // Verify token on initial load
   useEffect(() => {
     const verifyToken = async () => {
+      setLoading(true);
       if (token) {
         try {
-          // In a real app, you'd send the token to your backend to verify
-          // and fetch user details. For this example, we'll mock it.
           const response = await fetch(API_ENDPOINTS.AUTH.PROFILE, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
+            headers: { 'Authorization': `Bearer ${token}` },
           });
           if (response.ok) {
             const userData = await response.json();
@@ -39,14 +38,13 @@ export const AuthProvider = ({ children }) => {
     verifyToken();
   }, [token]);
 
+  // Login function
   const login = async (credentials) => {
     setLoading(true);
     try {
       const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials),
       });
       const data = await response.json();
@@ -66,6 +64,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Register function
+  const register = async (username, email, password) => {
+    if (!username || !email || !password) {
+      return { success: false, message: 'All fields are required' };
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        return { success: true, message: data.message || 'Registration successful' };
+      } else {
+        return { success: false, message: data.message || 'Registration failed' };
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      return { success: false, message: 'Network error or server unavailable' };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Logout function
   const logout = () => {
     localStorage.removeItem('authToken');
     setToken(null);
@@ -77,12 +103,12 @@ export const AuthProvider = ({ children }) => {
     token,
     loading,
     login,
+    register,
     logout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+// Hook
+export const useAuth = () => useContext(AuthContext);
