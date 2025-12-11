@@ -1,25 +1,29 @@
+// frontend/src/router.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Auth Screens
-import Login from "./modules/customer/app/auth/index.jsx"; // login page
+import Login from "./modules/customer/app/auth/index.jsx";
 import Signup from "./modules/customer/app/auth/signup.jsx";
 
-// Public / Placeholder Pages
+// Public pages
 const Welcome = () => <div>Welcome!</div>;
 const NotFound = () => <div>404 - Page Not Found</div>;
 
 const AppRouter = () => {
   return (
     <Routes>
-      {/* Auth Routes */}
+      {/* Default route */}
       <Route path="/" element={<Login />} />
+
+      {/* Auth Routes */}
+      <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
-      {/* Public / Default Page */}
+      {/* Dashboard */}
       <Route path="/app/welcome" element={<Welcome />} />
 
-      {/* Catch-all 404 */}
+      {/* Catch all */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
