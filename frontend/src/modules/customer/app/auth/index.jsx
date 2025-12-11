@@ -1,4 +1,3 @@
-//login page
 // frontend/src/modules/customer/app/auth/index.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,13 +8,14 @@ import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-s
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login, loading } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { login, loading } = useAuth();
 
   const handleLogin = async () => {
-    if (!email.trim() || !password) {
+    if (!email.trim() || !password.trim()) {
       alert("Email and password are required");
       return;
     }
@@ -26,7 +26,9 @@ export default function Login() {
       alert(result.message || "Login failed");
     } else {
       alert("Login successful!");
-      navigate("/"); // default page
+
+      // redirect after login
+      navigate("/app/welcome");
     }
   };
 
@@ -35,10 +37,12 @@ export default function Login() {
       <div className={styles.content}>
         <div className={styles.header}>
           <p className={styles.title}>Welcome Back</p>
-          <p className={styles.subtitle}>Sign in to BookWorm</p>
+          <p className={styles.subtitle}>Sign in to FUELWATCH</p>
         </div>
 
         <div className={styles.form}>
+
+          {/* Email */}
           <div className={styles.inputContainer}>
             <label className={styles.label}>Email</label>
             <div className={styles.inputWrapper}>
@@ -53,6 +57,7 @@ export default function Login() {
             </div>
           </div>
 
+          {/* Password */}
           <div className={styles.inputContainer}>
             <label className={styles.label}>Password</label>
             <div className={styles.inputWrapper}>
@@ -64,7 +69,11 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? "text" : "password"}
               />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className={styles.eyeIcon}>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={styles.eyeIcon}
+              >
                 {showPassword ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
               </button>
             </div>
@@ -77,6 +86,7 @@ export default function Login() {
           <button className={styles.linkButton} onClick={() => navigate("/signup")}>
             Don't have an account? <strong>Sign Up</strong>
           </button>
+
         </div>
       </div>
     </div>
