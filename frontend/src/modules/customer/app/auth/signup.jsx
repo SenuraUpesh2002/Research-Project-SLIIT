@@ -7,10 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default function Signup() {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -18,12 +19,22 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      alert("All fields are required.");
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    const result = await register(username, email, password);
+    const result = await register({
+      name,
+      email,
+      password,
+      role: "user"
+    });
 
     if (!result.success) {
       alert(result.message || "Registration failed");
@@ -38,21 +49,22 @@ export default function Signup() {
       <div className={styles.card}>
         <div className={styles.header}>
           <p className={styles.title}>FUELWATCH</p>
-          <p className={styles.subtitle}>Register to fuelwatch</p>
+          <p className={styles.subtitle}>Register to FuelWatch</p>
         </div>
 
         <div className={styles.formContainer}>
-          {/* Username */}
+          
+          {/* Name */}
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Username</label>
+            <label className={styles.label}>Name</label>
             <div className={styles.inputContainer}>
               <span className={styles.inputIcon}><FontAwesomeIcon icon={faUser} /></span>
               <input
                 className={styles.input}
                 type="text"
-                placeholder="johndoe"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
           </div>
@@ -84,7 +96,11 @@ export default function Signup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className={styles.eyeIcon}>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={styles.eyeIcon}
+              >
                 {showPassword ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
               </button>
             </div>
@@ -102,7 +118,11 @@ export default function Signup() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className={styles.eyeIcon}>
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className={styles.eyeIcon}
+              >
                 {showConfirmPassword ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
               </button>
             </div>
@@ -118,6 +138,7 @@ export default function Signup() {
               Login
             </button>
           </div>
+
         </div>
       </div>
     </div>
