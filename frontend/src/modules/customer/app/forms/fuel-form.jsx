@@ -98,7 +98,7 @@ export default function FuelFormScreen() {
         },
       };
 
-      const response = await fetch(API_ENDPOINTS.SUBMISSION.CREATE,
+      const response = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE,
         {
           method: "POST",
           headers: {
