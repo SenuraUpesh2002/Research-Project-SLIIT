@@ -32,25 +32,91 @@ export default function ResultsScreen() {
     const fetchStations = async () => {
       try {
         setLoading(true);
-        const queryParams = new URLSearchParams();
-        if (type) queryParams.append('type', type);
-        if (town) queryParams.append('town', town);
-        if (province) queryParams.append('province', province);
-
-        const response = await fetch(`${API_ENDPOINTS.STATIONS.GET_ALL}?${queryParams.toString()}`, {
+        setError(null);
+        
+        const response = await fetch(API_ENDPOINTS.STATIONS.GET_ALL, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+            'Content-Type': 'application/json'
           }
         });
 
         if (!response.ok) {
           throw new Error(`Failed to fetch stations: ${response.statusText}`);
         }
+        
         const data = await response.json();
-        setStations(Array.isArray(data) ? data : []);
+        console.log("Stations data received:", data); // Debug log
+        
+        // Ensure data is an array
+        let stationsList = Array.isArray(data) ? data : [];
+        
+        // Transform station data to match expected format first
+        stationsList = stationsList.map(station => {
+          // Parse location string (format might be "Town, Province" or just "Town")
+          const locationStr = station.location || '';
+          const locationParts = locationStr.split(',').map(s => s.trim());
+          const stationTown = locationParts[0] || '';
+          const stationProvince = locationParts[1] || '';
+          
+          // Determine station type from fuel_types_available
+          // If it has EV-related types, it's an EV station, otherwise fuel
+          const fuelTypes = station.fuel_types_available || [];
+          const isEVStation = Array.isArray(fuelTypes) && (
+            fuelTypes.some(type => 
+              typeof type === 'string' && (
+                type.toLowerCase().includes('ev') || 
+                type.toLowerCase().includes('electric') ||
+                type.toLowerCase().includes('charging')
+              )
+            )
+          );
+          
+          return {
+            id: station.id || station._id,
+            name: station.name || 'Unknown Station',
+            address: locationStr || 'Address not available',
+            type: isEVStation ? 'ev' : 'fuel',
+            distance: station.distance || 'N/A',
+            rating: station.rating || station.rating_score || 'N/A',
+            availability: station.availability || station.status || station.last_updated ? 'Available' : 'Unknown',
+            town: stationTown,
+            province: stationProvince,
+            fuelTypes: fuelTypes
+          };
+        });
+        
+        // Filter stations based on query parameters (client-side filtering)
+        if (type) {
+          stationsList = stationsList.filter(station => {
+            return station.type === type;
+          });
+        }
+        
+        if (town) {
+          stationsList = stationsList.filter(station => {
+            const stationTown = (station.town || '').toLowerCase();
+            const stationAddress = (station.address || '').toLowerCase();
+            const searchTown = town.toLowerCase();
+            return stationTown.includes(searchTown) || stationAddress.includes(searchTown);
+          });
+        }
+        
+        if (province) {
+          stationsList = stationsList.filter(station => {
+            const stationProvince = (station.province || '').toLowerCase();
+            const stationAddress = (station.address || '').toLowerCase();
+            const searchProvince = province.toLowerCase();
+            return stationProvince.includes(searchProvince) || stationAddress.includes(searchProvince);
+          });
+        }
+        
+        console.log("Filtered stations:", stationsList); // Debug log
+        setStations(stationsList);
       } catch (err) {
         setError(err.message);
         console.error("Error fetching stations:", err);
+        setStations([]);
       } finally {
         setLoading(false);
       }
@@ -60,11 +126,36 @@ export default function ResultsScreen() {
   }, [type, town, province]);
 
   if (loading) {
-    return <div className={styles.container}>Loading stations...</div>;
+    return (
+      <div className={styles.container}>
+        <div style={{ padding: '40px', textAlign: 'center' }}>
+          <p style={{ fontSize: '18px', color: '#64748b' }}>Loading stations...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
+    return (
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <button className={styles.backButton} onClick={() => navigate(-1)}>
+            <span style={{ fontSize: 24, color: '#1e40af' }}>⬅️</span>
+          </button>
+          <p className={styles.title}>Error Loading Stations</p>
+        </div>
+        <div style={{ padding: '40px', textAlign: 'center' }}>
+          <p className={styles.error}>Error: {error}</p>
+          <button
+            className={styles.searchAgainButton}
+            onClick={() => window.location.reload()}
+            style={{ marginTop: '20px' }}
+          >
+            <p className={styles.searchAgainText}>Retry</p>
+          </button>
+        </div>
+      </div>
+    );
   }
 
   const getStatusColor = (status) => {
@@ -142,16 +233,20 @@ export default function ResultsScreen() {
             <div className={styles.stationDetails}>
               <div className={styles.detailItem}>
                 <span style={{ fontSize: 16, color: '#64748b' }}>📍</span>
-                <p className={styles.detailText}>{station.distance}</p>
+                <p className={styles.detailText}>{station.distance || 'Location available'}</p>
               </div>
-              <div className={styles.detailItem}>
-                <span style={{ fontSize: 16, color: '#f59e0b' }}>⭐</span>
-                <p className={styles.detailText}>{station.rating}</p>
-              </div>
-              <div className={styles.detailItem}>
-                <div className={styles.statusDot} style={{ backgroundColor: getStatusColor(station.availability) }} />
-                <p className={styles.detailText}>{station.availability}</p>
-              </div>
+              {station.rating && station.rating !== 'N/A' && (
+                <div className={styles.detailItem}>
+                  <span style={{ fontSize: 16, color: '#f59e0b' }}>⭐</span>
+                  <p className={styles.detailText}>{station.rating}</p>
+                </div>
+              )}
+              {station.availability && station.availability !== 'Unknown' && (
+                <div className={styles.detailItem}>
+                  <div className={styles.statusDot} style={{ backgroundColor: getStatusColor(station.availability) }} />
+                  <p className={styles.detailText}>{station.availability}</p>
+                </div>
+              )}
             </div>
 
             <div className={styles.stationActions}>
