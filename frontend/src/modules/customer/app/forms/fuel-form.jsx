@@ -117,8 +117,15 @@ export default function FuelFormScreen() {
         throw new Error(errorData.message || "Failed to submit Fuel form");
       }
 
-      alert("Fuel form submitted successfully!");
-      navigate("/app/welcome"); // Navigate after successful submission
+      // Navigate to results page with form data
+      const queryParams = new URLSearchParams({
+        type: 'fuel',
+        province: formData.province,
+        town: formData.town,
+        vehicleType: formData.vehicleType,
+        fuelType: formData.fuelType,
+      });
+      navigate(`/results?${queryParams.toString()}`);
     } catch (error) {
       console.error("Fuel form submission error:", error);
       alert(`Submission failed: ${error.message}`);

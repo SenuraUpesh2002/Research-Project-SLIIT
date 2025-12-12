@@ -11,17 +11,31 @@ export default function ResultsScreen() {
   // Extract query parameters
   const type = params.get('type') || '';
   const town = params.get('town') || '';
+  const province = params.get('province') || '';
+  const vehicleType = params.get('vehicleType') || '';
+  const fuelType = params.get('fuelType') || '';
+  const chargerType = params.get('chargerType') || '';
+  const powerRating = params.get('powerRating') || '';
 
   const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
+    // Show success message if coming from form submission
+    if (town || province) {
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 5000);
+    }
+
     const fetchStations = async () => {
       try {
+        setLoading(true);
         const queryParams = new URLSearchParams();
         if (type) queryParams.append('type', type);
         if (town) queryParams.append('town', town);
+        if (province) queryParams.append('province', province);
 
         const response = await fetch(`${API_ENDPOINTS.STATIONS.GET_ALL}?${queryParams.toString()}`, {
           headers: {
@@ -33,7 +47,7 @@ export default function ResultsScreen() {
           throw new Error(`Failed to fetch stations: ${response.statusText}`);
         }
         const data = await response.json();
-        setStations(data);
+        setStations(Array.isArray(data) ? data : []);
       } catch (err) {
         setError(err.message);
         console.error("Error fetching stations:", err);
@@ -43,7 +57,7 @@ export default function ResultsScreen() {
     };
 
     fetchStations();
-  }, [type, town]);
+  }, [type, town, province]);
 
   if (loading) {
     return <div className={styles.container}>Loading stations...</div>;
@@ -65,6 +79,12 @@ export default function ResultsScreen() {
 
   return (
     <div className={styles.container}>
+      {showSuccess && (
+        <div className={styles.successBanner}>
+          <span style={{ fontSize: 20 }}>✅</span>
+          <p>Form submitted successfully! Here are your recommended stations.</p>
+        </div>
+      )}
       <div className={styles.header}>
         <button
           className={styles.backButton}
@@ -74,8 +94,19 @@ export default function ResultsScreen() {
         </button>
         <p className={styles.title}>Recommended Stations</p>
         <p className={styles.subtitle}>
-          Found {stations.length} stations near {town || 'your location'}
+          Found {stations.length} {type === 'ev' ? 'EV charging' : 'fuel'} stations 
+          {town ? ` in ${town}` : province ? ` in ${province}` : ' near your location'}
         </p>
+        {(vehicleType || fuelType || chargerType || powerRating) && (
+          <div className={styles.filterInfo}>
+            <p className={styles.filterText}>
+              Filters: {vehicleType && `Vehicle: ${vehicleType}`}
+              {fuelType && ` | Fuel: ${fuelType}`}
+              {chargerType && ` | Charger: ${chargerType}`}
+              {powerRating && ` | Power: ${powerRating}`}
+            </p>
+          </div>
+        )}
       </div>
 
       <div className={styles.content}>

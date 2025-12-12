@@ -23,10 +23,8 @@ export default function Login() {
     const result = await login({ email, password });
 
     if (!result.success) {
-      alert(result.message || "Login failed");
+      alert(result.error || result.message || "Login failed");
     } else {
-      alert("Login successful!");
-
       // redirect after login
       navigate("/app/welcome");
     }

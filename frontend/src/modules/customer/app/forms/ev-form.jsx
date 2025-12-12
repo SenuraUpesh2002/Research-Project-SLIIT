@@ -105,8 +105,15 @@ export default function EVFormScreen() {
         throw new Error(errorData.message || "Failed to submit EV form");
       }
 
-      alert("EV form submitted successfully!");
-      navigate("/app/welcome"); // Navigate after successful submission
+      // Navigate to results page with form data
+      const queryParams = new URLSearchParams({
+        type: 'ev',
+        province: formData.province,
+        town: formData.town,
+        chargerType: formData.chargerType || '',
+        powerRating: formData.powerRating || '',
+      });
+      navigate(`/results?${queryParams.toString()}`);
     } catch (error) {
       console.error("EV form submission error:", error);
       alert(`Submission failed: ${error.message}`);

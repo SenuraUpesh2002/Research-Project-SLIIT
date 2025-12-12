@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom';
+import CustomerNavbar from '../../../components/CustomerNavbar';
 import styles from './_layout.module.css';
 
 export default function CustomerLayout() {
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Customer Portal</h1>
-      </header>
+      <CustomerNavbar />
       <main className={styles.mainContent}>
         <Outlet />
       </main>
