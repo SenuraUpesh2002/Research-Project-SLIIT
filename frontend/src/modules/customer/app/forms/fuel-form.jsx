@@ -1,10 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./fuel-form.module.css";
 import { API_ENDPOINTS } from "../../../../constants/api";
-
-// Placeholder for a station ID, in a real app this would come from user selection or context
-const MOCK_STATION_ID = "60d0fe4f5311236168a109ca"; // Example ID, replace with actual logic
 
 const SRI_LANKAN_PROVINCES = [
   "Western Province",
@@ -42,8 +39,10 @@ export default function FuelFormScreen() {
     preferredBrand: "",
     province: "",
     town: "",
-    stationId: MOCK_STATION_ID, // Add stationId to form data
+    stationId: "",
   });
+  const [stations, setStations] = useState([]);
+  const [loadingStations, setLoadingStations] = useState(false);
 
   const [showDropdowns, setShowDropdowns] = useState({
     vehicleType: false,
@@ -63,6 +62,10 @@ export default function FuelFormScreen() {
   };
 
   const validateForm = () => {
+    if (!formData.stationId) {
+      alert("Please select a station (no stations available)");
+      return false;
+    }
     if (!formData.vehicleType) {
       alert("Please select your vehicle type");
       return false;
@@ -129,6 +132,87 @@ export default function FuelFormScreen() {
     handleSubmit();
   };
 
+  // Fetch stations once to ensure we submit a valid station_id (FK constraint)
+  useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        setLoadingStations(true);
+        const res = await fetch(API_ENDPOINTS.STATIONS.GET_ALL, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        });
+        if (!res.ok) {
+          throw new Error(`Failed to load stations (${res.status})`);
+        }
+        const data = await res.json();
+        setStations(data || []);
+        if (data && data.length > 0 && !formData.stationId) {
+          setFormData((prev) => ({ ...prev, stationId: data[0].id || data[0]._id || "" }));
+        }
+      } catch (err) {
+        console.error("Failed to load stations", err);
+      } finally {
+        setLoadingStations(false);
+      }
+    };
+
+    fetchStations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const renderStationDropdown = () => (
+    <div className={styles.inputContainer}>
+      <label className={styles.label}>Station</label>
+      <button
+        className={styles.dropdown}
+        onClick={() =>
+          setShowDropdowns((prev) => ({
+            ...prev,
+            stationId: !prev.stationId,
+          }))
+        }
+        disabled={loadingStations || stations.length === 0}
+      >
+        <span
+          className={`${styles.dropdownText} ${
+            !formData.stationId ? styles.placeholderText : ""
+          }`}
+        >
+          {loadingStations
+            ? "Loading stations..."
+            : stations.length === 0
+            ? "No stations available"
+            : stations.find((s) => (s.id || s._id) === formData.stationId)?.name ||
+              "Select station"}
+        </span>
+        <span style={{ fontSize: 20, color: "#64748b" }}>
+          {showDropdowns.stationId ? "⬆️" : "⬇️"}
+        </span>
+      </button>
+
+      {showDropdowns.stationId && stations.length > 0 && (
+        <div className={styles.dropdownList}>
+          {stations.map((station) => {
+            const stationId = station.id || station._id;
+            return (
+              <button
+                key={stationId}
+                className={styles.dropdownItem}
+                onClick={() => handleSelect("stationId", stationId)}
+              >
+                <span className={styles.dropdownItemText}>
+                  {station.name || "Station"}{station.town ? ` - ${station.town}` : ""}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+
   const renderDropdown = (field, options, label) => (
     <div className={styles.inputContainer}>
       <label className={styles.label}>{label}</label>
@@ -174,6 +258,7 @@ export default function FuelFormScreen() {
         {renderDropdown("fuelType", FUEL_TYPES, "Fuel Type")}
         {renderDropdown("preferredBrand", BRANDS, "Preferred Brand")}
         {renderDropdown("province", SRI_LANKAN_PROVINCES, "Province")}
+        {renderStationDropdown()}
         {formData.province ? renderDropdown("town", TOWNS[formData.province] || [], "Town") : null}
       </div>
 
