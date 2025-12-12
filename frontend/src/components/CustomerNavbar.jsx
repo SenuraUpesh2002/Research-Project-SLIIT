@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
 import styles from './CustomerNavbar.module.css';
 
 const CustomerNavbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   const handleLogout = () => {
     logout();
@@ -38,6 +40,11 @@ const CustomerNavbar = () => {
             <span>👤</span>
             <span>Profile</span>
           </Link>
+        </li>
+        <li>
+          <button onClick={toggleTheme} className={styles.themeToggle} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
         </li>
         {user && (
           <li className={styles.userInfo}>
