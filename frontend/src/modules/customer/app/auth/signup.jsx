@@ -18,9 +18,18 @@ export default function Signup() {
   const { loading, register } = useAuth();
   const navigate = useNavigate();
 
-  const handleSignUp = async () => {
-    if (!name.trim() || !email.trim() || !password.trim()) {
-      alert("All fields are required.");
+  const handleSignUp = async (e) => {
+    // 🛑 STOP any form from submitting
+    if (e) e.preventDefault();
+
+    console.log("DEBUG VALUES:");
+    console.log("name:", name);
+    console.log("email:", email);
+    console.log("password:", password);
+    console.log("confirmPassword:", confirmPassword);
+
+    if (!name || !email || !password || !confirmPassword) {
+      alert("All fields are required");
       return;
     }
 
@@ -38,10 +47,11 @@ export default function Signup() {
 
     if (!result.success) {
       alert(result.message || "Registration failed");
-    } else {
-      alert("Registration successful!");
-      navigate("/login");
+      return;
     }
+
+    alert("Registration successful!");
+    navigate("/login");
   };
 
   return (
@@ -52,8 +62,9 @@ export default function Signup() {
           <p className={styles.subtitle}>Register to FuelWatch</p>
         </div>
 
+        {/* IMPORTANT: THIS MUST BE DIV, NOT FORM */}
         <div className={styles.formContainer}>
-          
+
           {/* Name */}
           <div className={styles.inputGroup}>
             <label className={styles.label}>Name</label>
@@ -65,6 +76,7 @@ export default function Signup() {
                 placeholder="John Doe"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -80,6 +92,7 @@ export default function Signup() {
                 placeholder="johndoe@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -95,6 +108,7 @@ export default function Signup() {
                 placeholder="******"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <button
                 type="button"
@@ -117,6 +131,7 @@ export default function Signup() {
                 placeholder="******"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                required
               />
               <button
                 type="button"
@@ -128,13 +143,23 @@ export default function Signup() {
             </div>
           </div>
 
-          <button className={styles.button} onClick={handleSignUp} disabled={loading}>
+          {/* SIGN UP BUTTON */}
+          <button
+            type="button"
+            className={styles.button}
+            onClick={(e) => handleSignUp(e)}
+            disabled={loading}
+          >
             {loading ? "Loading..." : "Sign Up"}
           </button>
 
           <div className={styles.footer}>
             <p className={styles.footerText}>Already have an account?</p>
-            <button type="button" onClick={() => navigate("/login")} className={styles.link}>
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className={styles.link}
+            >
               Login
             </button>
           </div>
