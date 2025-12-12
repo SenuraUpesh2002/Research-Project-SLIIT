@@ -1,6 +1,6 @@
 .container {
   flex: 1;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #000000;
   min-height: 100vh;
   width: 100%;
 }
@@ -12,96 +12,116 @@
 }
 
 .profileHeader {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius-2xl);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
   padding: var(--spacing-2xl);
   margin-bottom: var(--spacing-xl);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   animation: fadeInDown 0.6s ease-out;
 }
 
 .profileAvatar {
   width: 100px;
   height: 100px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: var(--spacing-lg);
-  box-shadow: var(--shadow-lg);
-  border: 4px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .profileName {
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-xs);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .profileEmail {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
 }
 
 .logoutButton {
-  background: linear-gradient(135deg, var(--error-light) 0%, rgba(254, 226, 226, 0.8) 100%);
-  border-radius: var(--radius-lg);
+  background: transparent;
+  border-radius: 0;
   padding: var(--spacing-md) var(--spacing-lg);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 2px solid var(--error);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   width: 100%;
   margin-bottom: var(--spacing-xl);
   transition: all var(--transition-base);
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.logoutButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.3s ease;
+}
+
+.logoutButton:hover::before {
+  left: 0;
 }
 
 .logoutButton:hover {
-  background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+}
+
+.logoutButtonText {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  transition: color var(--transition-fast);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .logoutButton:hover .logoutButtonText {
   color: var(--text-white);
 }
 
-.logoutButtonText {
-  font-size: var(--font-size-base);
-  color: var(--error);
-  font-weight: var(--font-weight-semibold);
-  transition: color var(--transition-fast);
-}
-
 .error {
-  color: var(--error);
+  color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: var(--spacing-xl);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
+  font-weight: 300;
 }
 
 .section {
   margin-bottom: var(--spacing-xl);
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
   padding: var(--spacing-xl);
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   animation: fadeInUp 0.6s ease-out;
 }
 
@@ -112,22 +132,22 @@
 .sectionHeader {
   margin-bottom: var(--spacing-lg);
   padding-bottom: var(--spacing-md);
-  border-bottom: 2px solid var(--border-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sectionTitle {
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-xs);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .sectionSubtitle {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
 }
 
 .preferenceGrid {
@@ -138,95 +158,119 @@
 }
 
 .preferenceCard {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   transition: all var(--transition-base);
-  border: 2px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .preferenceCard:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-light);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .preferenceIcon {
   width: 50px;
   height: 50px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: var(--spacing-md);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .preferenceLabel {
   font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   margin-bottom: var(--spacing-xs);
-  font-weight: var(--font-weight-medium);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .preferenceValue {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
+  font-weight: 300;
+  color: var(--text-white);
+  letter-spacing: 1px;
 }
 
 .secondaryButton {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  border-radius: var(--radius-lg);
+  background: transparent;
+  border-radius: 0;
   padding: var(--spacing-md) var(--spacing-lg);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 2px solid var(--border-light);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   width: 100%;
   margin-top: var(--spacing-md);
   transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.secondaryButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.3s ease;
+}
+
+.secondaryButton:hover::before {
+  left: 0;
 }
 
 .secondaryButton:hover {
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-  border-color: var(--primary);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+}
+
+.secondaryButtonText {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: var(--spacing-sm);
+  font-weight: 400;
+  transition: color var(--transition-fast);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .secondaryButton:hover .secondaryButtonText {
   color: var(--text-white);
 }
 
-.secondaryButtonText {
-  font-size: var(--font-size-base);
-  color: var(--primary);
-  margin-left: var(--spacing-sm);
-  font-weight: var(--font-weight-semibold);
-  transition: color var(--transition-fast);
-}
-
 .stationCard {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(241, 245, 249, 0.5) 100%);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all var(--transition-base);
 }
 
 .stationCard:hover {
   transform: translateX(4px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .stationHeader {
@@ -239,36 +283,42 @@
 
 .stationName {
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-xs);
+  letter-spacing: 1px;
 }
 
 .stationAddress {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
 }
 
 .statusPill {
   padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--radius-full);
+  border-radius: 0;
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .statusAvailable {
-  background: linear-gradient(135deg, var(--success-light) 0%, rgba(209, 250, 229, 0.8) 100%);
-  color: #065f46;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .statusPending {
-  background: linear-gradient(135deg, var(--error-light) 0%, rgba(254, 226, 226, 0.8) 100%);
-  color: #991b1b;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .statusText {
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 400;
 }
 
 .stationMetaRow {
@@ -284,32 +334,34 @@
   flex-direction: row;
   align-items: center;
   padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--bg-primary);
-  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stationMetaText {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   margin-left: var(--spacing-xs);
-  font-weight: var(--font-weight-medium);
+  font-weight: 300;
 }
 
 .fuelTag {
-  background: linear-gradient(135deg, var(--info-light) 0%, rgba(219, 234, 254, 0.8) 100%);
-  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
   padding: var(--spacing-xs) var(--spacing-md);
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid var(--info);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .fuelTagText {
   font-size: var(--font-size-xs);
-  color: var(--info);
+  color: rgba(255, 255, 255, 0.8);
   margin-left: var(--spacing-xs);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 .cardActions {
@@ -320,18 +372,18 @@
 }
 
 .alertCard {
-  background: linear-gradient(135deg, var(--warning-light) 0%, rgba(254, 243, 199, 0.8) 100%);
-  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
-  border: 1px solid var(--warning);
-  border-left: 4px solid var(--warning);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
   transition: all var(--transition-base);
 }
 
 .alertCard:hover {
   transform: translateX(4px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .alertHeader {
@@ -343,35 +395,39 @@
 
 .alertStatus {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--warning);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
   margin-left: var(--spacing-sm);
+  letter-spacing: 1px;
 }
 
 .alertStation {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-xs);
+  letter-spacing: 1px;
 }
 
 .alertMessage {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   margin-bottom: var(--spacing-xs);
+  font-weight: 300;
 }
 
 .alertTime {
   font-size: var(--font-size-xs);
-  color: var(--text-tertiary);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
 }
 
 .historyCard {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(241, 245, 249, 0.5) 100%);
-  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -381,40 +437,45 @@
 
 .historyCard:hover {
   transform: translateX(4px);
-  box-shadow: var(--shadow-sm);
-  border-color: var(--primary-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .historyName {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
+  font-weight: 300;
+  color: var(--text-white);
+  letter-spacing: 1px;
 }
 
 .historyType {
   font-size: var(--font-size-xs);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
 }
 
 .historyStatus {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--success);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
   text-align: right;
+  letter-spacing: 1px;
 }
 
 .historyTime {
   font-size: var(--font-size-xs);
-  color: var(--text-tertiary);
+  color: rgba(255, 255, 255, 0.5);
   text-align: right;
+  font-weight: 300;
 }
 
 .emptyText {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   font-size: var(--font-size-sm);
   font-style: italic;
   text-align: center;
   padding: var(--spacing-lg);
+  font-weight: 300;
 }
 
 @keyframes fadeInDown {

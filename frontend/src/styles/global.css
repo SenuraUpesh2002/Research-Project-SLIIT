@@ -14,9 +14,9 @@ body,
 #root {
   height: 100%;
   width: 100%;
-  font-family: var(--font-family);
-  color: var(--text-primary);
-  background-color: var(--bg-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: var(--text-white);
+  background-color: #000000;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -47,28 +47,28 @@ select {
   outline: none;
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling - Tesla Style */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-medium);
-  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Selection Styling */
 ::selection {
-  background-color: var(--primary-light);
+  background-color: rgba(255, 255, 255, 0.3);
   color: var(--text-white);
 }
 

@@ -2,46 +2,51 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #000000;
   min-height: 100vh;
 }
 
 .header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
   padding: var(--spacing-xl);
   padding-top: calc(var(--spacing-xl) + 60px);
-  border-bottom: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .backButton {
   margin-bottom: var(--spacing-lg);
-  background: none;
-  border: none;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 0;
+  transition: all var(--transition-base);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .backButton:hover {
-  background-color: var(--bg-secondary);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--text-white);
 }
 
 .title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-sm);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .subtitle {
   font-size: var(--font-size-base);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 .form {
@@ -54,24 +59,26 @@
 }
 
 .infoCard {
-  background: linear-gradient(135deg, var(--info-light) 0%, rgba(219, 234, 254, 0.5) 100%);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   margin-bottom: var(--spacing-lg);
-  border-left: 4px solid var(--info);
-  box-shadow: var(--shadow-sm);
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .infoText {
   font-size: var(--font-size-sm);
-  color: var(--info);
+  color: rgba(255, 255, 255, 0.8);
   margin-left: var(--spacing-md);
   flex: 1;
-  line-height: 1.5;
-  font-weight: var(--font-weight-medium);
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 .inputContainer {
@@ -122,11 +129,12 @@
 }
 
 .dropdownList {
-  background-color: var(--bg-primary);
-  border-radius: var(--radius-lg);
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
   margin-top: var(--spacing-xs);
-  border: 2px solid var(--border-light);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   position: absolute;
   width: 100%;
   z-index: var(--z-dropdown);
@@ -148,10 +156,10 @@
 
 .dropdownItem {
   padding: var(--spacing-md);
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  transition: all var(--transition-fast);
-  background-color: var(--bg-primary);
+  transition: all var(--transition-base);
+  background-color: transparent;
 }
 
 .dropdownItem:last-child {
@@ -159,41 +167,47 @@
 }
 
 .dropdownItem:hover {
-  background-color: var(--bg-secondary);
-  padding-left: calc(var(--spacing-md) + 4px);
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-left: calc(var(--spacing-md) + 8px);
 }
 
 .dropdownItemText {
   font-size: var(--font-size-base);
-  color: var(--text-primary);
-  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 .chargerInfo {
-  background: var(--bg-primary);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
   padding: var(--spacing-xl);
   margin-top: var(--spacing-lg);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .chargerInfoTitle {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
+  font-weight: 400;
+  color: var(--text-white);
   margin-bottom: var(--spacing-md);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .chargerTypeItem {
   margin-bottom: var(--spacing-md);
   padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast);
+  border-radius: 0;
+  transition: all var(--transition-base);
+  border-left: 2px solid transparent;
 }
 
 .chargerTypeItem:hover {
-  background-color: var(--bg-secondary);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left-color: rgba(255, 255, 255, 0.3);
 }
 
 .chargerTypeItem:last-child {
@@ -202,45 +216,64 @@
 
 .chargerTypeName {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--secondary);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: var(--spacing-xs);
+  letter-spacing: 1px;
 }
 
 .chargerTypeDesc {
   font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  font-weight: 300;
 }
 
 .footer {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
   padding: var(--spacing-xl);
-  border-top: 1px solid var(--border-light);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.3);
   position: sticky;
   bottom: 0;
 }
 
 .findButton {
-  background: linear-gradient(135deg, var(--secondary) 0%, #d97706 100%);
-  border-radius: var(--radius-xl);
+  background: var(--text-white);
+  border-radius: 0;
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 2px solid var(--text-white);
   cursor: pointer;
   transition: all var(--transition-base);
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
   width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.findButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-dark);
+  transition: left 0.3s ease;
+}
+
+.findButton:hover:not(:disabled)::before {
+  left: 0;
 }
 
 .findButton:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
 }
 
 .findButton:active:not(:disabled) {
@@ -248,15 +281,25 @@
 }
 
 .buttonDisabled {
-  background: var(--bg-tertiary);
+  background: rgba(255, 255, 255, 0.2);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
   box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .findButtonText {
-  color: var(--text-white);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  color: var(--bg-dark);
+  font-size: var(--font-size-base);
+  font-weight: 500;
   margin-left: var(--spacing-sm);
+  position: relative;
+  z-index: 1;
+  transition: color var(--transition-base);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.findButton:hover:not(:disabled) .findButtonText {
+  color: var(--text-white);
 }

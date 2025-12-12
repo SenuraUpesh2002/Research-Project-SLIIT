@@ -1,6 +1,6 @@
 .container {
   flex: 1;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #000000;
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -8,83 +8,92 @@
 }
 
 .error {
-  color: var(--error);
+  color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: var(--spacing-xl);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
+  font-weight: 300;
 }
 
 .successBanner {
-  background: linear-gradient(135deg, var(--success-light) 0%, rgba(209, 250, 229, 0.8) 100%);
-  color: #065f46;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  color: var(--text-white);
   padding: var(--spacing-md) var(--spacing-xl);
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  border-bottom: 3px solid var(--success);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   animation: slideDown 0.3s ease-out;
 }
 
 .successBanner p {
   margin: 0;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 .filterInfo {
   margin-top: var(--spacing-md);
   padding: var(--spacing-md);
-  background: linear-gradient(135deg, var(--info-light) 0%, rgba(219, 234, 254, 0.5) 100%);
-  border-radius: var(--radius-lg);
-  border-left: 4px solid var(--info);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .filterText {
   font-size: var(--font-size-xs);
-  color: var(--info);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  font-weight: var(--font-weight-medium);
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 .header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
   padding: var(--spacing-xl);
   padding-top: calc(var(--spacing-xl) + 60px);
-  border-bottom: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .backButton {
   margin-bottom: var(--spacing-lg);
-  background: none;
-  border: none;
-  padding: var(--spacing-sm);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--spacing-sm) var(--spacing-md);
   cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast);
+  border-radius: 0;
+  transition: all var(--transition-base);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .backButton:hover {
-  background-color: var(--bg-secondary);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--text-white);
 }
 
 .title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-sm);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .subtitle {
   font-size: var(--font-size-base);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 .content {
@@ -97,12 +106,13 @@
 }
 
 .stationCard {
-  background: var(--bg-primary);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
   padding: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all var(--transition-base);
   cursor: default;
   animation: fadeInUp 0.4s ease-out;
@@ -115,9 +125,9 @@
 .stationCard:nth-child(5) { animation-delay: 0.5s; }
 
 .stationCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--primary-light);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .stationHeader {
@@ -135,30 +145,31 @@
 
 .stationName {
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-xs);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .stationAddress {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  font-weight: 300;
 }
 
 .stationIcon {
   width: 70px;
   height: 70px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .stationDetails {
@@ -168,8 +179,9 @@
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
   padding: var(--spacing-md);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .detailItem {
@@ -181,15 +193,16 @@
 
 .detailText {
   font-size: var(--font-size-sm);
-  color: var(--text-primary);
-  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 .statusDot {
   width: 10px;
   height: 10px;
   border-radius: var(--radius-full);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
 .stationActions {
@@ -202,88 +215,115 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  background: transparent;
   padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-xl);
+  border-radius: 0;
   flex: 1;
   justify-content: center;
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-base);
 }
 
 .actionButton:hover {
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
 }
 
 .actionButton:hover .actionButtonText {
   color: var(--text-white);
 }
 
-.actionButton:hover span {
-  filter: brightness(0) invert(1);
-}
-
 .actionButtonText {
   font-size: var(--font-size-sm);
-  color: var(--primary);
+  color: rgba(255, 255, 255, 0.8);
   margin-left: var(--spacing-xs);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 300;
   transition: color var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .noResultsCard {
-  background: var(--bg-primary);
-  border-radius: var(--radius-2xl);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
   padding: var(--spacing-3xl);
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: var(--spacing-xl);
-  box-shadow: var(--shadow-lg);
-  border: 2px dashed var(--border-medium);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
   animation: fadeIn 0.5s ease-out;
 }
 
 .noResultsTitle {
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
+  font-weight: 300;
+  color: var(--text-white);
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .noResultsText {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.8;
   margin-bottom: var(--spacing-xl);
   max-width: 400px;
+  font-weight: 300;
 }
 
 .searchAgainButton {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  background: var(--text-white);
   padding: var(--spacing-md) var(--spacing-xl);
-  border-radius: var(--radius-xl);
-  border: none;
+  border-radius: 0;
+  border: 2px solid var(--text-white);
   cursor: pointer;
   transition: all var(--transition-base);
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.searchAgainButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-dark);
+  transition: left 0.3s ease;
+}
+
+.searchAgainButton:hover::before {
+  left: 0;
 }
 
 .searchAgainButton:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
 }
 
 .searchAgainText {
-  color: var(--text-white);
+  color: var(--bg-dark);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  transition: color var(--transition-base);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.searchAgainButton:hover .searchAgainText {
+  color: var(--text-white);
 }
 
 @keyframes fadeIn {
@@ -318,25 +358,25 @@
 }
 
 .statusAvailable {
-  background-color: var(--success);
+  background-color: #10b981;
 }
 
 .statusPending {
-  background-color: var(--warning);
+  background-color: #f59e0b;
 }
 
 .statusLow {
-  background-color: var(--success);
+  background-color: #10b981;
 }
 
 .statusMedium {
-  background-color: var(--warning);
+  background-color: #f59e0b;
 }
 
 .statusHigh {
-  background-color: var(--error);
+  background-color: #ef4444;
 }
 
 .statusDefault {
-  background-color: var(--text-tertiary);
+  background-color: rgba(255, 255, 255, 0.3);
 }

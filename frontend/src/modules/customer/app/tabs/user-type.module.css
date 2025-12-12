@@ -1,12 +1,26 @@
 .container {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #000000;
   padding: var(--spacing-xl);
   min-height: 100vh;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(227, 25, 55, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(62, 106, 225, 0.08) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .header {
@@ -19,22 +33,28 @@
 }
 
 .title {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-md);
   text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  position: relative;
+  z-index: 1;
 }
 
 .subtitle {
-  font-size: var(--font-size-base);
-  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+  color: rgba(255, 255, 255, 0.7);
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.8;
   max-width: 500px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
 }
 
 .vehicleOptions {
@@ -49,14 +69,15 @@
 }
 
 .vehicleCard {
-  background: var(--bg-primary);
-  border-radius: var(--radius-2xl);
-  padding: var(--spacing-2xl);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
+  padding: var(--spacing-3xl);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: var(--shadow-lg);
-  border: 2px solid transparent;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all var(--transition-base);
   cursor: pointer;
   width: 100%;
@@ -64,21 +85,23 @@
   position: relative;
   overflow: hidden;
   animation: fadeInUp 0.6s ease-out;
+  z-index: 1;
 }
 
 .vehicleCard::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
+  background: rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transition: opacity var(--transition-base);
 }
 
 .vehicleCard:hover::before {
-  left: 100%;
+  opacity: 1;
 }
 
 .vehicleCard:nth-child(2) {
@@ -86,45 +109,56 @@
 }
 
 .vehicleCard:hover {
-  border-color: var(--primary);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .vehicleCard:active {
-  transform: translateY(-2px) scale(0.98);
+  transform: translateY(-4px) scale(0.98);
 }
 
 .iconContainer {
   width: 120px;
   height: 120px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: var(--spacing-lg);
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-base);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-base);
+  position: relative;
+  z-index: 1;
 }
 
 .vehicleCard:hover .iconContainer {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .vehicleTitle {
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--primary-dark);
+  font-weight: 300;
+  color: var(--text-white);
   margin-bottom: var(--spacing-md);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
 }
 
 .vehicleDescription {
   font-size: var(--font-size-base);
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.8;
   margin-bottom: var(--spacing-lg);
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
 }
 
 .features {
@@ -139,19 +173,22 @@
   flex-direction: row;
   align-items: center;
   padding: var(--spacing-sm);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-fast);
+  border-radius: 0;
+  transition: all var(--transition-fast);
+  position: relative;
+  z-index: 1;
 }
 
 .featureItem:hover {
-  background-color: var(--bg-secondary);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .featureText {
   font-size: var(--font-size-sm);
-  color: var(--text-primary);
+  color: rgba(255, 255, 255, 0.8);
   margin-left: var(--spacing-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 .backButton {
@@ -159,28 +196,36 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   margin-top: var(--spacing-xl);
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
+  background: transparent;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0;
   width: fit-content;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-base);
+  position: relative;
+  z-index: 1;
 }
 
 .backButton:hover {
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateX(-4px);
-  box-shadow: var(--shadow-md);
 }
 
 .backButtonText {
-  font-size: var(--font-size-base);
-  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.8);
   margin-left: var(--spacing-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.backButton:hover .backButtonText {
+  color: var(--text-white);
 }
