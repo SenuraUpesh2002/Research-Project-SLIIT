@@ -62,10 +62,6 @@ export default function FuelFormScreen() {
   };
 
   const validateForm = () => {
-    if (!formData.stationId) {
-      alert("Please select a station (no stations available)");
-      return false;
-    }
     if (!formData.vehicleType) {
       alert("Please select your vehicle type");
       return false;
@@ -88,54 +84,56 @@ export default function FuelFormScreen() {
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
-    try {
-      const submissionData = {
-        station: formData.stationId,
-        submissionType: "FUEL_REPORT", // Differentiate submission type
-        data: {
-          vehicleType: formData.vehicleType,
-          fuelType: formData.fuelType,
-          preferredBrand: formData.preferredBrand,
-          province: formData.province,
-          town: formData.town,
-        },
-      };
-
-      const response = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include auth token
+    // If we have a station ID, submit the form
+    if (formData.stationId) {
+      try {
+        const submissionData = {
+          station: formData.stationId,
+          submissionType: "FUEL_REPORT",
+          data: {
+            vehicleType: formData.vehicleType,
+            fuelType: formData.fuelType,
+            preferredBrand: formData.preferredBrand,
+            province: formData.province,
+            town: formData.town,
           },
-          body: JSON.stringify(submissionData),
+        };
+
+        const response = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+            body: JSON.stringify(submissionData),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Submission failed:", errorData);
+          // Continue to results page even if submission fails
         }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit Fuel form");
+      } catch (error) {
+        console.error("Fuel form submission error:", error);
+        // Continue to results page even if submission fails
       }
-
-      // Navigate to results page with form data
-      const queryParams = new URLSearchParams({
-        type: 'fuel',
-        province: formData.province,
-        town: formData.town,
-        vehicleType: formData.vehicleType,
-        fuelType: formData.fuelType,
-      });
-      navigate(`/results?${queryParams.toString()}`);
-    } catch (error) {
-      console.error("Fuel form submission error:", error);
-      alert(`Submission failed: ${error.message}`);
     }
+
+    // Navigate to results page with form data
+    const queryParams = new URLSearchParams({
+      type: 'fuel',
+      province: formData.province,
+      town: formData.town,
+      vehicleType: formData.vehicleType,
+      fuelType: formData.fuelType,
+    });
+    navigate(`/results?${queryParams.toString()}`);
   };
 
   const handleFindStations = () => {
     if (!validateForm()) return;
-
-    // Instead of navigating directly, call handleSubmit
     handleSubmit();
   };
 

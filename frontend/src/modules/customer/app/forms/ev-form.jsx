@@ -59,10 +59,6 @@ export default function EVFormScreen() {
   };
 
   const validateForm = () => {
-    if (!formData.stationId) {
-      alert("Please select a station (no stations available)");
-      return false;
-    }
     if (!formData.province) {
       alert("Please select your province");
       return false;
@@ -77,53 +73,55 @@ export default function EVFormScreen() {
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
-    try {
-      const submissionData = {
-        station: formData.stationId,
-        submissionType: "EV_CHARGE", // Differentiate submission type
-        data: {
-          chargerType: formData.chargerType,
-          powerRating: formData.powerRating,
-          province: formData.province,
-          town: formData.town,
-        },
-      };
-
-      const response = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include auth token
+    // If we have a station ID, submit the form
+    if (formData.stationId) {
+      try {
+        const submissionData = {
+          station: formData.stationId,
+          submissionType: "EV_CHARGE",
+          data: {
+            chargerType: formData.chargerType,
+            powerRating: formData.powerRating,
+            province: formData.province,
+            town: formData.town,
           },
-          body: JSON.stringify(submissionData),
+        };
+
+        const response = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+            body: JSON.stringify(submissionData),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Submission failed:", errorData);
+          // Continue to results page even if submission fails
         }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit EV form");
+      } catch (error) {
+        console.error("EV form submission error:", error);
+        // Continue to results page even if submission fails
       }
-
-      // Navigate to results page with form data
-      const queryParams = new URLSearchParams({
-        type: 'ev',
-        province: formData.province,
-        town: formData.town,
-        chargerType: formData.chargerType || '',
-        powerRating: formData.powerRating || '',
-      });
-      navigate(`/results?${queryParams.toString()}`);
-    } catch (error) {
-      console.error("EV form submission error:", error);
-      alert(`Submission failed: ${error.message}`);
     }
+
+    // Navigate to results page with form data
+    const queryParams = new URLSearchParams({
+      type: 'ev',
+      province: formData.province,
+      town: formData.town,
+      chargerType: formData.chargerType || '',
+      powerRating: formData.powerRating || '',
+    });
+    navigate(`/results?${queryParams.toString()}`);
   };
 
   const handleFindStations = () => {
     if (!validateForm()) return;
-
-    // Instead of navigating directly, call handleSubmit
     handleSubmit();
   };
 
