@@ -1,8 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import styles from './welcome.module.css';
+// frontend/src/modules/customer/app/tabs/welcome.jsx
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import styles from "./welcome.module.css";
 
 export default function WelcomeScreen() {
+  const { user, isLoading } = useAuth();
   const navigate = useNavigate();
+
+  // Show loading while fetching user
+  if (isLoading) return <p>Loading...</p>;
+
+  // Redirect to login if not logged in
+  if (!user) {
+    navigate("/login");
+    return null;
+  }
 
   return (
     <div className={styles.container}>
@@ -14,7 +26,7 @@ export default function WelcomeScreen() {
           </div>
           <p className={styles.appName}>FUELWATCH</p>
           <p className={styles.tagline}>
-            Find the best Fuel or EV Station smartly
+            Welcome, <strong>{user.name}</strong>! Find the best Fuel or EV Station smartly
           </p>
         </div>
 

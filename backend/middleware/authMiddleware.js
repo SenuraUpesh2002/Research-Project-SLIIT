@@ -1,3 +1,4 @@
+// backend/middleware/authMiddleware.js
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
@@ -5,37 +6,37 @@ const User = require('../models/User');
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = await User.findById(decoded.id).select('-password');
-
-      next();
+      const user = await User.findById(decoded.id);
+      if (user) {
+        // Remove password from the user object before attaching to request
+        const { password, ...userWithoutPassword } = user;
+        req.user = userWithoutPassword;
+      }
+      if (!user) {
+        return res.status(401).json({ message: 'User not found for given token' });
+      }
+      req.user = user;
+      return next();
     } catch (error) {
-      console.error(error);
-      res.status(401);
-      throw new Error('Not authorized, token failed');
+      console.error('Auth middleware error:', error);
+      return res.status(401).json({ message: 'Not authorized, token failed' });
     }
   }
 
-  if (!token) {
-    res.status(401);
-    throw new Error('Not authorized, no token');
-  }
+  return res.status(401).json({ message: 'Not authorized, no token' });
 });
 
 const admin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
-    next();
+    return next();
   } else {
-    res.status(401);
-    throw new Error('Not authorized as an admin');
+    return res.status(401).json({ message: 'Not authorized as an admin' });
   }
 };
 

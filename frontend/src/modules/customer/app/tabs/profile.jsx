@@ -1,54 +1,79 @@
+// frontend/src/modules/customer/app/tabs/profile.jsx
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import ProfileHeader from "../../components/ProfileHeader";
 import LogoutButton from "../../components/LogoutButton";
 import Loader from "../../components/Loader";
 import styles from "./profile.module.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faFire, faShieldAlt, faMapMarkerAlt, faCity, faBell, faCog, faMap, faClock, faUsers, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCar,
+  faFire,
+  faShieldAlt,
+  faMapMarkerAlt,
+  faCity,
+  faBell,
+  faCog,
+  faMap,
+  faClock,
+  faUsers,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { API_ENDPOINTS } from "../../../../constants/api";
 
 export default function Profile() {
-  const { user } = useAuth();
+  const { user, token, isLoading } = useAuth();
   const [favorites, setFavorites] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [dataLoading, setDataLoading] = useState(true);
 
+  // Fetch profile-related data from backend (favorites/alerts/history)
   useEffect(() => {
     const fetchProfileData = async () => {
-      if (!user) {
-        setLoading(false);
+      if (!token) {
+        setDataLoading(false);
         return;
       }
+
       try {
+        setDataLoading(true);
         const response = await fetch(API_ENDPOINTS.AUTH.PROFILE, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
+
         if (!response.ok) {
-          throw new Error(`Failed to fetch profile data: ${response.statusText}`);
+          // allow specific inspection of 401
+          if (response.status === 401) {
+            throw new Error("Unauthorized (401) - token invalid or expired");
+          }
+          throw new Error(`Failed to fetch profile data: ${response.status} ${response.statusText}`);
         }
+
         const data = await response.json();
+        // If the profile endpoint returns favorites/alerts/history include them,
+        // otherwise fall back to empty arrays.
         setFavorites(data.favorites || []);
         setAlerts(data.alerts || []);
         setHistory(data.history || []);
       } catch (err) {
-        setError(err.message);
         console.error("Error fetching profile data:", err);
+        setError(err.message || "Failed to fetch profile data");
       } finally {
-        setLoading(false);
+        setDataLoading(false);
       }
     };
 
     fetchProfileData();
-  }, [user]);
+  }, [token]);
 
-  if (loading) return <Loader />;
+  if (isLoading || dataLoading) return <Loader />;
+  if (!user) return <div className={styles.container}><p className={styles.error}>You are not logged in.</p></div>;
   if (error) return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
-  if (!user) return <Loader />;
 
   const vehiclePreferences = [
     { label: "Vehicle Type", value: user.preferences?.vehicleType || "Fuel Vehicle", icon: faCar },
@@ -62,9 +87,10 @@ export default function Profile() {
   return (
     <div className={styles.container}>
       <div className={styles.scrollContent}>
-        <ProfileHeader />
+        <ProfileHeader userName={user.name} />
         <LogoutButton />
 
+        {/* Vehicle Preferences */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <p className={styles.sectionTitle}>Vehicle Preferences</p>
@@ -89,67 +115,73 @@ export default function Profile() {
           </button>
         </div>
 
+        {/* Favorite Stations */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <p className={styles.sectionTitle}>Favorite Stations</p>
             <p className={styles.sectionSubtitle}>{favorites.length} saved for quick access</p>
           </div>
 
-          {favorites.map((station) => (
-            <div key={station.id} className={styles.stationCard}>
-              <div className={styles.stationHeader}>
-                <div>
-                  <p className={styles.stationName}>{station.name}</p>
-                  <p className={styles.stationAddress}>{station.address}</p>
+          {favorites.length === 0 ? (
+            <p className={styles.emptyText}>No favorites saved yet.</p>
+          ) : (
+            favorites.map((station) => (
+              <div key={station.id} className={styles.stationCard}>
+                <div className={styles.stationHeader}>
+                  <div>
+                    <p className={styles.stationName}>{station.name}</p>
+                    <p className={styles.stationAddress}>{station.address}</p>
+                  </div>
+                  <div className={`${styles.statusPill} ${station.status === "Available" ? styles.statusAvailable : styles.statusPending}`}>
+                    <p className={styles.statusText}>{station.status}</p>
+                  </div>
                 </div>
-                <div className={`${styles.statusPill} ${station.status === "Available" ? styles.statusAvailable : styles.statusPending}`}>
-                  <p className={styles.statusText}>{station.status}</p>
-                </div>
-              </div>
 
-              <div className={styles.stationMetaRow}>
-                <div className={styles.stationMeta}>
-                  <FontAwesomeIcon icon={faMap} style={{ fontSize: 16, color: 'var(--text-secondary)' }} />
-                  <p className={styles.stationMetaText}>{station.distance}</p>
+                <div className={styles.stationMetaRow}>
+                  <div className={styles.stationMeta}>
+                    <FontAwesomeIcon icon={faMap} style={{ fontSize: 16, color: 'var(--text-secondary)' }} />
+                    <p className={styles.stationMetaText}>{station.distance}</p>
+                  </div>
+                  <div className={styles.stationMeta}>
+                    <FontAwesomeIcon icon={faClock} style={{ fontSize: 16, color: 'var(--text-secondary)' }} />
+                    <p className={styles.stationMetaText}>{station.lastUpdated}</p>
+                  </div>
+                  <div className={styles.stationMeta}>
+                    <FontAwesomeIcon icon={faUsers} style={{ fontSize: 16, color: 'var(--text-secondary)' }} />
+                    <p className={styles.stationMetaText}>Queue: {station.queue}</p>
+                  </div>
                 </div>
-                <div className={styles.stationMeta}>
-                  <FontAwesomeIcon icon={faClock} style={{ fontSize: 16, color: 'var(--text-secondary)' }} />
-                  <p className={styles.stationMetaText}>{station.lastUpdated}</p>
-                </div>
-                <div className={styles.stationMeta}>
-                  <FontAwesomeIcon icon={faUsers} style={{ fontSize: 16, color: 'var(--text-secondary)' }} />
-                  <p className={styles.stationMetaText}>Queue: {station.queue}</p>
-                </div>
-              </div>
 
-              <div className={styles.stationMetaRow}>
-                <div className={styles.fuelTag}>
-                  <FontAwesomeIcon icon={faFire} style={{ fontSize: 14, color: 'var(--primary)' }} />
-                  <p className={styles.fuelTagText}>{station.fuel}</p>
+                <div className={styles.stationMetaRow}>
+                  <div className={styles.fuelTag}>
+                    <FontAwesomeIcon icon={faFire} style={{ fontSize: 14, color: 'var(--primary)' }} />
+                    <p className={styles.fuelTagText}>{station.fuel}</p>
+                  </div>
+                </div>
+
+                <div className={styles.cardActions}>
+                  <button className={styles.secondaryButton}>
+                    <FontAwesomeIcon icon={faBell} style={{ fontSize: 18, color: 'var(--primary)' }} />
+                    <p className={styles.secondaryButtonText}>Set Alert</p>
+                  </button>
+                  <button className={styles.secondaryButton}>
+                    <FontAwesomeIcon icon={faMapMarkerAlt} style={{ fontSize: 18, color: 'var(--primary)' }} />
+                    <p className={styles.secondaryButtonText}>Navigate</p>
+                  </button>
                 </div>
               </div>
-
-              <div className={styles.cardActions}>
-                <button className={styles.secondaryButton}>
-                  <FontAwesomeIcon icon={faBell} style={{ fontSize: 18, color: 'var(--primary)' }} />
-                  <p className={styles.secondaryButtonText}>Set Alert</p>
-                </button>
-                <button className={styles.secondaryButton}>
-                  <FontAwesomeIcon icon={faMapMarkerAlt} style={{ fontSize: 18, color: 'var(--primary)' }} />
-                  <p className={styles.secondaryButtonText}>Navigate</p>
-                </button>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
+        {/* Active Alerts */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <p className={styles.sectionTitle}>Active Alerts</p>
             <p className={styles.sectionSubtitle}>Stay ahead of restocks</p>
           </div>
 
-          {alerts.map((alert) => (
+          {alerts.length === 0 ? <p className={styles.emptyText}>No active alerts</p> : alerts.map((alert) => (
             <div key={alert.id} className={styles.alertCard}>
               <div className={styles.alertHeader}>
                 <FontAwesomeIcon icon={faBell} style={{ fontSize: 18, color: 'var(--primary)' }} />
@@ -167,13 +199,14 @@ export default function Profile() {
           </button>
         </div>
 
+        {/* Recent Activity */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <p className={styles.sectionTitle}>Recent Activity</p>
             <p className={styles.sectionSubtitle}>{history.length} stations checked recently</p>
           </div>
 
-          {history.map((item) => (
+          {history.length === 0 ? <p className={styles.emptyText}>No recent activity</p> : history.map((item) => (
             <div key={item.id} className={styles.historyCard}>
               <div>
                 <p className={styles.historyName}>{item.name}</p>
