@@ -215,12 +215,6 @@ export default function FuelFormScreen() {
         {renderDropdown("preferredBrand", BRANDS, "Preferred Brand")}
         {renderDropdown("province", SRI_LANKAN_PROVINCES, "Province")}
         {formData.province ? renderDropdown("town", TOWNS[formData.province] || [], "Town") : null}
-        {loadingStations && (
-          <p className={styles.helperText}>Loading stations...</p>
-        )}
-        {!loadingStations && stations.length === 0 && (
-          <p className={styles.helperText}>No stations available right now.</p>
-        )}
       </div>
 
       <div className={styles.footer}>

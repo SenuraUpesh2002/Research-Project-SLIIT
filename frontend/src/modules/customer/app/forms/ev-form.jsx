@@ -209,12 +209,6 @@ export default function EVFormScreen() {
         {renderDropdown("powerRating", POWER_RATINGS, "Power Rating (Optional)")}
         {renderDropdown("province", SRI_LANKAN_PROVINCES, "Province")}
         {formData.province ? renderDropdown("town", TOWNS[formData.province] || [], "Town") : null}
-        {loadingStations && (
-          <p className={styles.helperText}>Loading stations...</p>
-        )}
-        {!loadingStations && stations.length === 0 && (
-          <p className={styles.helperText}>No stations available right now.</p>
-        )}
 
         <div className={styles.chargerInfo}>
           <p className={styles.chargerInfoTitle}>Charger Types Available in Sri Lanka:</p>
