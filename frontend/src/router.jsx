@@ -5,9 +5,8 @@ import { Routes, Route } from "react-router-dom";
 // Auth Screens
 import Login from "./modules/customer/app/auth/index.jsx";
 import Signup from "./modules/customer/app/auth/signup.jsx";
+import Welcome from "./modules/customer/app/tabs/welcome.jsx";
 
-// Public pages
-const Welcome = () => <div>Welcome!</div>;
 const NotFound = () => <div>404 - Page Not Found</div>;
 
 const AppRouter = () => {

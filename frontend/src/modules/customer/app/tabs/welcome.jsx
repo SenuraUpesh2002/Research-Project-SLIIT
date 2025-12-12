@@ -1,20 +1,23 @@
 // frontend/src/modules/customer/app/tabs/welcome.jsx
-import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
+import { useAuth } from "../../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import styles from "./welcome.module.css";
 
 export default function WelcomeScreen() {
-  const { user, isLoading } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
 
-  // Show loading while fetching user
-  if (isLoading) return <p>Loading...</p>;
+  // If not authenticated, redirect to login once loading completes
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login");
+    }
+  }, [loading, user, navigate]);
 
-  // Redirect to login if not logged in
-  if (!user) {
-    navigate("/login");
-    return null;
-  }
+  // Show loading while fetching user
+  if (loading) return <p>Loading...</p>;
+  if (!user) return null;
 
   return (
     <div className={styles.container}>
