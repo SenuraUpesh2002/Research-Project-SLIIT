@@ -13,15 +13,12 @@ const protect = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       const user = await User.findById(decoded.id);
-      if (user) {
-        // Remove password from the user object before attaching to request
-        const { password, ...userWithoutPassword } = user;
-        req.user = userWithoutPassword;
-      }
       if (!user) {
         return res.status(401).json({ message: 'User not found for given token' });
       }
-      req.user = user;
+      // Remove password from the user object before attaching to request
+      const { password, ...userWithoutPassword } = user;
+      req.user = userWithoutPassword;
       return next();
     } catch (error) {
       console.error('Auth middleware error:', error);

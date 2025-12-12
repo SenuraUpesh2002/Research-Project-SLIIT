@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../../../hooks/useAuth';
 import { API_ENDPOINTS } from "../../../../constants/api";
 import styles from './results.module.css';
 
 export default function ResultsScreen() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, loading: authLoading } = useAuth();
   const params = new URLSearchParams(location.search);
   
   // Extract query parameters
@@ -22,7 +24,19 @@ export default function ResultsScreen() {
   const [error, setError] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Redirect to login if not authenticated
   useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/login');
+    }
+  }, [authLoading, user, navigate]);
+
+  useEffect(() => {
+    // Don't fetch if user is not authenticated
+    if (authLoading || !user) {
+      return;
+    }
+
     // Show success message if coming from form submission
     if (town || province) {
       setShowSuccess(true);
@@ -34,15 +48,26 @@ export default function ResultsScreen() {
         setLoading(true);
         setError(null);
         
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          throw new Error('No authentication token found. Please login again.');
+        }
+
         const response = await fetch(API_ENDPOINTS.STATIONS.GET_ALL, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+            'Authorization': `Bearer ${token.trim()}`,
             'Content-Type': 'application/json'
           }
         });
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch stations: ${response.statusText}`);
+          if (response.status === 401) {
+            // Token expired or invalid - clear it and redirect to login
+            localStorage.removeItem('authToken');
+            throw new Error('Session expired. Please login again.');
+          }
+          const errorData = await response.json().catch(() => ({ message: response.statusText }));
+          throw new Error(errorData.message || `Failed to fetch stations: ${response.statusText}`);
         }
         
         const data = await response.json();
@@ -123,9 +148,9 @@ export default function ResultsScreen() {
     };
 
     fetchStations();
-  }, [type, town, province]);
+  }, [type, town, province, authLoading, user]);
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className={styles.container}>
         <div style={{ padding: '40px', textAlign: 'center' }}>
@@ -135,7 +160,13 @@ export default function ResultsScreen() {
     );
   }
 
+  if (!user) {
+    return null; // Will redirect via useEffect
+  }
+
   if (error) {
+    const isAuthError = error.includes('Session expired') || error.includes('authentication token');
+    
     return (
       <div className={styles.container}>
         <div className={styles.header}>
@@ -146,13 +177,23 @@ export default function ResultsScreen() {
         </div>
         <div style={{ padding: '40px', textAlign: 'center' }}>
           <p className={styles.error}>Error: {error}</p>
-          <button
-            className={styles.searchAgainButton}
-            onClick={() => window.location.reload()}
-            style={{ marginTop: '20px' }}
-          >
-            <p className={styles.searchAgainText}>Retry</p>
-          </button>
+          {isAuthError ? (
+            <button
+              className={styles.searchAgainButton}
+              onClick={() => navigate('/login')}
+              style={{ marginTop: '20px' }}
+            >
+              <p className={styles.searchAgainText}>Go to Login</p>
+            </button>
+          ) : (
+            <button
+              className={styles.searchAgainButton}
+              onClick={() => window.location.reload()}
+              style={{ marginTop: '20px' }}
+            >
+              <p className={styles.searchAgainText}>Retry</p>
+            </button>
+          )}
         </div>
       </div>
     );
