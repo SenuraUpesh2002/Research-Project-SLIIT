@@ -1,9 +1,8 @@
 // frontend/src/modules/customer/app/tabs/profile.jsx
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
-import ProfileHeader from "../../components/ProfileHeader";
-import LogoutButton from "../../components/LogoutButton";
-import Loader from "../../components/Loader";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../../hooks/useAuth";
+import Loader from "../../../../components/Loader";
 import styles from "./profile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,7 +21,8 @@ import {
 import { API_ENDPOINTS } from "../../../../constants/api";
 
 export default function Profile() {
-  const { user, token, isLoading } = useAuth();
+  const navigate = useNavigate();
+  const { user, token, loading: isLoading, logout } = useAuth();
   const [favorites, setFavorites] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [history, setHistory] = useState([]);
@@ -84,11 +84,28 @@ export default function Profile() {
     { label: "Alerts", value: "Enabled", icon: faBell },
   ];
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.scrollContent}>
-        <ProfileHeader userName={user.name} />
-        <LogoutButton />
+        {/* Profile Header */}
+        <div className={styles.profileHeader}>
+          <div className={styles.profileAvatar}>
+            <span style={{ fontSize: 48, color: '#1e40af' }}>👤</span>
+          </div>
+          <p className={styles.profileName}>{user.name || user.email}</p>
+          <p className={styles.profileEmail}>{user.email}</p>
+        </div>
+        
+        {/* Logout Button */}
+        <button className={styles.logoutButton} onClick={handleLogout}>
+          <span style={{ fontSize: 18, color: '#ef4444', marginRight: 8 }}>🚪</span>
+          <p className={styles.logoutButtonText}>Logout</p>
+        </button>
 
         {/* Vehicle Preferences */}
         <div className={styles.section}>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { API_ENDPOINTS } from "../../../../constants/api";
 import styles from './results.module.css';
@@ -6,6 +7,10 @@ export default function ResultsScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  
+  // Extract query parameters
+  const type = params.get('type') || '';
+  const town = params.get('town') || '';
 
   const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,8 +79,23 @@ export default function ResultsScreen() {
       </div>
 
       <div className={styles.content}>
-        {stations.map((station, index) => ( // eslint-disable-line no-unused-vars
-          <div key={station.id} className={styles.stationCard}>
+        {stations.length === 0 && !loading ? (
+          <div className={styles.noResultsCard}>
+            <span style={{ fontSize: 48, color: '#64748b' }}>ℹ️</span>
+            <p className={styles.noResultsTitle}>No Stations Found</p>
+            <p className={styles.noResultsText}>
+              Try adjusting your search criteria or expanding your search area
+            </p>
+            <button
+              className={styles.searchAgainButton}
+              onClick={() => navigate(-1)}
+            >
+              <p className={styles.searchAgainText}>Search Again</p>
+            </button>
+          </div>
+        ) : (
+          stations.map((station) => (
+            <div key={station.id || station._id} className={styles.stationCard}>
             <div className={styles.stationHeader}>
               <div className={styles.stationInfo}>
                 <p className={styles.stationName}>{station.name}</p>
@@ -114,21 +134,8 @@ export default function ResultsScreen() {
               </button>
             </div>
           </div>
-        ))}
-
-        <div className={styles.noResultsCard}>
-          <span style={{ fontSize: 48, color: '#64748b' }}>ℹ️</span>
-          <p className={styles.noResultsTitle}>No More Stations</p>
-          <p className={styles.noResultsText}>
-            Try adjusting your search criteria or expanding your search area
-          </p>
-          <button
-            className={styles.searchAgainButton}
-            onClick={() => navigate(-1)}
-          >
-            <p className={styles.searchAgainText}>Search Again</p>
-          </button>
-        </div>
+          ))
+        )}
       </div>
     </div>
   );
