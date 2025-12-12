@@ -169,57 +169,6 @@ export default function FuelFormScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const renderStationDropdown = () => (
-    <div className={styles.inputContainer}>
-      <label className={styles.label}>Station</label>
-      <button
-        className={styles.dropdown}
-        onClick={() =>
-          setShowDropdowns((prev) => ({
-            ...prev,
-            stationId: !prev.stationId,
-          }))
-        }
-        disabled={loadingStations || stations.length === 0}
-      >
-        <span
-          className={`${styles.dropdownText} ${
-            !formData.stationId ? styles.placeholderText : ""
-          }`}
-        >
-          {loadingStations
-            ? "Loading stations..."
-            : stations.length === 0
-            ? "No stations available"
-            : stations.find((s) => (s.id || s._id) === formData.stationId)?.name ||
-              "Select station"}
-        </span>
-        <span style={{ fontSize: 20, color: "#64748b" }}>
-          {showDropdowns.stationId ? "⬆️" : "⬇️"}
-        </span>
-      </button>
-
-      {showDropdowns.stationId && stations.length > 0 && (
-        <div className={styles.dropdownList}>
-          {stations.map((station) => {
-            const stationId = station.id || station._id;
-            return (
-              <button
-                key={stationId}
-                className={styles.dropdownItem}
-                onClick={() => handleSelect("stationId", stationId)}
-              >
-                <span className={styles.dropdownItemText}>
-                  {station.name || "Station"}{station.town ? ` - ${station.town}` : ""}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-
   const renderDropdown = (field, options, label) => (
     <div className={styles.inputContainer}>
       <label className={styles.label}>{label}</label>
@@ -265,8 +214,13 @@ export default function FuelFormScreen() {
         {renderDropdown("fuelType", FUEL_TYPES, "Fuel Type")}
         {renderDropdown("preferredBrand", BRANDS, "Preferred Brand")}
         {renderDropdown("province", SRI_LANKAN_PROVINCES, "Province")}
-        {renderStationDropdown()}
         {formData.province ? renderDropdown("town", TOWNS[formData.province] || [], "Town") : null}
+        {loadingStations && (
+          <p className={styles.helperText}>Loading stations...</p>
+        )}
+        {!loadingStations && stations.length === 0 && (
+          <p className={styles.helperText}>No stations available right now.</p>
+        )}
       </div>
 
       <div className={styles.footer}>
