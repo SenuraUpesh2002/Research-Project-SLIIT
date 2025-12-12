@@ -5,19 +5,26 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body,
 #root {
   height: 100%;
   width: 100%;
-  font-family: 'Roboto', sans-serif;
-  color: var(--text-color-primary);
-  background-color: var(--background-color-primary);
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+  transition: color var(--transition-fast);
 }
 
 ul {
@@ -28,21 +35,48 @@ button {
   cursor: pointer;
   border: none;
   background: none;
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--font-family);
+  transition: all var(--transition-fast);
 }
 
 input,
-textarea {
-  font-family: 'Roboto', sans-serif;
+textarea,
+select {
+  font-family: var(--font-family);
   border: none;
   outline: none;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Selection Styling */
+::selection {
+  background-color: var(--primary-light);
+  color: var(--text-white);
 }
 
 /* Utility Classes */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 var(--spacing-xl);
 }
 
 .flex-center {
@@ -58,17 +92,37 @@ textarea {
 }
 
 .text-primary {
-  color: var(--primary-color);
+  color: var(--primary);
 }
 
 .text-secondary {
-  color: var(--secondary-color);
+  color: var(--secondary);
 }
 
 .bg-primary {
-  background-color: var(--primary-color);
+  background-color: var(--primary);
 }
 
 .bg-secondary {
-  background-color: var(--secondary-color);
+  background-color: var(--secondary);
+}
+
+/* Loading Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
