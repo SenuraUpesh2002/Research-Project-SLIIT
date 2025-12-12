@@ -4,32 +4,25 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import PredictionChart from '../components/PredictionChart';
-// import PredictionChart from '../components/PredictionChart';
 import StaffingRecommendation from '../components/StaffingRecommendation';
-import WeatherWidget from '../components/WeatherWidget';
-import HolidayCalendar from '../components/HolidayCalendar';
-import BusyTimeHeatmap from '../components/BusyTimeHeatmap';
-import { Activity } from 'lucide-react';
+import { Activity, TrendingUp } from 'lucide-react';
 
 const PredictionsTab = () => {
     const [forecast, setForecast] = useState([]);
     const [staffing, setStaffing] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedDayIndex, setSelectedDayIndex] = useState(0);
-    const [loadingStaffing, setLoadingStaffing] = useState(false);
 
     // Generate day label from date string
     const getDayLabel = (dateStr) => {
         if (!dateStr) return 'Morning Shift';
-        const date = new Date(dateStr);
-        return new Date(dateStr).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }) + ' Morning';
+        return new Date(dateStr).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
     };
 
     // Fetch staffing recommendation for a specific day
     const fetchStaffingForDay = async (dayIndex) => {
         if (!forecast[dayIndex]) return;
 
-        setLoadingStaffing(true);
         try {
             const token = localStorage.getItem('token');
             const config = { headers: { 'x-auth-token': token } };
@@ -40,7 +33,7 @@ const PredictionsTab = () => {
                 {
                     predicted_demand: selectedDay.demand,
                     date: selectedDay.date,
-                    shift: 'morning', // default
+                    shift: 'morning',
                     include_weather: true,
                     include_holidays: true,
                     include_busy_times: true
@@ -55,8 +48,6 @@ const PredictionsTab = () => {
             });
         } catch (error) {
             console.error('Error fetching staffing:', error);
-        } finally {
-            setLoadingStaffing(false);
         }
     };
 
@@ -84,7 +75,7 @@ const PredictionsTab = () => {
                 const firstDay = forecastRes.data[0];
                 setStaffing({
                     ...staffingRes.data,
-                    shift: firstDay ? getDayLabel(firstDay.date) : 'Tomorrow Morning',
+                    shift: firstDay ? getDayLabel(firstDay.date) : 'Tomorrow',
                     predicted_demand: firstDay?.demand || 520,
                 });
                 setLoading(false);
@@ -100,77 +91,86 @@ const PredictionsTab = () => {
         return (
             <div className="flex items-center justify-center h-96">
                 <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-400/20 to-cyan-400/20 flex items-center justify-center">
-                        <Activity className="w-8 h-8 text-blue-600 animate-pulse" />
-                    </div>
-                    <p className="text-lg font-light text-[#515154]">AI Engine is thinking...</p>
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
+                        className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-t-blue-600 border-r-purple-600 border-b-pink-600 border-l-transparent"
+                    />
+                    <p className="text-lg font-light text-gray-500">Loading predictions...</p>
                 </div>
             </div>
         );
     }
 
     const tomorrowDemand = forecast[0]?.demand || 0;
-    const weeklyAvg = forecast.length > 0
-        ? Math.round(forecast.reduce((a, b) => a + b.demand, 0) / forecast.length)
-        : 0;
-    const maxDemand = forecast.length > 0 ? Math.max(...forecast.map(d => d.demand)) : 0;
-    const minDemand = forecast.length > 0 ? Math.min(...forecast.map(d => d.demand)) : 0;
     const trend = forecast.length > 1 ? forecast[forecast.length - 1].demand - forecast[0].demand : 0;
 
     return (
         <div className="space-y-8">
             {/* Header */}
             <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-end justify-between"
             >
-                <div>
-                    <h2 className="text-4xl font-semibold tracking-tight text-[#1D1D1F]">
-                        AI Demand Intelligence
-                    </h2>
-                    <p className="text-lg text-[#86868B] mt-2 font-light">
-                        Predictive insights for smarter station management.
-                    </p>
-                </div>
-                <div className="flex gap-4">
-                    <div className="bg-white/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 text-xs font-medium text-gray-500 shadow-sm flex items-center">
-                        <Activity className="w-3 h-3 mr-1.5 text-blue-500" />
-                        Model Accuracy: 94%
-                    </div>
-                </div>
+                <h1 className="text-5xl font-light tracking-tight text-gray-900">AI Demand Intelligence</h1>
+                <p className="text-xl text-gray-500 mt-3">
+                    Predictive insights for smarter station management
+                </p>
             </motion.div>
 
-            {/* Bento Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                {/* 1. Main Prediction Chart (Span 3) */}
+            {/* Stats Cards */}
+            <div className="grid grid-cols-2 gap-4">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.98 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="lg:col-span-3 bg-white rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex flex-col justify-between"
+                    className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6"
                 >
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h3 className="text-xl font-medium text-[#1D1D1F]">Weekly Forecast</h3>
-                            <p className="text-sm text-gray-500 mt-1">Projected fuel demand for the next 7 days</p>
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center">
+                            <Activity className="w-5 h-5 text-white" />
                         </div>
-                        {/* Integrated Stats */}
-                        <div className="flex gap-8">
-                            <div>
-                                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Tommorow</p>
-                                <p className="text-2xl font-light text-[#1D1D1F] mt-1">{tomorrowDemand.toLocaleString()} L</p>
-                            </div>
-                            <div>
-                                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Trend</p>
-                                <p className={`text-2xl font-light mt-1 ${trend >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
-                                    {trend >= 0 ? '+' : ''}{trend}%
-                                </p>
-                            </div>
+                        <div>
+                            <p className="text-sm text-blue-600 font-medium">Tomorrow's Demand</p>
+                            <p className="text-2xl font-semibold text-gray-900">{tomorrowDemand.toLocaleString()} L</p>
                         </div>
                     </div>
-                    <div className="flex-1 min-h-[300px]">
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className={`bg-gradient-to-br ${trend >= 0 ? 'from-emerald-50 to-emerald-100 border-emerald-200' : 'from-rose-50 to-rose-100 border-rose-200'} border rounded-2xl p-6`}
+                >
+                    <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-xl ${trend >= 0 ? 'bg-emerald-500' : 'bg-rose-500'} flex items-center justify-center`}>
+                            <TrendingUp className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <p className={`text-sm ${trend >= 0 ? 'text-emerald-600' : 'text-rose-600'} font-medium`}>Weekly Trend</p>
+                            <p className={`text-2xl font-semibold ${trend >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                                {trend >= 0 ? '+' : ''}{trend}%
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+
+            {/* Main Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Forecast Chart */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="lg:col-span-2 bg-white rounded-3xl p-8 shadow-lg border border-gray-200"
+                >
+                    <div className="mb-6">
+                        <h3 className="text-2xl font-semibold text-gray-900">7-Day Forecast</h3>
+                        <p className="text-sm text-gray-500 mt-1">Projected fuel demand for the next week</p>
+                    </div>
+                    <div className="min-h-[350px]">
                         <PredictionChart
                             data={forecast}
                             onDayClick={handleDayClick}
@@ -179,68 +179,27 @@ const PredictionsTab = () => {
                     </div>
                 </motion.div>
 
-                {/* 2. Staffing Recommendation (Span 1, Row 1-2 Vertical) */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="lg:col-span-1 bg-gradient-to-b from-blue-50/50 to-white rounded-[32px] p-1 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-blue-100/50 flex flex-col"
-                >
-                    <div className="h-full bg-white/60 backdrop-blur-xl rounded-[28px] p-6 flex flex-col">
-                        <div className="mb-6">
-                            <h3 className="text-lg font-medium text-[#1D1D1F] flex items-center gap-2">
-                                <span className="p-1.5 bg-blue-100 text-blue-600 rounded-lg">
-                                    <Activity className="w-4 h-4" />
-                                </span>
-                                Staffing
-                            </h3>
-                            <p className="text-sm text-gray-500 mt-2 leading-relaxed">
-                                Recommended staff allocation for {getDayLabel(forecast[selectedDayIndex]?.date)}
-                            </p>
-                        </div>
-
-                        <div className="flex-1 flex flex-col justify-end">
-                            {staffing ? (
-                                <StaffingRecommendation recommendation={staffing} />
-                            ) : (
-                                <div className="animate-pulse bg-gray-100 rounded-2xl h-48 w-full" />
-                            )}
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* 3. Weather Widget (Span 1) */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="lg:col-span-1 overflow-hidden rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
-                >
-                    <WeatherWidget />
-                </motion.div>
-
-                {/* 4. Busy Time Heatmap (Span 2) */}
+                {/* Staffing Recommendation */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="lg:col-span-2 bg-white rounded-[32px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100"
+                    className="bg-gradient-to-br from-purple-50 to-white rounded-3xl p-8 shadow-lg border border-purple-200"
                 >
-                    <div className="h-full">
-                        <BusyTimeHeatmap />
+                    <div className="mb-6">
+                        <h3 className="text-xl font-semibold text-gray-900">Staffing Recommendation</h3>
+                        <p className="text-sm text-gray-500 mt-2">
+                            For {getDayLabel(forecast[selectedDayIndex]?.date)}
+                        </p>
+                    </div>
+                    <div>
+                        {staffing ? (
+                            <StaffingRecommendation recommendation={staffing} />
+                        ) : (
+                            <div className="animate-pulse bg-gray-100 rounded-2xl h-48 w-full" />
+                        )}
                     </div>
                 </motion.div>
-
-                {/* 5. Holiday Calendar (Span 1) */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="lg:col-span-1 bg-white rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden"
-                >
-                    <HolidayCalendar />
-                </motion.div>
-
             </div>
         </div>
     );

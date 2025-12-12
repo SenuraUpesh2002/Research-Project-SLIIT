@@ -94,12 +94,47 @@ const StaffingRecommendation = ({ recommendation }) => {
                     </div>
                 </div>
 
-                {/* Footer Insight */}
-                <div className="pt-6 border-t border-white/40">
-                    <p className="text-sm font-light text-[#64748B] text-center leading-relaxed">
-                        Powered by neural forecasting • Historical trends • Weather • Traffic patterns
-                    </p>
-                </div>
+                {/* ML Reasoning Section - Dynamic */}
+                {recommendation.reasoning && (
+                    <div className="mt-6 pt-6 border-t border-white/40">
+                        <div className="mb-4">
+                            <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                                ML Analysis
+                            </h4>
+                            <p className="text-sm text-gray-600 leading-relaxed">
+                                {recommendation.reasoning.summary}
+                            </p>
+                        </div>
+
+                        {recommendation.reasoning.ml_analysis && (
+                            <div className="space-y-2">
+                                {recommendation.reasoning.ml_analysis.map((factor, idx) => (
+                                    <div key={idx} className="flex items-start gap-2 text-xs text-gray-600">
+                                        <span className="text-blue-500 mt-0.5">•</span>
+                                        <span>{factor}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {recommendation.reasoning.historical_comparison && (
+                            <div className="mt-4 px-4 py-3 bg-blue-50/50 rounded-xl border border-blue-100">
+                                <p className="text-xs font-medium text-blue-700">
+                                    {recommendation.reasoning.historical_comparison}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Fallback Footer if no reasoning */}
+                {!recommendation.reasoning && (
+                    <div className="pt-6 border-t border-white/40">
+                        <p className="text-sm font-light text-[#64748B] text-center leading-relaxed">
+                            Powered by neural forecasting • Historical trends • Weather • Traffic patterns
+                        </p>
+                    </div>
+                )}
             </div>
         </motion.div>
     );

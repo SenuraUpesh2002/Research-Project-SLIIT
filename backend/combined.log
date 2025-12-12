@@ -1,0 +1,133 @@
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"address":"127.0.0.1","code":"ECONNREFUSED","errno":-61,"fatal":true,"level":"error","message":"Database connection failed: connect ECONNREFUSED 127.0.0.1:8889","port":8889,"service":"fuelwatch-backend","stack":"Error: connect ECONNREFUSED 127.0.0.1:8889\n    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)","syscall":"connect"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/auth/login","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/attendance/checkin","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/checkin/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/checkin/active","service":"fuelwatch-backend"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/weather/current","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/busy-times/patterns","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/holidays/upcoming","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}

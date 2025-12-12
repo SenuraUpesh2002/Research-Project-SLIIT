@@ -63,7 +63,7 @@ const EmployeeDetailsTab = () => {
     const fetchActiveEmployees = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:3001/api/checkin/active', {
+            const res = await axios.get('http://localhost:3001/api/attendance/active', {
                 headers: { 'x-auth-token': token },
             });
             setEmployees(res.data);
@@ -148,8 +148,8 @@ const EmployeeDetailsTab = () => {
                     </p>
                 </div>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+                {/* Stats Grid - Simplified */}
+                <div className="grid grid-cols-2 gap-4">
                     <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-5">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center">
@@ -170,54 +170,6 @@ const EmployeeDetailsTab = () => {
                             <div>
                                 <p className="text-sm text-emerald-600 font-medium">Total Staff</p>
                                 <p className="text-2xl font-semibold text-gray-900">{stats.registered}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-2xl p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center">
-                                <Shield className="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                                <p className="text-sm text-purple-600 font-medium">Managers</p>
-                                <p className="text-2xl font-semibold text-gray-900">{stats.managers}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-2xl p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center">
-                                <Clock className="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                                <p className="text-sm text-amber-600 font-medium">Morning Shift</p>
-                                <p className="text-2xl font-semibold text-gray-900">{stats.morning}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-200 rounded-2xl p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center">
-                                <Clock className="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                                <p className="text-sm text-rose-600 font-medium">Afternoon Shift</p>
-                                <p className="text-2xl font-semibold text-gray-900">{stats.afternoon}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-2xl p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center">
-                                <Clock className="w-5 h-5 text-white" />
-                            </div>
-                            <div>
-                                <p className="text-sm text-indigo-600 font-medium">Evening Shift</p>
-                                <p className="text-2xl font-semibold text-gray-900">{stats.evening}</p>
                             </div>
                         </div>
                     </div>
@@ -274,26 +226,6 @@ const EmployeeDetailsTab = () => {
                                 className="w-full pl-12 pr-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             />
                         </div>
-
-                        {viewMode === 'active' && (
-                            <div className="flex items-center gap-2">
-                                <Filter className="w-5 h-5 text-gray-400" />
-                                <div className="flex gap-2">
-                                    {['all', 'morning', 'afternoon', 'evening'].map((f) => (
-                                        <button
-                                            key={f}
-                                            onClick={() => setFilter(f)}
-                                            className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${filter === f
-                                                ? 'bg-blue-500 text-white'
-                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                                }`}
-                                        >
-                                            {f === 'all' ? 'All Shifts' : f}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </motion.div>

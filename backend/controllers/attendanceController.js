@@ -92,3 +92,27 @@ exports.getMyAttendance = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.getActiveAttendance = async (req, res) => {
+    try {
+        // Get all employees who are currently checked in (no checkout time) today
+        const [activeRecords] = await db.execute(
+            `SELECT 
+                a.*, 
+                e.full_name,
+                e.email,
+                e.phone,
+                e.role
+            FROM attendance a
+            JOIN employees e ON a.employee_email = e.email
+            WHERE DATE(a.check_in_time) = CURDATE() 
+            AND a.check_out_time IS NULL
+            ORDER BY a.check_in_time DESC`
+        );
+
+        res.json(activeRecords);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
