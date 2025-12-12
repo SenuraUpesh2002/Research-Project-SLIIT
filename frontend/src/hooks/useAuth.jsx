@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Register function
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, role = "user") => {
     if (!name || !email || !password) {
       return { success: false, message: 'All fields are required' };
     }
@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
       const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, role }),
       });
       const data = await response.json();
 

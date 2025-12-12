@@ -22,28 +22,29 @@ export default function Signup() {
     // 🛑 STOP any form from submitting
     if (e) e.preventDefault();
 
-    console.log("DEBUG VALUES:");
-    console.log("name:", name);
-    console.log("email:", email);
-    console.log("password:", password);
-    console.log("confirmPassword:", confirmPassword);
+    // Trim whitespace from inputs
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+    const trimmedConfirmPassword = confirmPassword.trim();
 
-    if (!name || !email || !password || !confirmPassword) {
+    console.log("DEBUG VALUES:");
+    console.log("name:", trimmedName);
+    console.log("email:", trimmedEmail);
+    console.log("password:", trimmedPassword);
+    console.log("confirmPassword:", trimmedConfirmPassword);
+
+    if (!trimmedName || !trimmedEmail || !trimmedPassword || !trimmedConfirmPassword) {
       alert("All fields are required");
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (trimmedPassword !== trimmedConfirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    const result = await register({
-      name,
-      email,
-      password,
-      role: "user"
-    });
+    const result = await register(trimmedName, trimmedEmail, trimmedPassword, "user");
 
     if (!result.success) {
       alert(result.message || "Registration failed");
