@@ -1,14 +1,14 @@
 .container {
   padding: 20px;
-  background-color: #f0f2f5;
+  background-color: var(--bg-primary);
   min-height: calc(100vh - 60px); /* Adjust based on header/footer height */
 }
 
 .header {
-  color: #333;
+  color: var(--text-white);
   margin-bottom: 30px;
   font-size: 2em;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid var(--border-medium);
   padding-bottom: 10px;
 }
 
@@ -21,7 +21,7 @@
 
 .searchInput {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-medium);
   border-radius: 5px;
   flex-grow: 1;
   max-width: 300px;
@@ -29,9 +29,9 @@
 
 .filterSelect {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-medium);
   border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--bg-secondary);
 }
 
 .error {
