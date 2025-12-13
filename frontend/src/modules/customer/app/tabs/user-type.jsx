@@ -40,11 +40,11 @@ export default function UserTypeScreen() {
             </div>
             <div className={styles.featureItem}>
               <span style={{ color: "#10b981", marginRight: 8 }}>✔</span> {/* Placeholder icon */}
-              <p className={styles.featureText}>Queue status updates</p>
+              <p className={styles.featureText}>Nearest fuel stations</p>
             </div>
             <div className={styles.featureItem}>
               <span style={{ color: "#10b981", marginRight: 8 }}>✔</span> {/* Placeholder icon */}
-              <p className={styles.featureText}>Price comparisons</p>
+              <p className={styles.featureText}>User Preferences</p>
             </div>
           </div>
         </button>

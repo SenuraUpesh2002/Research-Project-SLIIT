@@ -296,7 +296,7 @@ export default function FuelFormScreen() {
         <button className={styles.backButton} onClick={() => navigate(-1)}>
           <span style={{ fontSize: 24, color: '#1e40af' }}>⬅️</span>
         </button>
-        <p className={styles.title}>Enter Your Preferences</p>
+        <p className={styles.title}>Find Fuel Station</p>
         <p className={styles.subtitle}>Help us find the best fuel station for you</p>
       </div>
 
