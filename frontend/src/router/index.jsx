@@ -8,6 +8,7 @@ import Profile from '../modules/customer/app/(tabs)/profile';
 import Results from '../modules/customer/app/(tabs)/results';
 import UserType from '../modules/customer/app/(tabs)/user-type';
 import AdminLogin from '../modules/admin/pages/Login';
+import AdminSignup from '../modules/admin/pages/AdminSignup';
 
 // Public Pages (assuming these will be created)
 const LoginPage = () => (
@@ -22,6 +23,8 @@ const AppRouter = () => {
   return (
     <Routes>
         {/* Public Routes */}
+        <Route path="/testpage" element={<div>Test Page!</div>} />
+        <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin/login" element={<AdminLogin />} />

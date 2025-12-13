@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
 
@@ -28,6 +27,8 @@ const Navbar = ({ isAdmin = false }) => {
             <li><Link to="/about">About</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/login">Login</Link></li>
+            <li><Link to="/admin/login">Admin Login</Link></li>
+            <li><Link to="/admin/signup">Admin Signup</Link></li>
           </>
         )}
       </ul>

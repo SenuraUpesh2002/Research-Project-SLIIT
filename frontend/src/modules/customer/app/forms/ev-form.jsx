@@ -2,6 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ev-form.module.css";
 import { API_ENDPOINTS } from "../../../../constants/api";
+import { SRI_LANKA_GEO_DATA } from "../../../../constants/sriLankaGeoData";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import iconUrl from 'leaflet/dist/images/marker-icon.png';
+import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+
+// Fix for default marker icon not showing
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+});
 
 const SRI_LANKAN_PROVINCES = [
   "Western Province",
@@ -38,9 +53,70 @@ export default function EVFormScreen() {
     province: "",
     town: "",
     stationId: "",
+    latitude: null,
+    longitude: null,
   });
   const [stations, setStations] = useState([]);
   const [loadingStations, setLoadingStations] = useState(false);
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [mapCenter, setMapCenter] = useState([6.9271, 79.8612]); // Default to Sri Lanka center
+  const [mapZoom, setMapZoom] = useState(10); // Default zoom
+  const [suggestedMarkerPosition, setSuggestedMarkerPosition] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [tempMarkerPosition, setTempMarkerPosition] = useState(null);
+  const [confirmedLocationName, setConfirmedLocationName] = useState("");
+
+  useEffect(() => {
+    if (tempMarkerPosition) {
+      const fetchLocationName = async () => {
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${tempMarkerPosition.lat}&lon=${tempMarkerPosition.lng}`
+          );
+          const data = await response.json();
+          if (data.display_name) {
+            setConfirmedLocationName(data.display_name);
+          } else {
+            setConfirmedLocationName("Unknown location");
+          }
+        } catch (error) {
+          console.error("Error fetching location name:", error);
+          setConfirmedLocationName("Error fetching location");
+        }
+      };
+      fetchLocationName();
+    }
+  }, [tempMarkerPosition]);
+
+  function LocationMarker() {
+    const map = useMapEvents({
+      click(e) {
+        setTempMarkerPosition(e.latlng);
+        setShowConfirmation(true);
+        setSuggestedMarkerPosition(null); // Clear suggested marker when user clicks
+      },
+    });
+
+    return markerPosition === null ? null : (
+      <Marker position={markerPosition}></Marker>
+    );
+  }
+
+  const handleConfirmLocation = () => {
+    setMarkerPosition(tempMarkerPosition);
+    setFormData((prev) => ({
+      ...prev,
+      latitude: tempMarkerPosition.lat,
+      longitude: tempMarkerPosition.lng,
+    }));
+    setShowConfirmation(false);
+    setTempMarkerPosition(null);
+  };
+
+  const handleCancelConfirmation = () => {
+    setShowConfirmation(false);
+    setTempMarkerPosition(null);
+  };
 
   const [showDropdowns, setShowDropdowns] = useState({
     chargerType: false,
@@ -57,6 +133,21 @@ export default function EVFormScreen() {
     }));
     setShowDropdowns((prev) => ({ ...prev, [field]: false }));
   };
+
+  useEffect(() => {
+    if (formData.province && SRI_LANKA_GEO_DATA[formData.province]) {
+      let newCenter = SRI_LANKA_GEO_DATA[formData.province].center;
+      let newZoom = SRI_LANKA_GEO_DATA[formData.province].zoom;
+
+      if (formData.town && SRI_LANKA_GEO_DATA[formData.province].towns[formData.town]) {
+        newCenter = SRI_LANKA_GEO_DATA[formData.province].towns[formData.town].center;
+        newZoom = SRI_LANKA_GEO_DATA[formData.province].towns[formData.town].zoom;
+      }
+      setMapCenter(newCenter);
+      setMapZoom(newZoom);
+      setSuggestedMarkerPosition(newCenter);
+    }
+  }, [formData.province, formData.town]);
 
   const validateForm = () => {
     if (!formData.province) {
@@ -84,6 +175,8 @@ export default function EVFormScreen() {
             powerRating: formData.powerRating,
             province: formData.province,
             town: formData.town,
+            latitude: formData.latitude,
+            longitude: formData.longitude,
           },
         };
 
@@ -116,6 +209,8 @@ export default function EVFormScreen() {
       town: formData.town,
       chargerType: formData.chargerType || '',
       powerRating: formData.powerRating || '',
+      latitude: formData.latitude,
+      longitude: formData.longitude,
     });
     navigate(`/results?${queryParams.toString()}`);
   };
@@ -207,6 +302,29 @@ export default function EVFormScreen() {
         {renderDropdown("powerRating", POWER_RATINGS, "Power Rating (Optional)")}
         {renderDropdown("province", SRI_LANKAN_PROVINCES, "Province")}
         {formData.province ? renderDropdown("town", TOWNS[formData.province] || [], "Town") : null}
+
+        <div className={styles.mapContainer}>
+          <MapContainer key={JSON.stringify(mapCenter)} center={mapCenter} zoom={mapZoom} style={{ height: "400px", width: "100%" }}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {markerPosition && <Marker position={markerPosition}></Marker>}
+            {!markerPosition && suggestedMarkerPosition && !showConfirmation && <Marker position={suggestedMarkerPosition}></Marker>}
+            {showConfirmation && tempMarkerPosition && <Marker position={tempMarkerPosition}></Marker>}
+            <LocationMarker />
+          </MapContainer>
+        </div>
+
+        {showConfirmation && tempMarkerPosition && (
+            <div className={styles.confirmationDialog}>
+              <p>Confirm this location? {confirmedLocationName}</p>
+              <div className={styles.dialogActions}>
+                <button onClick={handleConfirmLocation} className={styles.confirmButton}>Yes</button>
+                <button onClick={handleCancelConfirmation} className={styles.cancelButton}>No</button>
+              </div>
+            </div>
+          )}
 
         <div className={styles.chargerInfo}>
           <p className={styles.chargerInfoTitle}>Charger Types Available in Sri Lanka:</p>
