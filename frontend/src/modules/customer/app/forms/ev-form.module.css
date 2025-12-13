@@ -15,7 +15,7 @@
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="light"] .header {
+[data-theme=\"light\"] .header {
   background: var(--bg-light-header);
   box-shadow: var(--shadow-light-header);
 }
@@ -148,7 +148,7 @@
   animation: slideDown 0.2s ease-out;
 }
 
-[data-theme="light"] .dropdownList {
+[data-theme=\"light\"] .dropdownList {
   box-shadow: 0 10px 40px rgba(53, 27, 101, 0.1);
 }
 
@@ -159,8 +159,7 @@
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
+    transform: translateY(0);  }
 }
 
 .dropdownItem {
@@ -194,6 +193,15 @@
   padding: var(--spacing-xl);
   margin-top: var(--spacing-lg);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-medium);
+}
+
+.mapContainer {
+  height: 400px; /* Or any desired height */
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
   border: 1px solid var(--border-medium);
 }
 
@@ -248,7 +256,7 @@
   bottom: 0;
 }
 
-[data-theme="light"] .footer {
+[data-theme=\"light\"] .footer {
   background: var(--bg-light-footer);
   box-shadow: var(--shadow-light-footer);
 }
@@ -316,4 +324,52 @@
 
 .findButton:hover:not(:disabled) .findButtonText {
   color: var(--text-white);
+}
+
+.confirmationDialog {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-medium);
+  text-align: center;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.confirmButton,
+.cancelButton {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-base);
+  border: none;
+}
+
+.confirmButton {
+  background-color: var(--primary);
+  color: var(--text-white);
+}
+
+.confirmButton:hover {
+  background-color: var(--primary-dark);
+}
+
+.cancelButton {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.cancelButton:hover {
+  background-color: var(--border-medium);
 }
