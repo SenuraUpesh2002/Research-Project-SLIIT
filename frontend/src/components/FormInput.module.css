@@ -6,29 +6,31 @@
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #333;
+  color: var(--text-secondary);
 }
 
 .input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-medium);
   border-radius: 5px;
   font-size: 1em;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .input:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 0.2rem var(--shadow-blue);
 }
 
 .inputError {
-  border-color: #dc3545;
+  border-color: var(--red-error);
 }
 
 .errorText {
-  color: #dc3545;
+  color: var(--red-error);
   font-size: 0.9em;
   margin-top: 5px;
 }
