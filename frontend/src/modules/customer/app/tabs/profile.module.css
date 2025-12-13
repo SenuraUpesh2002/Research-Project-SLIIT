@@ -12,7 +12,7 @@
 }
 
 .profileHeader {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
   backdrop-filter: blur(20px);
   border-radius: 0;
   padding: var(--spacing-2xl);
@@ -21,7 +21,7 @@
   flex-direction: column;
   align-items: center;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-medium);
   animation: fadeInDown 0.6s ease-out;
 }
 
@@ -29,13 +29,13 @@
   width: 100px;
   height: 100px;
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-tertiary);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: var(--spacing-lg);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-medium);
 }
 
 .profileName {
@@ -49,7 +49,7 @@
 
 .profileEmail {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   font-weight: 300;
 }
 
@@ -62,7 +62,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-medium);
   width: 100%;
   margin-bottom: var(--spacing-xl);
   transition: all var(--transition-base);
@@ -78,7 +78,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-secondary-hover);
   transition: left 0.3s ease;
 }
 
@@ -87,13 +87,13 @@
 }
 
 .logoutButton:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: var(--border-dark);
   transform: translateY(-2px);
 }
 
 .logoutButtonText {
   font-size: var(--font-size-base);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   font-weight: 400;
   transition: color var(--transition-fast);
   position: relative;
@@ -107,7 +107,7 @@
 }
 
 .error {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   text-align: center;
   padding: var(--spacing-xl);
   font-size: var(--font-size-base);
@@ -116,12 +116,12 @@
 
 .section {
   margin-bottom: var(--spacing-xl);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
   backdrop-filter: blur(20px);
   border-radius: 0;
   padding: var(--spacing-xl);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-medium);
   animation: fadeInUp 0.6s ease-out;
 }
 
@@ -132,7 +132,7 @@
 .sectionHeader {
   margin-bottom: var(--spacing-lg);
   padding-bottom: var(--spacing-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-medium);
 }
 
 .sectionTitle {
@@ -146,7 +146,7 @@
 
 .sectionSubtitle {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   font-weight: 300;
 }
 
@@ -158,7 +158,7 @@
 }
 
 .preferenceCard {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
   border-radius: 0;
   padding: var(--spacing-lg);
   display: flex;
@@ -166,32 +166,32 @@
   align-items: center;
   text-align: center;
   transition: all var(--transition-base);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-medium);
 }
 
 .preferenceCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-dark);
+  background: var(--bg-secondary-hover);
 }
 
 .preferenceIcon {
   width: 50px;
   height: 50px;
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-tertiary);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: var(--spacing-md);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-medium);
 }
 
 .preferenceLabel {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   margin-bottom: var(--spacing-xs);
   font-weight: 300;
   text-transform: uppercase;
@@ -214,7 +214,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-medium);
   width: 100%;
   margin-top: var(--spacing-md);
   transition: all var(--transition-base);
@@ -229,7 +229,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-secondary-hover);
   transition: left 0.3s ease;
 }
 
@@ -238,13 +238,13 @@
 }
 
 .secondaryButton:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: var(--border-dark);
   transform: translateY(-2px);
 }
 
 .secondaryButtonText {
   font-size: var(--font-size-base);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   margin-left: var(--spacing-sm);
   font-weight: 400;
   transition: color var(--transition-fast);
@@ -259,18 +259,18 @@
 }
 
 .stationCard {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
   border-radius: 0;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-medium);
   transition: all var(--transition-base);
 }
 
 .stationCard:hover {
   transform: translateX(4px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: var(--border-dark);
 }
 
 .stationHeader {
@@ -291,7 +291,7 @@
 
 .stationAddress {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   font-weight: 300;
 }
 
@@ -334,31 +334,31 @@
   flex-direction: row;
   align-items: center;
   padding: var(--spacing-xs) var(--spacing-sm);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-tertiary);
   border-radius: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-medium);
 }
 
 .stationMetaText {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   margin-left: var(--spacing-xs);
   font-weight: 300;
 }
 
 .fuelTag {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-tertiary);
   border-radius: 0;
   padding: var(--spacing-xs) var(--spacing-md);
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-medium);
 }
 
 .fuelTagText {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   margin-left: var(--spacing-xs);
   font-weight: 300;
   letter-spacing: 0.5px;
@@ -372,12 +372,12 @@
 }
 
 .alertCard {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
   border-radius: 0;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-medium);
+  border-left: 2px solid var(--border-dark);
   transition: all var(--transition-base);
 }
 
@@ -396,7 +396,7 @@
 .alertStatus {
   font-size: var(--font-size-sm);
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   margin-left: var(--spacing-sm);
   letter-spacing: 1px;
 }
@@ -411,23 +411,23 @@
 
 .alertMessage {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   margin-bottom: var(--spacing-xs);
   font-weight: 300;
 }
 
 .alertTime {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-tertiary);
   font-weight: 300;
 }
 
 .historyCard {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
   border-radius: 0;
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-sm);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-medium);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -438,7 +438,7 @@
 .historyCard:hover {
   transform: translateX(4px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: var(--border-dark);
 }
 
 .historyName {
@@ -450,27 +450,27 @@
 
 .historyType {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   font-weight: 300;
 }
 
 .historyStatus {
   font-size: var(--font-size-sm);
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   text-align: right;
   letter-spacing: 1px;
 }
 
 .historyTime {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-tertiary);
   text-align: right;
   font-weight: 300;
 }
 
 .emptyText {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   font-size: var(--font-size-sm);
   font-style: italic;
   text-align: center;
