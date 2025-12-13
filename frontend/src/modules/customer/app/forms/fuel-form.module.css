@@ -63,18 +63,46 @@
   width: 100%;
 }
 
+.formTitle {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-h4);
+}
+
+.infoCard {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+  border-left: 2px solid var(--border-dark);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.infoText {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-left: var(--spacing-md);
+  flex: 1;
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
 .inputContainer {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
   position: relative;
 }
 
 .label {
   font-size: var(--font-size-sm);
-  font-weight: 400;
-  color: var(--text-secondary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .dropdown {
@@ -82,32 +110,30 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--bg-tertiary);
-  backdrop-filter: blur(20px);
-  border-radius: 0;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-md);
-  border: 1px solid var(--border-medium);
-  box-shadow: none;
+  border: 2px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all var(--transition-fast);
 }
 
 .dropdown:hover {
-  border-color: var(--border-dark);
-  background-color: var(--bg-secondary-hover);
+  border-color: var(--secondary);
+  box-shadow: var(--shadow-md);
 }
 
 .dropdown:focus {
   outline: none;
-  border-color: var(--border-dark);
-  box-shadow: 0 0 0 1px var(--border-medium);
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
 }
 
 .dropdownText {
   font-size: var(--font-size-base);
-  color: var(--text-white);
+  color: var(--text-primary);
   flex: 1;
-  font-weight: 300;
 }
 
 .placeholderText {
@@ -140,13 +166,12 @@
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
+    transform: translateY(0);  }
 }
 
 .dropdownItem {
   padding: var(--spacing-md);
-  border-bottom: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-light);
   cursor: pointer;
   transition: all var(--transition-base);
   background-color: transparent;
@@ -163,13 +188,22 @@
 
 .dropdownItemText {
   font-size: var(--font-size-base);
-  color: var(--text-white);
+  color: var(--text-light);
   font-weight: 300;
   letter-spacing: 0.5px;
 }
 
+.mapContainer {
+  height: 400px; /* Or any desired height */
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-medium);
+}
+
 .footer {
-  background: var(--bg-secondary);
+  background: var(--bg-gradient);
   backdrop-filter: blur(20px);
   padding: var(--spacing-xl);
   border-top: 1px solid var(--border-light);
@@ -246,4 +280,52 @@
 
 .findButton:hover:not(:disabled) .findButtonText {
   color: var(--text-white);
+}
+
+.confirmationDialog {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+  box-shadow: 0 44px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-medium);
+  text-align: center;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.confirmButton,
+.cancelButton {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-base);
+  border: none;
+}
+
+.confirmButton {
+  background-color: var(--primary);
+  color: var(--text-white);
+}
+
+.confirmButton:hover {
+  background-color: var(--primary-dark);
+}
+
+.cancelButton {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.cancelButton:hover {
+  background-color: var(--border-medium);
 }
