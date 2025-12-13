@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AdminRoutes from '../modules/admin/routes/admin.routes';
 import ProtectedRoute from './ProtectedRoute';
@@ -7,6 +6,7 @@ import Welcome from '../modules/customer/app/(tabs)/welcome';
 import Profile from '../modules/customer/app/(tabs)/profile';
 import Results from '../modules/customer/app/(tabs)/results';
 import UserType from '../modules/customer/app/(tabs)/user-type';
+import AdminLogin from '../modules/admin/pages/Login';
 
 // Public Pages (assuming these will be created)
 const LoginPage = () => (
@@ -23,6 +23,7 @@ const AppRouter = () => {
         {/* Public Routes */}
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* Protected Customer Routes */}
         <Route
