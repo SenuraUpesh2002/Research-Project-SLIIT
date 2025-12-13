@@ -1,3 +1,4 @@
+console.log('AppRouter loaded - should see this on every refresh');
 import { Routes, Route } from 'react-router-dom';
 import AdminRoutes from '../modules/admin/routes/admin.routes';
 import ProtectedRoute from './ProtectedRoute';
