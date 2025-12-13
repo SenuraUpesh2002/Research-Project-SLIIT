@@ -14,7 +14,6 @@
   --warning-light: #fef3c7;
   --info: #3b82f6;
   --info-light: #dbeafe;
-}
 
 /* Dark Mode (Default - Tesla Style) */
 [data-theme="dark"] {
@@ -45,34 +44,7 @@
   --border-dark: rgba(255, 255, 255, 0.3);
 }
 
-/* Light Mode */
-[data-theme="light"] {
-  --primary: var(--purple-lighter);
-  --primary-dark: var(--purple-medium);
-  --primary-light: var(--purple-light);
-  --secondary: var(--purple-dark);
-  --accent: var(--purple-medium);
-  
-  /* Background Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f6fc;
-  --bg-tertiary: #f0ecf9;
-  --bg-dark: var(--purple-dark);
-  --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f8f6fc 100%);
-  --bg-gradient-light: linear-gradient(180deg, #f8f6fc 0%, #f0ecf9 100%);
-  
-  /* Text Colors */
-  --text-primary: var(--purple-dark);
-  --text-secondary: var(--purple-medium);
-  --text-tertiary: rgba(66, 36, 106, 0.6);
-  --text-white: #ffffff;
-  --text-light: rgba(53, 27, 101, 0.9);
-  
-  /* Border Colors */
-  --border-light: rgba(53, 27, 101, 0.1);
-  --border-medium: rgba(53, 27, 101, 0.2);
-  --border-dark: rgba(53, 27, 101, 0.3);
-}
+
   
   /* Status Colors */
   --success: #10b981;
