@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QrCode, Fingerprint, ArrowLeft, CheckCircle2, XCircle, Fuel } from 'lucide-react';
+import { QrCode, Fingerprint, ArrowLeft, CheckCircle2, XCircle, Fuel, MapPin, Clock } from 'lucide-react';
 
 const MobileCheckIn = () => {
     const [scanning, setScanning] = useState(false);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
-    const [scannerInstance, setScannerInstance] = useState(null); // ← Fixed: no TS syntax!
+    const [scannerInstance, setScannerInstance] = useState(null);
+    const [currentTime, setCurrentTime] = useState(new Date());
     const navigate = useNavigate();
 
     // Safe user parsing
@@ -24,6 +25,12 @@ const MobileCheckIn = () => {
     } catch (e) {
         console.warn('Invalid user data in localStorage');
     }
+
+    // Update time every second
+    useEffect(() => {
+        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+        return () => clearInterval(timer);
+    }, []);
 
     // Redirect if not logged in
     useEffect(() => {
@@ -58,11 +65,11 @@ const MobileCheckIn = () => {
                 handleCheckIn(decodedText);
             },
             () => {
-                // Ignore scan errors (they're noisy)
+                // Ignore scan errors
             }
         );
 
-        setScannerInstance(scanner); // Save instance for cleanup
+        setScannerInstance(scanner);
     };
 
     const handleCheckIn = async (qrData) => {
@@ -96,138 +103,247 @@ const MobileCheckIn = () => {
         };
     }, [scannerInstance]);
 
+    const formatTime = (date) => {
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    };
+
+    const formatDate = (date) => {
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-6 relative overflow-hidden">
-            {/* Animated Background Orbs */}
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4 md:p-6 relative overflow-hidden">
+            {/* Professional Background Pattern */}
             <div className="absolute inset-0">
-                <motion.div
-                    animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ repeat: Infinity, duration: 15 }}
-                    className="absolute top-0 left-0 w-96 h-96 rounded-full bg-gradient-to-br from-emerald-500/30 to-teal-500/20 blur-3xl"
+                {/* Subtle gradient overlays */}
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/5 via-transparent to-violet-600/5" />
+
+                {/* Geometric patterns */}
+                <div
+                    className="absolute inset-0 opacity-10"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(30deg, transparent 48%, rgba(255,255,255,0.05) 48%, rgba(255,255,255,0.05) 52%, transparent 52%),
+                            linear-gradient(-30deg, transparent 48%, rgba(255,255,255,0.05) 48%, rgba(255,255,255,0.05) 52%, transparent 52%)
+                        `,
+                        backgroundSize: '50px 50px'
+                    }}
                 />
-                <motion.div
-                    animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.7, 0.4] }}
-                    transition={{ repeat: Infinity, duration: 18 }}
-                    className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-gradient-to-tl from-purple-500/30 to-pink-500/20 blur-3xl"
+
+                {/* Grid overlay */}
+                <div
+                    className="absolute inset-0 opacity-5"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '100px 100px'
+                    }}
                 />
             </div>
 
             <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="relative z-10 w-full max-w-lg"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="relative z-10 w-full max-w-md"
             >
-                <div className="bg-white/80 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
-                    {/* Header */}
-                    <div className="p-10 text-center border-b border-white/30">
+                {/* Main Card */}
+                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+                    {/* Header Section */}
+                    <div className="relative bg-gradient-to-br from-slate-900 to-slate-800 p-8 text-center">
+                        {/* Decorative elements */}
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl" />
+
                         <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-                            className="w-28 h-28 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-black to-gray-800 flex items-center justify-center shadow-2xl"
+                            initial={{ scale: 0, rotate: -180 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20,
+                                delay: 0.2
+                            }}
+                            className="relative inline-block mb-6"
                         >
-                            <Fuel className="w-16 h-16 text-white" />
+                            <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-xl">
+                                <Fuel className="w-10 h-10 text-slate-900" />
+                            </div>
+                            {/* Pulse effect */}
+                            <div className="absolute inset-0 bg-white rounded-2xl animate-ping opacity-20" />
                         </motion.div>
-                        <h1 className="text-4xl font-light tracking-tight text-[#1D1D1F] mb-2">
-                            Mobile Check-In
+
+                        <h1 className="text-2xl font-bold text-white mb-2">
+                            Employee Check-In
                         </h1>
-                        <p className="text-xl text-[#515154]">
-                            Welcome, <span className="font-medium text-[#1D1D1F]">{user.name}</span>
+                        <p className="text-slate-300 text-sm">
+                            Welcome back, <span className="font-semibold text-white">{user.name}</span>
                         </p>
                     </div>
 
-                    {/* Messages */}
+                    {/* Time & Location Info Bar */}
+                    <div className="bg-slate-50 border-b border-slate-200 px-6 py-4">
+                        <div className="flex items-center justify-between text-sm">
+                            <div className="flex items-center gap-2 text-slate-600">
+                                <Clock className="w-4 h-4" />
+                                <span className="font-medium">{formatTime(currentTime)}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-slate-600">
+                                <MapPin className="w-4 h-4" />
+                                <span className="font-medium">GAM-0001-07</span>
+                            </div>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-1 text-center">
+                            {formatDate(currentTime)}
+                        </p>
+                    </div>
+
+                    {/* Status Messages */}
                     <AnimatePresence mode="wait">
                         {message && (
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                className="mx-10 mt-8 p-6 bg-emerald-50/90 backdrop-blur-xl rounded-2xl border border-emerald-200 flex items-center gap-4"
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="overflow-hidden"
                             >
-                                <CheckCircle2 className="w-10 h-10 text-emerald-600" />
-                                <div>
-                                    <p className="text-lg font-medium text-emerald-800">{message}</p>
-                                    <p className="text-sm text-emerald-600">Redirecting...</p>
+                                <div className="mx-6 mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3">
+                                    <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                                    <div className="flex-1">
+                                        <p className="text-sm font-semibold text-emerald-900">{message}</p>
+                                        <p className="text-xs text-emerald-700 mt-0.5">Redirecting to dashboard...</p>
+                                    </div>
                                 </div>
                             </motion.div>
                         )}
                         {error && (
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="mx-10 mt-8 p-6 bg-rose-50/90 backdrop-blur-xl rounded-2xl border border-rose-200 flex items-center gap-4"
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="overflow-hidden"
                             >
-                                <XCircle className="w-10 h-10 text-rose-600" />
-                                <p className="text-lg font-medium text-rose-800">{error}</p>
+                                <div className="mx-6 mt-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+                                    <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                                    <div className="flex-1">
+                                        <p className="text-sm font-semibold text-red-900">Check-in Failed</p>
+                                        <p className="text-xs text-red-700 mt-0.5">{error}</p>
+                                    </div>
+                                </div>
                             </motion.div>
                         )}
                     </AnimatePresence>
 
-                    {/* Actions */}
+                    {/* Action Buttons */}
                     {!scanning && !message && (
-                        <div className="p-10 space-y-6">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                            className="p-6 space-y-4"
+                        >
+                            {/* Primary Action - QR Scan */}
                             <motion.button
-                                whileHover={{ scale: 1.02 }}
+                                whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={startScanning}
-                                className="w-full bg-black text-white py-6 rounded-2xl font-medium text-lg shadow-2xl flex items-center justify-center gap-4"
+                                className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group"
                             >
-                                <QrCode className="w-7 h-7" />
-                                Scan QR Code
+                                <QrCode className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                <span>Scan QR Code</span>
                             </motion.button>
 
-                            <div className="text-center text-[#86868B] font-medium">OR</div>
+                            {/* Divider */}
+                            <div className="relative">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-slate-200" />
+                                </div>
+                                <div className="relative flex justify-center text-xs uppercase">
+                                    <span className="bg-white px-3 text-slate-500 font-medium">Or</span>
+                                </div>
+                            </div>
 
+                            {/* Secondary Action - Manual */}
                             <motion.button
-                                whileHover={{ scale: 1.02 }}
+                                whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={handleManualCheckIn}
-                                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6 rounded-2xl font-medium text-lg shadow-2xl flex items-center justify-center gap-4"
+                                className="w-full bg-white border-2 border-slate-300 text-slate-700 py-4 rounded-xl font-semibold hover:border-slate-400 hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-3 group"
                             >
-                                <Fingerprint className="w-7 h-7" />
-                                Manual Check-In
+                                <Fingerprint className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                <span>Manual Check-In</span>
                             </motion.button>
 
+                            {/* Back Button */}
                             <motion.button
-                                whileHover={{ scale: 1.02 }}
+                                whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => navigate('/dashboard')}
-                                className="w-full bg-white/70 backdrop-blur-xl border border-white/60 text-[#1D1D1F] py-5 rounded-2xl font-medium flex items-center justify-center gap-3"
+                                className="w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-medium hover:bg-slate-200 transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
                             >
-                                <ArrowLeft className="w-6 h-6" />
-                                Back to Dashboard
+                                <ArrowLeft className="w-4 h-4" />
+                                <span>Back to Dashboard</span>
                             </motion.button>
-                        </div>
+                        </motion.div>
                     )}
 
                     {/* QR Scanner View */}
                     {scanning && (
-                        <div className="p-10">
-                            <div id="qr-reader" className="rounded-2xl overflow-hidden shadow-2xl border-8 border-white/60" />
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="p-6"
+                        >
+                            <div className="mb-4">
+                                <h3 className="text-lg font-semibold text-slate-900 mb-1">Position QR Code</h3>
+                                <p className="text-sm text-slate-600">Align the QR code within the frame</p>
+                            </div>
+
+                            <div id="qr-reader" className="rounded-xl overflow-hidden shadow-lg border-2 border-slate-200 mb-4" />
+
                             <motion.button
+                                whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => {
                                     scannerInstance?.clear();
                                     setScanning(false);
                                 }}
-                                className="w-full mt-6 bg-rose-600 text-white py-5 rounded-2xl font-medium shadow-xl"
+                                className="w-full bg-red-600 text-white py-4 rounded-xl font-semibold hover:bg-red-700 transition-colors duration-200 shadow-lg"
                             >
-                                Cancel Scanning
+                                Cancel Scan
                             </motion.button>
-                        </div>
+                        </motion.div>
                     )}
 
                     {/* Footer */}
-                    <div className="px-10 pb-8 text-center">
-                        <p className="text-sm text-[#86868B]">
-                            Station: <span className="font-medium">GAM-0001-07</span>
-                        </p>
-                        <p className="text-xs text-[#86868B] mt-2">
-                            {new Date().toLocaleString()}
+                    <div className="bg-slate-50 px-6 py-4 border-t border-slate-200">
+                        <p className="text-xs text-center text-slate-500">
+                            Secure check-in system • All activities are logged
                         </p>
                     </div>
                 </div>
+
+                {/* Help Text */}
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="text-center text-slate-400 text-xs mt-4 px-4"
+                >
+                    Need assistance? Contact your supervisor or IT support
+                </motion.p>
             </motion.div>
         </div>
     );
