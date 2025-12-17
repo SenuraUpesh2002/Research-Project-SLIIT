@@ -12,7 +12,6 @@ import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 
 // Fix for Leaflet's default icon issue with Webpack
 delete L.Icon.Default.prototype._getIconUrl;
-
 L.Icon.Default.mergeOptions({
   iconRetinaUrl,
   iconUrl,
@@ -59,9 +58,9 @@ export default function FuelFormScreen() {
     latitude: null,
     longitude: null,
   });
-  const [markerPosition, setMarkerPosition] = useState(null);
   const [stations, setStations] = useState([]);
   const [loadingStations, setLoadingStations] = useState(false);
+  const [markerPosition, setMarkerPosition] = useState(null);
   const [mapCenter, setMapCenter] = useState([6.9271, 79.8612]); // Default to Sri Lanka center
   const [mapZoom, setMapZoom] = useState(10); // Default zoom
   const [suggestedMarkerPosition, setSuggestedMarkerPosition] = useState(null);
@@ -99,7 +98,10 @@ export default function FuelFormScreen() {
         setSuggestedMarkerPosition(null); // Clear suggested marker when user clicks
       },
     });
-    return markerPosition === null ? null : (<Marker position={markerPosition}></Marker>);
+
+    return markerPosition === null ? null : (
+      <Marker position={markerPosition}></Marker>
+    );
   }
 
   const handleConfirmLocation = () => {
@@ -310,14 +312,18 @@ export default function FuelFormScreen() {
 
       <div className={styles.mapContainer}>
           <MapContainer key={JSON.stringify(mapCenter)} center={mapCenter} zoom={mapZoom} style={{ height: "400px", width: "100%" }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
             {markerPosition && <Marker position={markerPosition}></Marker>}
             {!markerPosition && suggestedMarkerPosition && !showConfirmation && <Marker position={suggestedMarkerPosition}></Marker>}
             {showConfirmation && tempMarkerPosition && <Marker position={tempMarkerPosition}></Marker>}
             <LocationMarker />
           </MapContainer>
+        </div>
 
-          {showConfirmation && tempMarkerPosition && (
+        {showConfirmation && tempMarkerPosition && (
             <div className={styles.confirmationDialog}>
               <p>Confirm this location? {confirmedLocationName}</p>
               <div className={styles.dialogActions}>
@@ -326,7 +332,7 @@ export default function FuelFormScreen() {
               </div>
             </div>
           )}
-      </div>
+      
 
       <div className={styles.footer}>
         <button
