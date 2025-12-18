@@ -131,3 +131,224 @@
 {"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
 {"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
 {"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/attendance/active","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/employees","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/predictions/forecast","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /api/predictions/staffing","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /api/fuel/stocks","service":"fuelwatch-backend"}
+{"level":"info","message":"Server running on port 3001","service":"fuelwatch-backend"}
+{"level":"info","message":"Database connected successfully","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 401","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 401","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 401","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 401","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /login 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /login 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /checkin 201","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /stocks 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /active 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET / 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"GET /forecast 304","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}
+{"level":"info","message":"POST /staffing 200","service":"fuelwatch-backend"}

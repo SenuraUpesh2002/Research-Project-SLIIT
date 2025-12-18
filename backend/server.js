@@ -44,8 +44,15 @@ app.use(cors());
 app.use(express.json());
 
 // Request Logger Middleware
+// Request Logger Middleware
 app.use((req, res, next) => {
-    logger.info(`${req.method} ${req.url}`);
+    // Log properly when request completes
+    res.on('finish', () => {
+        logger.info({
+            message: `${req.method} ${req.url} ${res.statusCode}`,
+            service: 'fuelwatch-backend'
+        });
+    });
     next();
 });
 

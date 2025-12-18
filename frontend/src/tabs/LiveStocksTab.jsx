@@ -24,6 +24,9 @@ const LiveStocksTab = () => {
         } catch (err) {
             console.error(err);
             setError('Failed to load fuel stocks');
+            if (err.response && err.response.status === 401) {
+                setError('Session expired. Please login again.');
+            }
         } finally {
             setLoading(false);
             setIsRefreshing(false);
@@ -54,12 +57,21 @@ const LiveStocksTab = () => {
             <div className="text-center py-20 bg-white/50 backdrop-blur-xl rounded-3xl border border-white/60">
                 <Fuel className="w-20 h-20 mx-auto text-rose-500/30 mb-6" />
                 <p className="text-xl font-light text-[#515154]">{error}</p>
-                <button
-                    onClick={fetchStocks}
-                    className="mt-6 px-8 py-4 bg-black text-white rounded-2xl font-medium hover:shadow-2xl transition-all hover:scale-105"
-                >
-                    Try Again
-                </button>
+                {error.includes('Session expired') ? (
+                    <button
+                        onClick={() => window.location.href = '/'}
+                        className="mt-6 px-8 py-4 bg-black text-white rounded-2xl font-medium hover:shadow-2xl transition-all hover:scale-105"
+                    >
+                        Login Again
+                    </button>
+                ) : (
+                    <button
+                        onClick={fetchStocks}
+                        className="mt-6 px-8 py-4 bg-black text-white rounded-2xl font-medium hover:shadow-2xl transition-all hover:scale-105"
+                    >
+                        Try Again
+                    </button>
+                )}
             </div>
         );
     }
