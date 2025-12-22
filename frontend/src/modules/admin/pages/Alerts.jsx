@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { API_ENDPOINTS } from "../../../../constants/api";
+import { API_ENDPOINTS } from "../../../constants/api";
 import styles from './Alerts.module.css';
 import AlertCard from '../components/AlertCard'; // Assuming this component exists
 

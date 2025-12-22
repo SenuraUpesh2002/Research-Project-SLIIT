@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { API_ENDPOINTS } from "../../../../constants/api";
+import { API_ENDPOINTS } from "../../../constants/api";
+import apiClient from '../../../services/apiClient';
 import styles from './Submissions.module.css';
 import SubmissionTable from '../components/SubmissionTable'; // Assuming this component exists
 
@@ -15,18 +16,26 @@ const Submissions = () => {
     // Placeholder for fetching submissions from an API
     const fetchSubmissions = async () => {
       try {
-        const response = await fetch(API_ENDPOINTS.SUBMISSIONS.GET_ALL, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-          }
-        });
-        if (!response.ok) {
-          throw new Error(`Failed to fetch submissions: ${response.statusText}`);
+        const token = localStorage.getItem('authToken');
+        console.log('Token in Submissions:', token);
+        
+        const response = await apiClient.get(API_ENDPOINTS.SUBMISSIONS.GET_ALL);
+        const data = response.data || [];
+        console.log('Submissions data:', data);
+        
+        // Ensure data is an array
+        if (Array.isArray(data)) {
+          setSubmissions(data);
+        } else if (data && typeof data === 'object') {
+          // If it's a single object, wrap it in an array
+          setSubmissions([data]);
+        } else {
+          setSubmissions([]);
         }
-        const data = await response.json();
-        setSubmissions(data);
       } catch (err) {
+        console.error('Error fetching submissions:', err);
         setError('Failed to fetch submissions.');
+        setSubmissions([]);
       } finally {
         setLoading(false);
       }
@@ -36,7 +45,9 @@ const Submissions = () => {
   }, []);
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
+    console.log('Search term updated:', value);
   };
 
   const handleFilterChange = (e) => {
@@ -48,11 +59,34 @@ const Submissions = () => {
   };
 
   const filteredSubmissions = submissions.filter((submission) => {
-    const matchesSearch = submission.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          submission.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filterType === 'all' || submission.vehicleType.toLowerCase() === filterType;
+    // Safe string conversion
+    const getName = () => {
+      const name = submission.name || submission.user;
+      return typeof name === 'string' ? name : (name?.name || '');
+    };
+    
+    const getEmail = () => {
+      const email = submission.email;
+      return typeof email === 'string' ? email : (email?.email || '');
+    };
+    
+    const getVehicleType = () => {
+      const type = submission.vehicleType || submission.type;
+      return typeof type === 'string' ? type : (type?.type || '');
+    };
+
+    const name = getName().toLowerCase();
+    const email = getEmail().toLowerCase();
+    const vehicleType = getVehicleType().toLowerCase();
+    const search = searchTerm.toLowerCase().trim();
+
+    const matchesSearch = search === '' || name.includes(search) || email.includes(search);
+    const matchesFilter = filterType === 'all' || vehicleType.includes(filterType.toLowerCase());
+    
     return matchesSearch && matchesFilter;
   });
+
+  console.log('Search term:', searchTerm, 'Filtered results:', filteredSubmissions.length);
 
   const sortedSubmissions = [...filteredSubmissions].sort((a, b) => {
     if (sortBy === 'date') {
@@ -79,11 +113,6 @@ const Submissions = () => {
     setSubmissions(submissions.filter(sub => sub.id !== id));
   };
 
-  const handleCreateSubmission = () => {
-    console.log('Create new submission');
-    // Navigate to a create new submission page or open a form modal
-  };
-
   if (loading) return <div className={styles.loading}>Loading submissions...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
 
@@ -100,17 +129,14 @@ const Submissions = () => {
           onChange={handleSearch}
         />
         <select className={styles.filterSelect} value={filterType} onChange={handleFilterChange}>
-          <option value="all">All Vehicle Types</option>
-          <option value="ev">EV</option>
-          <option value="ice">ICE</option>
+          <option value="all">All Types</option>
+          <option value="EV Form">EV Form</option>
+          <option value="Fuel Form">Fuel Form</option>
         </select>
         <select className={styles.sortSelect} value={sortBy} onChange={handleSortChange}>
           <option value="date">Sort by Date</option>
           <option value="name">Sort by Name</option>
         </select>
-        <button className={styles.createButton} onClick={handleCreateSubmission}>
-          Create New Submission
-        </button>
       </div>
 
       <SubmissionTable

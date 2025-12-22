@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { API_ENDPOINTS } from "../../../../constants/api";
+import { API_ENDPOINTS } from "../../../constants/api";
 import styles from './Reports.module.css';
 import ReportCharts from '../components/ReportCharts'; // Assuming this path
 

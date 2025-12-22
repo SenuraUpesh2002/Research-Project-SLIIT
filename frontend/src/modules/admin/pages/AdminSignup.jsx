@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_ENDPOINTS } from '../../../../constants/api';
+import { API_ENDPOINTS } from '../../../constants/api';
 import styles from './Login.module.css'; // Reuse login styles
 
 const AdminSignup = () => {

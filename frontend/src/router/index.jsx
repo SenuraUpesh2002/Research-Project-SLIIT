@@ -1,73 +1,82 @@
-console.log('AppRouter loaded - should see this on every refresh');
-import { Routes, Route } from 'react-router-dom';
-import AdminRoutes from '../modules/admin/routes/admin.routes';
-import ProtectedRoute from './ProtectedRoute';
+// src/router/index.jsx
+import { Routes, Route } from "react-router-dom";
 
-import Welcome from '../modules/customer/app/(tabs)/welcome';
-import Profile from '../modules/customer/app/(tabs)/profile';
-import Results from '../modules/customer/app/(tabs)/results';
-import UserType from '../modules/customer/app/(tabs)/user-type';
-import AdminLogin from '../modules/admin/pages/Login';
-import AdminSignup from '../modules/admin/pages/AdminSignup';
+/* =====================
+   ROUTE GUARDS
+===================== */
+import ProtectedRoute from "./ProtectedRoute";
 
-// Public Pages (assuming these will be created)
-const LoginPage = () => (
-  <div>
-    <h1>Login</h1>
-    <p>Please log in to access the application.</p>
-  </div>
-);
-const NotFoundPage = () => <div>404 Not Found</div>;
+/* =====================
+   ADMIN ROUTES
+===================== */
+import AdminRoutes from "../modules/admin/routes/admin.routes";
+import AdminLogin from "../modules/admin/pages/AdminLogin";
+import AdminSignup from "../modules/admin/pages/AdminSignup";
+
+/* =====================
+   CUSTOMER ROUTES
+===================== */
+import CustomerLayout from "../modules/customer/app/_layout";
+import Welcome from "../modules/customer/app/tabs/welcome";
+import UserType from "../modules/customer/app/tabs/user-type";
+import FuelForm from "../modules/customer/app/forms/fuel-form";
+import EVForm from "../modules/customer/app/forms/ev-form";
+import Profile from "../modules/customer/app/tabs/profile";
+import Results from "../modules/customer/app/tabs/results";
+
+/* =====================
+   AUTH
+===================== */
+import Login from "../modules/customer/app/auth";
+
+/* =====================
+   NOT FOUND
+===================== */
+const NotFoundPage = () => <div>404 - Page Not Found</div>;
 
 const AppRouter = () => {
+  console.log("AppRouter loaded");
+
   return (
     <Routes>
-        {/* Public Routes */}
-        <Route path="/testpage" element={<div>Test Page!</div>} />
-        <Route path="/admin/signup" element={<AdminSignup />} />
-        <Route path="/" element={<Welcome />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* Protected Customer Routes */}
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute roles={['customer', 'admin']}>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/results"
-          element={
-            <ProtectedRoute roles={['customer', 'admin']}>
-              <Results />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/user-type"
-          element={
-            <ProtectedRoute roles={['customer', 'admin']}>
-              <UserType />
-            </ProtectedRoute>
-          }
-        />
+      {/* =====================
+          PUBLIC ROUTES
+      ===================== */}
+      <Route path="/" element={<require('../modules/entry/EntryPage').default />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/signup" element={<AdminSignup />} />
 
-        {/* Protected Admin Routes */}
-        <Route
-          path="/admin/*"
-          element={
-            <ProtectedRoute roles={['admin']}>
-              <AdminRoutes />
-            </ProtectedRoute>
-          }
-        />
+      {/* =====================
+          CUSTOMER ROUTES
+      ===================== */}
+      <Route
+        element={
+          <ProtectedRoute roles={["customer", "admin"]}>
+            <CustomerLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/app/welcome" element={<Welcome />} />
+        <Route path="/user-type" element={<UserType />} />
+        <Route path="/forms/fuel-form" element={<FuelForm />} />
+        <Route path="/forms/ev-form" element={<EVForm />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/results" element={<Results />} />
+      </Route>
 
-        {/* Catch-all for 404 */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      {/* =====================
+          ADMIN ROUTES
+      ===================== */}
+      <Route path="/admin/*" element={<AdminRoutes />} />
+
+      {/* =====================
+          404
+      ===================== */}
+      <Route path="*" element={<NotFoundPage />} />
+
+    </Routes>
   );
 };
 

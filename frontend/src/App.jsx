@@ -1,18 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AppRoutes from './router';
-import { AuthProvider } from './hooks/useAuth';
-import { ThemeProvider } from './hooks/useTheme';
-import { UiProvider } from './hooks/useUiStore'; // Assuming you'll create this
+// src/App.jsx
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./router";
+
+// Context Providers
+import { AuthProvider } from "./hooks/useAuth";
+import { ThemeProvider } from "./hooks/useTheme";
+import { UiProvider } from "./hooks/useUiStore";
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <UiProvider>
-          <Router>
-            <AppRoutes />
-          </Router>
+          <BrowserRouter>
+            <AppRouter />
+          </BrowserRouter>
         </UiProvider>
       </AuthProvider>
     </ThemeProvider>

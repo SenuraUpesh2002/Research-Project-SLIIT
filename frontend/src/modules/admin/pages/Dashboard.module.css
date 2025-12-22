@@ -1,25 +1,21 @@
-.container {
-  padding: 20px;
-  background-color: #f0f2f5;
+.dashboard {
+  padding: 30px;
+  background-color: #f8f9fa;
   min-height: 100vh;
 }
 
 .header {
   margin-bottom: 30px;
-  text-align: center;
 }
 
 .title {
   font-size: 32px;
-  color: #333;
-  margin-bottom: 10px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
 }
 
-.subtitle {
-  font-size: 16px;
-  color: #666;
-}
-
+/* Stats Grid */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -28,69 +24,201 @@
 }
 
 .statCard {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-.statCard h3 {
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 10px;
+.statCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
-.statCard p {
-  font-size: 36px;
-  font-weight: bold;
-  color: #007bff;
+.statIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-right: 16px;
+  color: white;
+  flex-shrink: 0;
 }
 
-.quickLinks {
-  margin-bottom: 40px;
+.statContent {
+  flex: 1;
 }
 
-.quickLinks h2 {
-  text-align: center;
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 20px;
+.statValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 4px 0;
 }
 
-.linksGrid {
+.statLabel {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.statTrend {
+  font-size: 13px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* Content Grid */
+.contentGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
 }
 
-.quickLinkCard {
-  display: block;
-  background-color: #e9ecef;
-  padding: 15px;
+@media (max-width: 1200px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 20px 0;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 12px;
+}
+
+/* Submissions List */
+.submissionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submissionItem {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: #f9fafb;
   border-radius: 8px;
-  text-align: center;
-  text-decoration: none;
-  color: #007bff;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-left: 4px solid #3b82f6;
+  transition: all 0.3s ease;
 }
 
-.quickLinkCard:hover {
-  background-color: #dee2e6;
-  transform: translateY(-3px);
+.submissionItem:hover {
+  background-color: #f3f4f6;
+  border-left-color: #2563eb;
 }
 
-.chartsSection {
-  text-align: center;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.chartsSection h2 {
+.submissionIcon {
   font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.submissionInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.submissionName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+}
+
+.submissionStation {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 6px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.submissionMeta {
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.submissionStatus {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+/* Alerts List */
+.alertsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.alertItem {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #f59e0b;
+  transition: all 0.3s ease;
+}
+
+.alertItem:hover {
+  background-color: #f3f4f6;
+  border-left-color: #d97706;
+}
+
+.alertIcon {
+  font-size: 20px;
+  margin-right: 12px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.alertInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.alertStation {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+}
+
+.alertMessage {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 6px 0;
+}
+
+.alertTime {
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 0;
 }
