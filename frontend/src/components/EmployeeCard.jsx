@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 const EmployeeCard = ({ checkIn }) => {
     const { full_name, emp_code, role, check_in_time, shift_type, status } = checkIn;
@@ -15,11 +16,18 @@ const EmployeeCard = ({ checkIn }) => {
 
     const colors = shiftColors[shift_type] || shiftColors.default;
 
+    const [currentTime, setCurrentTime] = useState(Date.now());
+
+    useEffect(() => {
+        const timer = setInterval(() => setCurrentTime(Date.now()), 60000);
+        return () => clearInterval(timer);
+    }, []);
+
     const formatTime = (dateString) =>
         new Date(dateString).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
 
     const getDuration = (startTime) => {
-        const diff = Math.floor((Date.now() - new Date(startTime).getTime()) / 60000);
+        const diff = Math.floor((currentTime - new Date(startTime).getTime()) / 60000);
         const hours = Math.floor(diff / 60);
         const mins = diff % 60;
         return `${hours}h ${mins}m`;

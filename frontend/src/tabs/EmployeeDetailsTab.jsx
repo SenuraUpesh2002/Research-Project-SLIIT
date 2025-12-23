@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import EmployeeCard from '../components/EmployeeCard';
 import {
     Users, UserCheck, Search, Filter, Plus,
@@ -15,7 +15,7 @@ const EmployeeDetailsTab = () => {
     const [allEmployees, setAllEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState('active');
-    const [filter, setFilter] = useState('all');
+    const [filter, setFilter] = useState('all'); // eslint-disable-line no-unused-vars
     const [searchQuery, setSearchQuery] = useState('');
     const [stats, setStats] = useState({
         active: 0,
@@ -35,7 +35,7 @@ const EmployeeDetailsTab = () => {
         if (userJson && userJson !== 'null' && userJson !== 'undefined') {
             user = JSON.parse(userJson);
         }
-    } catch (err) {
+    } catch (err) { // eslint-disable-line no-unused-vars
         console.warn('Failed to parse user from localStorage');
     }
     const isAdmin = user?.role === 'manager';
@@ -97,6 +97,7 @@ const EmployeeDetailsTab = () => {
 
     useEffect(() => {
         calculateStats();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [employees, allEmployees]);
 
     // Filters
