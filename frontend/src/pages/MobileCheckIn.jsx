@@ -39,7 +39,7 @@ const MobileCheckIn = () => {
         }
     }, [user, navigate]);
 
-    if (!user) return null;
+
 
     const startScanning = () => {
         setScanning(true);
@@ -102,6 +102,8 @@ const MobileCheckIn = () => {
             }
         };
     }, [scannerInstance]);
+
+    if (!user) return null;
 
     const formatTime = (date) => {
         return date.toLocaleTimeString('en-US', {

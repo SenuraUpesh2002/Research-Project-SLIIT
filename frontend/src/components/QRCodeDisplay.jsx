@@ -1,16 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 
 const QRCodeDisplay = () => {
-    const [qrData, setQrData] = useState(null);
-
-    useEffect(() => {
-        // Generate a simple QR code with today's date and station info
+    const [qrData] = useState(() => {
         const today = new Date().toISOString().slice(0, 10);
         const stationId = 'GAM-0001-07';
-        const qrContent = `FUELWATCH:${stationId}:${today}`;
-        setQrData(qrContent);
-    }, []);
+        return `FUELWATCH:${stationId}:${today}`;
+    });
 
     return (
         <div className="flex flex-col items-center">
