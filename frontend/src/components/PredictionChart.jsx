@@ -7,7 +7,10 @@ const PredictionChart = ({ data, onDayClick, selectedDayIndex = 0 }) => {
     // Handle chart click
     const handleClick = (chartData) => {
         if (chartData && chartData.activeTooltipIndex !== undefined && onDayClick) {
+            console.log('Chart clicked, index:', chartData.activeTooltipIndex);
             onDayClick(chartData.activeTooltipIndex);
+        } else {
+            console.log('Chart click ignored:', chartData);
         }
     };
 

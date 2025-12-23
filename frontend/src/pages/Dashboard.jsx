@@ -35,6 +35,7 @@ const Dashboard = () => {
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
                                 transition={{ duration: 0.5 }}
+                                style={{ willChange: 'opacity, height' }}
                                 className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-24 h-[380px] lg:h-[420px]"
                             >
 
@@ -113,6 +114,7 @@ const Dashboard = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -30 }}
                             transition={{ duration: 0.6, ease: "easeOut" }}
+                            style={{ willChange: 'transform, opacity' }}
                         >
                             <div className="bg-white/75 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-2xl overflow-hidden">
                                 <div className="p-10 lg:p-16 min-h-[500px]">
