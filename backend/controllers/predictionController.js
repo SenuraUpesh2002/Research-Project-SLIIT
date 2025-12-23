@@ -45,27 +45,35 @@ exports.getStaffingRecommendation = async (req, res) => {
         const date = req.body.date || new Date(Date.now() + 86400000).toISOString().split('T')[0];
         const shift = req.body.shift || 'morning';
 
-        console.log(`[Prediction] Generating insights for Date: ${date}, Shift: ${shift}`);
+        console.log(`[Prediction] Generating insights for Date=${date}, Shift=${shift}, InputDemand=${req.body.predicted_demand}`);
 
         let predictedDemand = 0;
         let breakdown = {};
 
-        // 1. Get Total Station Demand from ML Service
-        try {
-            const demandResponse = await axios.post(`${SAFE_ML_API_URL}/predict-station-demand`, {
-                date: date,
-                shift: shift,
-                station_id: 'Station_A' // Default station
-            });
+        // 1. Get Total Station Demand
+        // Prioritize usage of the demand passed from the frontend (which matches the chart)
+        // to ensure consistency between the Forecast Chart and Staffing Recommendation.
+        if (req.body.predicted_demand) {
+            predictedDemand = req.body.predicted_demand;
+            // Optionally still fetch random variation or breakdown if needed, but demand is fixed
+            // For now, let's trust the frontend's figure as the "Scenario" we are solving for.
+        } else {
+            // If not provided (e.g. standalone API call), calculate it.
+            try {
+                const demandResponse = await axios.post(`${SAFE_ML_API_URL}/predict-station-demand`, {
+                    date: date,
+                    shift: shift,
+                    station_id: 'Station_A'
+                });
 
-            if (demandResponse.data && demandResponse.data.total_predicted_demand) {
-                predictedDemand = demandResponse.data.total_predicted_demand;
-                breakdown = demandResponse.data.breakdown;
+                if (demandResponse.data && demandResponse.data.total_predicted_demand) {
+                    predictedDemand = demandResponse.data.total_predicted_demand;
+                    breakdown = demandResponse.data.breakdown;
+                }
+            } catch (mlError) {
+                console.error('Error fetching station demand from ML service:', mlError.message);
+                predictedDemand = 6000; // Default fallback
             }
-        } catch (mlError) {
-            console.error('Error fetching station demand from ML service:', mlError.message);
-            // Fallback: Use the single demand passed from frontend or a default
-            predictedDemand = req.body.predicted_demand || 6000;
         }
 
         // 2. Get Staffing Recommendation using Total Demand
@@ -93,10 +101,10 @@ exports.getStaffingRecommendation = async (req, res) => {
 
                 if (weather.impact === 'high') {
                     insights.push(`☀ Real-time Weather: Clear skies (${temp}°C)`);
-                    insights.push(`📈 Impact: +5% customer traffic expected`);
+                    insights.push('📈 Impact: +5% customer traffic expected');
                 } else if (weather.impact === 'low' || weather.impact === 'very_low') {
                     insights.push(`🌧 Real-time Weather: ${weather.desc} (${temp}°C)`);
-                    insights.push(`📉 Impact: -10% traffic expected`);
+                    insights.push('📉 Impact: -10% traffic expected');
                 } else {
                     insights.push(`☁ Weather: ${weather.desc}, ${temp}°C`);
                 }
@@ -112,18 +120,18 @@ exports.getStaffingRecommendation = async (req, res) => {
 
         if (shift.toLowerCase() === 'morning') {
             if (isWeekend) {
-                insights.push(`🚗 Traffic: Moderate weekend flow`);
+                insights.push('🚗 Traffic: Moderate weekend flow');
             } else {
-                insights.push(`🚗 Traffic: Heavy morning rush (School/Work)`);
+                insights.push('🚗 Traffic: Heavy morning rush (School/Work)');
             }
         } else if (shift.toLowerCase() === 'evening') {
             if (isWeekend) {
-                insights.push(`🚗 Traffic: High evening leisure traffic`);
+                insights.push('🚗 Traffic: High evening leisure traffic');
             } else {
-                insights.push(`🚗 Traffic: Peak commute hours (5PM - 7PM)`);
+                insights.push('🚗 Traffic: Peak commute hours (5PM - 7PM)');
             }
         } else {
-            insights.push(`🚗 Traffic: Standard flow`);
+            insights.push('🚗 Traffic: Standard flow');
         }
 
         // C. ML Model Confidence
@@ -134,7 +142,7 @@ exports.getStaffingRecommendation = async (req, res) => {
 
         // D. Demand/Inventory Insight
         if (predictedDemand > 8000) {
-            insights.push(`⛽ Inventory Alert: Peak demand >8000L`);
+            insights.push('⛽ Inventory Alert: Peak demand >8000L');
         } else {
             insights.push(`✅ Inventory: Sufficient for ${Math.round(predictedDemand)}L`);
         }

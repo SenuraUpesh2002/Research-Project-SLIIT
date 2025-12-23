@@ -13,7 +13,7 @@ exports.getCurrentWeather = async (req, res) => {
         // Fallback mock response in case ML service is down
         res.json({
             temperature: 30.0,
-            condition: "Sunny (Fallback)",
+            condition: 'Sunny (Fallback)',
             humidity: 70,
             is_fallback: true
         });
