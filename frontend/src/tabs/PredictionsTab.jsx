@@ -27,6 +27,7 @@ const PredictionsTab = () => {
             const token = localStorage.getItem('token');
             const config = { headers: { 'x-auth-token': token } };
             const selectedDay = forecast[dayIndex];
+            console.log('Fetching staffing for:', selectedDay.date, 'Demand:', selectedDay.demand);
 
             const staffingRes = await axios.post(
                 'http://localhost:3001/api/predictions/staffing',
@@ -41,6 +42,8 @@ const PredictionsTab = () => {
                 config
             );
 
+            console.log('Staffing response:', staffingRes.data);
+
             setStaffing({
                 ...staffingRes.data,
                 shift: getDayLabel(selectedDay.date),
@@ -53,6 +56,7 @@ const PredictionsTab = () => {
 
     // Handle day click
     const handleDayClick = (index) => {
+        console.log('Day clicked index:', index);
         setSelectedDayIndex(index);
         fetchStaffingForDay(index);
     };

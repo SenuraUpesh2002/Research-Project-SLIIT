@@ -246,17 +246,17 @@ def fallback_staffing_prediction(predicted_demand):
     """Fallback staffing prediction using simple rules"""
     # More realistic staffing formula that scales with demand
     # Base formula: 1 staff per ~1200L of demand, with min 2 and max 8
-    if predicted_demand < 2000:
+    if predicted_demand < 1500:
         staff = 2
-    elif predicted_demand < 3500:
+    elif predicted_demand < 3000:
         staff = 3
-    elif predicted_demand < 5000:
+    elif predicted_demand < 4500:
         staff = 4
-    elif predicted_demand < 6500:
+    elif predicted_demand < 6000:
         staff = 5
-    elif predicted_demand < 8000:
+    elif predicted_demand < 7500:
         staff = 6
-    elif predicted_demand < 9500:
+    elif predicted_demand < 9000:
         staff = 7
     else:
         staff = 8
@@ -413,9 +413,10 @@ def predict_staffing():
         predicted_demand = float(data['predicted_demand'])
         date_str = data.get('date', datetime.now().strftime('%Y-%m-%d'))
         shift = data.get('shift', 'morning')
+        include_weather = data.get('include_weather', False)
         
         # Try Random Forest prediction if available
-        if rf_model and rf_features:
+        if station_rf_model:
             try:
                 # Prepare features
                 # Features: actual_demand_liters, num_transactions, avg_wait_time_minutes, 
@@ -446,9 +447,9 @@ def predict_staffing():
                 ]])
                 
                 # Predict
-                staff_pred = rf_model.predict(features)[0]
-                recommended_staff = int(np.clip(np.round(staff_pred), 2, 5))
-                model_used = "Random Forest v1.0"
+                staff_pred = station_rf_model.predict(features)[0]
+                recommended_staff = int(np.clip(np.round(staff_pred), 2, 8))
+                model_used = "Station RF Model v1.0"
                 
             except Exception as e:
                 print(f"Random Forest prediction failed: {e}")
