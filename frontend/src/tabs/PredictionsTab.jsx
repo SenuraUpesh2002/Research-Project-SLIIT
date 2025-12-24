@@ -1,46 +1,36 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { predictionService } from '../services/api';
+import { getDayLabel } from '../utils/date';
+import { useForecast } from '../hooks/usePredictionData';
 import { motion } from 'framer-motion';
 import PredictionChart from '../components/PredictionChart';
 import StaffingRecommendation from '../components/StaffingRecommendation';
 import { Activity, TrendingUp } from 'lucide-react';
 
 const PredictionsTab = () => {
-    const [forecast, setForecast] = useState([]);
+    const { data: forecast = [], isLoading: loadingForecast } = useForecast();
     const [staffing, setStaffing] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [selectedDayIndex, setSelectedDayIndex] = useState(0);
-
-    // Generate day label from date string
-    const getDayLabel = (dateStr) => {
-        if (!dateStr) return 'Morning Shift';
-        return new Date(dateStr).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-    };
+    const [loadingStaffing, setLoadingStaffing] = useState(false);
 
     // Fetch staffing recommendation for a specific day
     const fetchStaffingForDay = async (dayIndex) => {
         if (!forecast[dayIndex]) return;
 
         try {
-            const token = localStorage.getItem('token');
-            const config = { headers: { 'x-auth-token': token } };
             const selectedDay = forecast[dayIndex];
             console.log('Fetching staffing for:', selectedDay.date, 'Demand:', selectedDay.demand);
 
-            const staffingRes = await axios.post(
-                'http://localhost:3001/api/predictions/staffing',
-                {
-                    predicted_demand: selectedDay.demand,
-                    date: selectedDay.date,
-                    shift: 'morning',
-                    include_weather: true,
-                    include_holidays: true,
-                    include_busy_times: true
-                },
-                config
-            );
+            const staffingRes = await predictionService.getStaffing({
+                predicted_demand: selectedDay.demand,
+                date: selectedDay.date,
+                shift: 'morning',
+                include_weather: true,
+                include_holidays: true,
+                include_busy_times: true
+            });
 
             console.log('Staffing response:', staffingRes.data);
 
@@ -61,46 +51,44 @@ const PredictionsTab = () => {
         fetchStaffingForDay(index);
     };
 
+    // Initial staffing fetch
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const config = { headers: { 'x-auth-token': token } };
+        if (forecast.length > 0 && !staffing) {
+            const fetchInitialStaffing = async () => {
+                setLoadingStaffing(true);
+                try {
+                    const firstDay = forecast[0];
+                    const staffingRes = await predictionService.getStaffing({
+                        include_weather: true,
+                        predicted_demand: firstDay.demand,
+                        date: firstDay.date
+                    });
 
-                const [forecastRes, staffingRes] = await Promise.all([
-                    axios.get('http://localhost:3001/api/predictions/forecast', config),
-                    axios.post('http://localhost:3001/api/predictions/staffing', {
-                        include_weather: true
-                    }, config),
-                ]);
+                    setStaffing({
+                        ...staffingRes.data,
+                        shift: getDayLabel(firstDay.date),
+                        predicted_demand: firstDay.demand,
+                    });
+                } catch (error) {
+                    console.error('Error fetching initial staffing:', error);
+                } finally {
+                    setLoadingStaffing(false);
+                }
+            };
+            fetchInitialStaffing();
+        }
+    }, [forecast, staffing]);
 
-                setForecast(forecastRes.data);
-
-                const firstDay = forecastRes.data[0];
-                setStaffing({
-                    ...staffingRes.data,
-                    shift: firstDay ? getDayLabel(firstDay.date) : 'Tomorrow',
-                    predicted_demand: firstDay?.demand || 520,
-                });
-                setLoading(false);
-            } catch (error) {
-                console.error(error);
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
-
-    if (loading) {
+    if (loadingForecast) {
         return (
-            <div className="flex items-center justify-center h-96">
+            <div className="flex items-center justify-center min-h-[500px]">
                 <div className="text-center">
                     <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-                        className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-t-blue-600 border-r-purple-600 border-b-pink-600 border-l-transparent"
+                        className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-t-blue-500 border-r-indigo-500 border-b-purple-500 border-l-transparent"
                     />
-                    <p className="text-lg font-light text-gray-500">Loading predictions...</p>
+                    <p className="text-lg font-light text-gray-500">Generating predictions...</p>
                 </div>
             </div>
         );
