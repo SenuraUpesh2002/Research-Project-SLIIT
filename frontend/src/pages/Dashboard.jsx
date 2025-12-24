@@ -7,6 +7,7 @@ import LiveStocksTab from '../tabs/LiveStocksTab';
 import EmployeeDetailsTab from '../tabs/EmployeeDetailsTab';
 import PredictionsTab from '../tabs/PredictionsTab';
 import QRCodeDisplay from '../components/QRCodeDisplay';
+import { formatDate } from '../utils/date';
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState('stocks');
@@ -31,12 +32,12 @@ const Dashboard = () => {
                         {activeTab === 'stocks' && (
                             <motion.div
                                 key="hero"
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.5 }}
-                                style={{ willChange: 'opacity, height' }}
-                                className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-24 h-[380px] lg:h-[420px]"
+                                initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                                animate={{ opacity: 1, height: 'auto', marginBottom: 96 }}
+                                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                style={{ overflow: 'hidden' }}
+                                className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:h-[420px]"
                             >
 
                                 {/* Dashboard Overview Card – Full Height */}
@@ -70,7 +71,7 @@ const Dashboard = () => {
                                                 Scan to Access Station
                                             </p>
                                             <p className="text-xs font-mono text-[#515154] bg-[#F2F2F7] px-3 py-1 rounded-full inline-block">
-                                                25/11/2025
+                                                {formatDate(new Date(), { year: 'numeric', month: 'numeric', day: 'numeric' })}
                                             </p>
                                         </div>
                                     </div>
@@ -86,17 +87,17 @@ const Dashboard = () => {
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    className="relative px-10 py-5 rounded-full text-lg font-medium transition-all duration-500"
+                                    className="relative px-10 py-5 rounded-full text-lg font-medium transition-all duration-300"
                                 >
                                     {activeTab === tab.id && (
                                         <motion.div
                                             layoutId="activePill"
                                             className="absolute inset-0 bg-black rounded-full"
-                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                         />
                                     )}
                                     <span
-                                        className={`relative z-10 transition-colors duration-500 ${activeTab === tab.id ? 'text-white' : 'text-[#1D1D1F]'
+                                        className={`relative z-10 transition-colors duration-300 ${activeTab === tab.id ? 'text-white' : 'text-[#1D1D1F]'
                                             }`}
                                     >
                                         {tab.label}
@@ -110,11 +111,10 @@ const Dashboard = () => {
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeTab}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -30 }}
-                            transition={{ duration: 0.6, ease: "easeOut" }}
-                            style={{ willChange: 'transform, opacity' }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
                         >
                             <div className="bg-white/75 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-2xl overflow-hidden">
                                 <div className="p-10 lg:p-16 min-h-[500px]">
