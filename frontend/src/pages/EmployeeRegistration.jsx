@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { authService } from '../services/api';
+import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { User, Mail, Phone, Briefcase, Lock, UserPlus, CheckCircle, AlertCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -12,30 +13,21 @@ const EmployeeRegistration = () => {
         role: 'attendant',
         password: ''
     });
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        if (error) setError('');
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMessage('');
-        setError('');
         setIsLoading(true);
 
         try {
-            const token = localStorage.getItem('token');
             const payload = { ...formData, device_id: 'browser-' + Date.now() };
+            await authService.register(payload);
 
-            await axios.post('http://localhost:3001/api/auth/register', payload, {
-                headers: { 'x-auth-token': token }
-            });
-
-            setMessage('Employee registered successfully!');
+            toast.success('Employee registered successfully!');
             setFormData({
                 name: '',
                 email: '',
@@ -44,7 +36,7 @@ const EmployeeRegistration = () => {
                 password: ''
             });
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed');
+            toast.error(err.response?.data?.message || 'Registration failed');
         } finally {
             setIsLoading(false);
         }
@@ -76,28 +68,6 @@ const EmployeeRegistration = () => {
 
                     <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
                         <div className="p-8 sm:p-10">
-                            {message && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="bg-green-50 text-green-700 p-4 rounded-2xl mb-6 flex items-center gap-3 border border-green-100"
-                                >
-                                    <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                                    <span>{message}</span>
-                                </motion.div>
-                            )}
-
-                            {error && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="bg-red-50 text-red-700 p-4 rounded-2xl mb-6 flex items-center gap-3 border border-red-100"
-                                >
-                                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                                    <span>{error}</span>
-                                </motion.div>
-                            )}
-
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
                                     <label className={labelClasses}>Full Name</label>
