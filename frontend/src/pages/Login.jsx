@@ -1,36 +1,37 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { authService } from '../services/api';
+import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { Fuel, Lock, Mail, LogIn } from 'lucide-react';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setError('');
 
         try {
-            const res = await axios.post('http://localhost:3001/api/auth/login', {
+            const res = await authService.login({
                 email,
                 password,
             });
 
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('user', JSON.stringify(res.data.user));
+            login(res.data.user, res.data.token);
+            toast.success('Welcome back!');
 
             // Success animation then redirect
             setTimeout(() => navigate('/dashboard'), 800);
         } catch (err) {
-            setError(err.response?.data?.message || 'Invalid credentials');
+            toast.error(err.response?.data?.message || 'Invalid credentials');
             setIsLoading(false);
         }
     };
@@ -87,16 +88,6 @@ const Login = () => {
 
                     {/* Form */}
                     <div className="px-12 pb-12">
-                        {error && (
-                            <motion.p
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="text-rose-600 text-center mb-6 font-medium bg-rose-50/80 backdrop-blur-xl py-3 rounded-2xl border border-rose-200"
-                            >
-                                {error}
-                            </motion.p>
-                        )}
-
                         <form onSubmit={handleSubmit} className="space-y-8">
                             {/* Email */}
                             <div className="relative">
