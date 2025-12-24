@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useActiveEmployees, useAllEmployees } from '../hooks/useEmployeeData';
+import { useAuth } from '../context/AuthContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import EmployeeCard from '../components/EmployeeCard';
 import {
@@ -11,9 +12,10 @@ import {
 } from 'lucide-react';
 
 const EmployeeDetailsTab = () => {
-    const [employees, setEmployees] = useState([]);
-    const [allEmployees, setAllEmployees] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { data: employees = [], isLoading: loadingActive } = useActiveEmployees();
+    const { data: allEmployees = [], isLoading: loadingAll } = useAllEmployees();
+    const loading = loadingActive || loadingAll;
+
     const [viewMode, setViewMode] = useState('active');
     const [filter, setFilter] = useState('all'); // eslint-disable-line no-unused-vars
     const [searchQuery, setSearchQuery] = useState('');
@@ -28,20 +30,13 @@ const EmployeeDetailsTab = () => {
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [showEmployeeModal, setShowEmployeeModal] = useState(false);
 
-    // Safe user parsing
-    let user = null;
-    try {
-        const userJson = localStorage.getItem('user');
-        if (userJson && userJson !== 'null' && userJson !== 'undefined') {
-            user = JSON.parse(userJson);
-        }
-    } catch (err) { // eslint-disable-line no-unused-vars
-        console.warn('Failed to parse user from localStorage');
-    }
+    const { user } = useAuth();
     const isAdmin = user?.role === 'manager';
 
     // Calculate statistics
-    const calculateStats = () => {
+    useEffect(() => {
+        if (loading) return;
+
         const active = employees.length;
         const registered = allEmployees.length;
         const managers = allEmployees.filter(e => e.role === 'manager').length;
@@ -57,48 +52,7 @@ const EmployeeDetailsTab = () => {
             afternoon,
             evening
         });
-    };
-
-    // Data fetching
-    const fetchActiveEmployees = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:3001/api/attendance/active', {
-                headers: { 'x-auth-token': token },
-            });
-            setEmployees(res.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    const fetchAllEmployees = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:3001/api/employees', {
-                headers: { 'x-auth-token': token },
-            });
-            setAllEmployees(res.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    const fetchData = async () => {
-        await Promise.all([fetchActiveEmployees(), fetchAllEmployees()]);
-        setLoading(false);
-    };
-
-    useEffect(() => {
-        fetchData();
-        const interval = setInterval(fetchActiveEmployees, 60000);
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        calculateStats();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [employees, allEmployees]);
+    }, [employees, allEmployees, loading]);
 
     // Filters
     const filteredActive = employees.filter((emp) => {
