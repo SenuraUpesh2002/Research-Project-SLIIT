@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import axios from 'axios';
+import { attendanceService } from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import { formatTime, formatDate } from '../utils/date';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QrCode, Fingerprint, ArrowLeft, CheckCircle2, XCircle, Fuel, MapPin, Clock } from 'lucide-react';
 
@@ -14,30 +16,14 @@ const MobileCheckIn = () => {
     const [scannerInstance, setScannerInstance] = useState(null);
     const [currentTime, setCurrentTime] = useState(new Date());
     const navigate = useNavigate();
+    const { user } = useAuth();
 
-    // Safe user parsing
-    let user = null;
-    try {
-        const userJson = localStorage.getItem('user');
-        if (userJson && userJson !== 'null' && userJson !== 'undefined') {
-            user = JSON.parse(userJson);
-        }
-    } catch (e) {
-        console.warn('Invalid user data in localStorage');
-    }
 
     // Update time every second
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
-
-    // Redirect if not logged in
-    useEffect(() => {
-        if (!user) {
-            navigate('/login');
-        }
-    }, [user, navigate]);
 
 
 
@@ -74,16 +60,11 @@ const MobileCheckIn = () => {
 
     const handleCheckIn = async (qrData) => {
         try {
-            const token = localStorage.getItem('token');
-            await axios.post(
-                'http://localhost:3001/api/attendance/checkin',
-                {
-                    qr_data: qrData,
-                    location: { lat: 7.2083, lng: 79.8358 },
-                    device_id: 'mobile-' + Date.now(),
-                },
-                { headers: { 'x-auth-token': token } }
-            );
+            await attendanceService.checkIn({
+                qr_data: qrData,
+                location: { lat: 7.2083, lng: 79.8358 },
+                device_id: 'mobile-' + Date.now(),
+            });
 
             setMessage('Check-in successful!');
             setTimeout(() => navigate('/dashboard'), 2500);
@@ -104,23 +85,6 @@ const MobileCheckIn = () => {
     }, [scannerInstance]);
 
     if (!user) return null;
-
-    const formatTime = (date) => {
-        return date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        });
-    };
-
-    const formatDate = (date) => {
-        return date.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4 md:p-6 relative overflow-hidden">
@@ -261,6 +225,7 @@ const MobileCheckIn = () => {
                                 whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={startScanning}
+                                aria-label="Start QR Code Scan"
                                 className="w-full bg-gradient-to-r from-slate-900 to-slate-800 text-white py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group"
                             >
                                 <QrCode className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -282,6 +247,7 @@ const MobileCheckIn = () => {
                                 whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={handleManualCheckIn}
+                                aria-label="Manual Check-In"
                                 className="w-full bg-white border-2 border-slate-300 text-slate-700 py-4 rounded-xl font-semibold hover:border-slate-400 hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-3 group"
                             >
                                 <Fingerprint className="w-5 h-5 group-hover:scale-110 transition-transform" />
