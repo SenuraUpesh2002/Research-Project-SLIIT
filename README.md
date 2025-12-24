@@ -2,7 +2,7 @@
 FUELWATCH – AI Powered AI Powered Smart Surveillance &amp;  Predictive Analysis Platform for Fuel Station Management.
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-<h1>System Diagram</h1>
+<h1>Complete System Diagram</h1>
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Component Overview Diagram – IT22179180</h1>
