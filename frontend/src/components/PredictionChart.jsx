@@ -1,24 +1,43 @@
-'use client';
-
+import React, { useCallback } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion } from 'framer-motion';
+import { getDayLabel } from '../utils/date';
 
-const PredictionChart = ({ data, onDayClick, selectedDayIndex = 0 }) => {
+// Extracted CustomDot component to prevent re-creation on every render
+const CustomDot = ({ cx, cy, index, selectedDayIndex, payload }) => {
+    const isSelected = index === selectedDayIndex;
+
+    // Use payload if needed for specific logic, but index comparison is sufficient here
+    return (
+        <circle
+            cx={cx}
+            cy={cy}
+            r={isSelected ? 10 : 5}
+            fill={isSelected ? '#3B82F6' : '#fff'}
+            stroke="#3B82F6"
+            strokeWidth={isSelected ? 4 : 2}
+            style={{
+                cursor: 'pointer',
+                filter: isSelected ? 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.6))' : 'none',
+                transition: 'all 0.3s ease'
+            }}
+        />
+    );
+};
+
+const PredictionChart = React.memo(({ data, onDayClick, selectedDayIndex = 0 }) => {
     // Handle chart click
-    const handleClick = (chartData) => {
+    const handleClick = useCallback((chartData) => {
         if (chartData && chartData.activeTooltipIndex !== undefined && onDayClick) {
-            console.log('Chart clicked, index:', chartData.activeTooltipIndex);
             onDayClick(chartData.activeTooltipIndex);
-        } else {
-            console.log('Chart click ignored:', chartData);
         }
-    };
+    }, [onDayClick]);
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: "easeOut" }} // Reduced duration slightly for snappier feel
             className="relative w-full"
         >
             {/* Premium Glass Container */}
@@ -113,13 +132,7 @@ const PredictionChart = ({ data, onDayClick, selectedDayIndex = 0 }) => {
                                 labelStyle={{ color: '#1D1D1F', fontWeight: 600 }}
                                 itemStyle={{ color: '#3B82F6', fontWeight: 500 }}
                                 formatter={(value) => [`${value.toLocaleString()} Liters`, 'Predicted Demand']}
-                                labelFormatter={(label) =>
-                                    new Date(label).toLocaleDateString('en-US', {
-                                        weekday: 'long',
-                                        month: 'long',
-                                        day: 'numeric',
-                                    })
-                                }
+                                labelFormatter={(label) => getDayLabel(label)}
                             />
 
                             {/* Glowing Area Fill + Animated Stroke */}
@@ -130,25 +143,13 @@ const PredictionChart = ({ data, onDayClick, selectedDayIndex = 0 }) => {
                                 strokeWidth={4}
                                 fillOpacity={1}
                                 fill="url(#premiumDemand)"
-                                dot={(props) => {
-                                    const isSelected = props.index === selectedDayIndex;
-                                    return (
-                                        <circle
-                                            key={props.index}
-                                            cx={props.cx}
-                                            cy={props.cy}
-                                            r={isSelected ? 10 : 5}
-                                            fill={isSelected ? '#3B82F6' : '#fff'}
-                                            stroke="#3B82F6"
-                                            strokeWidth={isSelected ? 4 : 2}
-                                            style={{
-                                                cursor: 'pointer',
-                                                filter: isSelected ? 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.6))' : 'none',
-                                                transition: 'all 0.3s ease'
-                                            }}
-                                        />
-                                    );
-                                }}
+                                dot={(props) => (
+                                    <CustomDot
+                                        key={props.index}
+                                        {...props}
+                                        selectedDayIndex={selectedDayIndex}
+                                    />
+                                )}
                                 activeDot={{
                                     r: 8,
                                     stroke: '#3B82F6',
@@ -174,6 +175,6 @@ const PredictionChart = ({ data, onDayClick, selectedDayIndex = 0 }) => {
             </div>
         </motion.div>
     );
-};
+});
 
 export default PredictionChart;
