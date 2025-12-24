@@ -1,43 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useFuelStocks } from '../hooks/useFuelData';
+import { formatTime } from '../utils/date';
 import { motion } from 'framer-motion';
 import ExpandableFuelGrid from '../components/ExpandableFuelGrid';
 import { Fuel, RefreshCw } from 'lucide-react';
 
 const LiveStocksTab = () => {
-    const [stocks, setStocks] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [isRefreshing, setIsRefreshing] = useState(false);
-
-    const fetchStocks = async () => {
-        setIsRefreshing(true);
-        try {
-            const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:3001/api/fuel/stocks', {
-                headers: { 'x-auth-token': token },
-            });
-            setStocks(res.data);
-            setError(null);
-        } catch (err) {
-            console.error(err);
-            setError('Failed to load fuel stocks');
-            if (err.response && err.response.status === 401) {
-                setError('Session expired. Please login again.');
-            }
-        } finally {
-            setLoading(false);
-            setIsRefreshing(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchStocks();
-        const interval = setInterval(fetchStocks, 30000);
-        return () => clearInterval(interval);
-    }, []);
+    const {
+        data: stocks = [],
+        isLoading: loading,
+        error,
+        refetch,
+        isRefetching: isRefreshing
+    } = useFuelStocks();
 
     if (loading && !isRefreshing) {
         return (
@@ -56,22 +32,13 @@ const LiveStocksTab = () => {
         return (
             <div className="text-center py-20 bg-white/50 backdrop-blur-xl rounded-3xl border border-white/60">
                 <Fuel className="w-20 h-20 mx-auto text-rose-500/30 mb-6" />
-                <p className="text-xl font-light text-[#515154]">{error}</p>
-                {error.includes('Session expired') ? (
-                    <button
-                        onClick={() => window.location.href = '/'}
-                        className="mt-6 px-8 py-4 bg-black text-white rounded-2xl font-medium hover:shadow-2xl transition-all hover:scale-105"
-                    >
-                        Login Again
-                    </button>
-                ) : (
-                    <button
-                        onClick={fetchStocks}
-                        className="mt-6 px-8 py-4 bg-black text-white rounded-2xl font-medium hover:shadow-2xl transition-all hover:scale-105"
-                    >
-                        Try Again
-                    </button>
-                )}
+                <p className="text-xl font-light text-[#515154]">Failed to load fuel stocks</p>
+                <button
+                    onClick={() => refetch()}
+                    className="mt-6 px-8 py-4 bg-black text-white rounded-2xl font-medium hover:shadow-2xl transition-all hover:scale-105"
+                >
+                    Try Again
+                </button>
             </div>
         );
     }
@@ -98,7 +65,7 @@ const LiveStocksTab = () => {
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={fetchStocks}
+                        onClick={() => refetch()}
                         disabled={isRefreshing}
                         className="group relative overflow-hidden rounded-2xl bg-black px-8 py-5 shadow-xl transition-all hover:shadow-2xl"
                     >
@@ -122,7 +89,7 @@ const LiveStocksTab = () => {
                     <span>Live Sync Active</span>
                 </div>
                 <span>•</span>
-                <span>Last updated {new Date().toLocaleTimeString()}</span>
+                <span>Last updated {formatTime(new Date())}</span>
             </div>
         </>
     );
