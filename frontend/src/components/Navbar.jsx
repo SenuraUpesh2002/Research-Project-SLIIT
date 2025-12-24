@@ -1,16 +1,16 @@
 'use client';
 
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import { LogOut, Smartphone, UserPlus } from 'lucide-react';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const { user, logout } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        logout();
         navigate('/login');
     };
 
@@ -76,6 +76,7 @@ const Navbar = () => {
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={handleLogout}
+                                        aria-label="Logout"
                                         className="group relative overflow-hidden rounded-full bg-black px-6 py-3 shadow-xl transition-all duration-300 hover:shadow-2xl"
                                     >
                                         <span className="relative z-10 flex items-center gap-2 text-white font-medium text-sm">
