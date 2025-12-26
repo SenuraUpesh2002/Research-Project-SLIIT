@@ -49,13 +49,15 @@ const Navbar = () => {
                                             <Smartphone className="w-4 h-4" />
                                             Mobile Check-In
                                         </Link>
-                                        <Link
-                                            to="/register-employee"
-                                            className="flex items-center gap-2 text-[#515154] hover:text-[#1D1D1F] transition-colors duration-300 font-medium"
-                                        >
-                                            <UserPlus className="w-4 h-4" />
-                                            Register Employee
-                                        </Link>
+                                        {(user.role === 'manager' || user.role === 'admin') && (
+                                            <Link
+                                                to="/register-employee"
+                                                className="flex items-center gap-2 text-[#515154] hover:text-[#1D1D1F] transition-colors duration-300 font-medium"
+                                            >
+                                                <UserPlus className="w-4 h-4" />
+                                                Register Employee
+                                            </Link>
+                                        )}
                                     </div>
 
                                     {/* Divider */}
