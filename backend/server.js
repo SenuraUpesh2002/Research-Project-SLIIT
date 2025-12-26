@@ -80,6 +80,11 @@ db.getConnection()
 
 const PORT = process.env.PORT || 5000;
 
+const setupAutoCheckout = require('./cron/autoCheckout');
+
+// Initialize Cron Jobs
+setupAutoCheckout();
+
 app.listen(PORT, () => {
     logger.info(`Server running on port ${PORT}`);
 });
