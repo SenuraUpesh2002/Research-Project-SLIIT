@@ -53,12 +53,14 @@ export const predictionService = {
 // Attendance related API calls
 export const attendanceService = {
     checkIn: (data) => api.post('/attendance/checkin', data),
+    checkOut: () => api.post('/attendance/checkout'),
     getActive: () => api.get('/attendance/active'),
 };
 
 // Employee related API calls
 export const employeeService = {
     getAll: () => api.get('/employees'),
+    update: (id, data) => api.put(`/employees/${id}`, data),
 };
 
 export default api;
