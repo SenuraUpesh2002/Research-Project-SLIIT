@@ -67,7 +67,7 @@ const MobileCheckIn = () => {
             });
 
             setMessage('Check-in successful!');
-            setTimeout(() => navigate('/dashboard'), 2500);
+            setTimeout(() => navigate('/employee-dashboard'), 2500);
         } catch (err) {
             setError(err.response?.data?.message || 'Check-in failed');
         }
@@ -258,7 +258,7 @@ const MobileCheckIn = () => {
                             <motion.button
                                 whileHover={{ scale: 1.01 }}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => navigate('/dashboard')}
+                                onClick={() => navigate('/employee-dashboard')}
                                 className="w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-medium hover:bg-slate-200 transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
                             >
                                 <ArrowLeft className="w-4 h-4" />
