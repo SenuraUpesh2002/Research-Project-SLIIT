@@ -29,7 +29,13 @@ const Login = () => {
             toast.success('Welcome back!');
 
             // Success animation then redirect
-            setTimeout(() => navigate('/dashboard'), 800);
+            setTimeout(() => {
+                if (res.data.user.role === 'manager' || res.data.user.role === 'admin') {
+                    navigate('/dashboard');
+                } else {
+                    navigate('/employee-dashboard');
+                }
+            }, 800);
         } catch (err) {
             toast.error(err.response?.data?.message || 'Invalid credentials');
             setIsLoading(false);
