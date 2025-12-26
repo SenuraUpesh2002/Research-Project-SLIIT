@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { employeeService } from '../services/api'; // Import employeeService
 import { useActiveEmployees, useAllEmployees } from '../hooks/useEmployeeData';
 import { useAuth } from '../context/AuthContext';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -8,7 +10,8 @@ import EmployeeCard from '../components/EmployeeCard';
 import {
     Users, UserCheck, Search, Filter, Plus,
     MoreVertical, Clock, Mail, Phone,
-    Briefcase, Calendar, Shield, Activity
+    Briefcase, Calendar, Shield, Activity,
+    Edit, Trash2, Send
 } from 'lucide-react';
 
 const EmployeeDetailsTab = () => {
@@ -29,9 +32,80 @@ const EmployeeDetailsTab = () => {
     });
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [showEmployeeModal, setShowEmployeeModal] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editFormData, setEditFormData] = useState({});
 
     const { user } = useAuth();
     const isAdmin = user?.role === 'manager';
+
+    const [activeDropdown, setActiveDropdown] = useState(null);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (activeDropdown && !event.target.closest('.action-menu-container')) {
+                setActiveDropdown(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [activeDropdown]);
+
+    const handleEdit = (emp) => {
+        setEditFormData({
+            full_name: emp.full_name,
+            email: emp.email,
+            role: emp.role,
+            is_active: emp.is_active
+        });
+        setIsEditing(true);
+        if (!showEmployeeModal) {
+            setSelectedEmployee(emp);
+            setShowEmployeeModal(true);
+        }
+        setActiveDropdown(null);
+    };
+
+    const handleSave = async () => {
+        try {
+            await employeeService.update(selectedEmployee.id, editFormData);
+            toast.success('Employee updated successfully');
+
+            // Optimistic update (or you could refetch)
+            // For now, let's close and refetch or update local state if we had a proper mutation hook
+            // Since we are using basic hooks, we might need to trigger a refetch or window reload 
+            // Ideally useQuery's invalidateQueries would be better but we don't have access to queryClient here easily without refactoring
+            // Let's just update the local selectedEmployee to reflect changes immediately in the UI
+            setSelectedEmployee({ ...selectedEmployee, ...editFormData });
+            setIsEditing(false);
+
+            // To refresh the list, we might need a way to refetch from useAllEmployees. 
+            // Assuming the hook auto-refetches or we accept a slight stale state until next mount.
+            window.location.reload(); // Simple brute force refresh for now to ensure data consistency
+        } catch (error) {
+            console.error(error);
+            toast.error('Failed to update employee');
+        }
+    };
+
+    const handleCancel = () => {
+        setIsEditing(false);
+        setEditFormData({});
+    };
+
+    const handleSendMessage = (emp) => {
+        window.location.href = `mailto:${emp.email}`;
+        setActiveDropdown(null);
+        toast.success(`Opening mail client for ${emp.email}`);
+    };
+
+    const handleDelete = (emp) => {
+        toast.error(`Delete feature for ${emp.full_name} coming soon!`);
+        setActiveDropdown(null);
+    };
 
     // Calculate statistics
     useEffect(() => {
@@ -326,11 +400,50 @@ const EmployeeDetailsTab = () => {
                                                             View
                                                         </button>
                                                         {isAdmin && (
-                                                            <>
-                                                                <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                                            <div className="relative action-menu-container">
+                                                                <button
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setActiveDropdown(activeDropdown === emp.id ? null : emp.id);
+                                                                    }}
+                                                                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                                >
                                                                     <MoreVertical className="w-4 h-4" />
                                                                 </button>
-                                                            </>
+
+                                                                {activeDropdown === emp.id && (
+                                                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 z-50 py-1">
+                                                                        <button
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                handleEdit(emp);
+                                                                            }}
+                                                                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                                                                        >
+                                                                            <Edit className="w-4 h-4" /> Edit Profile
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                handleSendMessage(emp);
+                                                                            }}
+                                                                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                                                                        >
+                                                                            <Send className="w-4 h-4" /> Send Message
+                                                                        </button>
+                                                                        <div className="my-1 border-t border-gray-100"></div>
+                                                                        <button
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                handleDelete(emp);
+                                                                            }}
+                                                                            className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                                                                        >
+                                                                            <Trash2 className="w-4 h-4" /> Remove
+                                                                        </button>
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                         )}
                                                     </div>
                                                 </td>
@@ -360,7 +473,10 @@ const EmployeeDetailsTab = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-                        onClick={() => setShowEmployeeModal(false)}
+                        onClick={() => {
+                            setShowEmployeeModal(false);
+                            setIsEditing(false);
+                        }}
                     >
                         <motion.div
                             initial={{ scale: 0.95, opacity: 0 }}
@@ -384,7 +500,10 @@ const EmployeeDetailsTab = () => {
                                         </div>
                                     </div>
                                     <button
-                                        onClick={() => setShowEmployeeModal(false)}
+                                        onClick={() => {
+                                            setShowEmployeeModal(false);
+                                            setIsEditing(false);
+                                        }}
                                         className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                                     >
                                         <span className="sr-only">Close</span>
@@ -399,7 +518,16 @@ const EmployeeDetailsTab = () => {
                                             <div className="space-y-3">
                                                 <div className="flex items-center gap-3">
                                                     <Mail className="w-5 h-5 text-gray-400" />
-                                                    <span className="text-gray-700">{selectedEmployee.email}</span>
+                                                    {isEditing ? (
+                                                        <input
+                                                            type="email"
+                                                            value={editFormData.email}
+                                                            onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })}
+                                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                        />
+                                                    ) : (
+                                                        <span className="text-gray-700">{selectedEmployee.email}</span>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -409,21 +537,45 @@ const EmployeeDetailsTab = () => {
                                             <div className="space-y-3">
                                                 <div className="flex items-center justify-between">
                                                     <span className="text-gray-600">Role</span>
-                                                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${selectedEmployee.role === 'manager' ? 'bg-purple-100 text-purple-700' :
-                                                        selectedEmployee.role === 'admin' ? 'bg-red-100 text-red-700' :
-                                                            'bg-blue-100 text-blue-700'
-                                                        }`}>
-                                                        {selectedEmployee.role}
-                                                    </span>
+                                                    {isEditing ? (
+                                                        <select
+                                                            value={editFormData.role}
+                                                            onChange={(e) => setEditFormData({ ...editFormData, role: e.target.value })}
+                                                            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                        >
+                                                            <option value="attendant">Attendant</option>
+                                                            <option value="supervisor">Supervisor</option>
+                                                            <option value="manager">Manager</option>
+                                                            <option value="admin">Admin</option>
+                                                        </select>
+                                                    ) : (
+                                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${selectedEmployee.role === 'manager' ? 'bg-purple-100 text-purple-700' :
+                                                            selectedEmployee.role === 'admin' ? 'bg-red-100 text-red-700' :
+                                                                'bg-blue-100 text-blue-700'
+                                                            }`}>
+                                                            {selectedEmployee.role}
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <span className="text-gray-600">Status</span>
-                                                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${selectedEmployee.is_active
-                                                        ? 'bg-emerald-100 text-emerald-700'
-                                                        : 'bg-gray-100 text-gray-600'
-                                                        }`}>
-                                                        {selectedEmployee.is_active ? 'Active' : 'Inactive'}
-                                                    </span>
+                                                    {isEditing ? (
+                                                        <select
+                                                            value={editFormData.is_active ? '1' : '0'} // Assuming boolean or 1/0 from backend. If boolean, use proper true/false
+                                                            onChange={(e) => setEditFormData({ ...editFormData, is_active: e.target.value === '1' })}
+                                                            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                        >
+                                                            <option value="1">Active</option>
+                                                            <option value="0">Inactive</option>
+                                                        </select>
+                                                    ) : (
+                                                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${selectedEmployee.is_active
+                                                            ? 'bg-emerald-100 text-emerald-700'
+                                                            : 'bg-gray-100 text-gray-600'
+                                                            }`}>
+                                                            {selectedEmployee.is_active ? 'Active' : 'Inactive'}
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -472,12 +624,37 @@ const EmployeeDetailsTab = () => {
                                 {isAdmin && (
                                     <div className="mt-8 pt-8 border-t border-gray-200">
                                         <div className="flex justify-end gap-3">
-                                            <button className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                                                Edit Profile
-                                            </button>
-                                            <button className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                                Send Message
-                                            </button>
+                                            {isEditing ? (
+                                                <>
+                                                    <button
+                                                        onClick={handleCancel}
+                                                        className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                    <button
+                                                        onClick={handleSave}
+                                                        className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                                    >
+                                                        Save Changes
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <button
+                                                        onClick={() => handleEdit(selectedEmployee)}
+                                                        className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                                                    >
+                                                        Edit Profile
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleSendMessage(selectedEmployee)}
+                                                        className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                                    >
+                                                        Send Message
+                                                    </button>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 )}
