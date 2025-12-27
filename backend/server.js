@@ -32,8 +32,9 @@ app.use(helmet()); // Security Headers
 
 // Rate Limiting
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
+    windowMs: 60 * 1000, // 1 minute
     max: 100, // Limit each IP to 100 requests per windowMs
+    skip: (req) => req.method === 'OPTIONS', // Do not count preflight requests
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
