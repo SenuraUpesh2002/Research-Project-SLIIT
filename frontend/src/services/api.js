@@ -55,6 +55,7 @@ export const attendanceService = {
     checkIn: (data) => api.post('/attendance/checkin', data),
     checkOut: () => api.post('/attendance/checkout'),
     getActive: () => api.get('/attendance/active'),
+    getMyAttendance: () => api.get('/attendance/my-attendance'),
 };
 
 // Employee related API calls
