@@ -3,7 +3,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import { LogOut, Smartphone, UserPlus } from 'lucide-react';
+import { LogOut, LayoutDashboard, UserPlus } from 'lucide-react';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -43,11 +43,11 @@ const Navbar = () => {
                                     {/* Secondary Links – Subtle & Premium */}
                                     <div className="hidden md:flex items-center space-x-8 text-sm">
                                         <Link
-                                            to="/mobile-checkin"
+                                            to="/employee-dashboard"
                                             className="flex items-center gap-2 text-[#515154] hover:text-[#1D1D1F] transition-colors duration-300 font-medium"
                                         >
-                                            <Smartphone className="w-4 h-4" />
-                                            Mobile Check-In
+                                            <LayoutDashboard className="w-4 h-4" />
+                                            Employee Dashboard
                                         </Link>
                                         {(user.role === 'manager' || user.role === 'admin') && (
                                             <Link
