@@ -1,61 +1,49 @@
+// frontend/src/modules/admin/pages/LandingPage.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.css';
 import logo from './logo.jpeg';
 
-// Dummy admin check function. Replace with your actual logic.
-function isAdmin() {
-  // TODO: Replace with real authentication/authorization logic
-  return true; // Change this to your actual admin check
-}
-
 const LandingPage = () => {
-  if (!isAdmin()) {
-    return (
-      <div className={styles.container}>
-        <h2>Access Denied</h2>
-        <p>You do not have permission to view this page.</p>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.wrapper}>
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.logo}>
-          <img
-            src={logo}
-            alt="Fuel Watch Logo"
-            style={{ height: '60px' }}
-          />
+          <img src={logo} alt="Fuel Watch Logo" />
         </div>
         <nav className={styles.nav}>
-          <a href="#">Dashboard</a>
-          <a href="#">Submissions</a>
-          <a href="#">Alerts</a>
-          <a href="#">Analytics</a>
-          <a href="#">Users</a>
+          <Link to="/admin/dashboard">Dashboard</Link>
+          <Link to="/admin/submissions">Submissions</Link>
+          <Link to="/admin/alerts">Alerts</Link>
+          <Link to="/admin/analytics">Analytics</Link>
+          <Link to="/admin/users">Users</Link>
         </nav>
         <div className={styles.profile}> {/* Profile icon */} </div>
       </header>
 
       {/* Hero Section */}
       <section className={styles.hero}>
-        <h1>Smart Station Recommendation Engine</h1>
-        <p>
-          Intelligently connect customers with nearby fuel stations and EV charging points, providing comprehensive recommendations and insights.
-        </p>
-        <div className={styles.heroButtons}>
-          <button>Admin Portal</button>
-          <button>For Customers</button>
+        <div className={styles.heroContent}>
+          <h1>Smart Station Recommendation Engine</h1>
+          <p>
+            Intelligently connect customers with nearby fuel stations and EV charging points, providing comprehensive recommendations and insights.
+          </p>
+          <div className={styles.heroButtons}>
+            <button>Admin Portal</button>
+            <button>For Customers</button>
+          </div>
+        </div>
+        <div className={styles.heroImage}>
+          {/* Add admin dashboard preview image here */}
         </div>
       </section>
 
       {/* Solution Overview */}
       <section className={styles.overview}>
         <h2>Complete Solution Overview</h2>
-        <div className={styles.modes}>
-          <div className={styles.modeBox}>
+        <div className={styles.overviewCards}>
+          <div className={styles.card}>
             <h3>Admin Mode</h3>
             <ul>
               <li>Dashboard & Control Panel</li>
@@ -65,10 +53,10 @@ const LandingPage = () => {
               <li>User Management</li>
             </ul>
           </div>
-          <div className={styles.modeBox}>
+          <div className={styles.card}>
             <h3>Customer Mode</h3>
             <ul>
-              <li>Nearby Fuel/Ev Station Search</li>
+              <li>Nearby Fuel/EV Station Search</li>
               <li>Smart Recommendations</li>
               <li>Route Optimization</li>
               <li>Profile & Preferences</li>
@@ -78,11 +66,10 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Customer Journey Flow */}
+      {/* Customer Journey */}
       <section className={styles.journey}>
         <h2>Customer Journey Flow</h2>
         <div className={styles.journeySteps}>
-          {/* Add your journey steps here as shown in the image */}
           <div className={styles.step}>Mode Selection</div>
           <div className={styles.step}>Location Input</div>
           <div className={styles.step}>Station Recommendations</div>
@@ -94,7 +81,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Admin Portal Features */}
+      {/* Admin Features */}
       <section className={styles.features}>
         <h2>Admin Portal Features</h2>
         <div className={styles.featureGrid}>
@@ -122,7 +109,7 @@ const LandingPage = () => {
       <section className={styles.cta}>
         <h2>Ready to Get Started?</h2>
         <p>Experience the complete station recommendation solution.</p>
-        <div>
+        <div className={styles.ctaButtons}>
           <button>Access Admin Portal</button>
           <button>For Customers</button>
         </div>
@@ -130,12 +117,28 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className={styles.footer}>
-        <div>
-          <p>© 2024 SLIIT. All rights reserved.</p>
-          <div className={styles.footerLinks}>
-            <span>Features</span>
-            <span>Support</span>
+        <div className={styles.footerContent}>
+          <div className={styles.footerLogo}>
+            <img src={logo} alt="Fuel Watch Logo" />
           </div>
+          <div className={styles.footerLinks}>
+            <h4>Features</h4>
+            <ul>
+              <li>Dashboard</li>
+              <li>Analytics</li>
+              <li>Reports</li>
+            </ul>
+          </div>
+          <div className={styles.footerLinks}>
+            <h4>Support</h4>
+            <ul>
+              <li>Contact</li>
+              <li>Documentation</li>
+            </ul>
+          </div>
+        </div>
+        <div className={styles.footerBottom}>
+          <p>© 2024 SLIIT. All rights reserved.</p>
         </div>
       </footer>
     </div>

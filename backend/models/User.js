@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const connectDB = require('../config/db');
+const { pool } = require('../config/db');
 
 const User = {
   // ------------------------------------------------------
@@ -7,30 +7,23 @@ const User = {
   // ------------------------------------------------------
   async create(name, email, password, role = 'user') {
     if (!name || !email || !password) {
-      throw new Error("Name, email, and password are required");
+      throw new Error('Name, email, and password are required');
     }
 
-    // Fallback safety check
     const safeRole = role || 'user';
-
     const hashedPassword = await bcrypt.hash(password, 10);
-    const connection = await connectDB();
 
-    try {
-      const [result] = await connection.execute(
-        'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
-        [name, email, hashedPassword, safeRole]
-      );
+    const [result] = await pool.execute(
+      'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+      [name, email, hashedPassword, safeRole]
+    );
 
-      return {
-        id: result.insertId,
-        name,
-        email,
-        role: safeRole
-      };
-    } finally {
-      connection.end();
-    }
+    return {
+      id: result.insertId,
+      name,
+      email,
+      role: safeRole,
+    };
   },
 
   // ------------------------------------------------------
@@ -39,17 +32,12 @@ const User = {
   async findByEmail(email) {
     if (!email) return null;
 
-    const connection = await connectDB();
+    const [rows] = await pool.execute(
+      'SELECT id, name, email, password, role FROM users WHERE email = ? LIMIT 1',
+      [email]
+    );
 
-    try {
-      const [rows] = await connection.execute(
-        'SELECT id, name, email, password, role FROM users WHERE email = ?',
-        [email]
-      );
-      return rows[0] || null;
-    } finally {
-      connection.end();
-    }
+    return rows[0] || null;
   },
 
   // ------------------------------------------------------
@@ -58,17 +46,12 @@ const User = {
   async findById(id) {
     if (!id) return null;
 
-    const connection = await connectDB();
+    const [rows] = await pool.execute(
+      'SELECT id, name, email, role FROM users WHERE id = ? LIMIT 1',
+      [id]
+    );
 
-    try {
-      const [rows] = await connection.execute(
-        'SELECT id, name, email, password, role FROM users WHERE id = ?',
-        [id]
-      );
-      return rows[0] || null;
-    } finally {
-      connection.end();
-    }
+    return rows[0] || null;
   },
 
   // ------------------------------------------------------
@@ -76,7 +59,7 @@ const User = {
   // ------------------------------------------------------
   async comparePassword(enteredPassword, hashedPassword) {
     if (!enteredPassword || !hashedPassword) return false;
-    return await bcrypt.compare(enteredPassword, hashedPassword);
+    return bcrypt.compare(enteredPassword, hashedPassword);
   },
 };
 

@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import styles from "./fuel-form.module.css";
 import { API_ENDPOINTS } from "../../../../constants/api";
 import { SRI_LANKA_GEO_DATA } from "../../../../constants/sriLankaGeoData";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import iconUrl from 'leaflet/dist/images/marker-icon.png';
-import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-// Fix for Leaflet's default icon issue with Webpack
+/* ===============================
+   LEAFLET ICON FIX
+================================ */
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl,
@@ -18,6 +20,9 @@ L.Icon.Default.mergeOptions({
   shadowUrl,
 });
 
+/* ===============================
+   CONSTANTS
+================================ */
 const SRI_LANKAN_PROVINCES = [
   "Western Province",
   "Central Province",
@@ -44,10 +49,19 @@ const TOWNS = {
 
 const VEHICLE_TYPES = ["Car", "Van", "Bus", "Truck", "Motorcycle", "Three Wheeler"];
 const FUEL_TYPES = ["Petrol", "Diesel", "Super Petrol"];
-const BRANDS = ["Ceylon Petroleum Corporation (CPC)", "Indian Oil Corporation (IOC)", "Shell", "Any Brand"];
+const BRANDS = [
+  "Ceylon Petroleum Corporation (CPC)",
+  "Indian Oil Corporation (IOC)",
+  "Shell",
+  "Any Brand",
+];
 
 export default function FuelFormScreen() {
   const navigate = useNavigate();
+
+  /* ===============================
+     FORM STATE
+  ================================ */
   const [formData, setFormData] = useState({
     vehicleType: "",
     fuelType: "",
@@ -58,50 +72,69 @@ export default function FuelFormScreen() {
     latitude: null,
     longitude: null,
   });
+
   const [stations, setStations] = useState([]);
   const [loadingStations, setLoadingStations] = useState(false);
+
+  /* ===============================
+     MAP STATE
+  ================================ */
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [mapCenter, setMapCenter] = useState([6.9271, 79.8612]); // Default to Sri Lanka center
-  const [mapZoom, setMapZoom] = useState(10); // Default zoom
+  const [mapCenter, setMapCenter] = useState([6.9271, 79.8612]);
+  const [mapZoom, setMapZoom] = useState(10);
+
+  // eslint-disable-next-line no-unused-vars
   const [suggestedMarkerPosition, setSuggestedMarkerPosition] = useState(null);
+
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [tempMarkerPosition, setTempMarkerPosition] = useState(null);
   const [confirmedLocationName, setConfirmedLocationName] = useState("");
 
+  /* ===============================
+     POPUP STATE
+  ================================ */
+  const [popup, setPopup] = useState(null);
+
+  const showPopup = (message, type = "success") => {
+    setPopup({ message, type });
+    setTimeout(() => setPopup(null), 3000);
+  };
+
+  /* ===============================
+     LOCATION NAME
+  ================================ */
   useEffect(() => {
-    if (tempMarkerPosition) {
-      const fetchLocationName = async () => {
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${tempMarkerPosition.lat}&lon=${tempMarkerPosition.lng}`
-          );
-          const data = await response.json();
-          if (data.display_name) {
-            setConfirmedLocationName(data.display_name);
-          } else {
-            setConfirmedLocationName("Unknown location");
-          }
-        } catch (error) {
-          console.error("Error fetching location name:", error);
-          setConfirmedLocationName("Error fetching location");
-        }
-      };
-      fetchLocationName();
-    }
+    if (!tempMarkerPosition) return;
+
+    const fetchLocationName = async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${tempMarkerPosition.lat}&lon=${tempMarkerPosition.lng}`
+        );
+        const data = await res.json();
+        setConfirmedLocationName(data.display_name || "Unknown location");
+      } catch {
+        setConfirmedLocationName("Error fetching location");
+      }
+    };
+
+    fetchLocationName();
   }, [tempMarkerPosition]);
 
   function LocationMarker() {
-    const map = useMapEvents({
+    useMapEvents({
       click(e) {
         setTempMarkerPosition(e.latlng);
         setShowConfirmation(true);
-        setSuggestedMarkerPosition(null); // Clear suggested marker when user clicks
+        setSuggestedMarkerPosition(null);
       },
     });
 
-    return markerPosition === null ? null : (
-      <Marker position={markerPosition}></Marker>
-    );
+    return markerPosition ? (
+      <Marker position={markerPosition}>
+        <Popup>Selected Location</Popup>
+      </Marker>
+    ) : null;
   }
 
   const handleConfirmLocation = () => {
@@ -120,6 +153,9 @@ export default function FuelFormScreen() {
     setTempMarkerPosition(null);
   };
 
+  /* ===============================
+     DROPDOWNS
+  ================================ */
   const [showDropdowns, setShowDropdowns] = useState({
     vehicleType: false,
     fuelType: false,
@@ -137,86 +173,72 @@ export default function FuelFormScreen() {
     setShowDropdowns((prev) => ({ ...prev, [field]: false }));
   };
 
+  /* ===============================
+     MAP CENTER UPDATE
+  ================================ */
   useEffect(() => {
-    if (formData.province && SRI_LANKA_GEO_DATA[formData.province]) {
-      let newCenter = SRI_LANKA_GEO_DATA[formData.province].center;
-      let newZoom = SRI_LANKA_GEO_DATA[formData.province].zoom;
+    if (!formData.province || !SRI_LANKA_GEO_DATA[formData.province]) return;
 
-      if (formData.town && SRI_LANKA_GEO_DATA[formData.province].towns[formData.town]) {
-        newCenter = SRI_LANKA_GEO_DATA[formData.province].towns[formData.town].center;
-        newZoom = SRI_LANKA_GEO_DATA[formData.province].towns[formData.town].zoom;
-      }
-      setMapCenter(newCenter);
-      setMapZoom(newZoom);
-      setSuggestedMarkerPosition(newCenter);
+    let center = SRI_LANKA_GEO_DATA[formData.province].center;
+    let zoom = SRI_LANKA_GEO_DATA[formData.province].zoom;
+
+    if (
+      formData.town &&
+      SRI_LANKA_GEO_DATA[formData.province].towns[formData.town]
+    ) {
+      center = SRI_LANKA_GEO_DATA[formData.province].towns[formData.town].center;
+      zoom = SRI_LANKA_GEO_DATA[formData.province].towns[formData.town].zoom;
     }
+
+    setMapCenter(center);
+    setMapZoom(zoom);
+    setSuggestedMarkerPosition(center);
   }, [formData.province, formData.town]);
 
+  /* ===============================
+     VALIDATION
+  ================================ */
   const validateForm = () => {
-    if (!formData.vehicleType) {
-      alert("Please select your vehicle type");
-      return false;
-    }
-    if (!formData.fuelType) {
-      alert("Please select fuel type");
-      return false;
-    }
-    if (!formData.province) {
-      alert("Please select your province");
-      return false;
-    }
-    if (!formData.town) {
-      alert("Please select your town");
-      return false;
-    }
+    if (!formData.vehicleType) return showPopup("Select vehicle type", "error"), false;
+    if (!formData.fuelType) return showPopup("Select fuel type", "error"), false;
+    if (!formData.province) return showPopup("Select province", "error"), false;
+    if (!formData.town) return showPopup("Select town", "error"), false;
     return true;
   };
 
+  /* ===============================
+     SUBMIT
+  ================================ */
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
-    // If we have a station ID, submit the form
-    if (formData.stationId) {
-      try {
-        const submissionData = {
-          station: formData.stationId,
-          submissionType: "FUEL_REPORT",
-          data: {
-            vehicleType: formData.vehicleType,
-            fuelType: formData.fuelType,
-            preferredBrand: formData.preferredBrand,
-            province: formData.province,
-            town: formData.town,
-            latitude: formData.latitude,
-            longitude: formData.longitude,
+    try {
+      if (formData.stationId) {
+        const res = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
-        };
+          body: JSON.stringify({
+            station: formData.stationId,
+            submissionType: "FUEL_REPORT",
+            data: formData,
+          }),
+        });
 
-        const response = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
-            body: JSON.stringify(submissionData),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Submission failed:", errorData);
-          // Continue to results page even if submission fails
+        if (!res.ok) {
+          showPopup("Submission failed, continuing...", "error");
+        } else {
+          showPopup("Fuel request submitted successfully!", "success");
         }
-      } catch (error) {
-        console.error("Fuel form submission error:", error);
-        // Continue to results page even if submission fails
       }
+    } catch {
+      showPopup("Network error while submitting", "error");
     }
 
-    // Navigate to results page with form data
     const queryParams = new URLSearchParams({
-      type: 'fuel',
+      type: "fuel",
       province: formData.province,
       town: formData.town,
       vehicleType: formData.vehicleType,
@@ -224,35 +246,31 @@ export default function FuelFormScreen() {
       latitude: formData.latitude,
       longitude: formData.longitude,
     });
+
     navigate(`/results?${queryParams.toString()}`);
   };
 
-  const handleFindStations = () => {
-    if (!validateForm()) return;
-    handleSubmit();
-  };
+  const handleFindStations = () => handleSubmit();
 
-  // Fetch stations once to ensure we submit a valid station_id (FK constraint)
+  /* ===============================
+     LOAD STATIONS (ONCE)
+  ================================ */
   useEffect(() => {
     const fetchStations = async () => {
       try {
         setLoadingStations(true);
         const res = await fetch(API_ENDPOINTS.STATIONS.GET_ALL, {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         });
-        if (!res.ok) {
-          throw new Error(`Failed to load stations (${res.status})`);
-        }
         const data = await res.json();
         setStations(data || []);
-        if (data && data.length > 0 && !formData.stationId) {
-          setFormData((prev) => ({ ...prev, stationId: data[0].id || data[0]._id || "" }));
+        if (data?.length && !formData.stationId) {
+          setFormData((p) => ({ ...p, stationId: data[0].id || data[0]._id }));
         }
-      } catch (err) {
-        console.error("Failed to load stations", err);
+      } catch {
+        showPopup("Failed to load stations", "error");
       } finally {
         setLoadingStations(false);
       }
@@ -268,23 +286,23 @@ export default function FuelFormScreen() {
       <button
         className={styles.dropdown}
         onClick={() =>
-          setShowDropdowns((prev) => ({
-            ...prev,
-            [field]: !prev[field],
-          }))
+          setShowDropdowns((p) => ({ ...p, [field]: !p[field] }))
         }
       >
-        <span className={`${styles.dropdownText} ${!formData[field] ? styles.placeholderText : ""}`}>
-          {formData[field] || `Select ${label.toLowerCase()}`}
+        <span className={styles.dropdownText}>
+          {formData[field] || `Select ${label}`}
         </span>
-        <span style={{ fontSize: 20, color: '#64748b' }}>{showDropdowns[field] ? "⬆️" : "⬇️"}</span>
       </button>
 
       {showDropdowns[field] && (
         <div className={styles.dropdownList}>
-          {options.map((option, index) => (
-            <button key={index} className={styles.dropdownItem} onClick={() => handleSelect(field, option)}>
-              <span className={styles.dropdownItemText}>{option}</span>
+          {options.map((o) => (
+            <button
+              key={o}
+              className={styles.dropdownItem}
+              onClick={() => handleSelect(field, o)}
+            >
+              {o}
             </button>
           ))}
         </div>
@@ -294,57 +312,60 @@ export default function FuelFormScreen() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <button className={styles.backButton} onClick={() => navigate(-1)}>
-          <span style={{ fontSize: 24, color: '#1e40af' }}>⬅️</span>
-        </button>
-        <p className={styles.title}>Find Fuel Station</p>
-        <p className={styles.subtitle}>Help us find the best fuel station for you</p>
-      </div>
+      {/* POPUP */}
+      {popup && (
+        <div
+          className={`${styles.popup} ${
+            popup.type === "error" ? styles.popupError : styles.popupSuccess
+          }`}
+        >
+          {popup.message}
+        </div>
+      )}
+
+      {loadingStations && (
+        <p style={{ textAlign: "center", color: "#94a3b8" }}>
+          Loading fuel stations...
+        </p>
+      )}
 
       <div className={styles.form}>
         {renderDropdown("vehicleType", VEHICLE_TYPES, "Vehicle Type")}
         {renderDropdown("fuelType", FUEL_TYPES, "Fuel Type")}
         {renderDropdown("preferredBrand", BRANDS, "Preferred Brand")}
         {renderDropdown("province", SRI_LANKAN_PROVINCES, "Province")}
-        {formData.province ? renderDropdown("town", TOWNS[formData.province] || [], "Town") : null}
+        {formData.province &&
+          renderDropdown("town", TOWNS[formData.province], "Town")}
       </div>
 
       <div className={styles.mapContainer}>
-          <MapContainer key={JSON.stringify(mapCenter)} center={mapCenter} zoom={mapZoom} style={{ height: "400px", width: "100%" }}>
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            {markerPosition && <Marker position={markerPosition}></Marker>}
-            {!markerPosition && suggestedMarkerPosition && !showConfirmation && <Marker position={suggestedMarkerPosition}></Marker>}
-            {showConfirmation && tempMarkerPosition && <Marker position={tempMarkerPosition}></Marker>}
-            <LocationMarker />
-          </MapContainer>
-        </div>
-
-        {showConfirmation && tempMarkerPosition && (
-            <div className={styles.confirmationDialog}>
-              <p>Confirm this location? {confirmedLocationName}</p>
-              <div className={styles.dialogActions}>
-                <button onClick={handleConfirmLocation} className={styles.confirmButton}>Yes</button>
-                <button onClick={handleCancelConfirmation} className={styles.cancelButton}>No</button>
-              </div>
-            </div>
+        <MapContainer center={mapCenter} zoom={mapZoom} style={{ height: 400 }}>
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {markerPosition && <Marker position={markerPosition} />}
+          {showConfirmation && tempMarkerPosition && (
+            <Marker position={tempMarkerPosition} />
           )}
-      
-
-      <div className={styles.footer}>
-        <button
-          className={`${styles.findButton} ${!formData.town ? styles.buttonDisabled : ""}`}
-          onClick={handleFindStations}
-          disabled={!formData.town}
-        >
-          <span style={{ fontSize: 20, color: '#ffffff' }}>🔍</span>
-          <span className={styles.findButtonText}>Find Best Station</span>
-        </button>
+          <LocationMarker />
+        </MapContainer>
       </div>
+
+      {showConfirmation && (
+        <div className={styles.confirmationDialog}>
+          <p>Confirm location: {confirmedLocationName}</p>
+          <div className={styles.dialogActions}>
+            <button onClick={handleConfirmLocation} className={styles.confirmButton}>Yes</button>
+            <button onClick={handleCancelConfirmation} className={styles.cancelButton}>No</button>
+          </div>
+        </div>
+      )}
+
+      <button
+        className={styles.findButton}
+        onClick={handleFindStations}
+        disabled={!formData.town || stations.length === 0}
+      >
+        Find Best Station
+      </button>
     </div>
   );
 }
-

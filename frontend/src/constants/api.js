@@ -1,3 +1,4 @@
+// frontend/src/constants/api.js
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://localhost:5000/api';
 
 export const API_ENDPOINTS = {
@@ -34,6 +35,8 @@ export const API_ENDPOINTS = {
   },
   ALERTS: {
     GET_ALL: `${API_BASE_URL}/alerts`,
-    GET_BY_ID: (id) => `${API_BASE_URL}/alerts/${id}`,
-  },
+    CREATE: `${API_BASE_URL}/alerts`,
+    DELETE: (id) => `${API_BASE_URL}/alerts/${id}`,
+    STREAM: `${API_BASE_URL}/alerts/stream`
+  }
 };

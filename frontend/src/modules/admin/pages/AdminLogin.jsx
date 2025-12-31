@@ -1,7 +1,8 @@
+// frontend/src/modules/admin/pages/AdminLogin.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_ENDPOINTS } from "../../../constants/api";
-import styles from './Login.module.css'; // Assuming a CSS module for styling
+import styles from './Login.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('admin@test.com');
@@ -12,8 +13,8 @@ const Login = () => {
   // Auto-login with test credentials for development
   useEffect(() => {
     const token = localStorage.getItem('authToken');
-    if (token && token.startsWith('test-admin-token-')) {
-      navigate('/admin/dashboard');
+    if (token) {
+      navigate('/admin'); // Redirect to landing page
     }
   }, [navigate]);
 
@@ -28,25 +29,18 @@ const Login = () => {
     const TEST_EMAIL = 'admin@test.com';
     const TEST_PASSWORD = 'admin123';
 
-    console.log('Login attempt with:', { emailTrimmed, passwordTrimmed });
-    console.log('Test email:', TEST_EMAIL, 'Test password:', TEST_PASSWORD);
-    console.log('Match:', emailTrimmed === TEST_EMAIL && passwordTrimmed === TEST_PASSWORD);
-
     if (emailTrimmed === TEST_EMAIL && passwordTrimmed === TEST_PASSWORD) {
       // Set a mock token for testing
       const token = 'test-admin-token-' + Date.now();
       localStorage.setItem('authToken', token);
       localStorage.setItem('userRole', 'admin');
-      console.log('✅ Admin login successful with test credentials!');
-      console.log('Token saved to localStorage:', localStorage.getItem('authToken'));
       setTimeout(() => {
-        navigate('/admin/dashboard');
+        navigate('/admin'); // Redirect to landing page
       }, 100);
       return;
     }
 
     // Only try API call if not using test credentials
-    console.log('Attempting API login (not test credentials)');
     try {
       const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
         method: 'POST',
@@ -61,14 +55,12 @@ const Login = () => {
       if (response.ok) {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userRole', 'admin');
-        console.log('Admin login successful!');
-        navigate('/admin/dashboard');
+        navigate('/admin'); // Redirect to landing page
       } else {
         setError(data.message || 'Login failed.');
       }
     } catch (err) {
       setError('Network error or server is unreachable.');
-      console.error('Login error:', err);
     }
   };
 

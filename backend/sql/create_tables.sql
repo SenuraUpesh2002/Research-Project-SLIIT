@@ -44,3 +44,11 @@ CREATE TABLE IF NOT EXISTS reports (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (station_id) REFERENCES stations(id) ON DELETE CASCADE
 );
+
+--- ✅ New Alerts Table
+CREATE TABLE IF NOT EXISTS alerts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(255) NOT NULL,
+    type ENUM('info', 'warning', 'system') DEFAULT 'info',
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
