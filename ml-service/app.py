@@ -15,9 +15,12 @@ from utils.weather_service import WeatherService
 try:
     from tensorflow import keras
     KERAS_AVAILABLE = True
-except ImportError:
+    print("✓ TensorFlow/Keras detected")
+except Exception as e:
     KERAS_AVAILABLE = False
-    print(" TensorFlow not available. Using fallback predictions.")
+    print(f"✗ TensorFlow not available: {e}")
+    import traceback
+    traceback.print_exc()
 
 app = Flask(__name__)
 CORS(app)
@@ -56,7 +59,46 @@ def load_models():
     
     print("\n Loading ML models...")
     
-    # ... (Load LSTM, ARIMA, RF as before)
+    # Load LSTM Model
+    if KERAS_AVAILABLE and os.path.exists(LSTM_MODEL_PATH):
+        try:
+            lstm_model = keras.models.load_model(LSTM_MODEL_PATH, compile=False)
+            print("✓ LSTM model loaded (compiled=False)")
+            
+            if os.path.exists(LSTM_SCALER_X_PATH):
+                with open(LSTM_SCALER_X_PATH, 'rb') as f:
+                    lstm_scaler_X = pickle.load(f)
+                print("✓ LSTM Scaler X loaded")
+                
+            if os.path.exists(LSTM_SCALER_Y_PATH):
+                with open(LSTM_SCALER_Y_PATH, 'rb') as f:
+                    lstm_scaler_y = pickle.load(f)
+                print("✓ LSTM Scaler Y loaded")
+        except Exception as e:
+            print(f" Failed to load LSTM model: {e}")
+
+    # Load ARIMA Model
+    if os.path.exists(ARIMA_MODEL_PATH):
+        try:
+            with open(ARIMA_MODEL_PATH, 'rb') as f:
+                arima_model = pickle.load(f)
+            print("✓ ARIMA model loaded")
+        except Exception as e:
+            print(f" Failed to load ARIMA model: {e}")
+
+    # Load Random Forest Model
+    if os.path.exists(RF_MODEL_PATH):
+        try:
+            with open(RF_MODEL_PATH, 'rb') as f:
+                rf_model = pickle.load(f)
+            print("✓ Random Forest model loaded")
+            
+            if os.path.exists(RF_FEATURES_PATH):
+                with open(RF_FEATURES_PATH, 'rb') as f:
+                    rf_features = pickle.load(f)
+                print("✓ RF features loaded")
+        except Exception as e:
+            print(f" Failed to load Random Forest model: {e}")
     
     # Load Station Demand Model
     if os.path.exists(STATION_DEMAND_MODEL_PATH):
@@ -436,13 +478,9 @@ def predict_staffing():
                 
                 features = np.array([[
                     predicted_demand,
-                    num_transactions,
-                    avg_wait_time,
                     day_of_week,
                     is_wknd,
-                    0, # is_holiday
                     shift_mult,
-                    temperature,
                     seasonal
                 ]])
                 
@@ -477,10 +515,10 @@ def predict_staffing():
         date_obj = datetime.strptime(date_str, '%Y-%m-%d')
         day_of_week = date_obj.strftime('%A')
         month_name = date_obj.strftime('%B')
-        is_weekend = date_obj.weekday() >= 5
+        is_weekend_val = date_obj.weekday() >= 5
         
         # Calculate historical comparison
-        historical_avg = 5800 if not is_weekend else 6900
+        historical_avg = 5800 if not is_weekend_val else 6900
         variance_from_avg = ((predicted_demand - historical_avg) / historical_avg) * 100
         
         # Build ML reasoning based on analysis
@@ -495,7 +533,7 @@ def predict_staffing():
             ml_factors.append(f"LSTM model forecasts {variance_from_avg:.1f}% decrease from {day_of_week} baseline")
         
         # Day of week factor
-        if is_weekend:
+        if is_weekend_val:
             ml_factors.append(f"Random Forest classifier: Weekend demand surge (+18% vs weekday)")
         else:
             if date_obj.weekday() == 4:  # Friday
