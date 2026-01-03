@@ -1,7 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 const { connectDB } = require('./config/db');
+const { PythonShell } = require('python-shell');
 
 // --------------------------------------------------
 // Initialize App
@@ -34,6 +37,43 @@ app.use('/api/reports', reportRoutes);
 app.use('/api/stations', stationRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/alerts', alertRoutes);
+
+// --------------------------------------------------
+// Prediction Route
+// --------------------------------------------------
+app.post('/api/predict', async (req, res) => {
+  try {
+    const stationData = req.body;
+
+    // Save station data to a temporary file
+    const tempFilePath = path.join(__dirname, 'temp_input.json');
+    fs.writeFileSync(tempFilePath, JSON.stringify(stationData));
+
+    // Run Python prediction script
+    const options = {
+      mode: 'text',
+      pythonPath: 'python', // Use 'python' on Windows
+      scriptPath: path.join(__dirname, 'model', 'predict.py'), // Correct path to predict.py
+      args: [tempFilePath]
+    };
+
+    PythonShell.run('predict.py', options, (err, results) => {
+      if (err) {
+        console.error('Prediction error:', err);
+        return res.status(500).json({ error: 'Prediction failed' });
+      }
+
+      // Clean up temporary file
+      fs.unlinkSync(tempFilePath);
+
+      const score = parseFloat(results[0]);
+      res.json({ score });
+    });
+  } catch (error) {
+    console.error('Request error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // --------------------------------------------------
 // Root Route
