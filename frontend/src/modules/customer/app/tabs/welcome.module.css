@@ -1,13 +1,15 @@
+/* ====================== Container ====================== */
 .container {
   display: flex;
   flex-direction: column;
   flex: 1;
-  background: white;
+  background: #ffffff; /* clean white background */
   min-height: 100vh;
   position: relative;
   overflow: hidden;
 }
 
+/* Soft radial lights for depth */
 .container::before {
   content: '';
   position: absolute;
@@ -16,11 +18,12 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 30% 40%, rgba(150, 103, 217, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(146, 109, 205, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 30% 40%, rgba(203, 178, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(210, 200, 246, 0.08) 0%, transparent 50%);
   pointer-events: none;
 }
 
+/* Light overlay gradient for subtle shading */
 .container::after {
   content: '';
   position: absolute;
@@ -28,11 +31,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(245,245,245,0.5) 100%);
   pointer-events: none;
 }
 
+/* ====================== Content ====================== */
 .content {
   flex: 1;
   display: flex;
@@ -44,6 +47,7 @@
   z-index: 1;
 }
 
+/* ====================== Logo / Hero ====================== */
 .logoContainer {
   display: flex;
   flex-direction: column;
@@ -68,34 +72,36 @@
   top: -10px;
   right: -10px;
   animation: pulse 2s ease-in-out infinite;
+  color: #a78bfa !important; /* soft purple */
 }
 
 .appName {
   font-size: 4rem;
-  font-weight: 300;
-  color: var(--text-white);
+  font-weight: 400;
+  color: #4b5563; /* dark gray instead of white for contrast */
   margin-bottom: var(--spacing-lg);
   letter-spacing: 8px;
   text-transform: uppercase;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .tagline {
   font-size: var(--font-size-xl);
-  color: rgba(255, 255, 255, 0.8);
+  color: #374151; /* medium gray */
   text-align: center;
   line-height: 1.8;
   max-width: 600px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 1px;
 }
 
 .tagline strong {
-  color: var(--text-white);
-  font-weight: 400;
+  color: #6b21a8; /* light purple highlight */
+  font-weight: 500;
 }
 
+/* ====================== Features ====================== */
 .features {
   width: 100%;
   max-width: 400px;
@@ -109,9 +115,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(203, 178, 255, 0.05); /* light purple glow */
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(203, 178, 255, 0.15);
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   transition: all var(--transition-base);
@@ -119,24 +125,25 @@
 }
 
 .feature:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(203, 178, 255, 0.12);
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(203, 178, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(203, 178, 255, 0.3);
 }
 
 .feature span {
   font-size: var(--font-size-2xl);
   margin-right: var(--spacing-md);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
 }
 
 .featureText {
   font-size: var(--font-size-base);
-  color: rgba(255, 255, 255, 0.95);
+  color: #4b5563;
   font-weight: var(--font-weight-medium);
 }
 
+/* ====================== Footer / Get Started ====================== */
 .footer {
   padding: var(--spacing-xl);
   padding-bottom: var(--spacing-2xl);
@@ -145,113 +152,68 @@
 }
 
 .getStartedButton {
-  background: var(--text-white);
-  border-radius: 0;
+  background: linear-gradient(135deg, #c4b6fa, #a78bfa); /* light purple gradient */
+  border-radius: 12px;
   padding: var(--spacing-lg) var(--spacing-3xl);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  box-shadow: none;
-  border: 2px solid var(--text-white);
+  border: none;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.3s ease;
   width: 100%;
   max-width: 280px;
   margin: 0 auto;
   animation: fadeInUp 1s ease-out 0.4s both;
   position: relative;
   overflow: hidden;
-}
-
-.getStartedButton::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: var(--bg-dark);
-  transition: left 0.3s ease;
-}
-
-.getStartedButton:hover::before {
-  left: 0;
+  box-shadow: 0 4px 15px rgba(167, 139, 250, 0.4);
 }
 
 .getStartedButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-}
-
-.getStartedButton:active {
-  transform: translateY(0);
+  box-shadow: 0 8px 25px rgba(167, 139, 250, 0.6);
 }
 
 .getStartedText {
-  color: var(--bg-dark);
+  color: #100d0d;
   font-size: var(--font-size-base);
   font-weight: 500;
   margin-right: var(--spacing-md);
   position: relative;
   z-index: 1;
-  transition: color var(--transition-base);
   letter-spacing: 1px;
   text-transform: uppercase;
-}
-
-.getStartedButton:hover .getStartedText {
-  color: var(--text-white);
 }
 
 .getStartedButton span:last-child {
   position: relative;
   z-index: 1;
-  transition: transform var(--transition-base);
+  transition: transform 0.3s ease;
 }
 
 .getStartedButton:hover span:last-child {
   transform: translateX(4px);
 }
 
+/* ====================== Animations ====================== */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
 }

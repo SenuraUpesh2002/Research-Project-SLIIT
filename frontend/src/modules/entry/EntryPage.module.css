@@ -1,80 +1,161 @@
 .portalWrapper {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 40px 16px;
-  }
-  
-  .title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #22223b;
-    margin-bottom: 12px;
-    text-align: center;
-  }
-  
-  .subtitle {
-    font-size: 1.2rem;
-    color: #4a4e69;
-    margin-bottom: 32px;
-    text-align: center;
-  }
-  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #eef2f7 0%, #d1d9e6 100%);
+  padding: 50px 16px;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 24px;
+  transition: transform 0.4s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+.title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #4b5563;
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+.portalCards {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.portalCard {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 24px rgba(31, 41, 55, 0.08);
+  padding: 32px 24px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.portalCard.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s ease;
+}
+
+.portalCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+  transform: skewX(-25deg);
+  transition: all 0.5s ease;
+}
+
+.portalCard:hover::after {
+  left: 125%;
+}
+
+.portalCard:hover {
+  box-shadow: 0 12px 36px rgba(31, 41, 55, 0.18);
+  transform: translateY(-6px) scale(1.05);
+}
+
+.portalCard svg {
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.portalCard:hover svg {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.portalCard h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.portalCard:hover h2 {
+  color: #3b82f6;
+}
+
+.portalCard p {
+  font-size: 1rem;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+/* Particle effect */
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: float 8s linear infinite;
+  top: calc(var(--random-top) * 1%);
+  left: calc(var(--random-left) * 1%);
+  animation-delay: calc(var(--random-delay) * 1s);
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-50px) scale(1.2); opacity: 1; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 700px) {
   .portalCards {
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .portalCard {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(34, 34, 59, 0.08);
-    padding: 32px 24px;
-    width: 280px;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    transition: box-shadow 0.2s, transform 0.2s;
-    cursor: pointer;
+    gap: 24px;
   }
-  
-  .portalCard:hover {
-    box-shadow: 0 8px 32px rgba(34, 34, 59, 0.16);
-    transform: translateY(-4px) scale(1.03);
+  .portalCard {
+    width: 100%;
+    max-width: 340px;
   }
-  
-  .portalCard svg {
-    margin-bottom: 18px;
+  .logo {
+    width: 100px;
   }
-  
-  .portalCard h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #22223b;
-    margin-bottom: 8px;
-    text-align: center;
-  }
-  
-  .portalCard p {
-    font-size: 1rem;
-    color: #4a4e69;
-    text-align: center;
-    margin-bottom: 0;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 700px) {
-    .portalCards {
-      flex-direction: column;
-      gap: 24px;
-    }
-    .portalCard {
-      width: 100%;
-      max-width: 340px;
-    }
-  }
+}

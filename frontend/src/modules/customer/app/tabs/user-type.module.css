@@ -1,15 +1,18 @@
+/* ====================== Container ====================== */
 .container {
   display: flex;
   flex-direction: column;
-  background: var(--bg-primary);
-  padding: var(--spacing-xl);
+  background: #ffffff; /* white background */
+  padding: 40px 16px;
   min-height: 100vh;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* Soft radial lighting */
 .container::before {
   content: '';
   position: absolute;
@@ -18,214 +21,175 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 30% 40%, rgba(150, 103, 217, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(146, 109, 205, 0.08) 0%, transparent 50%);
+    radial-gradient(circle at 30% 40%, rgba(203, 178, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(209, 196, 255, 0.05) 0%, transparent 50%);
   pointer-events: none;
 }
 
+/* ====================== Header ====================== */
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: var(--spacing-2xl);
-  margin-top: var(--spacing-xl);
+  margin-bottom: 40px;
   animation: fadeInDown 0.6s ease-out;
 }
 
 .title {
-  font-size: 3rem;
-  font-weight: 300;
-  color: var(--text-white);
-  margin-bottom: var(--spacing-md);
+  font-size: 2.8rem;
+  font-weight: 500;
+  color: #4b5563; /* dark gray */
+  margin-bottom: 12px;
   text-align: center;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  position: relative;
-  z-index: 1;
+  letter-spacing: 2px;
 }
 
 .subtitle {
-  font-size: var(--font-size-lg);
-  color: var(--text-secondary);
+  font-size: 1.2rem;
+  color: #6b7280; /* medium gray */
   text-align: center;
-  line-height: 1.8;
+  line-height: 1.6;
   max-width: 500px;
-  font-weight: 300;
-  letter-spacing: 1px;
-  position: relative;
-  z-index: 1;
 }
 
+/* ====================== Vehicle Options ====================== */
 .vehicleOptions {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--spacing-xl);
+  gap: 24px;
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
 }
 
+/* ====================== Vehicle Cards ====================== */
 .vehicleCard {
-  background: var(--bg-secondary);
-  backdrop-filter: blur(20px);
-  border-radius: 0;
-  padding: var(--spacing-3xl);
+  background: #f9f5ff; /* soft white-purple */
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-medium);
-  transition: all var(--transition-base);
+  box-shadow: 0 10px 40px rgba(167, 139, 250, 0.3);
+  border: 1px solid #e0d7ff;
+  transition: all 0.3s ease;
   cursor: pointer;
   width: 100%;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
   animation: fadeInUp 0.6s ease-out;
-  z-index: 1;
-}
-
-.vehicleCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg-secondary-hover);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.vehicleCard:hover::before {
-  opacity: 1;
-}
-
-.vehicleCard:nth-child(2) {
-  animation-delay: 0.2s;
 }
 
 .vehicleCard:hover {
-  border-color: var(--border-dark);
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(167, 139, 250, 0.5);
+  border-color: #c4b5fd;
 }
 
-.vehicleCard:active {
-  transform: translateY(-4px) scale(0.98);
-}
-
+/* Remove icon circle, keep icon centered */
 .iconContainer {
-  width: 120px;
-  height: 120px;
+  width: auto;
+  height: auto;
   border-radius: 0;
-  background: var(--bg-tertiary);
+  background: transparent; /* removed circle */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: var(--spacing-lg);
-  border: 1px solid var(--border-medium);
-  transition: all var(--transition-base);
-  position: relative;
-  z-index: 1;
+  margin-bottom: 16px;
+  border: none;
+  transition: transform 0.3s ease;
 }
 
 .vehicleCard:hover .iconContainer {
   transform: scale(1.05);
-  background: var(--bg-tertiary-hover);
-  border-color: var(--border-dark);
 }
 
+/* ====================== Vehicle Text ====================== */
 .vehicleTitle {
-  font-size: var(--font-size-2xl);
-  font-weight: 300;
-  color: var(--text-white);
-  margin-bottom: var(--spacing-md);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 8px;
 }
 
 .vehicleDescription {
-  font-size: var(--font-size-base);
-  color: var(--text-secondary);
+  font-size: 1rem;
+  color: #6b7280;
   text-align: center;
-  line-height: 1.8;
-  margin-bottom: var(--spacing-lg);
-  font-weight: 300;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 16px;
+  line-height: 1.5;
 }
 
+/* Features inside cards */
 .features {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 8px;
 }
 
 .featureItem {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: var(--spacing-sm);
-  border-radius: 0;
-  transition: all var(--transition-fast);
-  position: relative;
-  z-index: 1;
 }
 
-.featureItem:hover {
-  background-color: var(--bg-secondary-hover);
+.featureItem span {
+  font-size: 1rem;
+  color: #a78bfa; /* light purple checkmark */
 }
 
 .featureText {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  margin-left: var(--spacing-sm);
-  font-weight: 300;
-  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-left: 8px;
+  font-weight: 400;
 }
 
+/* ====================== Back Button ====================== */
 .backButton {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-md) var(--spacing-lg);
-  margin-top: var(--spacing-xl);
+  padding: 12px 24px;
+  margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
-  background: transparent;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 0;
+  background: linear-gradient(135deg, #c4b5fd, #a78bfa); /* light purple gradient */
+  border-radius: 12px;
+  border: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition: all 0.3s ease;
   width: fit-content;
-  transition: all var(--transition-base);
-  position: relative;
-  z-index: 1;
+  box-shadow: 0 6px 20px rgba(167, 139, 250, 0.4);
 }
 
 .backButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
   transform: translateX(-4px);
+  box-shadow: 0 10px 30px rgba(167, 139, 250, 0.6);
 }
 
 .backButtonText {
-  font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.8);
-  margin-left: var(--spacing-sm);
-  font-weight: 400;
+  font-size: 0.9rem;
+  margin-left: 8px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.backButton:hover .backButtonText {
-  color: var(--text-white);
+/* ====================== Animations ====================== */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
