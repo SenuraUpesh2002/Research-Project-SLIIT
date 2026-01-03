@@ -1,91 +1,83 @@
-const connectDB = require('../config/db');
+// backend/models/Submission.js
+const { pool } = require('../config/db');
 
 const Submission = {
   async create(userId, stationId, submissionType, data, status = 'pending') {
-    const connection = await connectDB();
     try {
-      const [result] = await connection.execute(
+      const [result] = await pool.execute(
         'INSERT INTO submissions (user_id, station_id, submission_type, data, status) VALUES (?, ?, ?, ?, ?)',
         [userId, stationId, submissionType, JSON.stringify(data), status]
       );
       return { id: result.insertId, userId, stationId, submissionType, data, status };
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async findById(id) {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
-        'SELECT id, user_id, station_id, submission_type, data, status, createdAt, updatedAt FROM submissions WHERE id = ?',
+      const [rows] = await pool.execute(
+        'SELECT id, user_id, station_id, submission_type, data, status, createdAt, updatedAt FROM submissions WHERE id = ? LIMIT 1',
         [id]
       );
-      if (rows[0]) {
-        rows[0].data = JSON.parse(rows[0].data);
-      }
-      return rows[0];
-    } finally {
-      connection.end();
+      if (rows[0]) rows[0].data = JSON.parse(rows[0].data);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
     }
   },
 
   async findByUserId(userId) {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.execute(
         'SELECT id, user_id, station_id, submission_type, data, status, createdAt, updatedAt FROM submissions WHERE user_id = ?',
         [userId]
       );
       return rows.map(row => ({ ...row, data: JSON.parse(row.data) }));
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async findByStationId(stationId) {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.execute(
         'SELECT id, user_id, station_id, submission_type, data, status, createdAt, updatedAt FROM submissions WHERE station_id = ?',
         [stationId]
       );
       return rows.map(row => ({ ...row, data: JSON.parse(row.data) }));
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async updateStatus(id, status) {
-    const connection = await connectDB();
     try {
-      await connection.execute(
+      await pool.execute(
         'UPDATE submissions SET status = ?, updatedAt = CURRENT_TIMESTAMP WHERE id = ?',
         [status, id]
       );
       return this.findById(id);
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async delete(id) {
-    const connection = await connectDB();
     try {
-      const [result] = await connection.execute(
+      const [result] = await pool.execute(
         'DELETE FROM submissions WHERE id = ?',
         [id]
       );
       return result.affectedRows > 0;
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async findAll() {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.execute(
         `SELECT
           s.id, s.submission_type, s.data, s.status, s.createdAt, s.updatedAt,
           u.id AS user_id, u.name AS user_name, u.email AS user_email,
@@ -112,8 +104,8 @@ const Submission = {
           location: row.station_location,
         },
       }));
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 };

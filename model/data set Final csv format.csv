@@ -1,0 +1,951 @@
+stationId,stationName,brand,province,town,latitude,longitude,petrolAvailability,dieselAvailability,superPetrolAvailability,lastUpdated,availabilityConfidence,estimatedWaitTime
+     FS001, IOC Fuel Station Colombo Fort, IOC, Western,  Colombo,6.9271,79.8612,  Available,  Available,  Available,12/26/2025 14:45,  High,5
+     FS002, CEYPETCO Filling Station Bambalapitiya, CEYPETCO, Western,  Colombo,6.8905,79.8563,  Available,  Not Available,  Available,12/26/2025 14:15,  Medium,25
+     FS003, Shell Galle Road, Shell, Western,  Colombo,6.8649,79.8577,  Available,  Available,  Available,12/26/2025 15:00,  High,10
+     FS004, IOC Nugegoda Junction, IOC, Western,  Nugegoda,6.8649,79.8897,  Not Available,  Available,  Not Available,12/26/2025 12:50,  Low,45
+     FS005, CEYPETCO Maharagama, CEYPETCO, Western,  Maharagama,6.8484,79.9267,  Available,  Available,  Not Available,12/26/2025 14:30,  High,15
+     FS006, Shell Moratuwa, Shell, Western,  Moratuwa,6.773,79.8816,  Available,  Available,  Available,12/26/2025 15:15,  High,8
+     FS007, IOC Panadura Town, IOC, Western,  Panadura,6.7133,79.9026,  Available,  Not Available,  Available,12/26/2025 14:00,  Medium,30
+     FS008, CEYPETCO Kalutara, CEYPETCO, Western,  Kalutara,6.5854,79.9607,  Available,  Available,  Available,12/26/2025 14:40,  High,12
+     FS009, Shell Beruwala, Shell, Western,  Beruwala,6.4788,79.9826,  Not Available,  Available,  Not Available,12/26/2025 12:30,  Low,50
+     FS010, IOC Horana Road, IOC, Western,  Horana,6.7153,80.0631,  Available,  Available,  Not Available,12/26/2025 14:20,  Medium,20
+     FS011, CEYPETCO Gampaha, CEYPETCO, Western,  Gampaha,7.0911,80.0161,  Available,  Available,  Available,12/26/2025 14:50,  High,7
+     FS012, Shell Negombo, Shell, Western,  Negombo,7.2008,79.8358,  Available,  Not Available,  Available,12/26/2025 13:45,  Medium,35
+     FS013, IOC Katunayake, IOC, Western,  Katunayake,7.1697,79.8841,  Available,  Available,  Available,12/26/2025 15:10,  High,5
+     FS014, CEYPETCO Ja-Ela, CEYPETCO, Western,  Ja-Ela,7.0744,79.8919,  Not Available,  Available,  Not Available,12/26/2025 12:15,  Low,55
+     FS015, Shell Wattala, Shell, Western,  Wattala,6.9889,79.8917,  Available,  Available,  Available,12/26/2025 14:55,  High,10
+     FS016, IOC Kelaniya, IOC, Western,  Kelaniya,6.9553,79.9217,  Available,  Available,  Not Available,12/26/2025 14:25,  Medium,18
+     FS017, CEYPETCO Kadawatha, CEYPETCO, Western,  Kadawatha,7.0008,79.9531,  Available,  Not Available,  Available,12/26/2025 13:40,  Medium,28
+     FS018, Shell Ragama, Shell, Western,  Ragama,7.0278,79.9164,  Available,  Available,  Available,12/26/2025 15:05,  High,6
+     FS019, IOC Kiribathgoda, IOC, Western,  Kiribathgoda,6.9803,79.9294,  Not Available,  Available,  Not Available,12/26/2025 13:00,  Low,42
+     FS020, CEYPETCO Kandy Central, CEYPETCO, Central,  Kandy,7.2906,80.6337,  Available,  Available,  Available,12/26/2025 14:45,  High,12
+     FS021, Shell Peradeniya, Shell, Central,  Peradeniya,7.2563,80.5965,  Available,  Available,  Not Available,12/26/2025 14:10,  Medium,22
+     FS022, IOC Katugastota, IOC, Central,  Katugastota,7.3272,80.6281,  Available,  Not Available,  Available,12/26/2025 13:50,  Medium,32
+     FS023, CEYPETCO Matale, CEYPETCO, Central,  Matale,7.4675,80.6234,  Available,  Available,  Available,12/26/2025 14:35,  High,14
+     FS024, Shell Dambulla, Shell, Central,  Dambulla,7.8731,80.6511,  Not Available,  Available,  Not Available,12/26/2025 12:40,  Low,48
+     FS025, IOC Nuwara Eliya, IOC, Central,  Nuwara Eliya,6.9497,80.7891,  Available,  Available,  Available,12/26/2025 15:00,  High,8
+     FS026, CEYPETCO Hatton, CEYPETCO, Central,  Hatton,6.8917,80.5958,  Available,  Not Available,  Not Available,12/26/2025 13:30,  Low,38
+     FS027, Shell Gampola, Shell, Central,  Gampola,7.1644,80.5769,  Available,  Available,  Available,12/26/2025 14:50,  High,9
+     FS028, IOC Nawalapitiya, IOC, Central,  Nawalapitiya,7.0556,80.5336,  Available,  Available,  Not Available,12/26/2025 14:15,  Medium,24
+     FS029, CEYPETCO Galle Fort, CEYPETCO, Southern,  Galle,6.0535,80.221,  Available,  Available,  Available,12/26/2025 14:55,  High,11
+     FS030, Shell Matara, Shell, Southern,  Matara,5.9549,80.555,  Available,  Not Available,  Available,12/26/2025 14:00,  Medium,27
+     FS031, IOC Hambantota, IOC, Southern,  Hambantota,6.1241,81.1185,  Not Available,  Available,  Not Available,12/26/2025 12:45,  Low,44
+     FS032, CEYPETCO Tangalle, CEYPETCO, Southern,  Tangalle,6.0233,80.7981,  Available,  Available,  Not Available,12/26/2025 14:20,  Medium,19
+     FS033, Shell Hikkaduwa, Shell, Southern,  Hikkaduwa,6.1408,80.1003,  Available,  Available,  Available,12/26/2025 15:10,  High,7
+     FS034, IOC Ambalangoda, IOC, Southern,  Ambalangoda,6.2358,80.0539,  Available,  Available,  Available,12/26/2025 14:40,  High,13
+     FS035, CEYPETCO Weligama, CEYPETCO, Southern,  Weligama,5.9739,80.4297,  Not Available,  Available,  Not Available,12/26/2025 12:55,  Low,51
+     FS036, Shell Mirissa, Shell, Southern,  Mirissa,5.9467,80.4586,  Available,  Not Available,  Available,12/26/2025 14:05,  Medium,29
+     FS037, IOC Akuressa, IOC, Southern,  Akuressa,6.0986,80.4858,  Available,  Available,  Not Available,12/26/2025 14:25,  Medium,21
+     FS038, CEYPETCO Jaffna Town, CEYPETCO, Northern,  Jaffna,9.6615,80.0255,  Available,  Available,  Available,12/26/2025 14:45,  High,10
+     FS039, IOC Chavakachcheri, IOC, Northern,  Chavakachcheri,9.6664,80.1631,  Available,  Not Available,  Not Available,12/26/2025 13:35,  Medium,33
+     FS040, Shell Point Pedro, Shell, Northern,  Point Pedro,9.8169,80.2347,  Not Available,  Available,  Not Available,12/26/2025 13:10,  Low,46
+     FS041, CEYPETCO Vavuniya, CEYPETCO, Northern,  Vavuniya,8.7514,80.4971,  Available,  Available,  Not Available,12/26/2025 14:20,  Medium,23
+     FS042, IOC Kilinochchi, IOC, Northern,  Kilinochchi,9.3961,80.4036,  Available,  Available,  Available,12/26/2025 14:50,  High,9
+     FS043, Shell Mannar, Shell, Northern,  Mannar,8.981,79.9044,  Available,  Not Available,  Available,12/26/2025 13:55,  Medium,31
+     FS044, CEYPETCO Trincomalee, CEYPETCO, Eastern,  Trincomalee,8.5874,81.2152,  Available,  Available,  Available,12/26/2025 15:00,  High,6
+     FS045, IOC Batticaloa, IOC, Eastern,  Batticaloa,7.731,81.6747,  Not Available,  Available,  Not Available,12/26/2025 12:50,  Low,49
+     FS046, Shell Ampara, Shell, Eastern,  Ampara,7.2974,81.6722,  Available,  Available,  Not Available,12/26/2025 14:15,  Medium,26
+     FS047, CEYPETCO Kalmunai, CEYPETCO, Eastern,  Kalmunai,7.4089,81.8336,  Available,  Available,  Available,12/26/2025 14:40,  High,15
+     FS048, IOC Valaichchenai, IOC, Eastern,  Valaichchenai,7.9167,81.5667,  Available,  Not Available,  Available,12/26/2025 13:45,  Medium,34
+     FS049, Shell Kattankudy, Shell, Eastern,  Kattankudy,7.6889,81.7308,  Not Available,  Available,  Not Available,12/26/2025 13:05,  Low,52
+     FS050, CEYPETCO Kurunegala, CEYPETCO, North Western,  Kurunegala,7.4863,80.3647,  Available,  Available,  Available,12/26/2025 14:55,  High,8
+     FS051, IOC Puttalam, IOC, North Western,  Puttalam,8.0362,79.8283,  Available,  Available,  Not Available,12/26/2025 14:10,  Medium,25
+     FS052, Shell Chilaw, Shell, North Western,  Chilaw,7.5758,79.7956,  Available,  Not Available,  Available,12/26/2025 13:40,  Medium,36
+     FS053, CEYPETCO Kuliyapitiya, CEYPETCO, North Western,  Kuliyapitiya,7.4689,80.0403,  Not Available,  Available,  Not Available,12/26/2025 12:35,  Low,47
+     FS054, IOC Wariyapola, IOC, North Western,  Wariyapola,7.5044,80.2289,  Available,  Available,  Available,12/26/2025 15:05,  High,11
+     FS055, Shell Narammala, Shell, North Western,  Narammala,7.4339,80.2022,  Available,  Available,  Not Available,12/26/2025 14:25,  Medium,17
+     FS056, CEYPETCO Ratnapura, CEYPETCO, Sabaragamuwa,  Ratnapura,6.7056,80.3847,  Available,  Available,  Available,12/26/2025 14:50,  High,13
+     FS057, IOC Embilipitiya, IOC, Sabaragamuwa,  Embilipitiya,6.3431,80.8511,  Available,  Not Available,  Not Available,12/26/2025 13:30,  Low,40
+    FS058,Shell Balangoda,Shell,Sabaragamuwa,Balangoda,6.661,80.6936,Available,Available,Available,12/26/2025 14:40,High,14
+FS059,IOC Kegalle Town,IOC,Sabaragamuwa,Kegalle,7.2513,80.3464,Available,Available,Not Available,12/26/2025 14:15,Medium,22
+     FS060, IOC Fuel Station Colombo Fort, IOC, Western,  Colombo,7.709566102,80.82339912,  Available,  Available,  Available,12/26/2025 14:45,  High,26.89830508
+     FS061, CEYPETCO Filling Station Bambalapitiya, CEYPETCO, Western,  Colombo,7.72567678,80.83845655,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,26.99152542
+     FS062, Shell Galle Road, Shell, Western,  Colombo,7.741787458,80.85351398,  Available,  Available,  Available,12/26/2025 14:45,  High,27.08474576
+     FS063, IOC Nugegoda Junction, IOC, Western,  Nugegoda,7.757898136,80.86857141,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,27.1779661
+     FS064, CEYPETCO Maharagama, CEYPETCO, Western,  Maharagama,7.774008814,80.88362884,  Available,  Available,  Not Available,12/26/2025 14:45,  High,27.27118644
+     FS065, Shell Moratuwa, Shell, Western,  Moratuwa,7.790119492,80.89868627,  Available,  Available,  Available,12/26/2025 14:45,  High,27.36440678
+     FS066, IOC Panadura Town, IOC, Western,  Panadura,7.806230169,80.91374369,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,27.45762712
+     FS067, CEYPETCO Kalutara, CEYPETCO, Western,  Kalutara,7.822340847,80.92880112,  Available,  Available,  Available,12/26/2025 14:45,  High,27.55084746
+     FS068, Shell Beruwala, Shell, Western,  Beruwala,7.838451525,80.94385855,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,27.6440678
+     FS069, IOC Horana Road, IOC, Western,  Horana,7.854562203,80.95891598,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,27.73728814
+     FS070, CEYPETCO Gampaha, CEYPETCO, Western,  Gampaha,7.870672881,80.97397341,  Available,  Available,  Available,12/26/2025 14:45,  High,27.83050847
+     FS071, Shell Negombo, Shell, Western,  Negombo,7.886783559,80.98903084,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,27.92372881
+     FS072, IOC Katunayake, IOC, Western,  Katunayake,7.902894237,81.00408826,  Available,  Available,  Available,12/26/2025 14:45,  High,28.01694915
+     FS073, CEYPETCO Ja-Ela, CEYPETCO, Western,  Ja-Ela,7.919004915,81.01914569,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,28.11016949
+     FS074, Shell Wattala, Shell, Western,  Wattala,7.935115593,81.03420312,  Available,  Available,  Available,12/26/2025 14:45,  High,28.20338983
+     FS075, IOC Kelaniya, IOC, Western,  Kelaniya,7.951226271,81.04926055,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,28.29661017
+     FS076, CEYPETCO Kadawatha, CEYPETCO, Western,  Kadawatha,7.967336949,81.06431798,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,28.38983051
+     FS077, Shell Ragama, Shell, Western,  Ragama,7.983447627,81.07937541,  Available,  Available,  Available,12/26/2025 14:45,  High,28.48305085
+     FS078, IOC Kiribathgoda, IOC, Western,  Kiribathgoda,7.999558305,81.09443283,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,28.57627119
+     FS079, CEYPETCO Kandy Central, CEYPETCO, Central,  Kandy,8.015668983,81.10949026,  Available,  Available,  Available,12/26/2025 14:45,  High,28.66949153
+     FS080, Shell Peradeniya, Shell, Central,  Peradeniya,8.031779661,81.12454769,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,28.76271186
+     FS081, IOC Katugastota, IOC, Central,  Katugastota,8.047890339,81.13960512,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,28.8559322
+     FS082, CEYPETCO Matale, CEYPETCO, Central,  Matale,8.064001017,81.15466255,  Available,  Available,  Available,12/26/2025 14:45,  High,28.94915254
+     FS083, Shell Dambulla, Shell, Central,  Dambulla,8.080111695,81.16971998,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,29.04237288
+     FS084, IOC Nuwara Eliya, IOC, Central,  Nuwara Eliya,8.096222373,81.18477741,  Available,  Available,  Available,12/26/2025 14:45,  High,29.13559322
+     FS085, CEYPETCO Hatton, CEYPETCO, Central,  Hatton,8.112333051,81.19983483,  Available,  Not Available,  Not Available,12/26/2025 14:45,  Low,29.22881356
+     FS086, Shell Gampola, Shell, Central,  Gampola,8.128443729,81.21489226,  Available,  Available,  Available,12/26/2025 14:45,  High,29.3220339
+     FS087, IOC Nawalapitiya, IOC, Central,  Nawalapitiya,8.144554407,81.22994969,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,29.41525424
+     FS088, CEYPETCO Galle Fort, CEYPETCO, Southern,  Galle,8.160665085,81.24500712,  Available,  Available,  Available,12/26/2025 14:45,  High,29.50847458
+     FS089, Shell Matara, Shell, Southern,  Matara,8.176775763,81.26006455,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,29.60169492
+     FS090, IOC Hambantota, IOC, Southern,  Hambantota,8.192886441,81.27512198,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,29.69491525
+     FS091, CEYPETCO Tangalle, CEYPETCO, Southern,  Tangalle,8.208997119,81.2901794,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,29.78813559
+     FS092, Shell Hikkaduwa, Shell, Southern,  Hikkaduwa,8.225107797,81.30523683,  Available,  Available,  Available,12/26/2025 14:45,  High,29.88135593
+     FS093, IOC Ambalangoda, IOC, Southern,  Ambalangoda,8.241218475,81.32029426,  Available,  Available,  Available,12/26/2025 14:45,  High,29.97457627
+     FS094, CEYPETCO Weligama, CEYPETCO, Southern,  Weligama,8.257329153,81.33535169,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,30.06779661
+     FS095, Shell Mirissa, Shell, Southern,  Mirissa,8.273439831,81.35040912,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,30.16101695
+     FS096, IOC Akuressa, IOC, Southern,  Akuressa,8.289550508,81.36546655,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,30.25423729
+     FS097, CEYPETCO Jaffna Town, CEYPETCO, Northern,  Jaffna,8.305661186,81.38052397,  Available,  Available,  Available,12/26/2025 14:45,  High,30.34745763
+     FS098, IOC Chavakachcheri, IOC, Northern,  Chavakachcheri,8.321771864,81.3955814,  Available,  Not Available,  Not Available,12/26/2025 14:45,  Medium,30.44067797
+     FS099, Shell Point Pedro, Shell, Northern,  Point Pedro,8.337882542,81.41063883,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,30.53389831
+     FS100, CEYPETCO Vavuniya, CEYPETCO, Northern,  Vavuniya,8.35399322,81.42569626,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,30.62711864
+     FS101, IOC Kilinochchi, IOC, Northern,  Kilinochchi,8.370103898,81.44075369,  Available,  Available,  Available,12/26/2025 14:45,  High,30.72033898
+     FS102, Shell Mannar, Shell, Northern,  Mannar,8.386214576,81.45581112,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,30.81355932
+     FS103, CEYPETCO Trincomalee, CEYPETCO, Eastern,  Trincomalee,8.402325254,81.47086854,  Available,  Available,  Available,12/26/2025 14:45,  High,30.90677966
+     FS104, IOC Batticaloa, IOC, Eastern,  Batticaloa,8.418435932,81.48592597,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,31
+     FS105, Shell Ampara, Shell, Eastern,  Ampara,8.43454661,81.5009834,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,31.09322034
+     FS106, CEYPETCO Kalmunai, CEYPETCO, Eastern,  Kalmunai,8.450657288,81.51604083,  Available,  Available,  Available,12/26/2025 14:45,  High,31.18644068
+     FS107, IOC Valaichchenai, IOC, Eastern,  Valaichchenai,8.466767966,81.53109826,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,31.27966102
+     FS108, Shell Kattankudy, Shell, Eastern,  Kattankudy,8.482878644,81.54615569,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,31.37288136
+     FS109, CEYPETCO Kurunegala, CEYPETCO, North Western,  Kurunegala,8.498989322,81.56121312,  Available,  Available,  Available,12/26/2025 14:45,  High,31.46610169
+     FS110, IOC Puttalam, IOC, North Western,  Puttalam,8.5151,81.57627054,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,31.55932203
+     FS111, Shell Chilaw, Shell, North Western,  Chilaw,8.531210678,81.59132797,  Available,  Not Available,  Available,12/26/2025 14:45,  Medium,31.65254237
+     FS112, CEYPETCO Kuliyapitiya, CEYPETCO, North Western,  Kuliyapitiya,8.547321356,81.6063854,  Not Available,  Available,  Not Available,12/26/2025 14:45,  Low,31.74576271
+     FS113, IOC Wariyapola, IOC, North Western,  Wariyapola,8.563432034,81.62144283,  Available,  Available,  Available,12/26/2025 14:45,  High,31.83898305
+     FS114, Shell Narammala, Shell, North Western,  Narammala,8.579542712,81.63650026,  Available,  Available,  Not Available,12/26/2025 14:45,  Medium,31.93220339
+     FS115, CEYPETCO Ratnapura, CEYPETCO, Sabaragamuwa,  Ratnapura,8.59565339,81.65155769,  Available,  Available,  Available,12/26/2025 14:45,  High,32.02542373
+     FS116, IOC Embilipitiya, IOC, Sabaragamuwa,  Embilipitiya,8.611764068,81.66661511,  Available,  Not Available,  Not Available,12/26/2025 14:45,  Low,32.11864407
+     FS117,Shell Balangoda,Shell,Sabaragamuwa,Balangoda,8.627874746,81.68167254,Available,Available,Available,12/26/2025 14:45,High,32.21186441
+FS118,Shell Galnewa,Shell,North Central,Galnewa,8.0606,80.5661,Available,Available,Available,12/26/2025 15:10,High,6
+FS119,IOC Mahawa,IOC,North Western,Mahawa,7.8289,80.3042,Available,Available,Not Available,12/26/2025 14:15,Medium,19
+FS120,CEYPETCO Nikaweratiya,CEYPETCO,North Western,Nikaweratiya,7.7464,80.1125,Not Available,Available,Not Available,12/26/2025 12:40,Low,52
+FS121,Shell Maho,Shell,North Western,Maho,7.8226,80.2806,Available,Available,Available,12/26/2025 15:05,High,8
+FS122,IOC Dehiattakandiya,IOC,Eastern,Dehiattakandiya,7.7397,81.0786,Available,Not Available,Available,12/26/2025 13:55,Medium,33
+FS123,CEYPETCO Kinniya,CEYPETCO,Eastern,Kinniya,8.4974,81.1845,Available,Available,Not Available,12/26/2025 14:25,Medium,21
+FS124,Shell Kantale,Shell,Eastern,Kantale,8.3556,81.0119,Not Available,Available,Not Available,12/26/2025 13:15,Low,47
+FS125,IOC Valachchenai Central,IOC,Eastern,Valachchenai,7.9167,81.5667,Available,Available,Available,12/26/2025 14:50,High,10
+FS126,Ceypetco Batticaloa Main,Ceypetco,Eastern,Batticaloa,7.7102,81.6924,Available,Available,Not Available,12/26/2025 14:55,High,15
+FS127,Lanka Fuel Kattankudy,Lanka,Eastern,Kattankudy,7.675,81.73,Available,Limited,Not Available,12/26/2025 15:00,Medium,25
+FS128,IOC Kalmunai South,IOC,Eastern,Kalmunai,7.409,81.8347,Available,Available,Available,12/26/2025 15:05,High,12
+FS129,Ceypetco Akkaraipattu,Ceypetco,Eastern,Akkaraipattu,7.2167,81.85,Limited,Available,Not Available,12/26/2025 15:10,Medium,30
+FS130,Lanka Fuel Ampara City,Lanka,Eastern,Ampara,7.2975,81.682,Available,Available,Available,12/26/2025 15:15,High,8
+FS131,IOC Trincomalee Harbour,IOC,Eastern,Trincomalee,8.5874,81.2152,Available,Available,Not Available,12/26/2025 15:20,High,18
+FS132,Ceypetco Nilaveli Road,Ceypetco,Eastern,Nilaveli,8.6897,81.199,Limited,Available,Not Available,12/26/2025 15:25,Medium,35
+FS133,Lanka Fuel Kantale,Lanka,Eastern,Kantale,8.3546,81.0041,Available,Available,Available,12/26/2025 15:30,High,14
+FS134,IOC Morawewa,IOC,Eastern,Morawewa,8.4889,80.9473,Limited,Limited,Not Available,12/26/2025 15:35,Low,45
+FS135,Ceypetco Pottuvil,Ceypetco,Eastern,Pottuvil,6.8756,81.8281,Available,Available,Available,12/26/2025 15:40,High,10
+FS136,Lanka Fuel Arugam Bay,Lanka,Eastern,Arugam Bay,6.8402,81.8326,Limited,Available,Not Available,12/26/2025 15:45,Medium,28
+FS137,IOC Sainthamaruthu,IOC,Eastern,Sainthamaruthu,7.3825,81.835,Available,Available,Available,12/26/2025 15:50,High,9
+FS138,Ceypetco Sammanthurai,Ceypetco,Eastern,Sammanthurai,7.3667,81.8,Available,Limited,Not Available,12/26/2025 15:55,Medium,22
+FS139,Lanka Fuel Thirukkovil,Lanka,Eastern,Thirukkovil,7.1167,81.85,Limited,Available,Not Available,12/26/2025 16:00,Medium,33
+FS140,IOC Uhana,IOC,Eastern,Uhana,7.3636,81.6373,Available,Available,Available,12/26/2025 16:05,High,11
+FS141,IOC Chilaw,IOC,North Western,Chilaw,7.5758,79.7953,Available,Available,Not Available,12/26/2025 16:30,High,12
+FS142,Ceypetco Wennappuwa,Ceypetco,North Western,Wennappuwa,7.3375,79.8478,Limited,Available,Not Available,12/26/2025 16:35,Medium,25
+FS143,Lanka Fuel Kuliyapitiya,Lanka,North Western,Kuliyapitiya,7.468,80.0403,Available,Available,Available,12/26/2025 16:40,High,10
+FS144,IOC Puttalam,IOC,North Western,Puttalam,8.0362,79.8283,Available,Limited,Not Available,12/26/2025 16:45,Medium,28
+FS145,Ceypetco Anamaduwa,Ceypetco,North Western,Anamaduwa,7.8772,79.8908,Limited,Limited,Not Available,12/26/2025 16:50,Low,45
+FS146,IOC Kurunegala City,IOC,North Western,Kurunegala,7.4863,80.3623,Available,Available,Available,12/26/2025 16:55,High,8
+FS147,Lanka Fuel Narammala,Lanka,North Western,Narammala,7.4333,80.2167,Available,Limited,Not Available,12/26/2025 17:00,Medium,20
+FS148,Ceypetco Wariyapola,Ceypetco,North Western,Wariyapola,7.6256,80.2386,Available,Available,Not Available,12/26/2025 17:05,High,14
+FS149,IOC Matale,IOC,Central,Matale,7.4675,80.6234,Available,Available,Available,12/26/2025 17:10,High,10
+FS150,Ceypetco Dambulla,Ceypetco,Central,Dambulla,7.8731,80.6511,Limited,Available,Not Available,12/26/2025 17:15,Medium,22
+FS151,Lanka Fuel Sigiriya,Lanka,Central,Sigiriya,7.9569,80.7597,Available,Limited,Not Available,12/26/2025 17:20,Medium,26
+FS152,IOC Badulla,IOC,Uva,Badulla,6.9934,81.055,Available,Available,Available,12/26/2025 17:25,High,12
+FS153,Ceypetco Bandarawela,Ceypetco,Uva,Bandarawela,6.8289,81.015,Limited,Available,Not Available,12/26/2025 17:30,Medium,24
+FS154,Lanka Fuel Welimada,Lanka,Uva,Welimada,6.9056,80.9125,Limited,Limited,Not Available,12/26/2025 17:35,Low,42
+FS155,IOC Galle Fort,IOC,Southern,Galle,6.0328,80.2168,Available,Available,Available,12/26/2025 17:40,High,10
+FS156,Ceypetco Hikkaduwa,Ceypetco,Southern,Hikkaduwa,6.1395,80.1132,Limited,Available,Not Available,12/26/2025 17:45,Medium,20
+FS157,Lanka Fuel Ambalangoda,Lanka,Southern,Ambalangoda,6.2355,80.0541,Available,Limited,Not Available,12/26/2025 17:50,Medium,23
+FS158,IOC Matara,IOC,Southern,Matara,5.9496,80.535,Available,Available,Available,12/26/2025 17:55,High,9
+FS159,Ceypetco Weligama,Ceypetco,Southern,Weligama,5.975,80.4297,Limited,Available,Not Available,12/26/2025 18:00,Medium,21
+FS160,Lanka Fuel Tangalle,Lanka,Southern,Tangalle,6.024,80.7947,Available,Limited,Not Available,12/26/2025 18:05,Medium,27
+FS161,IOC Hambantota Port,IOC,Southern,Hambantota,6.124,81.1185,Available,Available,Available,12/26/2025 18:10,High,8
+FS162,Ceypetco Tissamaharama,Ceypetco,Southern,Tissamaharama,6.2792,81.2867,Limited,Available,Not Available,12/26/2025 18:15,Medium,25
+FS163,IOC Ratnapura,IOC,Sabaragamuwa,Ratnapura,6.6828,80.399,Available,Available,Available,12/26/2025 18:20,High,11
+FS164,Ceypetco Balangoda,Ceypetco,Sabaragamuwa,Balangoda,6.6647,80.704,Limited,Available,Not Available,12/26/2025 18:25,Medium,24
+FS165,Lanka Fuel Kegalle,Lanka,Sabaragamuwa,Kegalle,7.2513,80.3464,Available,Limited,Not Available,12/26/2025 18:30,Medium,22
+FS166,IOC Nallur,IOC,Northern,Jaffna,9.6615,80.0255,Available,Available,Available,12/26/2025 18:35,High,10
+FS167,Ceypetco Chavakachcheri,Ceypetco,Northern,Chavakachcheri,9.6598,80.1658,Limited,Available,Not Available,12/26/2025 18:40,Medium,26
+FS168,Lanka Fuel Point Pedro,Lanka,Northern,Point Pedro,9.8167,80.2333,Available,Limited,Not Available,12/26/2025 18:45,Medium,24
+FS169,IOC Vavuniya,IOC,Northern,Vavuniya,8.7542,80.4982,Available,Available,Available,12/26/2025 18:50,High,12
+FS170,Ceypetco Mannar,Ceypetco,Northern,Mannar,8.981,79.9044,Limited,Available,Not Available,12/26/2025 18:55,Medium,30
+FS171,IOC Colombo Fort,IOC,Western,Colombo,6.9344,79.8428,Available,Available,Available,12/26/2025 19:00,High,8
+FS172,Ceypetco Dehiwala,Ceypetco,Western,Dehiwala,6.8519,79.8656,Limited,Available,Not Available,12/26/2025 19:05,Medium,18
+FS173,Lanka Fuel Nugegoda,Lanka,Western,Nugegoda,6.8649,79.8997,Available,Limited,Not Available,12/26/2025 19:10,Medium,20
+FS174,IOC Homagama,IOC,Western,Homagama,6.848,80.004,Available,Available,Available,12/26/2025 19:15,High,9
+FS175,Ceypetco Padukka,Ceypetco,Western,Padukka,6.8408,80.0906,Limited,Available,Not Available,12/26/2025 19:20,Medium,22
+FS176,IOC Kalutara,IOC,Western,Kalutara,6.5836,79.959,Available,Available,Available,12/26/2025 19:25,High,10
+FS177,Ceypetco Panadura,Ceypetco,Western,Panadura,6.713,79.9024,Limited,Available,Not Available,12/26/2025 19:30,Medium,21
+FS178,Lanka Fuel Horana,Lanka,Western,Horana,6.7167,80.0628,Available,Limited,Not Available,12/26/2025 19:35,Medium,24
+FS179,IOC Gampaha,IOC,Western,Gampaha,7.0873,80.014,Available,Available,Available,12/26/2025 19:40,High,9
+FS180,Ceypetco Negombo,Ceypetco,Western,Negombo,7.2083,79.8358,Limited,Available,Not Available,12/26/2025 19:45,Medium,19
+FS181,IOC Minuwangoda,IOC,Western,Minuwangoda,7.175,79.9531,Available,Available,Available,12/26/2025 19:50,High,10
+FS182,Ceypetco Ja-Ela,Ceypetco,Western,Ja-Ela,7.0769,79.8913,Limited,Available,Not Available,12/26/2025 19:55,Medium,20
+FS183,IOC Wattala,IOC,Western,Wattala,6.9896,79.8916,Available,Available,Available,12/26/2025 20:00,High,8
+FS184,Ceypetco Kelaniya,Ceypetco,Western,Kelaniya,6.9553,79.921,Limited,Available,Not Available,12/26/2025 20:05,Medium,18
+FS185,IOC Malabe,IOC,Western,Malabe,6.9049,79.955,Available,Available,Available,12/26/2025 20:10,High,9
+FS186,Ceypetco Kaduwela,Ceypetco,Western,Kaduwela,6.934,79.9847,Limited,Available,Not Available,12/26/2025 20:15,Medium,19
+FS187,IOC Avissawella,IOC,Western,Avissawella,6.9561,80.2047,Available,Available,Available,12/26/2025 20:20,High,10
+FS188,Ceypetco Hanwella,Ceypetco,Western,Hanwella,6.9094,80.0811,Limited,Available,Not Available,12/26/2025 20:25,Medium,21
+FS189,IOC Kottawa,IOC,Western,Kottawa,6.8401,79.963,Available,Available,Available,12/26/2025 20:30,High,8
+FS190,Ceypetco Maharagama,Ceypetco,Western,Maharagama,6.8444,79.928,Limited,Available,Not Available,12/26/2025 20:35,Medium,17
+FS191,IOC Piliyandala,IOC,Western,Piliyandala,6.8,79.9167,Available,Available,Available,12/26/2025 20:40,High,9
+FS192,Ceypetco Kesbewa,Ceypetco,Western,Kesbewa,6.7833,79.9417,Limited,Available,Not Available,12/26/2025 20:45,Medium,20
+FS193,IOC Moratuwa,IOC,Western,Moratuwa,6.773,79.8816,Available,Available,Available,12/26/2025 20:50,High,8
+FS194,Ceypetco Ratmalana,Ceypetco,Western,Ratmalana,6.8197,79.8801,Limited,Available,Not Available,12/26/2025 20:55,Medium,18
+FS195,IOC Mount Lavinia,IOC,Western,Mount Lavinia,6.829,79.8655,Available,Available,Available,12/26/2025 21:00,High,9
+FS196,Ceypetco Wellawatte,Ceypetco,Western,Wellawatte,6.8756,79.8596,Limited,Available,Not Available,12/26/2025 21:05,Medium,16
+FS197,IOC Bambalapitiya,IOC,Western,Bambalapitiya,6.8886,79.8565,Available,Available,Available,12/26/2025 21:10,High,7
+FS198,Ceypetco Kollupitiya,Ceypetco,Western,Kollupitiya,6.9147,79.8484,Limited,Available,Not Available,12/26/2025 21:15,Medium,15
+FS199,IOC Colombo 07,IOC,Western,Colombo 07,6.912,79.865,Available,Available,Available,12/26/2025 21:20,High,6
+FS200,Ceypetco Borella,Ceypetco,Western,Borella,6.9145,79.877,Limited,Available,Not Available,12/26/2025 21:25,Medium,14
+FS201,IOC Rajagiriya,IOC,Western,Rajagiriya,6.9108,79.9026,Available,Available,Available,12/26/2025 21:30,High,8
+FS202,Ceypetco Battaramulla,Ceypetco,Western,Battaramulla,6.9044,79.9192,Limited,Available,Not Available,12/26/2025 21:35,Medium,18
+FS203,Lanka Fuel Thalawathugoda,Lanka,Western,Thalawathugoda,6.8725,79.9397,Available,Limited,Not Available,12/26/2025 21:40,Medium,22
+FS204,IOC Kandy City,IOC,Central,Kandy,7.2906,80.6337,Available,Available,Available,12/26/2025 21:45,High,10
+FS205,Ceypetco Peradeniya,Ceypetco,Central,Peradeniya,7.2675,80.595,Limited,Available,Not Available,12/26/2025 21:50,Medium,20
+FS206,Lanka Fuel Katugastota,Lanka,Central,Katugastota,7.3214,80.6216,Available,Limited,Not Available,12/26/2025 21:55,Medium,24
+FS207,IOC Anuradhapura New Town,IOC,North Central,Anuradhapura,8.3114,80.4037,Available,Available,Available,12/26/2025 22:00,High,9
+FS208,Ceypetco Mihintale,Ceypetco,North Central,Mihintale,8.3596,80.5101,Limited,Available,Not Available,12/26/2025 22:05,Medium,23
+FS209,IOC Polonnaruwa,IOC,North Central,Polonnaruwa,7.9403,81.0188,Available,Available,Available,12/26/2025 22:10,High,11
+FS210,Ceypetco Hingurakgoda,Ceypetco,North Central,Hingurakgoda,8.0366,80.9487,Limited,Available,Not Available,12/26/2025 22:15,Medium,26
+FS211,IOC Kurunegala South,IOC,North Western,Kurunegala,7.4818,80.3609,Available,Available,Available,12/26/2025 22:20,High,10
+FS212,Ceypetco Melsiripura,Ceypetco,North Western,Melsiripura,7.65,80.495,Limited,Available,Not Available,12/26/2025 22:25,Medium,27
+FS213,IOC Jaffna Town,IOC,Northern,Jaffna,9.6615,80.0255,Available,Available,Available,12/26/2025 22:30,High,8
+FS214,Ceypetco Kilinochchi,Ceypetco,Northern,Kilinochchi,9.3803,80.377,Limited,Available,Not Available,12/26/2025 22:35,Medium,30
+FS215,IOC Mannar Town,IOC,Northern,Mannar,8.9833,79.9,Available,Available,Available,12/26/2025 22:40,High,12
+FS216,IOC Baddegama,IOC,Southern,Baddegama,6.1808,80.1872,Available,Available,Available,12/26/2025 22:45,High,9
+FS217,Ceypetco Elpitiya,Ceypetco,Southern,Elpitiya,6.2917,80.1667,Limited,Available,Not Available,12/26/2025 22:50,Medium,21
+FS218,IOC Akuressa,IOC,Southern,Akuressa,6.0969,80.4767,Available,Available,Available,12/26/2025 22:55,High,10
+FS219,IOC Balangoda City,IOC,Sabaragamuwa,Balangoda,6.6647,80.704,Available,Available,Available,12/26/2025 23:00,High,11
+FS220,Ceypetco Pelmadulla,Ceypetco,Sabaragamuwa,Pelmadulla,6.6167,80.55,Limited,Available,Not Available,12/26/2025 23:05,Medium,24
+FS221,IOC Monaragala Town,IOC,Uva,Monaragala,6.8728,81.3507,Available,Available,Available,12/26/2025 23:10,High,12
+FS222,Ceypetco Bibile,Ceypetco,Uva,Bibile,7.1536,81.2225,Limited,Available,Not Available,12/26/2025 23:15,Medium,28
+FS223,IOC Kalmunai North,IOC,Eastern,Kalmunai,7.4167,81.8167,Available,Available,Available,12/26/2025 23:20,High,10
+FS224,Ceypetco Eravur,Ceypetco,Eastern,Eravur,7.7833,81.6,Limited,Available,Not Available,12/26/2025 23:25,Medium,26
+FS225,IOC Dehiattakandiya,IOC,Eastern,Dehiattakandiya,7.7,81.0167,Available,Available,Available,12/26/2025 23:30,High,13
+FS226,IOC Kuliyapitiya East,IOC,North Western,Kuliyapitiya,7.4667,80.0333,Available,Available,Available,12/26/2025 23:35,High,11
+FS227,Ceypetco Nikaweratiya,Ceypetco,North Western,Nikaweratiya,7.7472,80.1156,Limited,Available,Not Available,12/26/2025 23:40,Medium,29
+FS228,IOC Kattankudy,IOC,Eastern,Kattankudy,7.675,81.73,Available,Available,Available,12/26/2025 23:45,High,10
+FS229,IOC Veyangoda,IOC,Western,Veyangoda,7.1569,79.9989,Available,Available,Available,12/26/2025 23:50,High,9
+FS230,Ceypetco Nittambuwa,Ceypetco,Western,Nittambuwa,7.1444,80.0958,Limited,Available,Not Available,12/26/2025 23:55,Medium,23
+FS231,IOC Matugama,IOC,Western,Matugama,6.5228,80.1144,Available,Available,Available,12/27/2025 0:00,High,12
+FS232,Ceypetco Aluthgama,Ceypetco,Western,Aluthgama,6.4389,79.9997,Limited,Available,Not Available,12/27/2025 0:05,Medium,25
+FS233,IOC Deniyaya,IOC,Southern,Deniyaya,6.3397,80.5597,Available,Available,Available,12/27/2025 0:10,High,14
+FS234,IOC Hatton Town,IOC,Central,Hatton,6.8914,80.5958,Available,Available,Available,12/27/2025 0:15,High,11
+FS235,Ceypetco Talawakele,Ceypetco,Central,Talawakele,6.9369,80.6581,Limited,Available,Not Available,12/27/2025 0:20,Medium,27
+FS236,IOC Kalawana,IOC,Sabaragamuwa,Kalawana,6.5322,80.4078,Available,Available,Available,12/27/2025 0:25,High,13
+FS237,IOC Kataragama,IOC,Uva,Kataragama,6.4147,81.3333,Available,Available,Available,12/27/2025 0:30,High,9
+FS238,Ceypetco Buttala,Ceypetco,Uva,Buttala,6.7536,81.2356,Limited,Available,Not Available,12/27/2025 0:35,Medium,26
+FS239,IOC Padaviya,IOC,North Central,Padaviya,8.8236,80.7789,Available,Available,Available,12/27/2025 0:40,High,15
+FS240,IOC Mullaitivu,IOC,Northern,Mullaitivu,9.2671,80.8142,Available,Available,Available,12/27/2025 0:45,High,14
+FS241,IOC Kesbewa Town,IOC,Western,Kesbewa,6.7833,79.9417,Available,Available,Available,12/27/2025 0:50,High,10
+FS242,IOC Bandarawela Town,IOC,Uva,Bandarawela,6.8289,81.015,Available,Available,Available,12/27/2025 0:55,High,12
+FS243,IOC Gampola,IOC,Central,Gampola,7.164,80.5703,Available,Available,Available,12/27/2025 1:00,High,11
+FS244,IOC Chunnakam,IOC,Northern,Chunnakam,9.7472,80.0333,Available,Available,Available,12/27/2025 1:05,High,9
+FS245,IOC Galnewa,IOC,North Central,Galnewa,8.3247,80.3861,Available,Available,Available,12/27/2025 1:10,High,13
+FS246,IOC Horowpothana,IOC,North Central,Horowpothana,8.5728,80.8981,Available,Available,Available,12/27/2025 1:15,High,14
+FS247,IOC Mahiyanganaya,IOC,Uva,Mahiyanganaya,7.3274,80.9923,Available,Available,Available,12/27/2025 1:20,High,12
+FS248,IOC Rikillagaskada,IOC,Central,Rikillagaskada,7.1458,80.7836,Available,Available,Available,12/27/2025 1:25,High,15
+FS249,IOC Walasmulla,IOC,Southern,Walasmulla,6.1536,80.6936,Available,Available,Available,12/27/2025 1:30,High,11
+FS250,IOC Lunugamvehera,IOC,Southern,Lunugamvehera,6.34,81.2167,Available,Available,Available,12/27/2025 1:35,High,16
+FS251,IOC Tissamaharama,IOC,Southern,Tissamaharama,6.28,81.2875,Available,Available,Available,12/27/2025 1:40,High,12
+FS252,Ceypetco Kirinda,Ceypetco,Southern,Kirinda,6.2436,81.2897,Limited,Available,Not Available,12/27/2025 1:45,Medium,24
+FS253,IOC Hambantota Port,IOC,Southern,Hambantota,6.124,81.1185,Available,Available,Available,12/27/2025 1:50,High,10
+FS254,Ceypetco Ambalantota,Ceypetco,Southern,Ambalantota,6.1139,81.0247,Limited,Available,Not Available,12/27/2025 1:55,Medium,22
+FS255,IOC Tangalle City,IOC,Southern,Tangalle,6.024,80.789,Available,Available,Available,12/27/2025 2:00,High,11
+FS256,IOC Kalutara North,IOC,Western,Kalutara,6.5854,79.9607,Available,Available,Available,12/27/2025 2:05,High,9
+FS257,Ceypetco Beruwala,Ceypetco,Western,Beruwala,6.4736,79.9839,Limited,Available,Not Available,12/27/2025 2:10,Medium,23
+FS258,IOC Wadduwa,IOC,Western,Wadduwa,6.6703,79.9249,Available,Available,Available,12/27/2025 2:15,High,10
+FS259,Ceypetco Panadura South,Ceypetco,Western,Panadura,6.7144,79.9061,Limited,Available,Not Available,12/27/2025 2:20,Medium,25
+FS260,IOC Moratuwa,IOC,Western,Moratuwa,6.773,79.8816,Available,Available,Available,12/27/2025 2:25,High,8
+FS261,IOC Negombo Lagoon,IOC,Western,Negombo,7.2083,79.8389,Available,Available,Available,12/27/2025 2:30,High,9
+FS262,Ceypetco Kochchikade,Ceypetco,Western,Kochchikade,7.2597,79.8542,Limited,Available,Not Available,12/27/2025 2:35,Medium,21
+FS263,IOC Minuwangoda,IOC,Western,Minuwangoda,7.1731,79.9533,Available,Available,Available,12/27/2025 2:40,High,10
+FS264,Ceypetco Divulapitiya,Ceypetco,Western,Divulapitiya,7.2333,79.9833,Limited,Available,Not Available,12/27/2025 2:45,Medium,24
+FS265,IOC Katunayake,IOC,Western,Katunayake,7.1695,79.8891,Available,Available,Available,12/27/2025 2:50,High,7
+FS266,IOC Avissawella,IOC,Western,Avissawella,6.9553,80.2049,Available,Available,Available,12/27/2025 2:55,High,11
+FS267,Ceypetco Padukka,Ceypetco,Western,Padukka,6.8456,80.0906,Limited,Available,Not Available,12/27/2025 3:00,Medium,26
+FS268,IOC Homagama,IOC,Western,Homagama,6.844,80.002,Available,Available,Available,12/27/2025 3:05,High,9
+FS269,Ceypetco Kottawa,Ceypetco,Western,Kottawa,6.8415,79.9698,Limited,Available,Not Available,12/27/2025 3:10,Medium,27
+FS270,IOC Maharagama,IOC,Western,Maharagama,6.847,79.9266,Available,Available,Available,12/27/2025 3:15,High,8
+FS271,IOC Kegalle Town,IOC,Sabaragamuwa,Kegalle,7.2513,80.3464,Available,Available,Available,12/27/2025 3:20,High,12
+FS272,Ceypetco Rambukkana,Ceypetco,Sabaragamuwa,Rambukkana,7.3236,80.3911,Limited,Available,Not Available,12/27/2025 3:25,Medium,24
+FS273,IOC Mawanella,IOC,Sabaragamuwa,Mawanella,7.2522,80.4469,Available,Available,Available,12/27/2025 3:30,High,11
+FS274,Ceypetco Warakapola,Ceypetco,Sabaragamuwa,Warakapola,7.2317,80.1967,Limited,Available,Not Available,12/27/2025 3:35,Medium,25
+FS275,IOC Dehiowita,IOC,Sabaragamuwa,Dehiowita,6.9697,80.2625,Available,Available,Available,12/27/2025 3:40,High,13
+FS276,IOC Badulla Town,IOC,Uva,Badulla,6.9934,81.055,Available,Available,Available,12/27/2025 3:45,High,10
+FS277,Ceypetco Hali Ela,Ceypetco,Uva,Hali Ela,6.95,81.05,Limited,Available,Not Available,12/27/2025 3:50,Medium,26
+FS278,IOC Passara,IOC,Uva,Passara,6.93,81.15,Available,Available,Available,12/27/2025 3:55,High,14
+FS279,Ceypetco Ella,Ceypetco,Uva,Ella,6.8667,81.0466,Limited,Available,Not Available,12/27/2025 4:00,Medium,28
+FS280,IOC Welimada,IOC,Uva,Welimada,6.9019,80.9133,Available,Available,Available,12/27/2025 4:05,High,12
+FS281,IOC Trincomalee Port,IOC,Eastern,Trincomalee,8.5711,81.2335,Available,Available,Available,12/27/2025 4:10,High,9
+FS282,Ceypetco Nilaveli,Ceypetco,Eastern,Nilaveli,8.6747,81.197,Limited,Available,Not Available,12/27/2025 4:15,Medium,27
+FS283,IOC Kantale,IOC,Eastern,Kantale,8.355,81.0075,Available,Available,Available,12/27/2025 4:20,High,13
+FS284,Ceypetco Morawewa,Ceypetco,Eastern,Morawewa,8.45,80.95,Limited,Available,Not Available,12/27/2025 4:25,Medium,30
+FS285,IOC Serunuwara,IOC,Eastern,Serunuwara,8.25,81.3,Available,Available,Available,12/27/2025 4:30,High,15
+FS286,IOC Puttalam Town,IOC,North Western,Puttalam,8.0362,79.8283,Available,Available,Available,12/27/2025 4:35,High,12
+FS287,Ceypetco Anamaduwa,Ceypetco,North Western,Anamaduwa,7.88,79.9,Limited,Available,Not Available,12/27/2025 4:40,Medium,26
+FS288,IOC Wennappuwa,IOC,North Western,Wennappuwa,7.35,79.85,Available,Available,Available,12/27/2025 4:45,High,9
+FS289,Ceypetco Dankotuwa,Ceypetco,North Western,Dankotuwa,7.3,79.88,Limited,Available,Not Available,12/27/2025 4:50,Medium,24
+FS290,IOC Chilaw South,IOC,North Western,Chilaw,7.575,79.795,Available,Available,Available,12/27/2025 4:55,High,11
+FS291,IOC Vavuniya Town,IOC,Northern,Vavuniya,8.7514,80.4971,Available,Available,Available,12/27/2025 5:00,High,13
+FS292,Ceypetco Omanthai,Ceypetco,Northern,Omanthai,8.8,80.55,Limited,Available,Not Available,12/27/2025 5:05,Medium,29
+FS293,IOC Cheddikulam,IOC,Northern,Cheddikulam,8.72,80.53,Available,Available,Available,12/27/2025 5:10,High,14
+FS294,Ceypetco Puliyankulam,Ceypetco,Northern,Puliyankulam,8.65,80.47,Limited,Available,Not Available,12/27/2025 5:15,Medium,31
+FS295,IOC Nedunkeni,IOC,Northern,Nedunkeni,8.82,80.62,Available,Available,Available,12/27/2025 5:20,High,16
+FS296,IOC Matale City,IOC,Central,Matale,7.4697,80.6214,Available,Available,Available,12/27/2025 5:25,High,10
+FS297,Ceypetco Dambulla South,Ceypetco,Central,Dambulla,7.86,80.65,Limited,Available,Not Available,12/27/2025 5:30,Medium,27
+FS298,IOC Galewela,IOC,Central,Galewela,7.75,80.57,Available,Available,Available,12/27/2025 5:35,High,14
+FS299,Ceypetco Naula,Ceypetco,Central,Naula,7.7,80.65,Limited,Available,Not Available,12/27/2025 5:40,Medium,28
+FS300,IOC Yatawatta,IOC,Central,Yatawatta,7.5667,80.6,Available,Available,Available,12/27/2025 5:45,High,12
+FS351,Laugfs Dambulla,Laugfs Petroleum,Central,Dambulla,7.856,80.651,Available,Available,Available,12/27/2025 10:00,High,12
+FS352,Sinopec Sigiriya,Sinopec,Central,Sigiriya,7.954,80.754,Limited,Available,Not Available,12/27/2025 10:05,Medium,26
+FS353,IOC Habarana,IOC,Central,Habarana,8.037,80.748,Available,Available,Available,12/27/2025 10:10,High,11
+FS354,Ceypetco Kandy South,Ceypetco,Central,Kandy,7.267,80.637,Limited,Available,Not Available,12/27/2025 10:15,Medium,29
+FS355,Laugfs Peradeniya,Laugfs Petroleum,Central,Peradeniya,7.259,80.599,Available,Available,Available,12/27/2025 10:20,High,10
+FS356,Sinopec Matale,Sinopec,Central,Matale,7.471,80.624,Available,Available,Available,12/27/2025 10:25,High,9
+FS357,IOC Ukuwela,IOC,Central,Ukuwela,7.424,80.6245,Limited,Available,Not Available,12/27/2025 10:30,Medium,27
+FS358,Laugfs Naula,Laugfs Petroleum,Central,Naula,7.706,80.6515,Available,Available,Available,12/27/2025 10:35,High,12
+FS359,Sinopec Galewela,Sinopec,Central,Galewela,7.758,80.566,Limited,Available,Not Available,12/27/2025 10:40,Medium,25
+FS360,IOC Rattota,IOC,Central,Rattota,7.536,80.694,Available,Available,Available,12/27/2025 10:45,High,13
+FS361,Laugfs Badulla,Laugfs Petroleum,Uva,Badulla,6.989,81.055,Available,Available,Available,12/27/2025 10:50,High,11
+FS362,Sinopec Bandarawela,Sinopec,Uva,Bandarawela,6.828,80.985,Limited,Available,Not Available,12/27/2025 10:55,Medium,26
+FS363,IOC Ella,IOC,Uva,Ella,6.865,81.046,Available,Available,Available,12/27/2025 11:00,High,9
+FS364,Ceypetco Mahiyanganaya,Ceypetco,Uva,Mahiyanganaya,7.327,81,Limited,Available,Not Available,12/27/2025 11:05,Medium,28
+FS365,Laugfs Passara,Laugfs Petroleum,Uva,Passara,6.935,81.153,Available,Available,Available,12/27/2025 11:10,High,12
+FS366,Sinopec Monaragala,Sinopec,Uva,Monaragala,6.871,81.351,Available,Available,Available,12/27/2025 11:15,High,10
+FS367,IOC Bibile,IOC,Uva,Bibile,6.747,81.224,Limited,Available,Not Available,12/27/2025 11:20,Medium,27
+FS368,Laugfs Wellawaya,Laugfs Petroleum,Uva,Wellawaya,6.736,81.104,Available,Available,Available,12/27/2025 11:25,High,11
+FS369,Sinopec Thanamalwila,Sinopec,Uva,Thanamalwila,6.439,81.13,Limited,Available,Not Available,12/27/2025 11:30,Medium,30
+FS370,IOC Buttala,IOC,Uva,Buttala,6.75,81.235,Available,Available,Available,12/27/2025 11:35,High,10
+FS371,Laugfs Anuradhapura,Laugfs Petroleum,North Central,Anuradhapura,8.311,80.403,Available,Available,Available,12/27/2025 11:40,High,9
+FS372,Sinopec Mihintale,Sinopec,North Central,Mihintale,8.359,80.51,Limited,Available,Not Available,12/27/2025 11:45,Medium,26
+FS373,IOC Kekirawa,IOC,North Central,Kekirawa,8.037,80.594,Available,Available,Available,12/27/2025 11:50,High,11
+FS374,Ceypetco Thambuttegama,Ceypetco,North Central,Thambuttegama,8.159,80.298,Limited,Available,Not Available,12/27/2025 11:55,Medium,29
+FS375,Laugfs Medawachchiya,Laugfs Petroleum,North Central,Medawachchiya,8.541,80.498,Available,Available,Available,12/27/2025 12:00,High,12
+FS376,Sinopec Padaviya,Sinopec,North Central,Padaviya,8.841,80.752,Limited,Available,Not Available,12/27/2025 12:05,Medium,31
+FS377,IOC Horowpothana,IOC,North Central,Horowpothana,8.581,80.877,Available,Available,Available,12/27/2025 12:10,High,10
+FS378,Laugfs Talawa,Laugfs Petroleum,North Central,Talawa,8.233,80.353,Available,Available,Available,12/27/2025 12:15,High,11
+FS379,Sinopec Nochchiyagama,Sinopec,North Central,Nochchiyagama,8.265,80.207,Limited,Available,Not Available,12/27/2025 12:20,Medium,28
+FS380,IOC Rajanganaya,IOC,North Central,Rajanganaya,8.189,80.178,Available,Available,Available,12/27/2025 12:25,High,12
+FS381,Laugfs Polonnaruwa,Laugfs Petroleum,North Central,Polonnaruwa,7.939,81.002,Available,Available,Available,12/27/2025 12:30,High,10
+FS382,Sinopec Hingurakgoda,Sinopec,North Central,Hingurakgoda,8.037,80.95,Limited,Available,Not Available,12/27/2025 12:35,Medium,27
+FS383,IOC Medirigiriya,IOC,North Central,Medirigiriya,7.974,80.926,Available,Available,Available,12/27/2025 12:40,High,11
+FS384,Ceypetco Giritale,Ceypetco,North Central,Giritale,8.003,80.973,Limited,Available,Not Available,12/27/2025 12:45,Medium,28
+FS385,Laugfs Elahera,Laugfs Petroleum,North Central,Elahera,7.717,80.808,Available,Available,Available,12/27/2025 12:50,High,12
+FS386,Sinopec Trincomalee,Sinopec,Eastern,Trincomalee,8.587,81.215,Available,Available,Available,12/27/2025 12:55,High,9
+FS387,IOC Nilaveli,IOC,Eastern,Nilaveli,8.686,81.201,Limited,Available,Not Available,12/27/2025 13:00,Medium,25
+FS388,Laugfs Kinniya,Laugfs Petroleum,Eastern,Kinniya,8.501,81.18,Available,Available,Available,12/27/2025 13:05,High,11
+FS389,Sinopec Kantale,Sinopec,Eastern,Kantale,8.359,81.008,Limited,Available,Not Available,12/27/2025 13:10,Medium,28
+FS390,IOC Morawewa,IOC,Eastern,Morawewa,8.536,80.979,Available,Available,Available,12/27/2025 13:15,High,12
+FS391,Laugfs Batticaloa,Laugfs Petroleum,Eastern,Batticaloa,7.716,81.692,Available,Available,Available,12/27/2025 13:20,High,10
+FS392,Sinopec Kalmunai,Sinopec,Eastern,Kalmunai,7.414,81.826,Limited,Available,Not Available,12/27/2025 13:25,Medium,27
+FS393,IOC Akkaraipattu,IOC,Eastern,Akkaraipattu,7.219,81.849,Available,Available,Available,12/27/2025 13:30,High,11
+FS394,Ceypetco Sammanthurai,Ceypetco,Eastern,Sammanthurai,7.363,81.832,Limited,Available,Not Available,12/27/2025 13:35,Medium,29
+FS395,Laugfs Pottuvil,Laugfs Petroleum,Eastern,Pottuvil,6.876,81.83,Available,Available,Available,12/27/2025 13:40,High,12
+FS396,Sinopec Ampara,Sinopec,Eastern,Ampara,7.297,81.674,Available,Available,Available,12/27/2025 13:45,High,9
+FS397,IOC Dehiattakandiya,IOC,Eastern,Dehiattakandiya,7.708,81.08,Limited,Available,Not Available,12/27/2025 13:50,Medium,26
+FS398,Laugfs Uhana,Laugfs Petroleum,Eastern,Uhana,7.363,81.639,Available,Available,Available,12/27/2025 13:55,High,11
+FS399,Sinopec Maha Oya,Sinopec,Eastern,Maha Oya,7.536,81.343,Limited,Available,Not Available,12/27/2025 14:00,Medium,28
+FS400,IOC Damana,IOC,Eastern,Damana,7.412,81.603,Available,Available,Available,12/27/2025 14:05,High,12
+FS401,IOC Galle Main,IOC,Southern,Galle,6.0535,80.221,Available,Available,Available,12/27/2025 14:30,High,12
+FS402,Ceypetco Unawatuna,Ceypetco,Southern,Unawatuna,6.017,80.248,Limited,Available,Not Available,12/27/2025 14:35,Medium,26
+FS403,Laugfs Hikkaduwa,Laugfs Petroleum,Southern,Hikkaduwa,6.14,80.102,Available,Available,Available,12/27/2025 14:40,High,11
+FS404,Sinopec Ambalangoda,Sinopec,Southern,Ambalangoda,6.235,80.054,Limited,Available,Not Available,12/27/2025 14:45,Medium,28
+FS405,IOC Elpitiya,IOC,Southern,Elpitiya,6.294,80.161,Available,Available,Available,12/27/2025 14:50,High,10
+FS406,Ceypetco Matara City,Ceypetco,Southern,Matara,5.9485,80.5353,Available,Available,Available,12/27/2025 14:55,High,13
+FS407,Laugfs Weligama,Laugfs Petroleum,Southern,Weligama,5.974,80.429,Limited,Available,Not Available,12/27/2025 15:00,Medium,27
+FS408,Sinopec Mirissa,Sinopec,Southern,Mirissa,5.946,80.457,Available,Available,Available,12/27/2025 15:05,High,9
+FS409,IOC Akuressa,IOC,Southern,Akuressa,6.101,80.481,Limited,Available,Not Available,12/27/2025 15:10,Medium,29
+FS410,Ceypetco Kamburupitiya,Ceypetco,Southern,Kamburupitiya,6.071,80.564,Available,Available,Available,12/27/2025 15:15,High,12
+FS411,Laugfs Hambantota,Laugfs Petroleum,Southern,Hambantota,6.124,81.118,Available,Available,Available,12/27/2025 15:20,High,10
+FS412,Sinopec Tissamaharama,Sinopec,Southern,Tissamaharama,6.279,81.287,Limited,Available,Not Available,12/27/2025 15:25,Medium,26
+FS413,IOC Beliatta,IOC,Southern,Beliatta,6.048,80.736,Available,Available,Available,12/27/2025 15:30,High,11
+FS414,Ceypetco Tangalle,Ceypetco,Southern,Tangalle,6.024,80.791,Limited,Available,Not Available,12/27/2025 15:35,Medium,28
+FS415,Laugfs Walasmulla,Laugfs Petroleum,Southern,Walasmulla,6.153,80.698,Available,Available,Available,12/27/2025 15:40,High,12
+FS416,IOC Rathnapura City,IOC,Sabaragamuwa,Ratnapura,6.6828,80.399,Available,Available,Available,12/27/2025 15:45,High,13
+FS417,Ceypetco Balangoda,Ceypetco,Sabaragamuwa,Balangoda,6.661,80.695,Limited,Available,Not Available,12/27/2025 15:50,Medium,27
+FS418,Laugfs Embilipitiya,Laugfs Petroleum,Sabaragamuwa,Embilipitiya,6.343,80.848,Available,Available,Available,12/27/2025 15:55,High,11
+FS419,Sinopec Pelmadulla,Sinopec,Sabaragamuwa,Pelmadulla,6.62,80.542,Limited,Available,Not Available,12/27/2025 16:00,Medium,28
+FS420,IOC Kalawana,IOC,Sabaragamuwa,Kalawana,6.531,80.407,Available,Available,Available,12/27/2025 16:05,High,12
+FS421,Laugfs Kegalle,Laugfs Petroleum,Sabaragamuwa,Kegalle,7.252,80.344,Available,Available,Available,12/27/2025 16:10,High,10
+FS422,Sinopec Mawanella,Sinopec,Sabaragamuwa,Mawanella,7.245,80.447,Limited,Available,Not Available,12/27/2025 16:15,Medium,26
+FS423,IOC Warakapola,IOC,Sabaragamuwa,Warakapola,7.231,80.198,Available,Available,Available,12/27/2025 16:20,High,11
+FS424,Ceypetco Rambukkana,Ceypetco,Sabaragamuwa,Rambukkana,7.323,80.392,Limited,Available,Not Available,12/27/2025 16:25,Medium,29
+FS425,Laugfs Deraniyagala,Laugfs Petroleum,Sabaragamuwa,Deraniyagala,6.93,80.338,Available,Available,Available,12/27/2025 16:30,High,12
+FS426,Sinopec Kuruwita,Sinopec,Sabaragamuwa,Kuruwita,6.78,80.366,Available,Available,Available,12/27/2025 16:35,High,9
+FS427,IOC Godakawela,IOC,Sabaragamuwa,Godakawela,6.504,80.643,Limited,Available,Not Available,12/27/2025 16:40,Medium,27
+FS428,Laugfs Kolonna,Laugfs Petroleum,Sabaragamuwa,Kolonna,6.405,80.681,Available,Available,Available,12/27/2025 16:45,High,11
+FS429,Sinopec Nivithigala,Sinopec,Sabaragamuwa,Nivithigala,6.579,80.455,Limited,Available,Not Available,12/27/2025 16:50,Medium,28
+FS430,IOC Ayagama,IOC,Sabaragamuwa,Ayagama,6.613,80.284,Available,Available,Available,12/27/2025 16:55,High,12
+FS431,Laugfs Colombo Fort,Laugfs Petroleum,Western,Colombo Fort,6.9344,79.8428,Available,Available,Available,12/27/2025 17:00,High,10
+FS432,Sinopec Pettah,Sinopec,Western,Pettah,6.9369,79.8487,Limited,Available,Not Available,12/27/2025 17:05,Medium,28
+FS433,IOC Maradana,IOC,Western,Maradana,6.9286,79.8651,Available,Available,Available,12/27/2025 17:10,High,12
+FS434,Ceypetco Borella,Ceypetco,Western,Borella,6.9145,79.877,Limited,Available,Not Available,12/27/2025 17:15,Medium,30
+FS435,Laugfs Narahenpita,Laugfs Petroleum,Western,Narahenpita,6.902,79.8775,Available,Available,Available,12/27/2025 17:20,High,11
+FS436,Sinopec Rajagiriya,Sinopec,Western,Rajagiriya,6.9108,79.8948,Limited,Available,Not Available,12/27/2025 17:25,Medium,26
+FS437,IOC Battaramulla,IOC,Western,Battaramulla,6.8964,79.9181,Available,Available,Available,12/27/2025 17:30,High,10
+FS438,Ceypetco Kotte,Ceypetco,Western,Sri Jayawardenepura Kotte,6.8905,79.9016,Limited,Available,Not Available,12/27/2025 17:35,Medium,29
+FS439,Laugfs Nugegoda,Laugfs Petroleum,Western,Nugegoda,6.8697,79.889,Available,Available,Available,12/27/2025 17:40,High,12
+FS440,Sinopec Maharagama,Sinopec,Western,Maharagama,6.8485,79.9266,Limited,Available,Not Available,12/27/2025 17:45,Medium,28
+FS441,IOC Homagama,IOC,Western,Homagama,6.8433,80.0049,Available,Available,Available,12/27/2025 17:50,High,11
+FS442,Ceypetco Kottawa,Ceypetco,Western,Kottawa,6.8402,79.9696,Limited,Available,Not Available,12/27/2025 17:55,Medium,27
+FS443,Laugfs Piliyandala,Laugfs Petroleum,Western,Piliyandala,6.801,79.922,Available,Available,Available,12/27/2025 18:00,High,12
+FS444,Sinopec Kesbewa,Sinopec,Western,Kesbewa,6.7955,79.9414,Limited,Available,Not Available,12/27/2025 18:05,Medium,28
+FS445,IOC Moratuwa,IOC,Western,Moratuwa,6.773,79.8825,Available,Available,Available,12/27/2025 18:10,High,10
+FS446,Ceypetco Panadura,Ceypetco,Western,Panadura,6.713,79.9045,Limited,Available,Not Available,12/27/2025 18:15,Medium,29
+FS447,Laugfs Wadduwa,Laugfs Petroleum,Western,Wadduwa,6.6658,79.925,Available,Available,Available,12/27/2025 18:20,High,11
+FS448,Sinopec Kalutara,Sinopec,Western,Kalutara,6.5833,79.959,Limited,Available,Not Available,12/27/2025 18:25,Medium,30
+FS449,IOC Aluthgama,IOC,Western,Aluthgama,6.437,79.996,Available,Available,Available,12/27/2025 18:30,High,12
+FS450,Laugfs Beruwala,Laugfs Petroleum,Western,Beruwala,6.473,79.983,Available,Available,Available,12/27/2025 18:35,High,11
+FS451,Sinopec Negombo,Sinopec,Western,Negombo,7.2083,79.8358,Limited,Available,Not Available,12/27/2025 18:40,Medium,28
+FS452,IOC Kochchikade,IOC,Western,Kochchikade,7.263,79.855,Available,Available,Available,12/27/2025 18:45,High,11
+FS453,Ceypetco Ja-Ela,Ceypetco,Western,Ja-Ela,7.077,79.894,Limited,Available,Not Available,12/27/2025 18:50,Medium,29
+FS454,Laugfs Wattala,Laugfs Petroleum,Western,Wattala,6.989,79.891,Available,Available,Available,12/27/2025 18:55,High,10
+FS455,Sinopec Kelaniya,Sinopec,Western,Kelaniya,6.955,79.922,Limited,Available,Not Available,12/27/2025 19:00,Medium,27
+FS456,IOC Kiribathgoda,IOC,Western,Kiribathgoda,6.979,79.9245,Available,Available,Available,12/27/2025 19:05,High,11
+FS457,Ceypetco Kadawatha,Ceypetco,Western,Kadawatha,7,79.952,Limited,Available,Not Available,12/27/2025 19:10,Medium,28
+FS458,Laugfs Gampaha,Laugfs Petroleum,Western,Gampaha,7.0873,79.9996,Available,Available,Available,12/27/2025 19:15,High,12
+FS459,Sinopec Mirigama,Sinopec,Western,Mirigama,7.24,80.126,Limited,Available,Not Available,12/27/2025 19:20,Medium,30
+FS460,IOC Minuwangoda,IOC,Western,Minuwangoda,7.171,79.954,Available,Available,Available,12/27/2025 19:25,High,11
+FS461,Laugfs Nittambuwa,Laugfs Petroleum,Western,Nittambuwa,7.145,80.095,Available,Available,Available,12/27/2025 19:30,High,12
+FS462,Sinopec Veyangoda,Sinopec,Western,Veyangoda,7.154,80.094,Limited,Available,Not Available,12/27/2025 19:35,Medium,27
+FS463,IOC Pugoda,IOC,Western,Pugoda,6.97,80.12,Available,Available,Available,12/27/2025 19:40,High,11
+FS464,Ceypetco Dompe,Ceypetco,Western,Dompe,6.931,80.088,Limited,Available,Not Available,12/27/2025 19:45,Medium,28
+FS465,Laugfs Hanwella,Laugfs Petroleum,Western,Hanwella,6.909,80.084,Available,Available,Available,12/27/2025 19:50,High,12
+FS466,Sinopec Avissawella,Sinopec,Western,Avissawella,6.954,80.211,Limited,Available,Not Available,12/27/2025 19:55,Medium,29
+FS467,IOC Padukka,IOC,Western,Padukka,6.842,80.091,Available,Available,Available,12/27/2025 20:00,High,11
+FS468,Ceypetco Ingiriya,Ceypetco,Western,Ingiriya,6.73,80.157,Limited,Available,Not Available,12/27/2025 20:05,Medium,28
+FS469,Laugfs Horana,Laugfs Petroleum,Western,Horana,6.715,80.062,Available,Available,Available,12/27/2025 20:10,High,12
+FS470,Sinopec Bulathsinhala,Sinopec,Western,Bulathsinhala,6.666,80.186,Limited,Available,Not Available,12/27/2025 20:15,Medium,30
+FS471,IOC Mathugama,IOC,Western,Mathugama,6.522,80.115,Available,Available,Available,12/27/2025 20:20,High,11
+FS472,Ceypetco Agalawatta,Ceypetco,Western,Agalawatta,6.541,80.134,Limited,Available,Not Available,12/27/2025 20:25,Medium,28
+FS473,Laugfs Dodangoda,Laugfs Petroleum,Western,Dodangoda,6.56,80.021,Available,Available,Available,12/27/2025 20:30,High,12
+FS474,Sinopec Alubomulla,Sinopec,Western,Alubomulla,6.617,79.965,Limited,Available,Not Available,12/27/2025 20:35,Medium,29
+FS475,IOC Maggona,IOC,Western,Maggona,6.507,79.977,Available,Available,Available,12/27/2025 20:40,High,11
+FS476,Laugfs Payagala,Laugfs Petroleum,Western,Payagala,6.528,79.979,Available,Available,Available,12/27/2025 20:45,High,12
+FS477,Sinopec Welipenna,Sinopec,Western,Welipenna,6.544,80.08,Limited,Available,Not Available,12/27/2025 20:50,Medium,28
+FS478,IOC Millaniya,IOC,Western,Millaniya,6.631,80.055,Available,Available,Available,12/27/2025 20:55,High,11
+FS479,Ceypetco Baduraliya,Ceypetco,Western,Baduraliya,6.52,80.235,Limited,Available,Not Available,12/27/2025 21:00,Medium,30
+FS480,Laugfs Kalawila,Laugfs Petroleum,Western,Kalawila,6.578,80.19,Available,Available,Available,12/27/2025 21:05,High,12
+FS481,Sinopec Madampe,Sinopec,North Western,Madampe,7.507,79.84,Limited,Available,Not Available,12/27/2025 21:10,Medium,29
+FS482,IOC Wennappuwa,IOC,North Western,Wennappuwa,7.33,79.86,Available,Available,Available,12/27/2025 21:15,High,11
+FS483,Laugfs Chilaw,Laugfs Petroleum,North Western,Chilaw,7.575,79.795,Available,Available,Available,12/27/2025 21:20,High,12
+FS484,Sinopec Marawila,Sinopec,North Western,Marawila,7.414,79.828,Limited,Available,Not Available,12/27/2025 21:25,Medium,28
+FS485,IOC Nattandiya,IOC,North Western,Nattandiya,7.411,79.864,Available,Available,Available,12/27/2025 21:30,High,11
+FS486,Ceypetco Dankotuwa,Ceypetco,North Western,Dankotuwa,7.3,79.885,Limited,Available,Not Available,12/27/2025 21:35,Medium,27
+FS487,Laugfs Puttalam,Laugfs Petroleum,North Western,Puttalam,8.033,79.825,Available,Available,Available,12/27/2025 21:40,High,12
+FS488,Sinopec Mundalama,Sinopec,North Western,Mundalama,7.989,79.81,Limited,Available,Not Available,12/27/2025 21:45,Medium,30
+FS489,IOC Anamaduwa,IOC,North Western,Anamaduwa,7.878,80.011,Available,Available,Available,12/27/2025 21:50,High,11
+FS490,Laugfs Karuwalagaswewa,Laugfs Petroleum,North Western,Karuwalagaswewa,7.748,80.053,Available,Available,Available,12/27/2025 21:55,High,12
+FS491,Sinopec Nikaweratiya,Sinopec,North Western,Nikaweratiya,7.749,80.124,Limited,Available,Not Available,12/27/2025 22:00,Medium,28
+FS492,IOC Wariyapola,IOC,North Western,Wariyapola,7.618,80.241,Available,Available,Available,12/27/2025 22:05,High,11
+FS493,Ceypetco Kurunegala,Ceypetco,North Western,Kurunegala,7.4863,80.362,Limited,Available,Not Available,12/27/2025 22:10,Medium,29
+FS494,Laugfs Mawathagama,Laugfs Petroleum,North Western,Mawathagama,7.407,80.447,Available,Available,Available,12/27/2025 22:15,High,12
+FS495,Sinopec Narammala,Sinopec,North Western,Narammala,7.433,80.217,Limited,Available,Not Available,12/27/2025 22:20,Medium,28
+FS496,IOC Polgahawela,IOC,North Western,Polgahawela,7.333,80.293,Available,Available,Available,12/27/2025 22:25,High,11
+FS497,Laugfs Alawwa,Laugfs Petroleum,North Western,Alawwa,7.296,80.234,Available,Available,Available,12/27/2025 22:30,High,12
+FS498,Sinopec Galgamuwa,Sinopec,North Western,Galgamuwa,7.995,80.267,Limited,Available,Not Available,12/27/2025 22:35,Medium,30
+FS499,IOC Giribawa,IOC,North Western,Giribawa,8.122,80.262,Available,Available,Available,12/27/2025 22:40,High,11
+FS500,Laugfs Mahawa,Laugfs Petroleum,North Western,Mahawa,7.822,80.296,Available,Available,Available,12/27/2025 22:45,High,12
+FS501, IOC Kegalle, IOC, Sabaragamuwa, Kegalle,7.26,80.34, Available, Available, Available, 2025-12-27T17:20:00Z, High,10
+FS502, Laugfs Mawanella, Laugfs Petroleum, Sabaragamuwa, Mawanella,7.21,80.35, Limited, Available, Available, 2025-12-27T17:22:00Z, Medium,25
+FS503, Sinopec Rambukkana, Sinopec, Sabaragamuwa, Rambukkana,7.32,80.37, Available, Limited, Not Available, 2025-12-27T17:24:00Z, Medium,30
+FS504, IOC Ruwanwella, IOC, Sabaragamuwa, Ruwanwella,7.29,80.4, Available, Available, Available, 2025-12-27T17:26:00Z, High,12
+FS505, Laugfs Ambepussa, Laugfs Petroleum, Western, Ambepussa,7.36,80.28, Available, Available, Available, 2025-12-27T17:28:00Z, High,11
+FS506, Sinopec Weligama, Sinopec, Southern, Weligama,5.99,80.45, Limited, Available, Available, 2025-12-27T17:30:00Z, Medium,18
+FS507, IOC Galle, IOC, Southern, Galle,6.035,80.216, Available, Available, Available, 2025-12-27T17:32:00Z, High,14
+FS508, Laugfs Matara, Laugfs Petroleum, Southern, Matara,5.948,80.534, Available, Limited, Available, 2025-12-27T17:34:00Z, Medium,22
+FS509, Sinopec Hambantota, Sinopec, Southern, Hambantota,6.124,81.123, Not Available, Available, Available, 2025-12-27T17:36:00Z, Low,40
+FS510, IOC Tangalle, IOC, Southern, Tangalle,6.017,80.788, Available, Available, Available, 2025-12-27T17:38:00Z, High,13
+FS511, Laugfs Polonnaruwa, Laugfs Petroleum, North Central, Polonnaruwa,7.933,81, Available, Available, Available, 2025-12-27T17:40:00Z, High,11
+FS512, Sinopec Anuradhapura, Sinopec, North Central, Anuradhapura,8.312,80.4, Limited, Available, Not Available, 2025-12-27T17:42:00Z, Medium,28
+FS513, IOC Mihintale, IOC, North Central, Mihintale,8.35,80.43, Available, Available, Available, 2025-12-27T17:44:00Z, High,10
+FS514, Laugfs Dambulla, Laugfs Petroleum, Central, Dambulla,7.86,80.65, Available, Limited, Available, 2025-12-27T17:46:00Z, Medium,20
+FS515, Sinopec Sigiriya, Sinopec, Central, Sigiriya,7.95,80.75, Available, Available, Not Available, 2025-12-27T17:48:00Z, Medium,27
+FS516, IOC Kandy, IOC, Central, Kandy,7.29,80.64, Available, Available, Available, 2025-12-27T17:50:00Z, High,12
+FS517, Laugfs Matale, Laugfs Petroleum, Central, Matale,7.45,80.6, Available, Limited, Available, 2025-12-27T17:52:00Z, Medium,22
+FS518, Sinopec Nuwara Eliya, Sinopec, Central, Nuwara Eliya,6.97,80.78, Limited, Available, Not Available, 2025-12-27T17:54:00Z, Medium,32
+FS519, IOC Hatton, IOC, Central, Hatton,7,80.6, Available, Available, Available, 2025-12-27T17:56:00Z, High,13
+FS520, Laugfs Bandarawela, Laugfs Petroleum, Uva, Bandarawela,6.84,81.04, Available, Available, Available, 2025-12-27T17:58:00Z, High,12
+FS521, Sinopec Badulla, Sinopec, Uva, Badulla,6.989,81.056, Limited, Available, Available, 2025-12-27T18:00:00Z, Medium,25
+FS522, IOC Monaragala, IOC, Uva, Monaragala,6.9,81.35, Available, Available, Available, 2025-12-27T18:02:00Z, High,14
+FS523, Laugfs Ella, Laugfs Petroleum, Uva, Ella,6.85,81.1, Available, Limited, Available, 2025-12-27T18:04:00Z, Medium,21
+FS524, Sinopec Wellawaya, Sinopec, Uva, Wellawaya,6.81,81.4, Not Available, Available, Available, 2025-12-27T18:06:00Z, Low,35
+FS525, IOC Ampara, IOC, Eastern, Ampara,7.3,81.67, Available, Available, Available, 2025-12-27T18:08:00Z, High,12
+FS526, Laugfs Maha Oya, Laugfs Petroleum, Eastern, Maha Oya,7.18,81.583, Available, Available, Available, 2025-12-27T18:10:00Z, High,11
+FS527, Sinopec Batticaloa, Sinopec, Eastern, Batticaloa,7.71,81.7, Limited, Available, Not Available, 2025-12-27T18:12:00Z, Medium,28
+FS528, IOC Trincomalee, IOC, Eastern, Trincomalee,8.58,81.23, Available, Available, Available, 2025-12-27T18:14:00Z, High,13
+FS529, Laugfs Kinniya, Laugfs Petroleum, Eastern, Kinniya,8.65,81.35, Available, Limited, Available, 2025-12-27T18:16:00Z, Medium,23
+FS530, Sinopec Sampur, Sinopec, Eastern, Sampur,8.68,81.5, Not Available, Available, Available, 2025-12-27T18:18:00Z, Low,37
+FS531, IOC Jaffna, IOC, Northern, Jaffna,9.661,80.025, Available, Available, Available, 2025-12-27T18:20:00Z, High,11
+FS532, Laugfs Vavuniya, Laugfs Petroleum, Northern, Vavuniya,8.75,80.5, Available, Available, Available, 2025-12-27T18:22:00Z, High,12
+FS533, Sinopec Kilinochchi, Sinopec, Northern, Kilinochchi,9.4,80.4, Limited, Available, Not Available, 2025-12-27T18:24:00Z, Medium,29
+FS534, IOC Mannar, IOC, Northern, Mannar,8.98,79.9, Available, Available, Available, 2025-12-27T18:26:00Z, High,12
+FS535, Laugfs Mullaitivu, Laugfs Petroleum, Northern, Mullaitivu,9.3,80.75, Available, Limited, Available, 2025-12-27T18:28:00Z, Medium,26
+FS536, Sinopec Point Pedro, Sinopec, Northern, Point Pedro,9.825,80.21, Not Available, Available, Available, 2025-12-27T18:30:00Z, Low,38
+FS537, IOC Negombo, IOC, Western, Negombo,7.2,79.84, Available, Available, Available, 2025-12-27T18:32:00Z, High,12
+FS538, Laugfs Wattala, Laugfs Petroleum, Western, Wattala,7,79.9, Available, Available, Available, 2025-12-27T18:34:00Z, High,11
+FS539, Sinopec Colombo, Sinopec, Western, Colombo,6.9271,79.8612, Limited, Available, Not Available, 2025-12-27T18:36:00Z, Medium,30
+FS540, IOC Panadura, IOC, Western, Panadura,6.7128,79.9088, Available, Available, Available, 2025-12-27T18:38:00Z, High,13
+FS541, Laugfs Kalutara, Laugfs Petroleum, Western, Kalutara,6.586,79.96, Available, Limited, Available, 2025-12-27T18:40:00Z, Medium,22
+FS542, Sinopec Horana, Sinopec, Western, Horana,6.708,80.04, Limited, Available, Not Available, 2025-12-27T18:42:00Z, Medium,28
+FS543, IOC Avissawella, IOC, Western, Avissawella,6.93,80.05, Available, Available, Available, 2025-12-27T18:44:00Z, High,12
+FS544, Laugfs Ratnapura, Laugfs Petroleum, Sabaragamuwa, Ratnapura,6.682,80.398, Available, Available, Available, 2025-12-27T18:46:00Z, High,11
+FS545, Sinopec Balangoda, Sinopec, Sabaragamuwa, Balangoda,6.667,80.97, Limited, Available, Not Available, 2025-12-27T18:48:00Z, Medium,29
+FS546, IOC Embilipitiya, IOC, Sabaragamuwa, Embilipitiya,6.48,80.7, Available, Available, Available, 2025-12-27T18:50:00Z, High,12
+FS547, Laugfs Rakwana, Laugfs Petroleum, Sabaragamuwa, Rakwana,6.57,80.58, Available, Limited, Available, 2025-12-27T18:52:00Z, Medium,24
+FS548, Sinopec Bandarawela, Sinopec, Uva, Bandarawela,6.84,81.04, Not Available, Available, Available, 2025-12-27T18:54:00Z, Low,35
+FS549, IOC Haputale, IOC, Uva, Haputale,6.73,80.98, Available, Available, Available, 2025-12-27T18:56:00Z, High,13
+FS550, Laugfs Diyatalawa, Laugfs Petroleum, Uva, Diyatalawa,6.85,81.01, Available, Available, Available, 2025-12-27T18:58:00Z, High,12
+FS551, Sinopec Welimada, Sinopec, Uva, Welimada,6.9,81.05, Limited, Available, Not Available, 2025-12-27T19:00:00Z, Medium,28
+FS552, IOC Passara, IOC, Uva, Passara,6.935,81.15, Available, Available, Available, 2025-12-27T19:02:00Z, High,11
+FS553, Laugfs Mahiyanganaya, Laugfs Petroleum, Uva, Mahiyanganaya,7.32,81, Available, Limited, Available, 2025-12-27T19:04:00Z, Medium,22
+FS554, Sinopec Girandurukotte, Sinopec, Uva, Girandurukotte,7.4,81, Not Available, Available, Available, 2025-12-27T19:06:00Z, Low,36
+FS555, IOC Kurunegala, IOC, North Western, Kurunegala,7.486,80.364, Available, Available, Available, 2025-12-27T19:08:00Z, High,12
+FS556, Laugfs Puttalam, Laugfs Petroleum, North Western, Puttalam,8.036,79.828, Available, Available, Available, 2025-12-27T19:10:00Z, High,11
+FS557, Sinopec Chilaw, Sinopec, North Western, Chilaw,7.575,79.795, Limited, Available, Not Available, 2025-12-27T19:12:00Z, Medium,29
+FS558, IOC Wariyapola, IOC, North Western, Wariyapola,7.625,80.235, Available, Available, Available, 2025-12-27T19:14:00Z, High,13
+FS559, Laugfs Narammala, Laugfs Petroleum, North Western, Narammala,7.435,80.215, Available, Limited, Available, 2025-12-27T19:16:00Z, Medium,21
+FS560, Sinopec Nikaweratiya, Sinopec, North Western, Nikaweratiya,7.747,80.113, Not Available, Available, Available, 2025-12-27T19:18:00Z, Low,34
+FS561, IOC Anuradhapura, IOC, North Central, Anuradhapura,8.312,80.413, Available, Available, Available, 2025-12-27T19:20:00Z, High,12
+FS562, Laugfs Kekirawa, Laugfs Petroleum, North Central, Kekirawa,8.038,80.6, Available, Available, Available, 2025-12-27T19:22:00Z, High,11
+FS563, Sinopec Thambuttegama, Sinopec, North Central, Thambuttegama,8.15,80.3, Limited, Available, Not Available, 2025-12-27T19:24:00Z, Medium,27
+FS564, IOC Habarana, IOC, North Central, Habarana,8.04,80.75, Available, Available, Available, 2025-12-27T19:26:00Z, High,13
+FS565, Laugfs Medawachchiya, Laugfs Petroleum, North Central, Medawachchiya,8.545,80.5, Available, Limited, Available, 2025-12-27T19:28:00Z, Medium,23
+FS566, Sinopec Polonnaruwa, Sinopec, North Central, Polonnaruwa,7.94,81, Not Available, Available, Available, 2025-12-27T19:30:00Z, Low,35
+FS567, IOC Gampaha, IOC, Western, Gampaha,7.09,79.995, Available, Available, Available, 2025-12-27T19:32:00Z, High,12
+FS568, Laugfs Ja-Ela, Laugfs Petroleum, Western, Ja-Ela,7.08,79.89, Available, Available, Available, 2025-12-27T19:34:00Z, High,11
+FS569, Sinopec Minuwangoda, Sinopec, Western, Minuwangoda,7.17,79.95, Limited, Available, Not Available, 2025-12-27T19:36:00Z, Medium,28
+FS570, IOC Mirigama, IOC, Western, Mirigama,7.24,80.12, Available, Available, Available, 2025-12-27T19:38:00Z, High,13
+FS571, Laugfs Nittambuwa, Laugfs Petroleum, Western, Nittambuwa,7.15,80.1, Available, Limited, Available, 2025-12-27T19:40:00Z, Medium,22
+FS572, Sinopec Kiribathgoda, Sinopec, Western, Kiribathgoda,6.98,79.92, Not Available, Available, Available, 2025-12-27T19:42:00Z, Low,36
+FS573, IOC Kalmunai, IOC, Eastern, Kalmunai,7.41,81.83, Available, Available, Available, 2025-12-27T19:44:00Z, High,12
+FS574, Laugfs Akkaraipattu, Laugfs Petroleum, Eastern, Akkaraipattu,7.22,81.85, Available, Available, Available, 2025-12-27T19:46:00Z, High,11
+FS575, Sinopec Sainthamaruthu, Sinopec, Eastern, Sainthamaruthu,7.38,81.84, Limited, Available, Not Available, 2025-12-27T19:48:00Z, Medium,27
+FS576, IOC Sammanthurai, IOC, Eastern, Sammanthurai,7.36,81.8, Available, Available, Available, 2025-12-27T19:50:00Z, High,13
+FS577, Laugfs Kattankudy, Laugfs Petroleum, Eastern, Kattankudy,7.675,81.73, Available, Limited, Available, 2025-12-27T19:52:00Z, Medium,23
+FS578, Sinopec Eravur, Sinopec, Eastern, Eravur,7.77,81.61, Not Available, Available, Available, 2025-12-27T19:54:00Z, Low,34
+FS579, IOC Mullaitivu, IOC, Northern, Mullaitivu,9.27,80.81, Available, Available, Available, 2025-12-27T19:56:00Z, High,12
+FS580, Laugfs Chavakachcheri, Laugfs Petroleum, Northern, Chavakachcheri,9.66,80.16, Available, Available, Available, 2025-12-27T19:58:00Z, High,11
+FS581, Sinopec Kopay, Sinopec, Northern, Kopay,9.68,80.01, Limited, Available, Not Available, 2025-12-27T20:00:00Z, Medium,28
+FS582, IOC Nallur, IOC, Northern, Nallur,9.67,80.03, Available, Available, Available, 2025-12-27T20:02:00Z, High,13
+FS583, Laugfs Karainagar, Laugfs Petroleum, Northern, Karainagar,9.74,79.88, Available, Limited, Available, 2025-12-27T20:04:00Z, Medium,24
+FS584, Sinopec Delft, Sinopec, Northern, Delft,9.51,79.72, Not Available, Available, Available, 2025-12-27T20:06:00Z, Low,38
+FS585, IOC Galle, IOC, Southern, Galle,6.03,80.22, Available, Available, Available, 2025-12-27T20:08:00Z, High,12
+FS586, Laugfs Hikkaduwa, Laugfs Petroleum, Southern, Hikkaduwa,6.14,80.1, Available, Available, Available, 2025-12-27T20:10:00Z, High,11
+FS587, Sinopec Elpitiya, Sinopec, Southern, Elpitiya,6.3,80.17, Limited, Available, Not Available, 2025-12-27T20:12:00Z, Medium,27
+FS588, IOC Ambalangoda, IOC, Southern, Ambalangoda,6.24,80.06, Available, Available, Available, 2025-12-27T20:14:00Z, High,13
+FS589, Laugfs Bentota, Laugfs Petroleum, Southern, Bentota,6.42,79.99, Available, Limited, Available, 2025-12-27T20:16:00Z, Medium,22
+FS590, Sinopec Ahungalla, Sinopec, Southern, Ahungalla,6.31,80.03, Not Available, Available, Available, 2025-12-27T20:18:00Z, Low,35
+FS591, IOC Matara, IOC, Southern, Matara,5.95,80.54, Available, Available, Available, 2025-12-27T20:20:00Z, High,12
+FS592, Laugfs Weligama, Laugfs Petroleum, Southern, Weligama,5.99,80.45, Available, Available, Available, 2025-12-27T20:22:00Z, High,11
+FS593, Sinopec Deniyaya, Sinopec, Southern, Deniyaya,6.35,80.56, Limited, Available, Not Available, 2025-12-27T20:24:00Z, Medium,28
+FS594, IOC Akuressa, IOC, Southern, Akuressa,6.1,80.48, Available, Available, Available, 2025-12-27T20:26:00Z, High,13
+FS595, Laugfs Kamburupitiya, Laugfs Petroleum, Southern, Kamburupitiya,6.08,80.56, Available, Limited, Available, 2025-12-27T20:28:00Z, Medium,23
+FS596, Sinopec Hakmana, Sinopec, Southern, Hakmana,6.09,80.65, Not Available, Available, Available, 2025-12-27T20:30:00Z, Low,36
+FS597, IOC Hambantota, IOC, Southern, Hambantota,6.12,81.12, Available, Available, Available, 2025-12-27T20:32:00Z, High,12
+FS598, Laugfs Tissamaharama, Laugfs Petroleum, Southern, Tissamaharama,6.28,81.29, Available, Available, Available, 2025-12-27T20:34:00Z, High,11
+FS599, Sinopec Sooriyawewa, Sinopec, Southern, Sooriyawewa,6.31,81.22, Limited, Available, Not Available, 2025-12-27T20:36:00Z, Medium,27
+FS600, IOC Kataragama, IOC, Southern, Kataragama,6.41,81.33, Available, Available, Available, 2025-12-27T20:38:00Z, High,13
+FS601, IOC Anuradhapura Central, IOC, North Central, Anuradhapura,8.3114,80.4037, Available, Available, Available, 2025-12-28T08:00:00Z, High,10
+FS602, Laugfs Mihintale, Laugfs Petroleum, North Central, Mihintale,8.35,80.51, Available, Available, Not Available, 2025-12-28T08:05:00Z, Medium,18
+FS603, Sinopec Kekirawa, Sinopec, North Central, Kekirawa,8.0375,80.5986, Limited, Available, Not Available, 2025-12-28T08:10:00Z, Medium,25
+FS604, IOC Thambuttegama, IOC, North Central, Thambuttegama,8.1567,80.2967, Available, Available, Available, 2025-12-28T08:15:00Z, High,12
+FS605, Laugfs Talawa, Laugfs Petroleum, North Central, Talawa,8.237,80.351, Available, Limited, Not Available, 2025-12-28T08:20:00Z, Medium,20
+FS606, IOC Medawachchiya, IOC, North Central, Medawachchiya,8.545,80.495, Available, Available, Available, 2025-12-28T08:25:00Z, High,11
+FS607, Sinopec Horowpothana, Sinopec, North Central, Horowpothana,8.433,80.865, Limited, Available, Not Available, 2025-12-28T08:30:00Z, Medium,27
+FS608, IOC Nochchiyagama, IOC, North Central, Nochchiyagama,8.266,80.206, Available, Available, Available, 2025-12-28T08:35:00Z, High,13
+FS609, Laugfs Padaviya, Laugfs Petroleum, North Central, Padaviya,8.823,80.765, Available, Limited, Not Available, 2025-12-28T08:40:00Z, Medium,22
+FS610, IOC Rambewa, IOC, North Central, Rambewa,8.445,80.502, Available, Available, Available, 2025-12-28T08:45:00Z, High,12
+FS611, IOC Polonnaruwa New Town, IOC, North Central, Polonnaruwa,7.9403,81.0188, Available, Available, Available, 2025-12-28T08:50:00Z, High,14
+FS612, Laugfs Hingurakgoda, Laugfs Petroleum, North Central, Hingurakgoda,8.037,80.949, Available, Available, Not Available, 2025-12-28T08:55:00Z, Medium,19
+FS613, Sinopec Medirigiriya, Sinopec, North Central, Medirigiriya,7.97,80.97, Limited, Available, Not Available, 2025-12-28T09:00:00Z, Medium,28
+FS614, IOC Kaduruwela, IOC, North Central, Kaduruwela,7.982,81.02, Available, Available, Available, 2025-12-28T09:05:00Z, High,11
+FS615, Laugfs Bakamuna, Laugfs Petroleum, North Central, Bakamuna,7.781,80.823, Available, Limited, Not Available, 2025-12-28T09:10:00Z, Medium,21
+FS616, IOC Dimbulagala, IOC, North Central, Dimbulagala,7.861,81.098, Available, Available, Available, 2025-12-28T09:15:00Z, High,13
+FS617, Sinopec Elahera, Sinopec, North Central, Elahera,7.721,80.833, Limited, Available, Not Available, 2025-12-28T09:20:00Z, Medium,26
+FS618, IOC Manampitiya, IOC, North Central, Manampitiya,8.02,81.09, Available, Available, Available, 2025-12-28T09:25:00Z, High,12
+FS619, Laugfs Welikanda, Laugfs Petroleum, North Central, Welikanda,7.95,81.25, Available, Limited, Not Available, 2025-12-28T09:30:00Z, Medium,23
+FS620, IOC Aralaganwila, IOC, North Central, Aralaganwila,7.67,81.02, Available, Available, Available, 2025-12-28T09:35:00Z, High,14
+FS621, IOC Dambulla Central, IOC, Central, Dambulla,7.856,80.651, Available, Available, Available, 2025-12-28T09:40:00Z, High,15
+FS622, Laugfs Sigiriya, Laugfs Petroleum, Central, Sigiriya,7.954,80.754, Available, Available, Not Available, 2025-12-28T09:45:00Z, Medium,20
+FS623, Sinopec Habarana, Sinopec, Central, Habarana,8.04,80.748, Limited, Available, Not Available, 2025-12-28T09:50:00Z, Medium,29
+FS624, IOC Galewela, IOC, Central, Galewela,7.755,80.567, Available, Available, Available, 2025-12-28T09:55:00Z, High,13
+FS625, Laugfs Naula, Laugfs Petroleum, Central, Naula,7.707,80.656, Available, Limited, Not Available, 2025-12-28T10:00:00Z, Medium,21
+FS626, IOC Pallepola, IOC, Central, Pallepola,7.62,80.6, Available, Available, Available, 2025-12-28T10:05:00Z, High,12
+FS627, Sinopec Ukuwela, Sinopec, Central, Ukuwela,7.42,80.62, Limited, Available, Not Available, 2025-12-28T10:10:00Z, Medium,27
+FS628, IOC Matale Town, IOC, Central, Matale,7.469,80.624, Available, Available, Available, 2025-12-28T10:15:00Z, High,14
+FS629, Laugfs Rattota, Laugfs Petroleum, Central, Rattota,7.522,80.684, Available, Limited, Not Available, 2025-12-28T10:20:00Z, Medium,22
+FS630, IOC Yatawatta, IOC, Central, Yatawatta,7.564,80.588, Available, Available, Available, 2025-12-28T10:25:00Z, High,11
+FS631, IOC Kandy City, IOC, Central, Kandy,7.2906,80.6337, Available, Available, Available, 2025-12-28T10:30:00Z, High,16
+FS632, Laugfs Peradeniya, Laugfs Petroleum, Central, Peradeniya,7.263,80.597, Available, Available, Not Available, 2025-12-28T10:35:00Z, Medium,19
+FS633, Sinopec Katugastota, Sinopec, Central, Katugastota,7.324,80.621, Limited, Available, Not Available, 2025-12-28T10:40:00Z, Medium,28
+FS634, IOC Kundasale, IOC, Central, Kundasale,7.311,80.713, Available, Available, Available, 2025-12-28T10:45:00Z, High,13
+FS635, Laugfs Digana, Laugfs Petroleum, Central, Digana,7.297,80.74, Available, Limited, Not Available, 2025-12-28T10:50:00Z, Medium,24
+FS636, IOC Teldeniya, IOC, Central, Teldeniya,7.296,80.765, Available, Available, Available, 2025-12-28T10:55:00Z, High,12
+FS637, Sinopec Madawala, Sinopec, Central, Madawala,7.245,80.678, Limited, Available, Not Available, 2025-12-28T11:00:00Z, Medium,26
+FS638, IOC Gampola, IOC, Central, Gampola,7.164,80.569, Available, Available, Available, 2025-12-28T11:05:00Z, High,14
+FS639, Laugfs Nawalapitiya, Laugfs Petroleum, Central, Nawalapitiya,7.048,80.535, Available, Limited, Not Available, 2025-12-28T11:10:00Z, Medium,23
+FS640, IOC Hatton Road, IOC, Central, Hatton,6.891,80.598, Available, Available, Available, 2025-12-28T11:15:00Z, High,15
+FS641, IOC Talawakele, IOC, Central, Talawakele,6.936,80.658, Available, Available, Available, 2025-12-28T11:20:00Z, High,14
+FS642, Laugfs Nanu Oya, Laugfs Petroleum, Central, Nanu Oya,6.975,80.645, Available, Available, Not Available, 2025-12-28T11:25:00Z, Medium,20
+FS643, Sinopec Lindula, Sinopec, Central, Lindula,6.923,80.682, Limited, Available, Not Available, 2025-12-28T11:30:00Z, Medium,29
+FS644, IOC Nallathanniya, IOC, Central, Nallathanniya,6.809,80.499, Available, Available, Available, 2025-12-28T11:35:00Z, High,13
+FS645, Laugfs Maskeliya, Laugfs Petroleum, Central, Maskeliya,6.832,80.566, Available, Limited, Not Available, 2025-12-28T11:40:00Z, Medium,22
+FS646, IOC Norton Bridge, IOC, Central, Norton Bridge,6.9,80.516, Available, Available, Available, 2025-12-28T11:45:00Z, High,12
+FS647, Sinopec Watawala, Sinopec, Central, Watawala,6.952,80.533, Limited, Available, Not Available, 2025-12-28T11:50:00Z, Medium,27
+FS648, IOC Kitulgala, IOC, Sabaragamuwa, Kitulgala,6.989,80.417, Available, Available, Available, 2025-12-28T11:55:00Z, High,13
+FS649, Laugfs Kithulgala Town, Laugfs Petroleum, Sabaragamuwa, Kitulgala,6.991,80.42, Available, Limited, Not Available, 2025-12-28T12:00:00Z, Medium,21
+FS650, IOC Yatiyantota, IOC, Sabaragamuwa, Yatiyantota,6.732,80.304, Available, Available, Available, 2025-12-28T12:05:00Z, High,14
+FS651, IOC Ratnapura Town, IOC, Sabaragamuwa, Ratnapura,6.6828,80.399, Available, Available, Available, 2025-12-28T12:10:00Z, High,15
+FS652, Laugfs Eheliyagoda, Laugfs Petroleum, Sabaragamuwa, Eheliyagoda,6.85,80.265, Available, Available, Not Available, 2025-12-28T12:15:00Z, Medium,20
+FS653, Sinopec Pelmadulla, Sinopec, Sabaragamuwa, Pelmadulla,6.62,80.542, Limited, Available, Not Available, 2025-12-28T12:20:00Z, Medium,28
+FS654, IOC Balangoda Central, IOC, Sabaragamuwa, Balangoda,6.661,80.704, Available, Available, Available, 2025-12-28T12:25:00Z, High,14
+FS655, Laugfs Imbulpe, Laugfs Petroleum, Sabaragamuwa, Imbulpe,6.724,80.787, Available, Limited, Not Available, 2025-12-28T12:30:00Z, Medium,23
+FS656, IOC Kalawana, IOC, Sabaragamuwa, Kalawana,6.533,80.408, Available, Available, Available, 2025-12-28T12:35:00Z, High,13
+FS657, Sinopec Nivithigala, Sinopec, Sabaragamuwa, Nivithigala,6.576,80.451, Limited, Available, Not Available, 2025-12-28T12:40:00Z, Medium,27
+FS658, IOC Godakawela, IOC, Sabaragamuwa, Godakawela,6.508,80.647, Available, Available, Available, 2025-12-28T12:45:00Z, High,12
+FS659, Laugfs Kolonna, Laugfs Petroleum, Sabaragamuwa, Kolonna,6.401,80.684, Available, Limited, Not Available, 2025-12-28T12:50:00Z, Medium,22
+FS660, IOC Udawalawa Junction, IOC, Sabaragamuwa, Udawalawa,6.424,80.888, Available, Available, Available, 2025-12-28T12:55:00Z, High,16
+FS661, IOC Badulla Town, IOC, Uva, Badulla,6.9934,81.055, Available, Available, Available, 2025-12-28T13:00:00Z, High,15
+FS662, Laugfs Hali Ela, Laugfs Petroleum, Uva, Hali Ela,6.957,81.035, Available, Available, Not Available, 2025-12-28T13:05:00Z, Medium,20
+FS663, Sinopec Passara, Sinopec, Uva, Passara,6.932,81.152, Limited, Available, Not Available, 2025-12-28T13:10:00Z, Medium,29
+FS664, IOC Bandarawela Central, IOC, Uva, Bandarawela,6.8269,80.9982, Available, Available, Available, 2025-12-28T13:15:00Z, High,14
+FS665, Laugfs Ella, Laugfs Petroleum, Uva, Ella,6.8667,81.0466, Available, Limited, Not Available, 2025-12-28T13:20:00Z, Medium,24
+FS666, IOC Diyatalawa, IOC, Uva, Diyatalawa,6.799,80.96, Available, Available, Available, 2025-12-28T13:25:00Z, High,13
+FS667, Sinopec Haputale, Sinopec, Uva, Haputale,6.765,80.951, Limited, Available, Not Available, 2025-12-28T13:30:00Z, Medium,27
+FS668, IOC Welimada, IOC, Uva, Welimada,6.905,80.914, Available, Available, Available, 2025-12-28T13:35:00Z, High,14
+FS669, Laugfs Uva Paranagama, Laugfs Petroleum, Uva, Uva Paranagama,6.894,81.103, Available, Limited, Not Available, 2025-12-28T13:40:00Z, Medium,22
+FS670, IOC Mahiyanganaya, IOC, Uva, Mahiyanganaya,7.327,81.003, Available, Available, Available, 2025-12-28T13:45:00Z, High,16
+FS671, IOC Monaragala Town, IOC, Uva, Monaragala,6.872,81.349, Available, Available, Available, 2025-12-28T13:50:00Z, High,15
+FS672, Laugfs Wellawaya, Laugfs Petroleum, Uva, Wellawaya,6.736,81.103, Available, Available, Not Available, 2025-12-28T13:55:00Z, Medium,19
+FS673, Sinopec Buttala, Sinopec, Uva, Buttala,6.757,81.238, Limited, Available, Not Available, 2025-12-28T14:00:00Z, Medium,28
+FS674, IOC Bibile, IOC, Uva, Bibile,7.159,81.222, Available, Available, Available, 2025-12-28T14:05:00Z, High,14
+FS675, Laugfs Madulla, Laugfs Petroleum, Uva, Madulla,6.926,81.386, Available, Limited, Not Available, 2025-12-28T14:10:00Z, Medium,23
+FS676, IOC Siyambalanduwa, IOC, Uva, Siyambalanduwa,6.904,81.549, Available, Available, Available, 2025-12-28T14:15:00Z, High,13
+FS677, Sinopec Okkampitiya, Sinopec, Uva, Okkampitiya,6.753,81.299, Limited, Available, Not Available, 2025-12-28T14:20:00Z, Medium,26
+FS678, IOC Kataragama Road, IOC, Uva, Kataragama,6.412,81.332, Available, Available, Available, 2025-12-28T14:25:00Z, High,17
+FS679, Laugfs Thanamalwila, Laugfs Petroleum, Uva, Thanamalwila,6.441,81.132, Available, Limited, Not Available, 2025-12-28T14:30:00Z, Medium,24
+FS680, IOC Sevanagala, IOC, Uva, Sevanagala,6.399,81.207, Available, Available, Available, 2025-12-28T14:35:00Z, High,15
+FS681, IOC Hambantota Town, IOC, Southern, Hambantota,6.124,81.118, Available, Available, Available, 2025-12-28T14:40:00Z, High,16
+FS682, Laugfs Ambalantota, Laugfs Petroleum, Southern, Ambalantota,6.126,81.023, Available, Available, Not Available, 2025-12-28T14:45:00Z, Medium,20
+FS683, Sinopec Tissamaharama, Sinopec, Southern, Tissamaharama,6.282,81.287, Limited, Available, Not Available, 2025-12-28T14:50:00Z, Medium,29
+FS684, IOC Beliatta Central, IOC, Southern, Beliatta,6.049,80.739, Available, Available, Available, 2025-12-28T14:55:00Z, High,14
+FS685, Laugfs Walasmulla, Laugfs Petroleum, Southern, Walasmulla,6.15,80.695, Available, Limited, Not Available, 2025-12-28T15:00:00Z, Medium,23
+FS686, IOC Weeraketiya, IOC, Southern, Weeraketiya,6.135,80.785, Available, Available, Available, 2025-12-28T15:05:00Z, High,13
+FS687, Sinopec Angunukolapelessa, Sinopec, Southern, Angunukolapelessa,6.162,80.893, Limited, Available, Not Available, 2025-12-28T15:10:00Z, Medium,27
+FS688, IOC Tangalle Road, IOC, Southern, Tangalle,6.021,80.796, Available, Available, Available, 2025-12-28T15:15:00Z, High,16
+FS689, Laugfs Hungama, Laugfs Petroleum, Southern, Hungama,6.109,80.956, Available, Limited, Not Available, 2025-12-28T15:20:00Z, Medium,24
+FS690, IOC Sooriyawewa, IOC, Southern, Sooriyawewa,6.244,81.022, Available, Available, Available, 2025-12-28T15:25:00Z, High,15
+FS691, IOC Matara Town, IOC, Southern, Matara,5.9485,80.5353, Available, Available, Available, 2025-12-28T15:30:00Z, High,17
+FS692, Laugfs Weligama, Laugfs Petroleum, Southern, Weligama,5.975,80.43, Available, Available, Not Available, 2025-12-28T15:35:00Z, Medium,20
+FS693, Sinopec Kamburupitiya, Sinopec, Southern, Kamburupitiya,6.075,80.564, Limited, Available, Not Available, 2025-12-28T15:40:00Z, Medium,28
+FS694, IOC Akuressa Central, IOC, Southern, Akuressa,6.097,80.476, Available, Available, Available, 2025-12-28T15:45:00Z, High,14
+FS695, Laugfs Deniyaya, Laugfs Petroleum, Southern, Deniyaya,6.34,80.333, Available, Limited, Not Available, 2025-12-28T15:50:00Z, Medium,25
+FS696, IOC Kekanadura, IOC, Southern, Kekanadura,5.976,80.6, Available, Available, Available, 2025-12-28T15:55:00Z, High,13
+FS697, Sinopec Hakmana, Sinopec, Southern, Hakmana,6.085,80.617, Limited, Available, Not Available, 2025-12-28T16:00:00Z, Medium,26
+FS698, IOC Dikwella Junction, IOC, Southern, Dikwella,5.967,80.686, Available, Available, Available, 2025-12-28T16:05:00Z, High,15
+FS699, Laugfs Devinuwara, Laugfs Petroleum, Southern, Devinuwara,5.928,80.589, Available, Limited, Not Available, 2025-12-28T16:10:00Z, Medium,23
+FS700, IOC Kottegoda, IOC, Southern, Kottegoda,5.912,80.62, Available, Available, Available, 2025-12-28T16:15:00Z, High,14
+FS701, IOC Galle Fort, IOC, Southern, Galle,6.032,80.217, Available, Available, Available, 2025-12-28T16:20:00Z, High,18
+FS702, Laugfs Unawatuna, Laugfs Petroleum, Southern, Unawatuna,6.016,80.249, Available, Available, Not Available, 2025-12-28T16:25:00Z, Medium,21
+FS703, Sinopec Hikkaduwa, Sinopec, Southern, Hikkaduwa,6.14,80.101, Limited, Available, Not Available, 2025-12-28T16:30:00Z, Medium,30
+FS704, IOC Ambalangoda Central, IOC, Southern, Ambalangoda,6.235,80.053, Available, Available, Available, 2025-12-28T16:35:00Z, High,16
+FS705, Laugfs Elpitiya, Laugfs Petroleum, Southern, Elpitiya,6.292,80.162, Available, Limited, Not Available, 2025-12-28T16:40:00Z, Medium,24
+FS706, IOC Karandeniya, IOC, Southern, Karandeniya,6.256,80.103, Available, Available, Available, 2025-12-28T16:45:00Z, High,14
+FS707, Sinopec Baddegama, Sinopec, Southern, Baddegama,6.184,80.2, Limited, Available, Not Available, 2025-12-28T16:50:00Z, Medium,27
+FS708, IOC Bentota Road, IOC, Southern, Bentota,6.421,79.998, Available, Available, Available, 2025-12-28T16:55:00Z, High,17
+FS709, Laugfs Aluthgama, Laugfs Petroleum, Southern, Aluthgama,6.43,79.997, Available, Limited, Not Available, 2025-12-28T17:00:00Z, Medium,22
+FS710, IOC Balapitiya, IOC, Southern, Balapitiya,6.279,80.038, Available, Available, Available, 2025-12-28T17:05:00Z, High,15
+FS711, IOC Kalutara South, IOC, Western, Kalutara,6.5854,79.9607, Available, Available, Available, 2025-12-28T17:10:00Z, High,18
+FS712, Laugfs Kalutara North, Laugfs Petroleum, Western, Kalutara,6.595,79.962, Available, Available, Not Available, 2025-12-28T17:15:00Z, Medium,21
+FS713, Sinopec Beruwala, Sinopec, Western, Beruwala,6.474,79.984, Limited, Available, Not Available, 2025-12-28T17:20:00Z, Medium,29
+FS714, IOC Alubomulla, IOC, Western, Alubomulla,6.604,79.982, Available, Available, Available, 2025-12-28T17:25:00Z, High,15
+FS715, Laugfs Matugama, Laugfs Petroleum, Western, Matugama,6.524,80.113, Available, Limited, Not Available, 2025-12-28T17:30:00Z, Medium,23
+FS716, IOC Agalawatta, IOC, Western, Agalawatta,6.541,80.151, Available, Available, Available, 2025-12-28T17:35:00Z, High,14
+FS717, Sinopec Bulathsinhala, Sinopec, Western, Bulathsinhala,6.666,80.196, Limited, Available, Not Available, 2025-12-28T17:40:00Z, Medium,28
+FS718, IOC Bandaragama, IOC, Western, Bandaragama,6.712,79.989, Available, Available, Available, 2025-12-28T17:45:00Z, High,16
+FS719, Laugfs Horana Town, Laugfs Petroleum, Western, Horana,6.716,80.062, Available, Limited, Not Available, 2025-12-28T17:50:00Z, Medium,24
+FS720, IOC Ingiriya, IOC, Western, Ingiriya,6.739,80.1, Available, Available, Available, 2025-12-28T17:55:00Z, High,15
+FS721, IOC Panadura South, IOC, Western, Panadura,6.7132,79.9076, Available, Available, Available, 2025-12-28T18:00:00Z, High,19
+FS722, Laugfs Panadura North, Laugfs Petroleum, Western, Panadura,6.739,79.901, Available, Available, Not Available, 2025-12-28T18:05:00Z, Medium,21
+FS723, Sinopec Moratuwa, Sinopec, Western, Moratuwa,6.773,79.882, Limited, Available, Not Available, 2025-12-28T18:10:00Z, Medium,30
+FS724, IOC Piliyandala Central, IOC, Western, Piliyandala,6.801,79.923, Available, Available, Available, 2025-12-28T18:15:00Z, High,17
+FS725, Laugfs Kesbewa, Laugfs Petroleum, Western, Kesbewa,6.795,79.94, Available, Limited, Not Available, 2025-12-28T18:20:00Z, Medium,25
+FS726, IOC Maharagama A4, IOC, Western, Maharagama,6.847,79.926, Available, Available, Available, 2025-12-28T18:25:00Z, High,16
+FS727, Sinopec Boralesgamuwa, Sinopec, Western, Boralesgamuwa,6.842,79.9, Limited, Available, Not Available, 2025-12-28T18:30:00Z, Medium,28
+FS728, IOC Nugegoda, IOC, Western, Nugegoda,6.869,79.889, Available, Available, Available, 2025-12-28T18:35:00Z, High,18
+FS729, Laugfs Kottawa, Laugfs Petroleum, Western, Kottawa,6.84,79.965, Available, Limited, Not Available, 2025-12-28T18:40:00Z, Medium,26
+FS730, IOC Homagama Town, IOC, Western, Homagama,6.844,80.003, Available, Available, Available, 2025-12-28T18:45:00Z, High,15
+FS731, IOC Colombo Fort, IOC, Western, Colombo,6.9344,79.8428, Available, Available, Available, 2025-12-28T18:50:00Z, High,20
+FS732, Laugfs Pettah, Laugfs Petroleum, Western, Colombo,6.936,79.85, Available, Available, Not Available, 2025-12-28T18:55:00Z, Medium,22
+FS733, Sinopec Borella, Sinopec, Western, Colombo,6.914,79.877, Limited, Available, Not Available, 2025-12-28T19:00:00Z, Medium,31
+FS734, IOC Rajagiriya, IOC, Western, Rajagiriya,6.91,79.893, Available, Available, Available, 2025-12-28T19:05:00Z, High,18
+FS735, Laugfs Battaramulla, Laugfs Petroleum, Western, Battaramulla,6.904,79.918, Available, Limited, Not Available, 2025-12-28T19:10:00Z, Medium,24
+FS736, IOC Malabe New Town, IOC, Western, Malabe,6.906,79.958, Available, Available, Available, 2025-12-28T19:15:00Z, High,17
+FS737, Sinopec Kaduwela, Sinopec, Western, Kaduwela,6.935,79.983, Limited, Available, Not Available, 2025-12-28T19:20:00Z, Medium,29
+FS738, IOC Athurugiriya, IOC, Western, Athurugiriya,6.876,79.998, Available, Available, Available, 2025-12-28T19:25:00Z, High,16
+FS739, Laugfs Hanwella, Laugfs Petroleum, Western, Hanwella,6.907,80.084, Available, Limited, Not Available, 2025-12-28T19:30:00Z, Medium,25
+FS740, IOC Padukka, IOC, Western, Padukka,6.844,80.103, Available, Available, Available, 2025-12-28T19:35:00Z, High,15
+FS741, IOC Negombo Town, IOC, Western, Negombo,7.2086,79.8358, Available, Available, Available, 2025-12-28T19:40:00Z, High,19
+FS742, Laugfs Katunayake, Laugfs Petroleum, Western, Katunayake,7.164,79.873, Available, Available, Not Available, 2025-12-28T19:45:00Z, Medium,21
+FS743, Sinopec Kochchikade, Sinopec, Western, Kochchikade,7.258,79.854, Limited, Available, Not Available, 2025-12-28T19:50:00Z, Medium,30
+FS744, IOC Minuwangoda Central, IOC, Western, Minuwangoda,7.171,79.953, Available, Available, Available, 2025-12-28T19:55:00Z, High,16
+FS745, Laugfs Divulapitiya, Laugfs Petroleum, Western, Divulapitiya,7.227,79.978, Available, Limited, Not Available, 2025-12-28T20:00:00Z, Medium,24
+FS746, IOC Gampaha Town, IOC, Western, Gampaha,7.091,79.994, Available, Available, Available, 2025-12-28T20:05:00Z, High,17
+FS747, Sinopec Kiribathgoda, Sinopec, Western, Kiribathgoda,6.982,79.926, Limited, Available, Not Available, 2025-12-28T20:10:00Z, Medium,29
+FS748, IOC Ja-Ela Junction, IOC, Western, Ja-Ela,7.074,79.891, Available, Available, Available, 2025-12-28T20:15:00Z, High,18
+FS749, Laugfs Wattala, Laugfs Petroleum, Western, Wattala,6.988,79.889, Available, Limited, Not Available, 2025-12-28T20:20:00Z, Medium,25
+FS750, IOC Kelaniya, IOC, Western, Kelaniya,6.955,79.915, Available, Available, Available, 2025-12-28T20:25:00Z, High,16
+FS751, IOC Ja-Ela Town, IOC, Western, Ja-Ela,7.079,79.892, Available, Available, Available, 2025-12-28T20:30:00Z, High,17
+FS752, Laugfs Kandana, Laugfs Petroleum, Western, Kandana,7.049,79.897, Available, Available, Not Available, 2025-12-28T20:35:00Z, Medium,21
+FS753, Sinopec Ragama, Sinopec, Western, Ragama,7.028,79.916, Limited, Available, Not Available, 2025-12-28T20:40:00Z, Medium,30
+FS754, IOC Mahara Junction, IOC, Western, Mahara,7.015,79.925, Available, Available, Available, 2025-12-28T20:45:00Z, High,18
+FS755, Laugfs Kirillawala, Laugfs Petroleum, Western, Kirillawala,6.999,79.95, Available, Limited, Not Available, 2025-12-28T20:50:00Z, Medium,24
+FS756, IOC Kadawatha Central, IOC, Western, Kadawatha,7,79.95, Available, Available, Available, 2025-12-28T20:55:00Z, High,16
+FS757, Sinopec Ganemulla, Sinopec, Western, Ganemulla,7.066,79.963, Limited, Available, Not Available, 2025-12-28T21:00:00Z, Medium,29
+FS758, IOC Kiribathgoda Town, IOC, Western, Kiribathgoda,6.982,79.926, Available, Available, Available, 2025-12-28T21:05:00Z, High,17
+FS759, Laugfs Delgoda, Laugfs Petroleum, Western, Delgoda,6.995,80.015, Available, Limited, Not Available, 2025-12-28T21:10:00Z, Medium,25
+FS760, IOC Weliweriya, IOC, Western, Weliweriya,7.028,80.02, Available, Available, Available, 2025-12-28T21:15:00Z, High,15
+FS761, IOC Nittambuwa, IOC, Western, Nittambuwa,7.142,80.097, Available, Available, Available, 2025-12-28T21:20:00Z, High,16
+FS762, Laugfs Mirigama, Laugfs Petroleum, Western, Mirigama,7.241,80.125, Available, Available, Not Available, 2025-12-28T21:25:00Z, Medium,20
+FS763, Sinopec Pasyala, Sinopec, Western, Pasyala,7.176,80.11, Limited, Available, Not Available, 2025-12-28T21:30:00Z, Medium,28
+FS764, IOC Divulapitiya Town, IOC, Western, Divulapitiya,7.229,79.981, Available, Available, Available, 2025-12-28T21:35:00Z, High,17
+FS765, Laugfs Minuwangoda North, Laugfs Petroleum, Western, Minuwangoda,7.18,79.955, Available, Limited, Not Available, 2025-12-28T21:40:00Z, Medium,24
+FS766, IOC Katunayake Airport Road, IOC, Western, Katunayake,7.169,79.884, Available, Available, Available, 2025-12-28T21:45:00Z, High,19
+FS767, Sinopec Seeduwa, Sinopec, Western, Seeduwa,7.129,79.878, Limited, Available, Not Available, 2025-12-28T21:50:00Z, Medium,30
+FS768, IOC Ekala, IOC, Western, Ekala,7.103,79.919, Available, Available, Available, 2025-12-28T21:55:00Z, High,16
+FS769, Laugfs Kotugoda, Laugfs Petroleum, Western, Kotugoda,7.105,79.975, Available, Limited, Not Available, 2025-12-28T22:00:00Z, Medium,25
+FS770, IOC Mabola, IOC, Western, Mabola,7.06,79.903, Available, Available, Available, 2025-12-28T22:05:00Z, High,15
+FS771, IOC Kurunegala Town, IOC, North Western, Kurunegala,7.486,80.362, Available, Available, Available, 2025-12-28T22:10:00Z, High,17
+FS772, Laugfs Mawathagama, Laugfs Petroleum, North Western, Mawathagama,7.408,80.436, Available, Available, Not Available, 2025-12-28T22:15:00Z, Medium,21
+FS773, Sinopec Polgahawela Junction, Sinopec, North Western, Polgahawela,7.335,80.293, Limited, Available, Not Available, 2025-12-28T22:20:00Z, Medium,29
+FS774, IOC Alawwa Central, IOC, North Western, Alawwa,7.291,80.236, Available, Available, Available, 2025-12-28T22:25:00Z, High,16
+FS775, Laugfs Narammala, Laugfs Petroleum, North Western, Narammala,7.434,80.214, Available, Limited, Not Available, 2025-12-28T22:30:00Z, Medium,24
+FS776, IOC Wariyapola, IOC, North Western, Wariyapola,7.625,80.237, Available, Available, Available, 2025-12-28T22:35:00Z, High,15
+FS777, Sinopec Maho, Sinopec, North Western, Maho,7.822,80.276, Limited, Available, Not Available, 2025-12-28T22:40:00Z, Medium,28
+FS778, IOC Nikaweratiya, IOC, North Western, Nikaweratiya,7.748,80.113, Available, Available, Available, 2025-12-28T22:45:00Z, High,16
+FS779, Laugfs Hettipola, Laugfs Petroleum, North Western, Hettipola,7.421,80.258, Available, Limited, Not Available, 2025-12-28T22:50:00Z, Medium,23
+FS780, IOC Kuliyapitiya, IOC, North Western, Kuliyapitiya,7.469,80.04, Available, Available, Available, 2025-12-28T22:55:00Z, High,17
+FS781, IOC Chilaw Town, IOC, North Western, Chilaw,7.575,79.795, Available, Available, Available, 2025-12-28T23:00:00Z, High,18
+FS782, Laugfs Wennappuwa, Laugfs Petroleum, North Western, Wennappuwa,7.331,79.855, Available, Available, Not Available, 2025-12-28T23:05:00Z, Medium,21
+FS783, Sinopec Marawila, Sinopec, North Western, Marawila,7.409,79.828, Limited, Available, Not Available, 2025-12-28T23:10:00Z, Medium,29
+FS784, IOC Puttalam Central, IOC, North Western, Puttalam,8.033,79.826, Available, Available, Available, 2025-12-28T23:15:00Z, High,17
+FS785, Laugfs Mundel, Laugfs Petroleum, North Western, Mundel,7.795,79.828, Available, Limited, Not Available, 2025-12-28T23:20:00Z, Medium,24
+FS786, IOC Anamaduwa, IOC, North Western, Anamaduwa,7.881,80.015, Available, Available, Available, 2025-12-28T23:25:00Z, High,15
+FS787, Sinopec Pallama, Sinopec, North Western, Pallama,7.678,79.924, Limited, Available, Not Available, 2025-12-28T23:30:00Z, Medium,27
+FS788, IOC Nattandiya, IOC, North Western, Nattandiya,7.408,79.868, Available, Available, Available, 2025-12-28T23:35:00Z, High,16
+FS789, Laugfs Dankotuwa, Laugfs Petroleum, North Western, Dankotuwa,7.298,79.885, Available, Limited, Not Available, 2025-12-28T23:40:00Z, Medium,23
+FS790, IOC Bingiriya, IOC, North Western, Bingiriya,7.61,79.929, Available, Available, Available, 2025-12-28T23:45:00Z, High,14
+FS791, IOC Jaffna Town, IOC, Northern, Jaffna,9.6615,80.0255, Available, Available, Available, 2025-12-28T23:50:00Z, High,20
+FS792, Laugfs Chavakachcheri, Laugfs Petroleum, Northern, Chavakachcheri,9.659,80.168, Available, Available, Not Available, 2025-12-28T23:55:00Z, Medium,22
+FS793, Sinopec Point Pedro, Sinopec, Northern, Point Pedro,9.816,80.238, Limited, Available, Not Available, 2025-12-29T00:00:00Z, Medium,30
+FS794, IOC Nallur, IOC, Northern, Nallur,9.668,80.039, Available, Available, Available, 2025-12-29T00:05:00Z, High,18
+FS795, Laugfs Kopay, Laugfs Petroleum, Northern, Kopay,9.685,80.06, Available, Limited, Not Available, 2025-12-29T00:10:00Z, Medium,24
+FS796, IOC Chunnakam, IOC, Northern, Chunnakam,9.741,80.045, Available, Available, Available, 2025-12-29T00:15:00Z, High,17
+FS797, Sinopec Tellippalai, Sinopec, Northern, Tellippalai,9.769,80.035, Limited, Available, Not Available, 2025-12-29T00:20:00Z, Medium,28
+FS798, IOC Uduvil, IOC, Northern, Uduvil,9.753,80.045, Available, Available, Available, 2025-12-29T00:25:00Z, High,16
+FS799, Laugfs Sandilipay, Laugfs Petroleum, Northern, Sandilipay,9.776,80.06, Available, Limited, Not Available, 2025-12-29T00:30:00Z, Medium,23
+FS800, IOC Kankesanthurai, IOC, Northern, Kankesanthurai,9.807,80.041, Available, Available, Available, 2025-12-29T00:35:00Z, High,19
+FS801, IOC Vavuniya Town, IOC, Northern, Vavuniya,8.751,80.497, Available, Available, Available, 2025-12-29T00:40:00Z, High,18
+FS802, Laugfs Cheddikulam, Laugfs Petroleum, Northern, Cheddikulam,8.702,80.56, Available, Available, Not Available, 2025-12-29T00:45:00Z, Medium,22
+FS803, Sinopec Omanthai, Sinopec, Northern, Omanthai,8.778,80.518, Limited, Available, Not Available, 2025-12-29T00:50:00Z, Medium,29
+FS804, IOC Thandikulam, IOC, Northern, Thandikulam,8.763,80.46, Available, Available, Available, 2025-12-29T00:55:00Z, High,17
+FS805, Laugfs Puliyankulam, Laugfs Petroleum, Northern, Puliyankulam,8.739,80.52, Available, Limited, Not Available, 2025-12-29T01:00:00Z, Medium,24
+FS806, IOC Kilinochchi Central, IOC, Northern, Kilinochchi,9.395,80.404, Available, Available, Available, 2025-12-29T01:05:00Z, High,16
+FS807, Sinopec Paranthan, Sinopec, Northern, Paranthan,9.454,80.407, Limited, Available, Not Available, 2025-12-29T01:10:00Z, Medium,28
+FS808, IOC Poonakary, IOC, Northern, Poonakary,9.503,80.21, Available, Available, Available, 2025-12-29T01:15:00Z, High,15
+FS809, Laugfs Pallai, Laugfs Petroleum, Northern, Pallai,9.602,80.31, Available, Limited, Not Available, 2025-12-29T01:20:00Z, Medium,23
+FS810, IOC Elephant Pass, IOC, Northern, Elephant Pass,9.516,80.296, Available, Available, Available, 2025-12-29T01:25:00Z, High,14
+FS811, IOC Mannar Town, IOC, Northern, Mannar,8.981,79.904, Available, Available, Available, 2025-12-29T01:30:00Z, High,19
+FS812, Laugfs Madhu Road, Laugfs Petroleum, Northern, Madhu,8.784,79.93, Available, Available, Not Available, 2025-12-29T01:35:00Z, Medium,21
+FS813, Sinopec Pesalai, Sinopec, Northern, Pesalai,8.988,79.935, Limited, Available, Not Available, 2025-12-29T01:40:00Z, Medium,30
+FS814, IOC Thalaimannar, IOC, Northern, Thalaimannar,9.095,79.717, Available, Available, Available, 2025-12-29T01:45:00Z, High,18
+FS815, Laugfs Nanattan, Laugfs Petroleum, Northern, Nanattan,8.86,79.94, Available, Limited, Not Available, 2025-12-29T01:50:00Z, Medium,24
+FS816, IOC Madhu Church Road, IOC, Northern, Madhu,8.783,79.931, Available, Available, Available, 2025-12-29T01:55:00Z, High,16
+FS817, Sinopec Murunkan, Sinopec, Northern, Murunkan,8.912,80.04, Limited, Available, Not Available, 2025-12-29T02:00:00Z, Medium,27
+FS818, IOC Adampan, IOC, Northern, Adampan,8.94,80, Available, Available, Available, 2025-12-29T02:05:00Z, High,15
+FS819, Laugfs Vankalai, Laugfs Petroleum, Northern, Vankalai,8.94,79.92, Available, Limited, Not Available, 2025-12-29T02:10:00Z, Medium,23
+FS820, IOC Mantai West, IOC, Northern, Mantai,8.92,80.08, Available, Available, Available, 2025-12-29T02:15:00Z, High,14
+FS821, IOC Trincomalee Town, IOC, Eastern, Trincomalee,8.587,81.215, Available, Available, Available, 2025-12-29T02:20:00Z, High,18
+FS822, Laugfs Nilaveli, Laugfs Petroleum, Eastern, Nilaveli,8.676,81.201, Available, Available, Not Available, 2025-12-29T02:25:00Z, Medium,21
+FS823, Sinopec Kinniya, Sinopec, Eastern, Kinniya,8.498,81.18, Limited, Available, Not Available, 2025-12-29T02:30:00Z, Medium,29
+FS824, IOC Kantale, IOC, Eastern, Kantale,8.357,81, Available, Available, Available, 2025-12-29T02:35:00Z, High,17
+FS825, Laugfs Morawewa, Laugfs Petroleum, Eastern, Morawewa,8.515,80.95, Available, Limited, Not Available, 2025-12-29T02:40:00Z, Medium,24
+FS826, IOC Serunuwara, IOC, Eastern, Serunuwara,8.455,81.31, Available, Available, Available, 2025-12-29T02:45:00Z, High,16
+FS827, Sinopec Sampur, Sinopec, Eastern, Sampur,8.525,81.29, Limited, Available, Not Available, 2025-12-29T02:50:00Z, Medium,28
+FS828, IOC Muttur, IOC, Eastern, Muttur,8.45,81.27, Available, Available, Available, 2025-12-29T02:55:00Z, High,15
+FS829, Laugfs Thoppur, Laugfs Petroleum, Eastern, Thoppur,8.37,81.07, Available, Limited, Not Available, 2025-12-29T03:00:00Z, Medium,23
+FS830, IOC Pulmoddai, IOC, Eastern, Pulmoddai,8.932,80.985, Available, Available, Available, 2025-12-29T03:05:00Z, High,14
+FS831, IOC Batticaloa Town, IOC, Eastern, Batticaloa,7.731,81.674, Available, Available, Available, 2025-12-29T03:10:00Z, High,18
+FS832, Laugfs Kattankudy, Laugfs Petroleum, Eastern, Kattankudy,7.688,81.73, Available, Available, Not Available, 2025-12-29T03:15:00Z, Medium,22
+FS833, Sinopec Eravur, Sinopec, Eastern, Eravur,7.783,81.6, Limited, Available, Not Available, 2025-12-29T03:20:00Z, Medium,30
+FS834, IOC Kaluwanchikudy, IOC, Eastern, Kaluwanchikudy,7.515,81.785, Available, Available, Available, 2025-12-29T03:25:00Z, High,17
+FS835, Laugfs Valaichchenai, Laugfs Petroleum, Eastern, Valaichchenai,7.917,81.567, Available, Limited, Not Available, 2025-12-29T03:30:00Z, Medium,24
+FS836, IOC Oddamavadi, IOC, Eastern, Oddamavadi,7.908,81.528, Available, Available, Available, 2025-12-29T03:35:00Z, High,16
+FS837, Sinopec Kiran, Sinopec, Eastern, Kiran,7.865,81.538, Limited, Available, Not Available, 2025-12-29T03:40:00Z, Medium,27
+FS838, IOC Manmunai, IOC, Eastern, Manmunai,7.703,81.695, Available, Available, Available, 2025-12-29T03:45:00Z, High,15
+FS839, Laugfs Chenkalady, Laugfs Petroleum, Eastern, Chenkalady,7.787,81.597, Available, Limited, Not Available, 2025-12-29T03:50:00Z, Medium,23
+FS840, IOC Kokkadichcholai, IOC, Eastern, Kokkadichcholai,7.507,81.745, Available, Available, Available, 2025-12-29T03:55:00Z, High,14
+FS841, IOC Ampara Town, IOC, Eastern, Ampara,7.297,81.672, Available, Available, Available, 2025-12-29T04:00:00Z, High,18
+FS842, Laugfs Akkaraipattu, Laugfs Petroleum, Eastern, Akkaraipattu,7.218,81.852, Available, Available, Not Available, 2025-12-29T04:05:00Z, Medium,21
+FS843, Sinopec Kalmunai Central, Sinopec, Eastern, Kalmunai,7.409,81.834, Limited, Available, Not Available, 2025-12-29T04:10:00Z, Medium,29
+FS844, IOC Sammanthurai, IOC, Eastern, Sammanthurai,7.362,81.831, Available, Available, Available, 2025-12-29T04:15:00Z, High,17
+FS845, Laugfs Addalaichenai, Laugfs Petroleum, Eastern, Addalaichenai,7.482,81.751, Available, Limited, Not Available, 2025-12-29T04:20:00Z, Medium,24
+FS846, IOC Uhana, IOC, Eastern, Uhana,7.368,81.631, Available, Available, Available, 2025-12-29T04:25:00Z, High,16
+FS847, Sinopec Pottuvil, Sinopec, Eastern, Pottuvil,6.875,81.833, Limited, Available, Not Available, 2025-12-29T04:30:00Z, Medium,28
+FS848, IOC Lahugala, IOC, Eastern, Lahugala,6.925,81.75, Available, Available, Available, 2025-12-29T04:35:00Z, High,15
+FS849, Laugfs Dehiattakandiya, Laugfs Petroleum, Eastern, Dehiattakandiya,7.214,81.093, Available, Limited, Not Available, 2025-12-29T04:40:00Z, Medium,23
+FS850, IOC Siyambalanduwa, IOC, Uva, Siyambalanduwa,6.91,81.54, Available, Available, Available, 2025-12-29T04:45:00Z, High,14
+FS851, IOC Monaragala Town, IOC, Uva, Monaragala,6.872,81.35, Available, Available, Available, 2025-12-29T05:00:00Z, High,18
+FS852, Laugfs Badalkumbura, Laugfs Petroleum, Uva, Badalkumbura,6.894,81.24, Available, Available, Not Available, 2025-12-29T05:05:00Z, Medium,22
+FS853, Sinopec Wellawaya, Sinopec, Uva, Wellawaya,6.734,81.103, Limited, Available, Not Available, 2025-12-29T05:10:00Z, Medium,30
+FS854, IOC Buttala, IOC, Uva, Buttala,6.753,81.24, Available, Available, Available, 2025-12-29T05:15:00Z, High,17
+FS855, Laugfs Tanamalwila, Laugfs Petroleum, Uva, Tanamalwila,6.438,81.132, Available, Limited, Not Available, 2025-12-29T05:20:00Z, Medium,24
+FS856, IOC Medagama, IOC, Uva, Medagama,6.791,81.276, Available, Available, Available, 2025-12-29T05:25:00Z, High,16
+FS857, Sinopec Sewanagala, Sinopec, Uva, Sewanagala,6.398,81.092, Limited, Available, Not Available, 2025-12-29T05:30:00Z, Medium,28
+FS858, IOC Siyambalanduwa Road, IOC, Uva, Siyambalanduwa,6.902,81.538, Available, Available, Available, 2025-12-29T05:35:00Z, High,15
+FS859, Laugfs Bibile, Laugfs Petroleum, Uva, Bibile,6.554,81.292, Available, Limited, Not Available, 2025-12-29T05:40:00Z, Medium,23
+FS860, IOC Madulla, IOC, Uva, Madulla,6.713,81.289, Available, Available, Available, 2025-12-29T05:45:00Z, High,14
+FS861, IOC Badulla Town, IOC, Uva, Badulla,6.993,81.055, Available, Available, Available, 2025-12-29T05:50:00Z, High,18
+FS862, Laugfs Hali Ela, Laugfs Petroleum, Uva, Hali Ela,6.953,81.04, Available, Available, Not Available, 2025-12-29T05:55:00Z, Medium,21
+FS863, Sinopec Ella, Sinopec, Uva, Ella,6.872,81.046, Limited, Available, Not Available, 2025-12-29T06:00:00Z, Medium,29
+FS864, IOC Passara, IOC, Uva, Passara,6.932,81.147, Available, Available, Available, 2025-12-29T06:05:00Z, High,17
+FS865, Laugfs Lunugala, Laugfs Petroleum, Uva, Lunugala,6.947,81.196, Available, Limited, Not Available, 2025-12-29T06:10:00Z, Medium,24
+FS866, IOC Bandarawela, IOC, Uva, Bandarawela,6.828,80.997, Available, Available, Available, 2025-12-29T06:15:00Z, High,16
+FS867, Sinopec Diyatalawa, Sinopec, Uva, Diyatalawa,6.803,80.96, Limited, Available, Not Available, 2025-12-29T06:20:00Z, Medium,27
+FS868, IOC Haputale, IOC, Uva, Haputale,6.767,80.952, Available, Available, Available, 2025-12-29T06:25:00Z, High,15
+FS869, Laugfs Welimada, Laugfs Petroleum, Uva, Welimada,6.907,80.912, Available, Limited, Not Available, 2025-12-29T06:30:00Z, Medium,23
+FS870, IOC Mahiyanganaya, IOC, Uva, Mahiyanganaya,7.244,81.123, Available, Available, Available, 2025-12-29T06:35:00Z, High,14
+FS871, IOC Kandy Town, IOC, Central, Kandy,7.29,80.633, Available, Available, Available, 2025-12-29T06:40:00Z, High,20
+FS872, Laugfs Katugastota, Laugfs Petroleum, Central, Katugastota,7.323,80.621, Available, Available, Not Available, 2025-12-29T06:45:00Z, Medium,22
+FS873, Sinopec Peradeniya, Sinopec, Central, Peradeniya,7.261,80.598, Limited, Available, Not Available, 2025-12-29T06:50:00Z, Medium,31
+FS874, IOC Gampola, IOC, Central, Gampola,7.165,80.567, Available, Available, Available, 2025-12-29T06:55:00Z, High,18
+FS875, Laugfs Nawalapitiya, Laugfs Petroleum, Central, Nawalapitiya,7.05,80.53, Available, Limited, Not Available, 2025-12-29T07:00:00Z, Medium,24
+FS876, IOC Digana, IOC, Central, Digana,7.295,80.725, Available, Available, Available, 2025-12-29T07:05:00Z, High,16
+FS877, Sinopec Teldeniya, Sinopec, Central, Teldeniya,7.295,80.75, Limited, Available, Not Available, 2025-12-29T07:10:00Z, Medium,27
+FS878, IOC Kundasale, IOC, Central, Kundasale,7.305,80.715, Available, Available, Available, 2025-12-29T07:15:00Z, High,15
+FS879, Laugfs Udunuwara, Laugfs Petroleum, Central, Udunuwara,7.23,80.56, Available, Limited, Not Available, 2025-12-29T07:20:00Z, Medium,23
+FS880, IOC Galagedara, IOC, Central, Galagedara,7.372,80.523, Available, Available, Available, 2025-12-29T07:25:00Z, High,14
+FS881, IOC Matale Town, IOC, Central, Matale,7.467,80.623, Available, Available, Available, 2025-12-29T07:30:00Z, High,18
+FS882, Laugfs Ukuwela, Laugfs Petroleum, Central, Ukuwela,7.417,80.623, Available, Available, Not Available, 2025-12-29T07:35:00Z, Medium,21
+FS883, Sinopec Dambulla Central, Sinopec, Central, Dambulla,7.86,80.65, Limited, Available, Not Available, 2025-12-29T07:40:00Z, Medium,30
+FS884, IOC Sigiriya Road, IOC, Central, Sigiriya,7.954,80.755, Available, Available, Available, 2025-12-29T07:45:00Z, High,17
+FS885, Laugfs Naula, Laugfs Petroleum, Central, Naula,7.707,80.652, Available, Limited, Not Available, 2025-12-29T07:50:00Z, Medium,24
+FS886, IOC Pallepola, IOC, Central, Pallepola,7.623,80.587, Available, Available, Available, 2025-12-29T07:55:00Z, High,16
+FS887, Sinopec Rattota, Sinopec, Central, Rattota,7.525,80.654, Limited, Available, Not Available, 2025-12-29T08:00:00Z, Medium,28
+FS888, IOC Wilgamuwa, IOC, Central, Wilgamuwa,7.638,80.568, Available, Available, Available, 2025-12-29T08:05:00Z, High,15
+FS889, Laugfs Laggala, Laugfs Petroleum, Central, Laggala,7.7,80.715, Available, Limited, Not Available, 2025-12-29T08:10:00Z, Medium,23
+FS890, IOC Palapathwela, IOC, Central, Palapathwela,7.514,80.622, Available, Available, Available, 2025-12-29T08:15:00Z, High,14
+FS891, IOC Nuwara Eliya Town, IOC, Central, Nuwara Eliya,6.969,80.789, Available, Available, Available, 2025-12-29T08:20:00Z, High,18
+FS892, Laugfs Hatton, Laugfs Petroleum, Central, Hatton,6.902,80.595, Available, Available, Not Available, 2025-12-29T08:25:00Z, Medium,22
+FS893, Sinopec Talawakele, Sinopec, Central, Talawakele,6.936,80.661, Limited, Available, Not Available, 2025-12-29T08:30:00Z, Medium,29
+FS894, IOC Kotagala, IOC, Central, Kotagala,6.92,80.623, Available, Available, Available, 2025-12-29T08:35:00Z, High,17
+FS895, Laugfs Maskeliya, Laugfs Petroleum, Central, Maskeliya,6.83,80.56, Available, Limited, Not Available, 2025-12-29T08:40:00Z, Medium,24
+FS896, IOC Walapane, IOC, Central, Walapane,6.999,80.815, Available, Available, Available, 2025-12-29T08:45:00Z, High,16
+FS897, Sinopec Ragala, Sinopec, Central, Ragala,6.97,80.774, Limited, Available, Not Available, 2025-12-29T08:50:00Z, Medium,28
+FS898, IOC Hanguranketha, IOC, Central, Hanguranketha,7.043,80.886, Available, Available, Available, 2025-12-29T08:55:00Z, High,15
+FS899, Laugfs Ambewela, Laugfs Petroleum, Central, Ambewela,6.893,80.802, Available, Limited, Not Available, 2025-12-29T09:00:00Z, Medium,23
+FS900, IOC Pussellawa, IOC, Central, Pussellawa,7.015,80.889, Available, Available, Available, 2025-12-29T09:05:00Z, High,14
+FS901, IOC Colombo Fort, IOC, Western, Colombo,6.934,79.85, Available, Available, Available, 2025-12-29T09:10:00Z, High,20
+FS902, Laugfs Pettah, Laugfs Petroleum, Western, Colombo,6.936,79.857, Available, Available, Not Available, 2025-12-29T09:15:00Z, Medium,25
+FS903, Sinopec Maradana, Sinopec, Western, Colombo,6.928,79.867, Limited, Available, Not Available, 2025-12-29T09:20:00Z, Medium,32
+FS904, IOC Borella Junction, IOC, Western, Borella,6.915,79.877, Available, Available, Available, 2025-12-29T09:25:00Z, High,18
+FS905, Laugfs Narahenpita, Laugfs Petroleum, Western, Colombo,6.9,79.877, Available, Limited, Not Available, 2025-12-29T09:30:00Z, Medium,26
+FS906, IOC Nugegoda, IOC, Western, Nugegoda,6.869,79.889, Available, Available, Available, 2025-12-29T09:35:00Z, High,17
+FS907, Sinopec Maharagama, Sinopec, Western, Maharagama,6.848,79.927, Limited, Available, Not Available, 2025-12-29T09:40:00Z, Medium,31
+FS908, IOC Homagama, IOC, Western, Homagama,6.848,80.004, Available, Available, Available, 2025-12-29T09:45:00Z, High,16
+FS909, Laugfs Kottawa, Laugfs Petroleum, Western, Kottawa,6.844,79.965, Available, Limited, Not Available, 2025-12-29T09:50:00Z, Medium,24
+FS910, IOC Padukka, IOC, Western, Padukka,6.837,80.09, Available, Available, Available, 2025-12-29T09:55:00Z, High,15
+FS911, IOC Malabe, IOC, Western, Malabe,6.906,79.958, Available, Available, Available, 2025-12-29T10:00:00Z, High,18
+FS912, Laugfs Athurugiriya, Laugfs Petroleum, Western, Athurugiriya,6.873,79.997, Available, Available, Not Available, 2025-12-29T10:05:00Z, Medium,22
+FS913, Sinopec Kaduwela, Sinopec, Western, Kaduwela,6.934,79.984, Limited, Available, Not Available, 2025-12-29T10:10:00Z, Medium,30
+FS914, IOC Battaramulla, IOC, Western, Battaramulla,6.902,79.918, Available, Available, Available, 2025-12-29T10:15:00Z, High,17
+FS915, Laugfs Rajagiriya, Laugfs Petroleum, Western, Rajagiriya,6.907,79.894, Available, Limited, Not Available, 2025-12-29T10:20:00Z, Medium,24
+FS916, IOC Kolonnawa, IOC, Western, Kolonnawa,6.933,79.888, Available, Available, Available, 2025-12-29T10:25:00Z, High,16
+FS917, Sinopec Mulleriyawa, Sinopec, Western, Mulleriyawa,6.936,79.925, Limited, Available, Not Available, 2025-12-29T10:30:00Z, Medium,28
+FS918, IOC Wellampitiya, IOC, Western, Wellampitiya,6.936,79.88, Available, Available, Available, 2025-12-29T10:35:00Z, High,15
+FS919, Laugfs Angoda, Laugfs Petroleum, Western, Angoda,6.929,79.955, Available, Limited, Not Available, 2025-12-29T10:40:00Z, Medium,23
+FS920, IOC Peliyagoda, IOC, Western, Peliyagoda,6.958,79.884, Available, Available, Available, 2025-12-29T10:45:00Z, High,14
+FS921, IOC Wattala, IOC, Western, Wattala,6.989,79.888, Available, Available, Available, 2025-12-29T10:50:00Z, High,18
+FS922, Laugfs Hendala, Laugfs Petroleum, Western, Hendala,7.004,79.873, Available, Available, Not Available, 2025-12-29T10:55:00Z, Medium,22
+FS923, Sinopec Kelaniya, Sinopec, Western, Kelaniya,6.957,79.916, Limited, Available, Not Available, 2025-12-29T11:00:00Z, Medium,29
+FS924, IOC Ragama, IOC, Western, Ragama,7.027,79.915, Available, Available, Available, 2025-12-29T11:05:00Z, High,17
+FS925, Laugfs Kadawatha, Laugfs Petroleum, Western, Kadawatha,7.001,79.954, Available, Limited, Not Available, 2025-12-29T11:10:00Z, Medium,24
+FS926, IOC Kiribathgoda, IOC, Western, Kiribathgoda,6.977,79.927, Available, Available, Available, 2025-12-29T11:15:00Z, High,16
+FS927, Sinopec Delgoda, Sinopec, Western, Delgoda,6.989,80.02, Limited, Available, Not Available, 2025-12-29T11:20:00Z, Medium,28
+FS928, IOC Gampaha Town, IOC, Western, Gampaha,7.091,79.993, Available, Available, Available, 2025-12-29T11:25:00Z, High,15
+FS929, Laugfs Mirigama, Laugfs Petroleum, Western, Mirigama,7.244,80.126, Available, Limited, Not Available, 2025-12-29T11:30:00Z, Medium,23
+FS930, IOC Minuwangoda, IOC, Western, Minuwangoda,7.169,79.955, Available, Available, Available, 2025-12-29T11:35:00Z, High,14
+FS931, IOC Negombo Town, IOC, Western, Negombo,7.208,79.838, Available, Available, Available, 2025-12-29T11:40:00Z, High,18
+FS932, Laugfs Kochchikade, Laugfs Petroleum, Western, Kochchikade,7.259,79.851, Available, Available, Not Available, 2025-12-29T11:45:00Z, Medium,22
+FS933, Sinopec Wennappuwa, Sinopec, Western, Wennappuwa,7.327,79.849, Limited, Available, Not Available, 2025-12-29T11:50:00Z, Medium,29
+FS934, IOC Chilaw Road, IOC, Western, Chilaw,7.575,79.795, Available, Available, Available, 2025-12-29T11:55:00Z, High,17
+FS935, Laugfs Marawila, Laugfs Petroleum, Western, Marawila,7.413,79.821, Available, Limited, Not Available, 2025-12-29T12:00:00Z, Medium,24
+FS936, IOC Dankotuwa, IOC, Western, Dankotuwa,7.3,79.885, Available, Available, Available, 2025-12-29T12:05:00Z, High,16
+FS937, Sinopec Nattandiya, Sinopec, Western, Nattandiya,7.407,79.857, Limited, Available, Not Available, 2025-12-29T12:10:00Z, Medium,28
+FS938, IOC Puttalam Road, IOC, North Western, Puttalam,8.04,79.828, Available, Available, Available, 2025-12-29T12:15:00Z, High,15
+FS939, Laugfs Anamaduwa, Laugfs Petroleum, North Western, Anamaduwa,7.88,80.005, Available, Limited, Not Available, 2025-12-29T12:20:00Z, Medium,23
+FS940, IOC Mundalama, IOC, North Western, Mundalama,7.78,79.915, Available, Available, Available, 2025-12-29T12:25:00Z, High,14
+FS941, IOC Kurunegala Town, IOC, North Western, Kurunegala,7.486,80.364, Available, Available, Available, 2025-12-29T12:30:00Z, High,18
+FS942, Laugfs Mawathagama, Laugfs Petroleum, North Western, Mawathagama,7.409,80.443, Available, Available, Not Available, 2025-12-29T12:35:00Z, Medium,22
+FS943, Sinopec Narammala, Sinopec, North Western, Narammala,7.433,80.221, Limited, Available, Not Available, 2025-12-29T12:40:00Z, Medium,29
+FS944, IOC Wariyapola, IOC, North Western, Wariyapola,7.62,80.24, Available, Available, Available, 2025-12-29T12:45:00Z, High,17
+FS945, Laugfs Alawwa Junction, Laugfs Petroleum, North Western, Alawwa,7.296,80.234, Available, Limited, Not Available, 2025-12-29T12:50:00Z, Medium,24
+FS946, IOC Polgahawela Road, IOC, North Western, Polgahawela,7.333,80.293, Available, Available, Available, 2025-12-29T12:55:00Z, High,16
+FS947, Sinopec Bingiriya, Sinopec, North Western, Bingiriya,7.605,79.91, Limited, Available, Not Available, 2025-12-29T13:00:00Z, Medium,28
+FS948, IOC Kuliyapitiya, IOC, North Western, Kuliyapitiya,7.468,80.04, Available, Available, Available, 2025-12-29T13:05:00Z, High,15
+FS949, Laugfs Hettipola, Laugfs Petroleum, North Western, Hettipola,7.605,80.08, Available, Limited, Not Available, 2025-12-29T13:10:00Z, Medium,23
+FS950, IOC Nikaweratiya, IOC, North Western, Nikaweratiya,7.747,80.114, Available, Available, Available, 2025-12-29T13:15:00Z, High,14
+FS951, IOC Anuradhapura Town, IOC, North Central, Anuradhapura,8.311,80.403, Available, Available, Available, 2025-12-29T13:20:00Z, High,18
+FS952, Laugfs Kekirawa, Laugfs Petroleum, North Central, Kekirawa,8.038,80.598, Available, Available, Not Available, 2025-12-29T13:25:00Z, Medium,22
+FS953, Sinopec Mihintale, Sinopec, North Central, Mihintale,8.35,80.51, Limited, Available, Not Available, 2025-12-29T13:30:00Z, Medium,29
+FS954, IOC Tambuttegama, IOC, North Central, Tambuttegama,8.15,80.296, Available, Available, Available, 2025-12-29T13:35:00Z, High,17
+FS955, Laugfs Talawa, Laugfs Petroleum, North Central, Talawa,8.243,80.347, Available, Limited, Not Available, 2025-12-29T13:40:00Z, Medium,24
+FS956, IOC Medawachchiya, IOC, North Central, Medawachchiya,8.54,80.495, Available, Available, Available, 2025-12-29T13:45:00Z, High,16
+FS957, Sinopec Horowpothana, Sinopec, North Central, Horowpothana,8.433,80.871, Limited, Available, Not Available, 2025-12-29T13:50:00Z, Medium,28
+FS958, IOC Galenbindunuwewa, IOC, North Central, Galenbindunuwewa,8.326,80.563, Available, Available, Available, 2025-12-29T13:55:00Z, High,15
+FS959, Laugfs Padaviya, Laugfs Petroleum, North Central, Padaviya,8.8,80.76, Available, Limited, Not Available, 2025-12-29T14:00:00Z, Medium,23
+FS960, IOC Kahatagasdigiliya, IOC, North Central, Kahatagasdigiliya,8.425,80.685, Available, Available, Available, 2025-12-29T14:05:00Z, High,14
+FS961, IOC Polonnaruwa Town, IOC, North Central, Polonnaruwa,7.94,81, Available, Available, Available, 2025-12-29T14:10:00Z, High,18
+FS962, Laugfs Hingurakgoda, Laugfs Petroleum, North Central, Hingurakgoda,8.036,80.948, Available, Available, Not Available, 2025-12-29T14:15:00Z, Medium,22
+FS963, Sinopec Kaduruwela, Sinopec, North Central, Kaduruwela,7.934,81.003, Limited, Available, Not Available, 2025-12-29T14:20:00Z, Medium,29
+FS964, IOC Medirigiriya, IOC, North Central, Medirigiriya,8.027,80.967, Available, Available, Available, 2025-12-29T14:25:00Z, High,17
+FS965, Laugfs Elahera, Laugfs Petroleum, North Central, Elahera,7.722,80.819, Available, Limited, Not Available, 2025-12-29T14:30:00Z, Medium,24
+FS966, IOC Bakamuna, IOC, North Central, Bakamuna,7.785,80.815, Available, Available, Available, 2025-12-29T14:35:00Z, High,16
+FS967, Sinopec Welikanda, Sinopec, North Central, Welikanda,7.968,81.235, Limited, Available, Not Available, 2025-12-29T14:40:00Z, Medium,28
+FS968, IOC Dimbulagala, IOC, North Central, Dimbulagala,7.867,81.13, Available, Available, Available, 2025-12-29T14:45:00Z, High,15
+FS969, Laugfs Aralaganwila, Laugfs Petroleum, North Central, Aralaganwila,7.713,81.067, Available, Limited, Not Available, 2025-12-29T14:50:00Z, Medium,23
+FS970, IOC Giritale, IOC, North Central, Giritale,7.983,80.938, Available, Available, Available, 2025-12-29T14:55:00Z, High,14
+FS971, IOC Hambantota Town, IOC, Southern, Hambantota,6.123,81.118, Available, Available, Available, 2025-12-29T15:00:00Z, High,18
+FS972, Laugfs Tissamaharama, Laugfs Petroleum, Southern, Tissamaharama,6.28,81.286, Available, Available, Not Available, 2025-12-29T15:05:00Z, Medium,22
+FS973, Sinopec Kirinda, Sinopec, Southern, Kirinda,6.215,81.336, Limited, Available, Not Available, 2025-12-29T15:10:00Z, Medium,29
+FS974, IOC Beliatta, IOC, Southern, Beliatta,6.048,80.732, Available, Available, Available, 2025-12-29T15:15:00Z, High,17
+FS975, Laugfs Walasmulla, Laugfs Petroleum, Southern, Walasmulla,6.153,80.695, Available, Limited, Not Available, 2025-12-29T15:20:00Z, Medium,24
+FS976, IOC Tangalle, IOC, Southern, Tangalle,6.024,80.796, Available, Available, Available, 2025-12-29T15:25:00Z, High,16
+FS977, Sinopec Weeraketiya, Sinopec, Southern, Weeraketiya,6.134,80.785, Limited, Available, Not Available, 2025-12-29T15:30:00Z, Medium,28
+FS978, IOC Ambalantota, IOC, Southern, Ambalantota,6.12,81.026, Available, Available, Available, 2025-12-29T15:35:00Z, High,15
+FS979, Laugfs Lunugamvehera, Laugfs Petroleum, Southern, Lunugamvehera,6.34,81.217, Available, Limited, Not Available, 2025-12-29T15:40:00Z, Medium,23
+FS980, IOC Sooriyawewa, IOC, Southern, Sooriyawewa,6.21,81.098, Available, Available, Available, 2025-12-29T15:45:00Z, High,14
+FS981, IOC Matara Town, IOC, Southern, Matara,5.954,80.555, Available, Available, Available, 2025-12-29T15:50:00Z, High,18
+FS982, Laugfs Weligama, Laugfs Petroleum, Southern, Weligama,5.975,80.43, Available, Available, Not Available, 2025-12-29T15:55:00Z, Medium,22
+FS983, Sinopec Akuressa, Sinopec, Southern, Akuressa,6.103,80.48, Limited, Available, Not Available, 2025-12-29T16:00:00Z, Medium,29
+FS984, IOC Kamburupitiya, IOC, Southern, Kamburupitiya,6.075,80.564, Available, Available, Available, 2025-12-29T16:05:00Z, High,17
+FS985, Laugfs Deniyaya, Laugfs Petroleum, Southern, Deniyaya,6.34,80.46, Available, Limited, Not Available, 2025-12-29T16:10:00Z, Medium,24
+FS986, IOC Hakmana, IOC, Southern, Hakmana,6.085,80.6, Available, Available, Available, 2025-12-29T16:15:00Z, High,16
+FS987, Sinopec Mulatiyana, Sinopec, Southern, Mulatiyana,6.03,80.515, Limited, Available, Not Available, 2025-12-29T16:20:00Z, Medium,28
+FS988, IOC Devinuwara, IOC, Southern, Devinuwara,5.927,80.59, Available, Available, Available, 2025-12-29T16:25:00Z, High,15
+FS989, Laugfs Dikwella, Laugfs Petroleum, Southern, Dikwella,5.98,80.68, Available, Limited, Not Available, 2025-12-29T16:30:00Z, Medium,23
+FS990, IOC Kottegoda, IOC, Southern, Kottegoda,6.13,80.455, Available, Available, Available, 2025-12-29T16:35:00Z, High,14
+FS991, IOC Galle Fort, IOC, Southern, Galle,6.032,80.216, Available, Available, Available, 2025-12-29T16:40:00Z, High,18
+FS992, Laugfs Hikkaduwa, Laugfs Petroleum, Southern, Hikkaduwa,6.14,80.1, Available, Available, Not Available, 2025-12-29T16:45:00Z, Medium,22
+FS993, Sinopec Elpitiya, Sinopec, Southern, Elpitiya,6.291,80.164, Limited, Available, Not Available, 2025-12-29T16:50:00Z, Medium,29
+FS994, IOC Ambalangoda, IOC, Southern, Ambalangoda,6.244,80.059, Available, Available, Available, 2025-12-29T16:55:00Z, High,17
+FS995, Laugfs Balapitiya, Laugfs Petroleum, Southern, Balapitiya,6.278,80.038, Available, Limited, Not Available, 2025-12-29T17:00:00Z, Medium,24
+FS996, IOC Baddegama, IOC, Southern, Baddegama,6.176,80.2, Available, Available, Available, 2025-12-29T17:05:00Z, High,16
+FS997, Sinopec Karapitiya, Sinopec, Southern, Galle,6.062,80.221, Limited, Available, Not Available, 2025-12-29T17:10:00Z, Medium,28
+FS998, IOC Boossa, IOC, Southern, Boossa,6.185,80.2, Available, Available, Available, 2025-12-29T17:15:00Z, High,15
+FS999, Laugfs Ahangama, Laugfs Petroleum, Southern, Ahangama,5.973,80.37, Available, Limited, Not Available, 2025-12-29T17:20:00Z, Medium,23
+FS1000, IOC Koggala, IOC, Southern, Koggala,5.995,80.32, Available, Available, Available, 2025-12-29T17:25:00Z, High,14

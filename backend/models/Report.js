@@ -1,88 +1,82 @@
-const connectDB = require('../config/db');
+// backend/models/Report.js
+const { pool } = require('../config/db');
 
 const Report = {
   async create(userId, stationId, reportType, description, status = 'pending') {
-    const connection = await connectDB();
     try {
-      const [result] = await connection.execute(
+      const [result] = await pool.execute(
         'INSERT INTO reports (user_id, station_id, report_type, description, status) VALUES (?, ?, ?, ?, ?)',
         [userId, stationId, reportType, description, status]
       );
       return { id: result.insertId, userId, stationId, reportType, description, status };
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async findById(id) {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
-        'SELECT id, user_id, station_id, report_type, description, status, createdAt, updatedAt FROM reports WHERE id = ?',
+      const [rows] = await pool.execute(
+        'SELECT id, user_id, station_id, report_type, description, status, createdAt, updatedAt FROM reports WHERE id = ? LIMIT 1',
         [id]
       );
-      return rows[0];
-    } finally {
-      connection.end();
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
     }
   },
 
   async findByUserId(userId) {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.execute(
         'SELECT id, user_id, station_id, report_type, description, status, createdAt, updatedAt FROM reports WHERE user_id = ?',
         [userId]
       );
       return rows;
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async findByStationId(stationId) {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.execute(
         'SELECT id, user_id, station_id, report_type, description, status, createdAt, updatedAt FROM reports WHERE station_id = ?',
         [stationId]
       );
       return rows;
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async updateStatus(id, status) {
-    const connection = await connectDB();
     try {
-      await connection.execute(
+      await pool.execute(
         'UPDATE reports SET status = ?, updatedAt = CURRENT_TIMESTAMP WHERE id = ?',
         [status, id]
       );
       return this.findById(id);
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async delete(id) {
-    const connection = await connectDB();
     try {
-      const [result] = await connection.execute(
+      const [result] = await pool.execute(
         'DELETE FROM reports WHERE id = ?',
         [id]
       );
       return result.affectedRows > 0;
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 
   async findAll() {
-    const connection = await connectDB();
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.execute(
         `SELECT
           r.id, r.report_type, r.description, r.status, r.createdAt, r.updatedAt,
           u.id AS user_id, u.name AS user_name, u.email AS user_email,
@@ -109,8 +103,8 @@ const Report = {
           location: row.station_location,
         },
       }));
-    } finally {
-      connection.end();
+    } catch (error) {
+      throw error;
     }
   },
 };
