@@ -136,10 +136,11 @@ function getComparator(order, orderBy) {
 }
 
 function Anomaly() {
-  const [anomalies, setAnomalies] = useState(SAMPLE_ANOMALIES); // Use sample data initially
+  const [anomalies, setAnomalies] = useState([]); // Use sample data initially
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [useSampleData, setUseSampleData] = useState(true); // Toggle for demo
+  const [useSampleData, setUseSampleData] = useState(false);
+
 
   const [fuelFilter, setFuelFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -291,8 +292,9 @@ function Anomaly() {
             Real Time Fuel Availability - Fuel Anomaly Detection
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Live view of abnormal fuel events - 8 anomalies detected today
+              Live view of abnormal fuel events – {total} anomalies listed
           </Typography>
+
         </Box>
         <Box sx={{ display: "flex", gap: 1 }}>
           <Tooltip title="Toggle sample data">

@@ -462,6 +462,73 @@ app.post('/sensor/test', (req, res) => {
 });
 
 
+// AFTER connection is created, BEFORE app.listen
+
+function mapAnomalyRow(row) {
+  let status = "Info";
+  if (Math.abs(row.volume_diff) >= 1000 || row.anomaly_score >= 0.9) status = "Critical";
+  else if (Math.abs(row.volume_diff) >= 200 || row.anomaly_score >= 0.7) status = "Warning";
+
+  const reason =
+    row.anomalytypes ||
+    (row.volume_diff < 0
+      ? `Sudden drop of ${Math.abs(row.volume_diff)} L detected in short time window.`
+      : "Model detected unusual refill behaviour.");
+
+  return {
+    id: row.id,
+    date: row.reading_time,
+    stationId: row.stationId,
+    stationName: row.stationName || row.stationId,
+    fuelType: row.fuel_type,
+    volume: row.volume_diff,
+    score: row.anomaly_score,
+    status,
+    reason,
+  };
+}
+
+app.get("/api/anomaly", (req, res) => {
+  const sql = `
+  SELECT id, stationId, reading_time, fuel_type,
+         fuel_volume_l, volume_diff,
+         anomaly_score, anomalyflag_corrected, anomalytypes
+         FROM iforest_anomalies
+         WHERE anomalyflag_corrected = 1
+  ORDER BY reading_time DESC
+`;
+
+  connection.query(sql, (err, rows) => {
+    if (err) {
+      console.error("DB error /api/anomaly:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json(rows.map(mapAnomalyRow));
+  });
+});
+
+
+
+app.get("/api/anomaly/summary", (req, res) => {
+  const sql = `
+    SELECT
+      COUNT(*) AS total,
+      SUM(CASE WHEN anomalyflag_corrected = -1 THEN 1 ELSE 0 END) AS anomalies
+    FROM iforest_anomalies
+  `;
+  connection.query(sql, (err, rows) => {
+    if (err) return res.status(500).json({ error: "Database error" });
+    const { total, anomalies } = rows[0];
+    res.json({
+      totalRecords: total,
+      anomalyCount: anomalies,
+      anomalyRate: total ? anomalies / total : 0
+    });
+  });
+});
+
+
+
 
 app.listen(8081 , () => {
     console.log("Server is running")
