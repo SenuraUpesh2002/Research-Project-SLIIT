@@ -39,7 +39,6 @@ app.get("/",(req,res) => {
  */
 const connection = mysql.createConnection({
   host: '127.0.0.1',
-  port: 3308,
   user: 'root',
   password: '',
   database: 'fuelwatch'
@@ -490,23 +489,34 @@ function mapAnomalyRow(row) {
 }
 
 app.get("/api/anomaly", (req, res) => {
-  const sql = `
-  SELECT id, stationId, reading_time, fuel_type,
-         fuel_volume_l, volume_diff,
-         anomaly_score, anomalyflag_corrected, anomalytypes
-         FROM iforest_anomalies
-         WHERE anomalyflag_corrected = 1
-  ORDER BY reading_time DESC
-`;
-
-  connection.query(sql, (err, rows) => {
-    if (err) {
-      console.error("DB error /api/anomaly:", err);
-      return res.status(500).json({ error: "Database error" });
-    }
-    res.json(rows.map(mapAnomalyRow));
+  const page = parseInt(req.query.page) || 0;
+  const limit = parseInt(req.query.limit) || 50;
+  const offset = page * limit;
+  
+  const countSql = `SELECT COUNT(*) as total FROM iforest_anomalies WHERE anomaly_score > 0.1 OR volume_diff < 0`;
+  const dataSql = `
+    SELECT id, stationId, reading_time, fuel_type,
+           fuel_volume_l, volume_diff, anomaly_score, anomalyflag,
+           COALESCE(anomalytypes, 'High Score') AS anomalytypes
+    FROM iforest_anomalies 
+    WHERE anomaly_score > 0.1 OR volume_diff < 0
+    ORDER BY anomaly_score DESC 
+    LIMIT ? OFFSET ?
+  `;
+  
+  connection.query(countSql, (err, countRows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    connection.query(dataSql, [limit, offset], (err, rows) => {
+      if (err) console.error("DB error /api/anomaly:", err);
+      res.json({
+        data: rows.map(mapAnomalyRow),
+        total: countRows[0].total,  // 43!
+        page, limit
+      });
+    });
   });
 });
+
 
 
 
