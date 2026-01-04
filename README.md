@@ -19,6 +19,8 @@ FUELWATCH – AI Powered AI Powered Smart Surveillance &amp;  Predictive Analysi
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Component Overview Diagram – IT22081834</h1>
+<img width="1536" height="1024" alt="Designer" src="https://github.com/user-attachments/assets/b02d77f9-d0ce-4456-b1f7-e1db08761d4d" />
+
 
 </div>
 
