@@ -13,7 +13,8 @@ router.get('/users', protect, admin, async (req, res) => {
     connection.end();
     res.json(rows);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching users' });
+    console.error('Error fetching users:', error); // <-- Add this to print error details
+    res.status(500).json({ message: 'Error fetching users', error: error.message });
   }
 });
 

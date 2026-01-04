@@ -1,17 +1,24 @@
 import styles from './Analytics.module.css';
+import ModelVisualizations from '../components/ModelVisualizations';
+
+window.addEventListener('unhandledrejection', (e) => {
+  if (e?.reason?.message?.includes('Could not establish connection. Receiving end does not exist')) {
+    e.preventDefault();
+  }
+});
 
 export default function Analytics() {
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Analytics</h1>
-        <p className={styles.subtitle}>View detailed analytics and reports</p>
+      <div className={styles.headerRow}>
+        <div className={styles.titleBlock}>
+          <h1 className={styles.title}>Analytics</h1>
+          <p className={styles.subtitle}>View detailed analytics and reports</p>
+        </div>
       </div>
 
-      <div className={styles.comingSoon}>
-        <div className={styles.icon}>📊</div>
-        <h2>Coming Soon</h2>
-        <p>Analytics dashboard is under development. Check back soon!</p>
+      <div className={styles.panel}>
+        <ModelVisualizations />
       </div>
     </div>
   );

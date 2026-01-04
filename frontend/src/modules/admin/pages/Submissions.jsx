@@ -19,7 +19,9 @@ const Submissions = () => {
         const token = localStorage.getItem('authToken');
         console.log('Token in Submissions:', token);
         
-        const response = await apiClient.get(API_ENDPOINTS.SUBMISSIONS.GET_ALL);
+        const response = await apiClient.get(API_ENDPOINTS.SUBMISSIONS.GET_ALL, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
         const data = response.data || [];
         console.log('Submissions data:', data);
         

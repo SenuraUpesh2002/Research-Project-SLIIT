@@ -2,54 +2,46 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--bg-primary);
+  background: #f6f3fb; /* soft light purple */
 }
 
 /* ================= HEADER ================= */
 .header {
-  background: rgba(53, 27, 101, 0.9);
-  backdrop-filter: blur(20px);
+  background: linear-gradient(135deg, #ede7ff, #f7f4ff);
   padding: var(--spacing-xl);
   padding-top: calc(var(--spacing-xl) + 60px);
-  border-bottom: 1px solid var(--border-light);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="light"] .header {
-  background: var(--bg-light-header);
-  box-shadow: var(--shadow-light-header);
+  border-bottom: 1px solid #d8ccff;
 }
 
 .backButton {
   margin-bottom: var(--spacing-lg);
-  background: transparent;
-  border: 1px solid var(--border-medium);
+  background: #ffffff;
+  border: 1px solid #d8ccff;
   cursor: pointer;
   padding: var(--spacing-sm) var(--spacing-md);
   transition: all var(--transition-base);
-  color: var(--text-secondary);
+  color: #6e50d8;
+  border-radius: 6px;
 }
 
 .backButton:hover {
-  background-color: var(--bg-secondary-hover);
-  border-color: var(--border-dark);
-  color: var(--text-white);
+  background-color: #efe9ff;
+  border-color: #bfa8ff;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 300;
-  color: var(--text-white);
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: #4b2fbf;
   margin-bottom: var(--spacing-sm);
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 
 .subtitle {
   font-size: var(--font-size-base);
-  color: var(--text-secondary);
-  font-weight: 300;
-  letter-spacing: 1px;
+  color: #6e50d8;
+  font-weight: 400;
 }
 
 /* ================= FORM ================= */
@@ -59,29 +51,33 @@
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .formTitle {
   text-align: center;
-  color: var(--primary);
+  color: #4b2fbf;
   margin-bottom: var(--spacing-lg);
   font-size: var(--font-size-h4);
+  font-weight: 500;
 }
 
 /* ================= INFO CARD ================= */
 .infoCard {
-  background: var(--bg-secondary);
+  background: #ffffff;
   padding: var(--spacing-lg);
   display: flex;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
-  border-left: 3px solid var(--primary);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #a580f0;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(128, 90, 230, 0.15);
 }
 
 .infoText {
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: #6e50d8;
   line-height: 1.6;
 }
 
@@ -89,12 +85,13 @@
 .inputContainer {
   margin-bottom: var(--spacing-lg);
   position: relative;
+  z-index: 5; /* keeps dropdown above map */
 }
 
 .label {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
+  font-weight: 500;
+  color: #4b2fbf;
   margin-bottom: var(--spacing-sm);
 }
 
@@ -103,50 +100,53 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--bg-primary);
+  background-color: #ffffff;
   padding: var(--spacing-md);
-  border: 2px solid var(--border-light);
+  border: 2px solid #d8ccff;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.2s ease;
+  border-radius: 8px;
 }
 
 .dropdown:hover {
-  border-color: var(--secondary);
+  border-color: #a580f0;
 }
 
 .dropdownText {
   font-size: var(--font-size-base);
-  color: var(--text-primary);
+  color: #4b2fbf;
 }
 
 .placeholderText {
-  color: var(--text-tertiary);
+  color: #9c8edb;
 }
 
 .dropdownList {
   position: absolute;
   width: 100%;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-medium);
+  background: #ffffff;
+  border: 1px solid #d8ccff;
   margin-top: var(--spacing-xs);
-  z-index: 10;
-  max-height: 250px;
+  z-index: 9999; /* 🔥 FIX: above map */
+  max-height: 260px;
   overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(128, 90, 230, 0.15);
   animation: slideDown 0.2s ease-out;
 }
 
 .dropdownItem {
   padding: var(--spacing-md);
   cursor: pointer;
-  transition: background var(--transition-fast);
+  transition: background 0.2s ease;
 }
 
 .dropdownItem:hover {
-  background: var(--bg-secondary-hover);
+  background: #efe9ff;
 }
 
 .dropdownItemText {
-  color: var(--text-primary);
+  color: #4b2fbf;
   font-size: var(--font-size-base);
 }
 
@@ -166,25 +166,31 @@
   height: 400px;
   width: 100%;
   margin-bottom: var(--spacing-lg);
-  border: 1px solid var(--border-medium);
+  border-radius: 10px;
+  border: 1px solid #d8ccff;
   overflow: hidden;
+  box-shadow: 0 6px 20px rgba(128, 90, 230, 0.15);
+  position: relative;
+  z-index: 1; /* stays behind dropdown */
 }
 
 /* ================= LOADING TEXT ================= */
 .loadingText {
   text-align: center;
-  color: var(--text-tertiary);
+  color: #9c8edb;
   margin-bottom: var(--spacing-md);
   font-size: var(--font-size-sm);
 }
 
 /* ================= CONFIRMATION ================= */
 .confirmationDialog {
-  background: var(--bg-secondary);
+  background: #ffffff;
   padding: var(--spacing-xl);
   margin-top: var(--spacing-lg);
-  border: 1px solid var(--border-medium);
+  border-radius: 10px;
+  border: 1px solid #d8ccff;
   text-align: center;
+  box-shadow: 0 8px 25px rgba(128, 90, 230, 0.15);
 }
 
 .dialogActions {
@@ -199,54 +205,58 @@
   padding: var(--spacing-md) var(--spacing-lg);
   cursor: pointer;
   border: none;
-  font-weight: var(--font-weight-semibold);
+  font-weight: 500;
+  border-radius: 6px;
 }
 
 .confirmButton {
-  background: var(--primary);
-  color: var(--text-white);
+  background: #a580f0;
+  color: #ffffff;
 }
 
 .confirmButton:hover {
-  background: var(--primary-dark);
+  background: #8f6ae6;
 }
 
 .cancelButton {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
+  background: #efe9ff;
+  color: #4b2fbf;
 }
 
 /* ================= FOOTER ================= */
 .footer {
-  background: var(--bg-gradient);
-  padding: var(--spacing-xl);
-  border-top: 1px solid var(--border-light);
+  background: #ffffff;
+  padding: var(--spacing-lg);
+  border-top: 1px solid #d8ccff;
   position: sticky;
   bottom: 0;
+  z-index: 3;
 }
 
+/* ================= FIND BUTTON (FIXED SIZE) ================= */
 .findButton {
-  width: 100%;
-  padding: var(--spacing-lg);
-  background: var(--text-white);
-  border: 2px solid var(--text-white);
+  width: 20%;
+  margin: 0 auto;          /* ✅ centers the button */
+  display: block;
+  padding: 12px 16px;
+  background: #a580f0;
+  border: none;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.3s ease;
+  border-radius: 10px;
 }
+
 
 .findButton:hover:not(:disabled) {
-  background: var(--bg-dark);
+  background: #8f6ae6;
 }
 
 .findButtonText {
-  color: var(--bg-dark);
-  font-size: var(--font-size-base);
-  letter-spacing: 2px;
+  color: #ffffff;
+  font-size: 72px;      /* 🔥 very large */
+  font-weight: 700;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-}
-
-.findButton:hover:not(:disabled) .findButtonText {
-  color: var(--text-white);
 }
 
 .buttonDisabled {

@@ -164,7 +164,7 @@
   background: linear-gradient(135deg, #c4b5fd, #a78bfa); /* light purple gradient */
   border-radius: 12px;
   border: none;
-  color: #ffffff;
+  color: #0f0d0d;
   font-weight: 500;
   transition: all 0.3s ease;
   width: fit-content;
@@ -173,7 +173,7 @@
 
 .backButton:hover {
   transform: translateX(-4px);
-  box-shadow: 0 10px 30px rgba(167, 139, 250, 0.6);
+  box-shadow: 0 10px 30px rgba(138, 101, 249, 0.6);
 }
 
 .backButtonText {

@@ -1,6 +1,6 @@
 // frontend/src/router.jsx
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 /* =======================
    AUTH SCREENS
@@ -19,6 +19,7 @@ import EntryPage from "./modules/entry/EntryPage";
 import AdminLogin from "./modules/admin/pages/AdminLogin.jsx";
 import AdminSignup from "./modules/admin/pages/AdminSignup.jsx";
 import LandingPage from "./modules/admin/pages/LandingPage.jsx";
+import Analytics from "./modules/admin/pages/Analytics.jsx";
 import Dashboard from "./modules/admin/pages/Dashboard.jsx";
 import Submissions from "./modules/admin/pages/Submissions.jsx";
 import Duplicates from "./modules/admin/pages/Duplicates.jsx";
@@ -42,51 +43,44 @@ import Results from "./modules/customer/app/tabs/results.jsx";
 ======================= */
 const NotFound = () => <div>404 - Page Not Found</div>;
 
-const AppRouter = () => {
-  return (
-    <Routes>
+const routes = [
+   { path: "/", element: <EntryPage /> },
+   { path: "/login", element: <Login /> },
+   { path: "/signup", element: <Signup /> },
 
-      {/* =======================
-          ENTRY / AUTH
-      ======================= */}
-      <Route path="/" element={<EntryPage />} />
+   // Customer routes with layout
+   {
+      element: <CustomerLayout />,
+      children: [
+         { path: "/app/welcome", element: <Welcome /> },
+         { path: "/user-type", element: <UserType /> },
+         { path: "/forms/fuel-form", element: <FuelForm /> },
+         { path: "/forms/ev-form", element: <EVForm /> },
+         { path: "/profile", element: <Profile /> },
+         { path: "/results", element: <Results /> },
+      ],
+   },
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+   // Admin routes
+   { path: "/admin/login", element: <AdminLogin /> },
+   { path: "/admin/signup", element: <AdminSignup /> },
+   { path: "/admin", element: <LandingPage /> },
+   { path: "/admin/analytics", element: <Analytics /> },
+   { path: "/admin/dashboard", element: <Dashboard /> },
+   { path: "/admin/submissions", element: <Submissions /> },
+   { path: "/admin/duplicates", element: <Duplicates /> },
+   { path: "/admin/alerts", element: <Alerts /> },
+   { path: "/admin/reports", element: <Reports /> },
+   { path: "/admin/users", element: <Users /> },
 
-      {/* =======================
-          CUSTOMER ROUTES
-          (With Navbar Layout)
-      ======================= */}
-      <Route element={<CustomerLayout />}>
-        <Route path="/app/welcome" element={<Welcome />} />
-        <Route path="/user-type" element={<UserType />} />
-        <Route path="/forms/fuel-form" element={<FuelForm />} />
-        <Route path="/forms/ev-form" element={<EVForm />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/results" element={<Results />} />
-      </Route>
+   // Catch-all
+   { path: "*", element: <NotFound /> },
+];
 
-      {/* =======================
-          ADMIN ROUTES
-      ======================= */}
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/signup" element={<AdminSignup />} />
-      <Route path="/admin" element={<LandingPage />} />
-      <Route path="/admin/dashboard" element={<Dashboard />} />
-      <Route path="/admin/submissions" element={<Submissions />} />
-      <Route path="/admin/duplicates" element={<Duplicates />} />
-      <Route path="/admin/alerts" element={<Alerts />} />
-      <Route path="/admin/reports" element={<Reports />} />
-      <Route path="/admin/users" element={<Users />} />
+const router = createBrowserRouter(routes, {
+   future: {
+      v7_startTransition: true,
+   },
+});
 
-      {/* =======================
-          CATCH ALL
-      ======================= */}
-      <Route path="*" element={<NotFound />} />
-
-    </Routes>
-  );
-};
-
-export default AppRouter;
+export default router;

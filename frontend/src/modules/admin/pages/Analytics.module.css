@@ -3,7 +3,7 @@
 }
 
 .header {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .title {
@@ -19,32 +19,20 @@
   margin: 8px 0 0 0;
 }
 
-.comingSoon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 20px;
-  background-color: white;
+.panel {
+  background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  padding: 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
-.icon {
-  font-size: 64px;
-  margin-bottom: 20px;
+.headerRow {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
 }
 
-.comingSoon h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 12px 0;
-}
+.titleBlock { display:flex; flex-direction:column; }
 
-.comingSoon p {
-  font-size: 16px;
-  color: #6b7280;
-  margin: 0;
-}
+.subtitle { margin-top:6px; }

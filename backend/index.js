@@ -23,6 +23,38 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve model visualizations (files located in ../model/visualizations)
+app.use('/visualizations', express.static(path.join(__dirname, '..', 'model', 'visualizations')));
+
+// Return a manifest (array of filenames) for visualizations
+app.get('/visualizations/manifest.json', (req, res) => {
+  try {
+    const vizDir = path.join(__dirname, '..', 'model', 'visualizations');
+    const thumbDir = path.join(vizDir, 'thumbs');
+    const files = fs.readdirSync(vizDir).filter(f => {
+      const lower = f.toLowerCase();
+      return lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.gif') || lower.endsWith('.html') || lower.endsWith('.svg') || lower.endsWith('.webp');
+    });
+
+    const manifest = files.sort().map(f => {
+      const lower = f.toLowerCase();
+      const isHtml = lower.endsWith('.html');
+      const isImage = !isHtml;
+      const thumbPath = fs.existsSync(path.join(thumbDir, f)) ? `thumbs/${f}` : null;
+      return {
+        file: f,
+        type: isHtml ? 'html' : 'image',
+        thumb: thumbPath,
+      };
+    });
+
+    res.json(manifest);
+  } catch (err) {
+    console.error('Failed to read visualizations dir', err);
+    res.status(500).json([]);
+  }
+});
+
 // --------------------------------------------------
 // Routes
 // --------------------------------------------------
@@ -31,12 +63,14 @@ const reportRoutes = require('./routes/reportRoutes');
 const stationRoutes = require('./routes/stationRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
 const alertRoutes = require('./routes/alertRoutes');
+const adminRoutes = require('./routes/adminRoutes'); // <-- ADD THIS LINE
 
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/stations', stationRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/alerts', alertRoutes);
+app.use('/api', adminRoutes); // <-- ADD THIS LINE
 
 // --------------------------------------------------
 // Prediction Route

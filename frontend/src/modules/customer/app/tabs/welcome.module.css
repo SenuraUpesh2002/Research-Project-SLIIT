@@ -88,7 +88,7 @@
 
 .tagline {
   font-size: var(--font-size-xl);
-  color: #374151; /* medium gray */
+  color: #01050b; /* medium gray */
   text-align: center;
   line-height: 1.8;
   max-width: 600px;
@@ -152,8 +152,8 @@
 }
 
 .getStartedButton {
-  background: linear-gradient(135deg, #c4b6fa, #a78bfa); /* light purple gradient */
-  border-radius: 12px;
+  background: linear-gradient(135deg, #dbd2ff, #ded3fe); /* light purple gradient */
+  border-radius: 8px;
   padding: var(--spacing-lg) var(--spacing-3xl);
   display: flex;
   flex-direction: row;
@@ -162,8 +162,8 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%;
-  max-width: 280px;
+  width: 50%;
+  max-width: 200px;
   margin: 0 auto;
   animation: fadeInUp 1s ease-out 0.4s both;
   position: relative;
