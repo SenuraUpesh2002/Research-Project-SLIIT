@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+/* eslint-disable react/prop-types */
+import { createContext, useContext, useState, useMemo } from 'react';
 
 const ThemeContext = createContext(null);
 

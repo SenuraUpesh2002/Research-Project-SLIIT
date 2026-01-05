@@ -1,12 +1,14 @@
 // src/App.jsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
+import { Routes, Route } from 'react-router-dom';
 
 // Context Providers
 import { AuthProvider } from "./hooks/useAuth";
 import { ThemeProvider } from "./hooks/useTheme";
 import { UiProvider } from "./hooks/useUiStore";
+import FuelResultsScreen from "./modules/customer/app/results/fuel-results.jsx";
 
 function App() {
   useEffect(() => {
@@ -35,3 +37,8 @@ function App() {
 }
 
 export default App;
+
+// Remove this block:
+// <Routes>
+//   <Route path="/fuel-results" element={<FuelResultsScreen />} />
+// </Routes>

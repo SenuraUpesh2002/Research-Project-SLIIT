@@ -1,5 +1,5 @@
 // frontend/src/router.jsx
-import React from "react";
+// jsx runtime handles React imports
 import { createBrowserRouter } from "react-router-dom";
 
 /* =======================
@@ -37,6 +37,8 @@ import FuelForm from "./modules/customer/app/forms/fuel-form.jsx";
 import EVForm from "./modules/customer/app/forms/ev-form.jsx";
 import Profile from "./modules/customer/app/tabs/profile.jsx";
 import Results from "./modules/customer/app/tabs/results.jsx";
+import FuelResultsScreen from "./modules/customer/app/results/fuel-results.jsx";
+import EVResultsScreen from "./modules/customer/app/results/ev-results.jsx"; // <-- Add this import
 
 /* =======================
    NOT FOUND
@@ -58,6 +60,8 @@ const routes = [
          { path: "/forms/ev-form", element: <EVForm /> },
          { path: "/profile", element: <Profile /> },
          { path: "/results", element: <Results /> },
+         { path: "/fuel-results", element: <FuelResultsScreen /> },
+         { path: "/ev-results", element: <EVResultsScreen /> }, // <-- Add this route
       ],
    },
 

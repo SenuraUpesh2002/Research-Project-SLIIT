@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../../hooks/useAuth';
-import { API_ENDPOINTS } from "../../../../constants/api";
+import { API_ENDPOINTS, API_BASE } from "../../../../constants/api";
 import styles from './results.module.css';
 
 export default function ResultsScreen() {
@@ -53,7 +53,7 @@ export default function ResultsScreen() {
           throw new Error('No authentication token found. Please login again.');
         }
 
-        const response = await fetch(API_ENDPOINTS.STATIONS.GET_ALL, {
+        const response = await fetch(`${API_BASE}${API_ENDPOINTS.STATIONS.GET_ALL}`, {
           headers: {
             'Authorization': `Bearer ${token.trim()}`,
             'Content-Type': 'application/json'

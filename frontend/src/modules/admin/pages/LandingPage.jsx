@@ -1,5 +1,5 @@
 // frontend/src/modules/admin/pages/LandingPage.jsx
-import React from 'react';
+// jsx runtime handles React imports
 import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.css';
 import logo from './logo.jpeg';

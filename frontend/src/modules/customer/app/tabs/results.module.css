@@ -8,7 +8,7 @@
 }
 
 .error {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   text-align: center;
   padding: var(--spacing-xl);
   font-size: var(--font-size-base);
@@ -18,12 +18,12 @@
 .successBanner {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
-  color: var(--text-white);
+  color: #000000;
   padding: var(--spacing-md) var(--spacing-xl);
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
   animation: slideDown 0.3s ease-out;
 }
@@ -33,6 +33,7 @@
   font-size: var(--font-size-sm);
   font-weight: 300;
   letter-spacing: 1px;
+  color: #000000;
 }
 
 .filterInfo {
@@ -41,13 +42,13 @@
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border-radius: 0;
-  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  border-left: 2px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .filterText {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.7);
+  color: #000000;
   margin: 0;
   font-weight: 300;
   letter-spacing: 0.5px;
@@ -63,31 +64,31 @@
 }
 
 [data-theme="light"] .header {
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   box-shadow: 0 2px 20px rgba(53, 27, 101, 0.1);
 }
 
 .backButton {
   margin-bottom: var(--spacing-lg);
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   padding: var(--spacing-sm) var(--spacing-md);
   cursor: pointer;
   border-radius: 0;
   transition: all var(--transition-base);
-  color: rgba(255, 255, 255, 0.8);
+  color: #000000;
 }
 
 .backButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
-  color: var(--text-white);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.4);
+  color: #000000;
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 300;
-  color: var(--text-white);
+  color: #000000;
   margin-bottom: var(--spacing-sm);
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -96,7 +97,7 @@
 
 .subtitle {
   font-size: var(--font-size-base);
-  color: rgba(255, 255, 255, 0.7);
+  color: #000000;
   font-weight: 300;
   letter-spacing: 1px;
 }
@@ -111,16 +112,33 @@
 }
 
 .stationCard {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   border-radius: 0;
   padding: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   transition: all var(--transition-base);
   cursor: default;
   animation: fadeInUp 0.4s ease-out;
+}
+
+.stationCard {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.stationName {
+  color: #000000;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.stationAddress {
+  color: #000000;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .stationCard:nth-child(1) { animation-delay: 0.1s; }
@@ -132,7 +150,7 @@
 .stationCard:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(0, 0, 0, 0.3);
 }
 
 .stationHeader {
@@ -148,22 +166,6 @@
   margin-right: var(--spacing-md);
 }
 
-.stationName {
-  font-size: var(--font-size-xl);
-  font-weight: 300;
-  color: var(--text-white);
-  margin-bottom: var(--spacing-xs);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.stationAddress {
-  font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.6;
-  font-weight: 300;
-}
-
 .stationIcon {
   width: 70px;
   height: 70px;
@@ -174,7 +176,7 @@
   align-items: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .stationDetails {
@@ -184,9 +186,9 @@
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
   padding: var(--spacing-md);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.07);
   border-radius: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .detailItem {
@@ -198,8 +200,8 @@
 
 .detailText {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 300;
+  color: #000000;
+  font-weight: 500;
   letter-spacing: 0.5px;
 }
 
@@ -225,33 +227,29 @@
   border-radius: 0;
   flex: 1;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: all var(--transition-base);
 }
 
 .actionButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.5);
   transform: translateY(-2px);
-}
-
-.actionButton:hover .actionButtonText {
-  color: var(--text-white);
 }
 
 .actionButtonText {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.8);
+  color: #000000;
   margin-left: var(--spacing-xs);
-  font-weight: 300;
+  font-weight: 600;
   transition: color var(--transition-fast);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .noResultsCard {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(20px);
   border-radius: 0;
   padding: var(--spacing-3xl);
@@ -260,14 +258,14 @@
   align-items: center;
   margin-top: var(--spacing-xl);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border: 1px dashed rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.5s ease-out;
 }
 
 .noResultsTitle {
   font-size: var(--font-size-xl);
-  font-weight: 300;
-  color: var(--text-white);
+  font-weight: 600;
+  color: #000000;
   margin-top: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
   letter-spacing: 2px;
@@ -276,7 +274,7 @@
 
 .noResultsText {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
+  color: #000000;
   text-align: center;
   line-height: 1.8;
   margin-bottom: var(--spacing-xl);
@@ -285,10 +283,10 @@
 }
 
 .searchAgainButton {
-  background: var(--text-white);
+  background: #ffffff;
   padding: var(--spacing-md) var(--spacing-xl);
   border-radius: 0;
-  border: 2px solid var(--text-white);
+  border: 2px solid #000000;
   cursor: pointer;
   transition: all var(--transition-base);
   box-shadow: none;
@@ -313,13 +311,13 @@
 
 .searchAgainButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .searchAgainText {
   color: var(--bg-dark);
   font-size: var(--font-size-base);
-  font-weight: 500;
+  font-weight: 600;
   position: relative;
   z-index: 1;
   transition: color var(--transition-base);
@@ -328,7 +326,7 @@
 }
 
 .searchAgainButton:hover .searchAgainText {
-  color: var(--text-white);
+  color: #000000;
 }
 
 @keyframes fadeIn {

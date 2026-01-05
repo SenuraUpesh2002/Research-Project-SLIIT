@@ -82,7 +82,7 @@ export default function Login() {
           </button>
 
           <button className={styles.linkButton} onClick={() => navigate("/signup")}>
-            Don't have an account? <strong>Sign Up</strong>
+            Don&apos;t have an account? <strong>Sign Up</strong>
           </button>
 
         </div>

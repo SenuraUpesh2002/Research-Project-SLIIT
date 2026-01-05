@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './FormInput.module.css';
 
 // eslint-disable-next-line react/prop-types

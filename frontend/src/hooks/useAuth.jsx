@@ -3,6 +3,8 @@ import { useState, useEffect, useContext, createContext } from "react";
 import PropTypes from "prop-types";
 import { API_ENDPOINTS } from "../constants/api";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -33,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         }
 
         try {
-          const response = await fetch(API_ENDPOINTS.AUTH.PROFILE, {
+          const response = await fetch(`${API_BASE}${API_ENDPOINTS.AUTH.PROFILE}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -69,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     setLoading(true);
     try {
-      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
+      const response = await fetch(`${API_BASE}${API_ENDPOINTS.AUTH.LOGIN}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
@@ -110,7 +112,7 @@ export const AuthProvider = ({ children }) => {
 
     setLoading(true);
     try {
-      const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
+      const response = await fetch(`${API_BASE}${API_ENDPOINTS.AUTH.REGISTER}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role }),

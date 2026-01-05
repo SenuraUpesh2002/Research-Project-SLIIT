@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Table.module.css';
 
 /* eslint-disable react/prop-types */

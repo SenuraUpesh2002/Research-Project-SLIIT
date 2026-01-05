@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { API_ENDPOINTS } from '../constants/api';
 
 const useSubmission = () => {
