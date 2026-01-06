@@ -1,7 +1,19 @@
 # Research-Project-SLIIT
 FUELWATCH – AI Powered AI Powered Smart Surveillance &amp;  Predictive Analysis Platform for Fuel Station Management.
 
-Project Overview
+Project Overview:
+
+Fuelwatch is an AI-enabled fuel management system platform that consisting of IoT mechanisms that designed to support real-time fuel station management and loss prevention. The system enables continuous fuel level monitoring, anomaly detection, demand forecasting, intelligent alerting, smart recommondation engines, automated staff manipulation systems and gas demand prediction systems through an integrated web and mobile application.
+
+The platform addresses key operational challenges such as manual stock measurement, undetected fuel losses, inaccurate demand planning, delayed reordering decisions, and lack of centralized monitoring for Sri Lankan fuel stations with some other critical issues. Fuelwatch provides the following capabilities:
+
+1) Real-time fuel stock monitoring using IoT ultrasonic sensors and microcontroller mechanisms
+2) ML-based anomaly detection to monitor irregularities
+3) Time-series demand forecasting for optimal reordering and inventory management
+4) Intelligent alerting system for low stock, anomalies, and sensor health issues
+5) Recommondations of the fuel station in a location-aware personalization based on user preferences and fuel type
+6) Filling station employee(staff) check-in and check-out manipulation
+7) Gas demand predictions with automatic refill suggestions
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Complete System Diagram</h1>
