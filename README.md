@@ -11,7 +11,7 @@ The platform addresses key operational challenges such as manual stock measureme
 2) ML-based anomaly detection to monitor irregularities
 3) Time-series demand forecasting for optimal reordering and inventory management
 4) Intelligent alerting system for low stock, anomalies, and sensor health issues
-5) Recommondations of the fuel station in a location-aware personalization based on user preferences and fuel type
+5) Recommondations of the fuel station in a location-aware personalization based on user preferences, fuel type or EV 
 6) Filling station employee(staff) check-in and check-out manipulation
 7) Gas demand predictions with automatic refill suggestions
 
