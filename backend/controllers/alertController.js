@@ -18,23 +18,24 @@ exports.getAllAlerts = async (req, res) => {
 
 // CREATE alert
 exports.createAlert = async (req, res) => {
-  const { message, type } = req.body;
+  const { message, type, stationId, details } = req.body;
 
-  if (!message || !type) {
-    return res.status(400).json({ message: 'Message and type are required' });
+  if (!message || !type || !stationId || !details) {
+    return res.status(400).json({ message: 'Message, type, stationId, and details are required' });
   }
 
   try {
     const [result] = await pool.query(
-      'INSERT INTO alerts (message, type) VALUES (?, ?)',
-      [message, type]
+      'INSERT INTO alerts (message, type, station_id, details) VALUES (?, ?, ?, ?)',
+      [message, type, stationId, JSON.stringify(details)]
     );
 
     const [rows] = await pool.query(
       'SELECT * FROM alerts WHERE id = ?',
       [result.insertId]
     );
-
+    // Parse details before sending
+    if (rows[0]) rows[0].details = JSON.parse(rows[0].details);
     res.status(201).json(rows[0]);
   } catch (error) {
     console.error('❌ Error creating alert:', error);

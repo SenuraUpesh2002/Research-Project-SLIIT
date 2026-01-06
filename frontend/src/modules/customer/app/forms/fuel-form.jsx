@@ -61,7 +61,35 @@ export default function FuelFormScreen() {
      FIND BEST STATION
      - Directly render result page
   ================================ */
-  const handleFindStations = () => {
+  const handleFindStations = async () => {
+    // Prepare submission data
+    const submissionData = {
+      submissionType: "FUEL_FORM",
+      data: {
+        vehicleType: formData.vehicleType,
+        fuelType: formData.fuelType,
+        preferredBrand: formData.preferredBrand,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+      },
+    };
+  
+    try {
+      // Send to backend
+      await fetch(`${API_BASE}${API_ENDPOINTS.SUBMISSIONS.CREATE}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+        body: JSON.stringify(submissionData),
+      });
+      // Optionally, show success message or redirect
+    } catch (error) {
+      console.error("Failed to submit fuel form:", error);
+    }
+  
+    // Existing navigation logic
     const queryParams = new URLSearchParams({
       type: "fuel",
       preferredBrand: formData.preferredBrand || "",
@@ -69,7 +97,7 @@ export default function FuelFormScreen() {
       fuelType: formData.fuelType || "",
     });
     navigate(`/fuel-results?${queryParams.toString()}`);
-};
+  };
 
   /* ===============================
      USE BROWSER GPS + GEOAPIFY REVERSE GEOCODE

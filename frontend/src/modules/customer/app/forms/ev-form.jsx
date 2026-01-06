@@ -335,37 +335,34 @@ export default function EVFormScreen() {
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) return;
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("You are not logged in. Please log in to submit.");
+      return;
+    }
+    // Prepare submission data
+    const submissionData = {
+      submissionType: "EV_FORM",
+      data: {
+        chargerType: formData.chargerType,
+        powerRating: formData.powerRating,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+      },
+    };
 
-    if (formData.stationId) {
-      try {
-        const submissionData = {
-          station: formData.stationId,
-          submissionType: "EV_CHARGE",
-          data: {
-            chargerType: formData.chargerType,
-            powerRating: formData.powerRating,
-            latitude: formData.latitude,
-            longitude: formData.longitude,
-          },
-        };
-
-        const response = await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-          body: JSON.stringify(submissionData),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Submission failed:", errorData);
-        }
-      } catch (error) {
-        console.error("EV form submission error:", error);
-      }
+    try {
+      await fetch(API_ENDPOINTS.SUBMISSIONS.CREATE, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(submissionData),
+      });
+      // Optionally, show success message or redirect
+    } catch (error) {
+      console.error("EV form submission error:", error);
     }
 
     const queryParams = new URLSearchParams({
@@ -376,7 +373,6 @@ export default function EVFormScreen() {
       longitude: formData.longitude,
     });
 
-    // CHANGE THIS LINE:
     navigate(`/ev-results?${queryParams.toString()}`);
   };
 

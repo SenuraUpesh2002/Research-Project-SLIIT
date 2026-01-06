@@ -1,3 +1,4 @@
+console.log('index.js started');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -14,6 +15,7 @@ const app = express();
 // --------------------------------------------------
 // Connect Database (ONLY ONCE)
 // --------------------------------------------------
+console.log('Attempting to connect to database...');
 connectDB();
 
 // --------------------------------------------------

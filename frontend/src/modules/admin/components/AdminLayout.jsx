@@ -1,6 +1,7 @@
 // frontend/src/modules/admin/components/AdminLayout.jsx
 
-import { Link, useMatch } from 'react-router-dom';
+import React from 'react'; // <-- Add this import
+import { Link, useMatch, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import styles from './AdminLayout.module.css';
 
@@ -8,6 +9,16 @@ const AdminLayout = () => {
   const isActive = (path) => {
     return useMatch(`/admin/${path}`);
   };
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    // Only redirect if NOT on an admin route AND not already on the login page
+    if (!location.pathname.startsWith('/admin') && location.pathname !== '/admin/login') {
+      navigate('/admin/login');
+    }
+  }, [location, navigate]);
 
   return (
     <div className={styles.adminLayout}>

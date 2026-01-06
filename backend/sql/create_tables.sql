@@ -50,5 +50,13 @@ CREATE TABLE IF NOT EXISTS alerts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     message VARCHAR(255) NOT NULL,
     type ENUM('info', 'warning', 'system') DEFAULT 'info',
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    station_id INT,
+    details JSON,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (station_id) REFERENCES stations(id) ON DELETE SET NULL
 );
+
+-- Insert dummy data for stations
+INSERT INTO stations (name, location, fuel_types_available) VALUES
+('Test Fuel Station', 'Colombo', '["Petrol", "Diesel"]'),
+('Test EV Station', 'Kandy', '["Type 2 (AC)", "CCS (DC)"]');

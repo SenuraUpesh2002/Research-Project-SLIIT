@@ -1,45 +1,19 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
-
 const apiClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Request interceptor to add the auth token to headers
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    console.log('API Request - Token from localStorage:', token);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-      console.log('Authorization header set:', config.headers.Authorization);
-    } else {
-      console.warn('No token found in localStorage');
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+// Attach token to every request
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
-
-// Response interceptor for error handling (e.g., redirect on 401)
-apiClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      // Handle unauthorized errors, e.g., redirect to login
-      console.log('Unauthorized request, redirecting to login...');
-      // window.location.href = '/login'; // Uncomment in a real app
-    }
-    return Promise.reject(error);
-  }
-);
+  return config;
+}, (error) => Promise.reject(error));
 
 export default apiClient;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API_ENDPOINTS } from "../../../constants/api";
+import apiClient from '../../../services/apiClient'; // Import apiClient
 import styles from './Users.module.css';
 import UserTable from '../components/UserTable'; // Assuming this path
 
@@ -13,15 +14,8 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(API_ENDPOINTS.USERS.GET_ALL, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-          }
-        });
-        if (!response.ok) {
-          throw new Error(`Failed to fetch users: ${response.statusText}`);
-        }
-        const data = await response.json();
+        const response = await apiClient.get(API_ENDPOINTS.USERS.GET_ALL); // Use apiClient
+        const data = response.data;
         setUsers(data);
       } catch (err) {
         setError('Failed to load users.');

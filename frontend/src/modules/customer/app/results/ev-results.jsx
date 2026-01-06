@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styles from "./ev-results.module.css";
+import apiClient from "@services/apiClient";
 
 // Dummy data for demonstration
 const bestMatchStation = {
+  id: 4, // Added ID
   name: "ChargeNet EV Station - Colombo",
   address: "50 Marine Drive, Colombo 03",
   distance: "1.0 km",
@@ -17,6 +19,7 @@ const bestMatchStation = {
 
 const alternativeStations = [
   {
+    id: 5, // Added ID
     name: "EV Lanka Station - Bambalapitiya",
     address: "120 Galle Road, Colombo 04",
     distance: "2.2 km",
@@ -28,6 +31,7 @@ const alternativeStations = [
     powerRating: "22kW",
   },
   {
+    id: 6, // Added ID
     name: "GreenCharge Station - Wellawatta",
     address: "300 Galle Road, Colombo 06",
     distance: "3.5 km",
@@ -42,9 +46,53 @@ const alternativeStations = [
 
 export default function EVResultsScreen() {
   const [submitted, setSubmitted] = useState(false);
+  const [selectedStation, setSelectedStation] = useState(null); // Track selected station
+  const [showConfirm, setShowConfirm] = useState(false); // Show confirmation dialog
+  const [loading, setLoading] = useState(false);
 
-  const handleSelectStation = () => {
-    setSubmitted(true);
+  // Handle selection of a station (best or alternative)
+  const handleSelectStation = (station) => {
+    setSelectedStation(station);
+    setShowConfirm(true);
+  };
+
+  // Confirm selection: save submission & send alert
+  const handleConfirmSelection = async () => {
+    setLoading(true);
+    try {
+      // Example user info (replace with actual user context)
+      const userInfo = {
+        userId: localStorage.getItem("userId"),
+        name: localStorage.getItem("userName"),
+        email: localStorage.getItem("userEmail"),
+      };
+
+      // Save submission
+      await apiClient.post("/submissions", {
+        user: userInfo,
+        station: {
+          ...selectedStation,
+          name: "Test EV Station" // Use the dummy station name
+        },
+        vehicleType: "EV",
+        date: new Date().toISOString(),
+      });
+
+      // Send alert to station
+      await apiClient.post("/alerts", {
+        message: `New EV charging request for ${selectedStation.name}`,
+        type: "system",
+        stationId: selectedStation.id, // Use id if available
+        details: selectedStation,
+      });
+
+      setSubmitted(true);
+    } catch (err) {
+      alert("Failed to submit request. Please try again.");
+    } finally {
+      setLoading(false);
+      setShowConfirm(false);
+    }
   };
 
   return (
@@ -84,7 +132,10 @@ export default function EVResultsScreen() {
                 ))}
               </div>
             </div>
-            <button className={styles.selectButton} onClick={handleSelectStation}>
+            <button
+              className={styles.selectButton}
+              onClick={() => handleSelectStation(bestMatchStation)}
+            >
               Select This Station
             </button>
           </div>
@@ -142,6 +193,28 @@ export default function EVResultsScreen() {
           <div className={styles.confirmActions}>
             <button className={styles.homeButton}>Back to Home</button>
             <button className={styles.historyButton}>View History</button>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {showConfirm && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Confirm Selection</h3>
+            <p>
+              Are you sure you want to select <strong>{selectedStation?.name}</strong>?
+            </p>
+            <div className={styles.modalActions}>
+              <button onClick={() => setShowConfirm(false)}>Cancel</button>
+              <button
+                className={styles.homeButton}
+                onClick={handleConfirmSelection}
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Confirm"}
+              </button>
+            </div>
           </div>
         </div>
       )}

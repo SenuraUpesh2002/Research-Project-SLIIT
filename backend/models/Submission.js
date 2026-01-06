@@ -2,13 +2,14 @@
 const { pool } = require('../config/db');
 
 const Submission = {
-  async create(userId, stationId, submissionType, data, status = 'pending') {
+  async create(submissionData) {
     try {
+      const { user_id, station_id, submission_type, data } = submissionData;
       const [result] = await pool.execute(
-        'INSERT INTO submissions (user_id, station_id, submission_type, data, status) VALUES (?, ?, ?, ?, ?)',
-        [userId, stationId, submissionType, JSON.stringify(data), status]
+        'INSERT INTO submissions (user_id, station_id, submission_type, data, createdAt, updatedAt) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+        [user_id, station_id, submission_type, JSON.stringify(data)]
       );
-      return { id: result.insertId, userId, stationId, submissionType, data, status };
+      return { id: result.insertId, user_id, station_id, submission_type, data };
     } catch (error) {
       throw error;
     }
@@ -20,7 +21,9 @@ const Submission = {
         'SELECT id, user_id, station_id, submission_type, data, status, createdAt, updatedAt FROM submissions WHERE id = ? LIMIT 1',
         [id]
       );
-      if (rows[0]) rows[0].data = JSON.parse(rows[0].data);
+      if (rows[0]) {
+        rows[0].data = JSON.parse(rows[0].data);
+      }
       return rows[0] || null;
     } catch (error) {
       throw error;
@@ -33,7 +36,7 @@ const Submission = {
         'SELECT id, user_id, station_id, submission_type, data, status, createdAt, updatedAt FROM submissions WHERE user_id = ?',
         [userId]
       );
-      return rows.map(row => ({ ...row, data: JSON.parse(row.data) }));
+     return rows.map(row => ({ ...row, data: JSON.parse(row.data) }));
     } catch (error) {
       throw error;
     }
@@ -78,31 +81,30 @@ const Submission = {
   async findAll() {
     try {
       const [rows] = await pool.execute(
-        `SELECT
-          s.id, s.submission_type, s.data, s.status, s.createdAt, s.updatedAt,
-          u.id AS user_id, u.name AS user_name, u.email AS user_email,
-          st.id AS station_id, st.name AS station_name, st.location AS station_location
-        FROM submissions s
-        JOIN users u ON s.user_id = u.id
-        JOIN stations st ON s.station_id = st.id`
+        `SELECT 
+          s.id, 
+          s.user_id, 
+          u.name AS user_name, 
+          s.station_id, 
+          st.name AS station_name, 
+          s.submission_type, 
+          s.data, 
+          s.createdAt, 
+          s.updatedAt 
+         FROM submissions s
+         LEFT JOIN users u ON s.user_id = u.id
+         LEFT JOIN stations st ON s.station_id = st.id`
       );
       return rows.map(row => ({
         id: row.id,
-        submissionType: row.submission_type,
+        user_id: row.user_id,
+        user_name: row.user_name,
+        station_id: row.station_id,
+        station_name: row.station_name,
+        submission_type: row.submission_type,
         data: JSON.parse(row.data),
-        status: row.status,
         createdAt: row.createdAt,
         updatedAt: row.updatedAt,
-        user: {
-          id: row.user_id,
-          name: row.user_name,
-          email: row.user_email,
-        },
-        station: {
-          id: row.station_id,
-          name: row.station_name,
-          location: row.station_location,
-        },
       }));
     } catch (error) {
       throw error;

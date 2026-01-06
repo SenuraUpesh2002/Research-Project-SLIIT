@@ -19,16 +19,17 @@ const Submissions = () => {
         const token = localStorage.getItem('authToken');
         console.log('Token in Submissions:', token);
 
-        // Rely on `apiClient` request interceptor to attach Authorization header
+        // Fix: Ensure API endpoint is correct (no duplicated '/api')
+        // If your apiClient baseURL is 'http://localhost:5000/api', use '/submissions'
+        console.log('Fetching submissions from /submissions endpoint...');
         const response = await apiClient.get(API_ENDPOINTS.SUBMISSIONS.GET_ALL);
         const data = response.data || [];
         console.log('Submissions data:', data);
-        
+    
         // Ensure data is an array
         if (Array.isArray(data)) {
           setSubmissions(data);
         } else if (data && typeof data === 'object') {
-          // If it's a single object, wrap it in an array
           setSubmissions([data]);
         } else {
           setSubmissions([]);
@@ -151,3 +152,15 @@ const Submissions = () => {
 };
 
 export default Submissions;
+
+// Remove this duplicate function at the end of the file:
+//
+// const fetchSubmissions = async () => {
+//   try {
+//     // Fix: Remove extra '/api' from the endpoint
+//     const response = await apiClient.get('/submissions');
+//     setSubmissions(response.data);
+//   } catch (error) {
+//     console.error('Error fetching submissions:', error);
+//   }
+// };

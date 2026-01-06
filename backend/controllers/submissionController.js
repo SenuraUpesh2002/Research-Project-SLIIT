@@ -1,18 +1,57 @@
 const asyncHandler = require('express-async-handler');
 const Submission = require('../models/Submission');
+const Station = require('../models/Station'); // Add this line
 
 // @desc    Create new submission
 // @route   POST /api/submissions
 // @access  Private
 const createSubmission = asyncHandler(async (req, res) => {
-  const { station, submissionType, data } = req.body;
+  const user_id = req.user.id; // Get user_id from authenticated user
 
-  const createdSubmission = await Submission.create(
-    req.user.id,
-    station,
-    submissionType,
-    data
-  );
+  let station_id;
+
+    let submission_type;
+    let data;
+
+  // Handle different request body structures
+  if (req.body.submissionType && req.body.data) {
+    // Structure 1: { submissionType: 'FUEL_FORM', data: { ... } }
+    submission_type = req.body.submissionType;
+    data = req.body.data;
+    // Assuming station_id might be within data for this type, or needs to be derived
+    // For now, we'll assume it's not directly provided at top level for this type
+    // and will need to be handled based on the 'data' content if required.
+    // If station_id is always required, we'll need to adjust this logic.
+    station_id = req.body.station_id || null; // Placeholder, adjust as needed
+  } else if (req.body.station && req.body.vehicleType && req.body.date) {
+    // Structure 2: { user: { ... }, station: { name: '...', ... }, vehicleType: '...', date: '...' }
+    submission_type = 'STATION_CONFIRMATION'; // Or another appropriate type
+    data = {
+      vehicleType: req.body.vehicleType,
+      date: req.body.date,
+      stationDetails: req.body.station, // Store full station details in data
+    };
+
+    // Find station_id by station name
+    const station = await Station.findByName(req.body.station.name);
+    if (!station) {
+      res.status(404);
+      throw new Error('Station not found for confirmation');
+    }
+    station_id = station.id;
+  } else {
+    res.status(400);
+    throw new Error('Invalid submission request body structure');
+  }
+
+  // Validate required fields
+  if (!user_id || !station_id || !submission_type || !data) {
+    console.log('Missing required submission fields:', { user_id, station_id, submission_type, data });
+    res.status(400);
+    throw new Error('Missing required submission fields after parsing');
+  }
+
+  const createdSubmission = await Submission.create({ user_id, station_id, submission_type, data });
   res.status(201).json(createdSubmission);
 });
 
@@ -21,6 +60,7 @@ const createSubmission = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getSubmissions = asyncHandler(async (req, res) => {
   const submissions = await Submission.findAll(); // Assuming a findAll method in your MySQL model
+  console.log('Submissions from DB:', submissions);
   res.json(submissions);
 });
 
@@ -75,3 +115,5 @@ module.exports = {
   updateSubmission,
   deleteSubmission,
 };
+
+

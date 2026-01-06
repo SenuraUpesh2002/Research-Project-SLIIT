@@ -1,51 +1,99 @@
 import React, { useState } from "react";
 import styles from "./fuel-results.module.css";
+import apiClient from "@services/apiClient";
 
 // Dummy data for demonstration
 const bestMatchStation = {
-  name: "Shell Fuel Station - Colombo",
-  address: "125 Galle Road, Colombo 03",
-  distance: "1.2 km",
+  id: 1, // Added ID
+  name: "Colombo Fuel & EV",
+  address: "100 Main Street, Colombo 01",
+  distance: "0.8 km",
   status: "Available",
-  contact: "011-2345678",
+  contact: "011-1234567",
   hours: "24/7 Open",
-  matchScore: 98,
-  services: ["Petrol", "Diesel", "Super Petrol", "Car Wash", "Shop"],
+  matchScore: 95,
+  fuelType: "Petrol",
+  pumpCount: 8,
+  services: ["Petrol", "Diesel", "Mini Mart", "Restrooms"],
 };
 
 const alternativeStations = [
   {
-    name: "IOC Fuel Station - Bambalapitiya",
-    address: "78 Galle Road, Colombo 04",
-    distance: "2.5 km",
-    status: "Available",
-    contact: "011-3456789",
+    id: 2, // Added ID
+    name: "Kandy Petrol Stop",
+    address: "200 Lotus Road, Colombo 02",
+    distance: "2.0 km",
+    status: "Busy",
+    contact: "011-2345678",
     hours: "6AM - 10PM",
-    matchScore: 92,
+    matchScore: 88,
+    fuelType: "Diesel",
+    pumpCount: 6,
   },
   {
-    name: "CPC Fuel Station - Wellawatta",
-    address: "245 Galle Road, Colombo 06",
-    distance: "3.8 km",
-    status: "Busy",
-    contact: "011-4567890",
+    id: 3, // Added ID
+    name: "Moratuwa Charge Point",
+    address: "50 York Street, Colombo 01",
+    distance: "3.1 km",
+    status: "Available",
+    contact: "011-3456789",
     hours: "24/7 Open",
-    matchScore: 88,
+    matchScore: 83,
+    fuelType: "Petrol",
+    pumpCount: 10,
   },
 ];
 
 export default function FuelResultsScreen() {
   const [submitted, setSubmitted] = useState(false);
+  const [selectedStation, setSelectedStation] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSelectStation = () => {
-    setSubmitted(true);
+  const handleSelectStation = (station) => {
+    setSelectedStation(station);
+    setShowConfirm(true);
+  };
+
+  const handleConfirmSelection = async () => {
+    setLoading(true);
+    try {
+      const userInfo = {
+        userId: localStorage.getItem("userId"),
+        name: localStorage.getItem("userName"),
+        email: localStorage.getItem("userEmail"),
+      };
+
+      // Save submission
+      await apiClient.post("/submissions", {
+        user: userInfo,
+        station: selectedStation,
+        vehicleType: "Fuel",
+        date: new Date().toISOString(),
+      });
+
+      // Send alert to station
+      await apiClient.post("/alerts", {
+        message: `New fuel request for ${selectedStation.name}`,
+        type: "system",
+        stationId: selectedStation.id,
+        details: selectedStation,
+      });
+
+      setSubmitted(true);
+    } catch (err) {
+      alert("Failed to submit request. Please try again.");
+    } finally {
+      setLoading(false);
+      setShowConfirm(false);
+    }
   };
 
   return (
     <div className={styles.container}>
       {!submitted ? (
         <>
-          <h2>Station Recommendations</h2>
+          <h2>Fuel Station Recommendations</h2>
           <div className={styles.bestMatchCard}>
             <div className={styles.header}>
               <span className={styles.stationName}>{bestMatchStation.name}</span>
@@ -66,13 +114,22 @@ export default function FuelResultsScreen() {
                 <strong>Hours:</strong> {bestMatchStation.hours}
               </div>
               <div>
+                <strong>Fuel Type:</strong> {bestMatchStation.fuelType}
+              </div>
+              <div>
+                <strong>Pump Count:</strong> {bestMatchStation.pumpCount}
+              </div>
+              <div>
                 <strong>Available Services:</strong>
                 {bestMatchStation.services.map((s) => (
                   <span key={s} className={styles.serviceTag}>{s}</span>
                 ))}
               </div>
             </div>
-            <button className={styles.selectButton} onClick={handleSelectStation}>
+            <button
+              className={styles.selectButton}
+              onClick={() => handleSelectStation(bestMatchStation)}
+            >
               Select This Station
             </button>
           </div>
@@ -89,6 +146,8 @@ export default function FuelResultsScreen() {
                 <div><strong>Status:</strong> {station.status}</div>
                 <div><strong>Contact:</strong> {station.contact}</div>
                 <div><strong>Hours:</strong> {station.hours}</div>
+                <div><strong>Fuel Type:</strong> {station.fuelType}</div>
+                <div><strong>Pump Count:</strong> {station.pumpCount}</div>
               </div>
             ))}
           </div>
@@ -100,7 +159,7 @@ export default function FuelResultsScreen() {
           <p>Your alert has been sent to the station</p>
           <div className={styles.confirmDetails}>
             <div>
-              <strong>Confirmation ID:</strong> FC-2024-001234
+              <strong>Confirmation ID:</strong> FUEL-2024-001234
             </div>
             <div>
               <strong>Submitted On:</strong> Dec 15, 2024 - 2:24 PM
@@ -112,13 +171,14 @@ export default function FuelResultsScreen() {
                 <li>{bestMatchStation.address}</li>
                 <li>{bestMatchStation.contact}</li>
                 <li>{bestMatchStation.distance} from your location</li>
+                <li>Fuel: {bestMatchStation.fuelType} | Pumps: {bestMatchStation.pumpCount}</li>
               </ul>
             </div>
             <div className={styles.nextSteps}>
               <strong>Next Steps</strong>
               <ul>
                 <li>The station has been notified of your request</li>
-                <li>They will prepare your fuel/exchange service</li>
+                <li>They will prepare your fueling service</li>
                 <li>You may receive a confirmation call shortly</li>
                 <li>Please proceed to the station at your convenience</li>
               </ul>
@@ -127,6 +187,28 @@ export default function FuelResultsScreen() {
           <div className={styles.confirmActions}>
             <button className={styles.homeButton}>Back to Home</button>
             <button className={styles.historyButton}>View History</button>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal */}
+      {showConfirm && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Confirm Selection</h3>
+            <p>
+              Are you sure you want to select <strong>{selectedStation?.name}</strong>?
+            </p>
+            <div className={styles.modalActions}>
+              <button onClick={() => setShowConfirm(false)}>Cancel</button>
+              <button
+                className={styles.homeButton}
+                onClick={handleConfirmSelection}
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Confirm"}
+              </button>
+            </div>
           </div>
         </div>
       )}
