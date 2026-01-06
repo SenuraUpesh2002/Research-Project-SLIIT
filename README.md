@@ -15,6 +15,8 @@ The platform addresses key operational challenges such as manual stock measureme
 6) Filling station employee(staff) check-in and check-out manipulation
 7) Gas demand predictions with automatic refill suggestions
 
+Github Repository Link - https://github.com/SenuraUpesh2002/Research-Project-SLIIT.git
+
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Complete System Diagram</h1>
 
