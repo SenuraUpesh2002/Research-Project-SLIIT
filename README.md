@@ -38,7 +38,8 @@ Github Repository Link - https://github.com/SenuraUpesh2002/Research-Project-SLI
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Component Overview Diagram – IT22081834</h1>
-<img width="1536" height="1024" alt="Designer" src="https://github.com/user-attachments/assets/b02d77f9-d0ce-4456-b1f7-e1db08761d4d" />
+<img width="1536" height="1024" alt="ChatGPT Image Jan 7, 2026, 03_32_39 AM" src="https://github.com/user-attachments/assets/027ac5e5-8418-4078-b971-1370c90787a2" />
+
 
 
 </div>
