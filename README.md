@@ -1,7 +1,7 @@
 # Research-Project-SLIIT
 FUELWATCH – AI Powered AI Powered Smart Surveillance &amp;  Predictive Analysis Platform for Fuel Station Management.
 
-Project Overview:
+Project Overview: 
 
 Fuelwatch is an AI-enabled fuel management system platform that consisting of IoT mechanisms that designed to support real-time fuel station management and loss prevention. The system enables continuous fuel level monitoring, anomaly detection, demand forecasting, intelligent alerting, smart recommondation engines, automated staff manipulation systems and gas demand prediction systems through an integrated web and mobile application.
 
