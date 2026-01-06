@@ -15,10 +15,13 @@ The platform addresses key operational challenges such as manual stock measureme
 6) Filling station employee(staff) check-in and check-out manipulation
 7) Gas demand predictions with automatic refill suggestions
 
+Development is doing using React.js, Node.js, MongoDB, Python-based ML models and Arduino(IoT) concepts. Fuelwatch is a cost-effective, scalable solution to Sri Lankan fuel station operations and regulatory requirements, aimed at improving profitability and operational efficiency for independent and chain stations.
+
 Github Repository Link - https://github.com/SenuraUpesh2002/Research-Project-SLIIT.git
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Complete System Diagram</h1>
+
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Component Overview Diagram – IT22179180</h1>
