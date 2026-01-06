@@ -21,7 +21,7 @@ Github Repository Link - https://github.com/SenuraUpesh2002/Research-Project-SLI
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Complete System Diagram</h1>
-
+<img src="https://github.com/SenuraUpesh2002/Research-Project-SLIIT/blob/a6bd1e9236d2b29e30238f2a7145808c4543e331/System%20diagram.jpg">
 
 <div style="border: 2px solid #ccc; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
 <h1>Component Overview Diagram – IT22179180</h1>
