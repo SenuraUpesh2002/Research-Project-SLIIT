@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS stations (
 CREATE TABLE IF NOT EXISTS submissions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    station_id INT NOT NULL,
+    station_id INT NULL,
     submission_type VARCHAR(255) NOT NULL,
     data JSON,
     status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',

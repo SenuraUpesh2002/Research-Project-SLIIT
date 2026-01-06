@@ -2,97 +2,53 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import PropTypes from "prop-types";
 import { API_ENDPOINTS } from "../constants/api";
+import authService from "../services/auth.service"; // Import authService
+import useAuthStore from "../state/auth.store";
+import { jwtDecode } from "jwt-decode";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(
-    localStorage.getItem("authToken")?.trim() || null
-  );
+  const { isAuthenticated, user, token, login: authStoreLogin, logout: authStoreLogout } = useAuthStore();
   const [loading, setLoading] = useState(false);
 
   // Verify token on initial load
   useEffect(() => {
-    const verifyToken = async () => {
-      setLoading(true);
+    setLoading(true);
 
-      if (token) {
-        console.log("TOKEN SENT IN HEADER:", token); // DEBUG
+    const authToken = localStorage.getItem("authToken");
+    // console.log("Auth Token from localStorage (useAuth):", authToken);
 
-        // Test token support
-        if (token.startsWith("test-admin-token-")) {
-          setUser({
-            id: "test-user-id",
-            email: "admin@test.com",
-            role: "admin",
-            name: "Test Admin",
-          });
-          setLoading(false);
-          return;
-        }
-
-        try {
-          const response = await fetch(`${API_BASE}${API_ENDPOINTS.AUTH.PROFILE}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
-          } else if (response.status === 404) {
-            // Profile endpoint missing – token still valid
-            setUser({ token });
-          } else {
-            console.warn("Invalid token. Removing.");
-            localStorage.removeItem("authToken");
-            setToken(null);
-            setUser(null);
-          }
-        } catch (error) {
-          console.error("Token verification failed:", error);
-          localStorage.removeItem("authToken");
-          setToken(null);
-          setUser(null);
-        }
+    if (authToken && authService.validateToken()) {
+      try {
+        const decodedToken = jwtDecode(authToken);
+        authStoreLogin(decodedToken, authToken);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        authStoreLogout();
+        localStorage.removeItem("authToken");
       }
+    } else {
+      authStoreLogout();
+      localStorage.removeItem("authToken");
+    }
 
-      setLoading(false);
-    };
-
-    verifyToken();
-  }, [token]);
+    setLoading(false);
+  }, [authStoreLogin, authStoreLogout]);
 
   // Login
   const login = async (credentials) => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE}${API_ENDPOINTS.AUTH.LOGIN}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
-
-      const data = await response.json();
-      console.log("TOKEN RECEIVED:", data.token); // DEBUG
-
-      if (response.ok) {
-        const trimmedToken = data.token.trim();
-        localStorage.setItem("authToken", trimmedToken);
-        setToken(trimmedToken);
-        setUser(data.user);
-
+      const decodedUser = await authService.login(credentials);
+      if (decodedUser) {
+        const authToken = localStorage.getItem('authToken'); // Retrieve the raw token
+        authStoreLogin(decodedUser, authToken); // Pass decoded user and raw token
         return { success: true };
       }
-
-      return {
-        success: false,
-        message: data.message || "Login failed",
-      };
+      return { success: false, message: "Login failed" };
     } catch (error) {
       console.error("Login error:", error);
       return {
@@ -112,31 +68,16 @@ export const AuthProvider = ({ children }) => {
 
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE}${API_ENDPOINTS.AUTH.REGISTER}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, role }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        return {
-          success: true,
-          message: data.message || "Registration successful",
-        };
+      const response = await authService.register({ name, email, password, role });
+      if (response.token) {
+        const decodedUser = jwtDecode(response.token);
+        authStoreLogin(decodedUser, response.token);
+        return { success: true };
       }
-
-      return {
-        success: false,
-        message: data.message || "Registration failed",
-      };
+      return { success: false, message: response.message || "Registration failed" };
     } catch (error) {
       console.error("Registration error:", error);
-      return {
-        success: false,
-        message: "Network error or server unavailable",
-      };
+      return { success: false, message: "Network error or server unavailable" };
     } finally {
       setLoading(false);
     }
@@ -144,14 +85,14 @@ export const AuthProvider = ({ children }) => {
 
   // Logout
   const logout = () => {
-    localStorage.removeItem("authToken");
-    setToken(null);
-    setUser(null);
+    authService.logout();
+    authStoreLogout();
   };
 
   return (
     <AuthContext.Provider
       value={{
+        isAuthenticated,
         user,
         token,
         loading,
@@ -172,3 +113,7 @@ AuthProvider.propTypes = {
 
 // Hook
 export const useAuth = () => useContext(AuthContext);
+
+
+
+

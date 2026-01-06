@@ -12,9 +12,10 @@ const FUEL_TYPES = [
   "Petrol (Octane 92)", "Petrol (Octane 95) / Super Petrol", "Diesel",
   "Auto Diesel", "Lubricants", "Kerosene", "Any Fuel Type"
 ];
-const BRANDS = [
-  "Ceylon Petroleum Corporation (CPC)", "Ceylon Petroleum Storage Terminal Ltd (CPSTL)",
-  "Indian Oil Corporation (IOC)", "Lanka IOC", "Shell", "Sinopec (China Petroleum)", "Any Brand"
+const BRANDS_DISPLAY = [
+  { id: "IOC", name: "IOC" },
+  { id: "CPC", name: "CPC" },
+  { id: "Shell", name: "Shell" },
 ];
 
 export default function FuelFormScreen() {
@@ -24,44 +25,45 @@ export default function FuelFormScreen() {
      FORM STATE
   ================================ */
   const [formData, setFormData] = useState({
-    vehicleType: "", fuelType: "", preferredBrand: "",
-    stationId: "",
-    latitude: null, longitude: null,
+    vehicleType: "",
+    fuelType: "",
+    preferredBrand: "",
+    latitude: null,
+    longitude: null,
   });
 
-  const [, setStations] = useState([]);
-  const [loadingStations, setLoadingStations] = useState(false);
   const [loadingLocation, setLoadingLocation] = useState(false);
   const [locationError, setLocationError] = useState("");
-
   const [locationLabel, setLocationLabel] = useState("");
+  const [confirmedLocation, setConfirmedLocation] = useState(false);
 
   /* ===============================
      DROPDOWNS
   ================================ */
   const [showDropdowns, setShowDropdowns] = useState({
-    vehicleType: false, fuelType: false, preferredBrand: false,
+    vehicleType: false,
+    fuelType: false,
   });
 
   const handleSelect = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-      ...(field === "province" ? { town: "" } : {}),
     }));
     setShowDropdowns((prev) => ({ ...prev, [field]: false }));
   };
 
-  /* ===============================
-     MAP CENTER UPDATE
-  ================================ */
-  // No map/province sync when using GPS-only flow
+  const handleBrandSelect = (brandId) => {
+    setFormData((prev) => ({
+      ...prev,
+      preferredBrand: brandId,
+    }));
+  };
 
   /* ===============================
      FIND BEST STATION
-     - Directly render result page
   ================================ */
-  const handleFindStations = async () => {
+  const handleContinueToRecommendations = async () => {
     // Prepare submission data
     const submissionData = {
       submissionType: "FUEL_FORM",
@@ -73,7 +75,7 @@ export default function FuelFormScreen() {
         longitude: formData.longitude,
       },
     };
-  
+
     try {
       // Send to backend
       await fetch(`${API_BASE}${API_ENDPOINTS.SUBMISSIONS.CREATE}`, {
@@ -88,7 +90,7 @@ export default function FuelFormScreen() {
     } catch (error) {
       console.error("Failed to submit fuel form:", error);
     }
-  
+
     // Existing navigation logic
     const queryParams = new URLSearchParams({
       type: "fuel",
@@ -109,6 +111,7 @@ export default function FuelFormScreen() {
     }
     setLoadingLocation(true);
     setLocationError("");
+    setConfirmedLocation(false); // Reset confirmation on new location attempt
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
@@ -145,32 +148,20 @@ export default function FuelFormScreen() {
     );
   };
 
-  /* ===============================
-     LOAD STATIONS (ONCE)
-  ================================ */
-  useEffect(() => {
-    const fetchStations = async () => {
-      try {
-        setLoadingStations(true);
-        const res = await fetch(`${API_BASE}${API_ENDPOINTS.STATIONS.GET_ALL}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
-        });
-        const data = await res.json();
-        setStations(data || []);
-        if (data?.length) {
-          setFormData((p) => {
-            if (p.stationId) return p;
-            return { ...p, stationId: data[0].id || data[0]._id };
-          });
-        }
-      } catch {
-        console.error("Failed to load stations");
-      } finally {
-        setLoadingStations(false);
-      }
-    };
-    fetchStations();
-  }, []);
+  const handleConfirmLocation = () => {
+    setConfirmedLocation(true);
+  };
+
+  const handleSelectAgain = () => {
+    setFormData((p) => ({ ...p, latitude: null, longitude: null }));
+    setLocationLabel("");
+    setLocationError("");
+    setConfirmedLocation(false);
+  };
+
+  const handleCancel = () => {
+    navigate(-1); // Go back to the previous page
+  };
 
   const renderDropdown = (field, options, label) => (
     <div className={styles.inputContainer}>
@@ -197,33 +188,87 @@ export default function FuelFormScreen() {
 
   return (
     <div className={styles.container}>
-      {loadingStations && <p style={{ textAlign: "center", color: "#94a3b8" }}>Loading fuel stations...</p>}
+      <h1 className={styles.header}>Fuel Station Request</h1>
+      <p className={styles.subHeader}>Fill in your requirements to find the best match</p>
 
-      <div className={styles.form}>
+      <div className={styles.formGrid}>
         {renderDropdown("vehicleType", VEHICLE_TYPES, "Vehicle Type")}
         {renderDropdown("fuelType", FUEL_TYPES, "Fuel Type")}
-        {renderDropdown("preferredBrand", BRANDS, "Preferred Brand")}
       </div>
 
-      <div style={{ textAlign: "center", margin: "10px 0" }}>
-        <button
-          className={styles.findButton}
-          onClick={handleUseCurrentLocation}
-          disabled={loadingLocation}
-          style={{ marginRight: 8 }}
-        >
-          {loadingLocation ? "Locating..." : "Use my current location"}
-        </button>
-        {locationError && <p style={{ color: "#dc2626", marginTop: 8 }}>{locationError}</p>}
-        {locationLabel && <p style={{ color: "#0f172a", marginTop: 8 }}>{locationLabel}</p>}
+      <div className={styles.section}>
+        <label className={styles.label}>Preferred Brand</label>
+        <div className={styles.brandSelection}>
+          {BRANDS_DISPLAY.map((brand) => (
+            <button
+              key={brand.id}
+              className={`${styles.brandButton} ${formData.preferredBrand === brand.id ? styles.selected : ""}`}
+              onClick={() => handleBrandSelect(brand.id)}
+            >
+              {brand.name}
+            </button>
+          ))}
+        </div>
       </div>
-      <button
-        className={styles.findButton}
-        onClick={handleFindStations}
-        disabled={!formData.latitude || !formData.longitude}
-      >
-        Find Best Station
-      </button>
+
+      <div className={styles.section}>
+        <label className={styles.label}>Select Your Exact Location</label>
+        <div className={styles.mapPlaceholder}>
+          <img src="/icons/map-pin.png" alt="Map Pin" className={styles.mapPinIcon} />
+          <p>Click on the map to select your location</p>
+          <button
+            className={styles.findButton}
+            onClick={handleUseCurrentLocation}
+            disabled={loadingLocation}
+          >
+            {loadingLocation ? "Locating..." : "Use my current location"}
+          </button>
+          {locationError && <p className={styles.errorText}>{locationError}</p>}
+        </div>
+      </div>
+
+      {locationLabel && (
+        <div className={styles.detectedAddress}>
+          <img src="/icons/location-pin.png" alt="Location Pin" className={styles.locationPinIcon} />
+          <div>
+            <p className={styles.addressLabel}>Detected Address</p>
+            <p className={styles.addressText}>{locationLabel}</p>
+            {formData.latitude && formData.longitude && (
+              <p className={styles.coordinatesText}>
+                Coordinates: {formData.latitude.toFixed(4)}° N, {formData.longitude.toFixed(4)}° E
+              </p>
+            )}
+          </div>
+          <div className={styles.locationActions}>
+            <button
+              className={styles.confirmLocationButton}
+              onClick={handleConfirmLocation}
+              disabled={confirmedLocation}
+            >
+              Confirm Location
+            </button>
+            <button
+              className={styles.selectAgainButton}
+              onClick={handleSelectAgain}
+            >
+              Select Again
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className={styles.formActions}>
+        <button className={styles.cancelButton} onClick={handleCancel}>
+          Cancel
+        </button>
+        <button
+          className={styles.continueButton}
+          onClick={handleContinueToRecommendations}
+          disabled={!confirmedLocation || !formData.vehicleType || !formData.fuelType || !formData.preferredBrand}
+        >
+          Continue to Recommendations →
+        </button>
+      </div>
     </div>
   );
 }

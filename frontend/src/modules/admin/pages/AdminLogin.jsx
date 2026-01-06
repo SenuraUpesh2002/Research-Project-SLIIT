@@ -1,7 +1,7 @@
 // frontend/src/modules/admin/pages/AdminLogin.jsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_ENDPOINTS } from "../../../constants/api";
+import authService from '../../../services/auth.service';
 import styles from './Login.module.css';
 
 const Login = () => {
@@ -10,57 +10,20 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Auto-login with test credentials for development
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      navigate('/admin'); // Redirect to landing page
-    }
-  }, [navigate]);
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(''); // Clear previous errors
 
-    const emailTrimmed = email.trim();
-    const passwordTrimmed = password.trim();
-
-    // Test credentials
-    const TEST_EMAIL = 'admin@test.com';
-    const TEST_PASSWORD = 'admin123';
-
-    if (emailTrimmed === TEST_EMAIL && passwordTrimmed === TEST_PASSWORD) {
-      // Set a mock token for testing
-      const token = 'test-admin-token-' + Date.now();
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('userRole', 'admin');
-      setTimeout(() => {
-        navigate('/admin'); // Redirect to landing page
-      }, 100);
-      return;
-    }
-
-    // Only try API call if not using test credentials
     try {
-      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: emailTrimmed, password: passwordTrimmed }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userRole', 'admin');
+      const user = await authService.login({ email, password });
+      if (user) {
+        localStorage.setItem('userRole', 'admin'); // Assuming successful login means admin role
         navigate('/admin'); // Redirect to landing page
       } else {
-        setError(data.message || 'Login failed.');
+        setError('Login failed. Please check your credentials.');
       }
     } catch (err) {
-      setError('Network error or server is unreachable.');
+      setError(err.response?.data?.message || 'Network error or server is unreachable.');
     }
   };
 

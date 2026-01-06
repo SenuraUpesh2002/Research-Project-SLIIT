@@ -27,9 +27,11 @@ const protect = asyncHandler(async (req, res, next) => {
       if (!user) {
         return res.status(401).json({ message: 'User not found for given token' });
       }
+      console.log('User found in protect middleware:', user); // Add this line
       // Remove password from the user object before attaching to request
       const { password, ...userWithoutPassword } = user;
       req.user = userWithoutPassword;
+      console.log('req.user after setting in protect middleware:', req.user);
       return next();
     } catch (error) {
       console.error('Auth middleware error:', error);
@@ -49,3 +51,5 @@ const admin = (req, res, next) => {
 };
 
 module.exports = { protect, admin };
+
+

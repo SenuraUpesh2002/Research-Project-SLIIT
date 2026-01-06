@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./fuel-results.module.css";
 import apiClient from "@services/apiClient";
+import { useNavigate } from "react-router-dom";
 
 // Dummy data for demonstration
 const bestMatchStation = {
@@ -49,6 +50,7 @@ export default function FuelResultsScreen() {
   const [selectedStation, setSelectedStation] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSelectStation = (station) => {
     setSelectedStation(station);
@@ -185,7 +187,7 @@ export default function FuelResultsScreen() {
             </div>
           </div>
           <div className={styles.confirmActions}>
-            <button className={styles.homeButton}>Back to Home</button>
+            <button className={styles.homeButton} onClick={() => navigate("/user-type")}>Back to Home</button>
             <button className={styles.historyButton}>View History</button>
           </div>
         </div>

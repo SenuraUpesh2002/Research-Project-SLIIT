@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { API_ENDPOINTS } from "../../../constants/api";
 import apiClient from '../../../services/apiClient';
 import styles from './Alerts.module.css';
+import AdminSidebar from '../components/AdminSidebar';
 
 const Alerts = () => {
   const [alerts, setAlerts] = useState([]);
@@ -91,84 +92,89 @@ const Alerts = () => {
   if (error) return <div className={styles.error}>{error}</div>;
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Alerts & Notification Management</h1>
+    <div className={styles.adminLayout}>
+      <AdminSidebar />
+      <div className={styles.mainContent}>
+        <div className={styles.container}>
+          <h1 className={styles.title}>Alerts & Notification Management</h1>
 
-      {/* Create Alert */}
-      <div className={styles.createAlertSection}>
-        <textarea
-          className={styles.alertInput}
-          placeholder="Enter new alert message..."
-          value={newAlertMessage}
-          onChange={(e) => setNewAlertMessage(e.target.value)}
-        />
+          {/* Create Alert */}
+          <div className={styles.createAlertSection}>
+            <textarea
+              className={styles.alertInput}
+              placeholder="Enter new alert message..."
+              value={newAlertMessage}
+              onChange={(e) => setNewAlertMessage(e.target.value)}
+            />
 
-        <select
-          value={alertType}
-          onChange={(e) => setAlertType(e.target.value)}
-        >
-          <option value="info">Info</option>
-          <option value="warning">Warning</option>
-          <option value="system">System</option>
-        </select>
-
-        <button className={styles.createButton} onClick={handleCreateAlert}>
-          Create Alert
-        </button>
-      </div>
-
-      {/* Alerts */}
-      {alerts.length === 0 ? (
-        <p className={styles.noAlerts}>No alerts available</p>
-      ) : (
-        <div className={styles.alertsList}>
-          {alerts.map(alert => (
-            <div
-              key={alert.id}
-              className={`${styles.alertCard} ${styles[alert.type]}`}
+            <select
+              value={alertType}
+              onChange={(e) => setAlertType(e.target.value)}
             >
-              <div className={styles.alertHeader}>
-                <span className={styles.alertType}>{alert.type}</span>
-                <span className={styles.alertDate}>
-                  {new Date(alert.created_at).toLocaleString()}
-                </span>
-              </div>
+              <option value="info">Info</option>
+              <option value="warning">Warning</option>
+              <option value="system">System</option>
+            </select>
 
-              <p className={styles.alertMessage}>{alert.message}</p>
-
-              <button
-                className={styles.deleteBtn}
-                onClick={() => openDeleteConfirm(alert)}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Confirmation Popup */}
-      {showConfirm && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
-            <h3>Delete Alert</h3>
-            <p>Are you sure you want to delete this alert?</p>
-            <div className={styles.modalActions}>
-              <button onClick={() => setShowConfirm(false)}>Cancel</button>
-              <button className={styles.danger} onClick={confirmDelete}>
-                Delete
-              </button>
-            </div>
+            <button className={styles.createButton} onClick={handleCreateAlert}>
+              Create Alert
+            </button>
           </div>
-        </div>
-      )}
 
-      {/* Toast Popup */}
-      {toast && (
-        <div className={`${styles.toast} ${styles[toast.type]}`}>
-          {toast.message}
+          {/* Alerts */}
+          {alerts.length === 0 ? (
+            <p className={styles.noAlerts}>No alerts available</p>
+          ) : (
+            <div className={styles.alertsList}>
+              {alerts.map(alert => (
+                <div
+                  key={alert.id}
+                  className={`${styles.alertCard} ${styles[alert.type]}`}
+                >
+                  <div className={styles.alertHeader}>
+                    <span className={styles.alertType}>{alert.type}</span>
+                    <span className={styles.alertDate}>
+                      {new Date(alert.created_at).toLocaleString()}
+                    </span>
+                  </div>
+
+                  <p className={styles.alertMessage}>{alert.message}</p>
+
+                  <button
+                    className={styles.deleteBtn}
+                    onClick={() => openDeleteConfirm(alert)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Confirmation Popup */}
+          {showConfirm && (
+            <div className={styles.modalOverlay}>
+              <div className={styles.modal}>
+                <h3>Delete Alert</h3>
+                <p>Are you sure you want to delete this alert?</p>
+                <div className={styles.modalActions}>
+                  <button onClick={() => setShowConfirm(false)}>Cancel</button>
+                  <button className={styles.danger} onClick={confirmDelete}>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Toast Popup */}
+          {toast && (
+            <div className={`${styles.toast} ${styles[toast.type]}`}>
+              {toast.message}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

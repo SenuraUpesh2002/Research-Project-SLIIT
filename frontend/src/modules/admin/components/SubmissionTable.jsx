@@ -6,9 +6,8 @@ const SubmissionTable = ({ submissions, onViewDetails, onEditSubmission, onDelet
   if (submissions && submissions.length > 0) {
     console.log('First submission data:', JSON.stringify(submissions[0], null, 2));
     console.log('Available fields:', Object.keys(submissions[0]));
-    console.log('Name field:', submissions[0].name);
-    console.log('User field:', submissions[0].user);
-    console.log('Email field:', submissions[0].email);
+    console.log('User name field:', submissions[0].user_name); // Log user_name
+    console.log('Station name field:', submissions[0].station_name); // Log station_name
   }
 
   const getStatusColor = (status) => {
@@ -38,25 +37,12 @@ const SubmissionTable = ({ submissions, onViewDetails, onEditSubmission, onDelet
 
   const SafeString = (value) => {
     if (typeof value === 'string') return value;
-    if (typeof value === 'object' && value !== null && value.name) return value.name;
-    if (typeof value === 'object' && value !== null && value.email) return value.email;
     return String(value || 'N/A');
   };
 
   if (!submissions || submissions.length === 0) {
     return <p>No submissions to display.</p>;
   }
-
-  // Count submissions per user using user_id as the unique identifier
-  const submissionCountByUser = {};
-  submissions.forEach(submission => {
-    const userId = submission.user_id; // Use user_id as the primary identifier
-    if (userId) {
-      submissionCountByUser[userId] = (submissionCountByUser[userId] || 0) + 1;
-    }
-  });
-  
-  console.log('Submission count by user:', submissionCountByUser);
 
   return (
     <div style={{ overflowX: 'auto' }}>
@@ -73,24 +59,22 @@ const SubmissionTable = ({ submissions, onViewDetails, onEditSubmission, onDelet
         </thead>
         <tbody>
           {submissions.map((submission) => {
-            const userId = submission.user_id;
-            const submissionCount = submissionCountByUser[userId] || 0;
-            
             return (
-              <tr key={submission.id || Math.random()}>
+              <tr key={submission.id}> {/* Use submission.id for key */}
                 <td>
                   <div className={styles.userInfo}>
-                    <div className={styles.userName}>{SafeString(submission.name || submission.user)}</div>
-                    <div className={styles.userEmail}>{SafeString(submission.email)}</div>
+                    <div className={styles.userName}>{SafeString(submission.user_name)}</div>
+                    {/* Assuming user_email might be available in submission.data or directly */}
+                    {/* <div className={styles.userEmail}>{SafeString(submission.user_email)}</div> */}
                   </div>
                 </td>
-                <td>{SafeString(submission.station || submission.stationName || 'N/A')}</td>
+                <td>{SafeString(submission.station_name)}</td>
                 <td>
                   <span className={styles.typeTag}>
-                    {SafeString(submission.submissionType || submission.submission_type || submission.formType || submission.type || submission.vehicleType || 'N/A')}
+                    {SafeString(submission.submission_type)}
                   </span>
                 </td>
-                <td>{formatDate(submission.date || submission.createdAt)}</td>
+                <td>{formatDate(submission.createdAt)}</td>
                 <td>
                   <span 
                     className={styles.statusBadge}

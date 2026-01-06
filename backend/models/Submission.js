@@ -4,7 +4,7 @@ const { pool } = require('../config/db');
 const Submission = {
   async create(submissionData) {
     try {
-      const { user_id, station_id, submission_type, data } = submissionData;
+      const { user_id, station_id = null, submission_type, data } = submissionData;
       const [result] = await pool.execute(
         'INSERT INTO submissions (user_id, station_id, submission_type, data, createdAt, updatedAt) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
         [user_id, station_id, submission_type, JSON.stringify(data)]
@@ -78,10 +78,10 @@ const Submission = {
     }
   },
 
-  async findAll() {
+  async findAll({ searchTerm = '' } = {}) {
     try {
-      const [rows] = await pool.execute(
-        `SELECT 
+      let query = `
+        SELECT 
           s.id, 
           s.user_id, 
           u.name AS user_name, 
@@ -91,10 +91,24 @@ const Submission = {
           s.data, 
           s.createdAt, 
           s.updatedAt 
-         FROM submissions s
-         LEFT JOIN users u ON s.user_id = u.id
-         LEFT JOIN stations st ON s.station_id = st.id`
-      );
+        FROM submissions s
+        LEFT JOIN users u ON s.user_id = u.id
+        LEFT JOIN stations st ON s.station_id = st.id
+      `;
+      const params = [];
+
+      if (searchTerm) {
+        query += `
+          WHERE u.name LIKE ? 
+          OR st.name LIKE ? 
+          OR s.submission_type LIKE ? 
+          OR s.data LIKE ?
+        `;
+        const searchWildcard = `%${searchTerm}%`;
+        params.push(searchWildcard, searchWildcard, searchWildcard, searchWildcard);
+      }
+
+      const [rows] = await pool.execute(query, params);
       return rows.map(row => ({
         id: row.id,
         user_id: row.user_id,

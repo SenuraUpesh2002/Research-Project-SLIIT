@@ -1,265 +1,320 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #f6f3fb; /* soft light purple */
-}
-
-/* ================= HEADER ================= */
-.header {
-  background: linear-gradient(135deg, #ede7ff, #f7f4ff);
-  padding: var(--spacing-xl);
-  padding-top: calc(var(--spacing-xl) + 60px);
-  border-bottom: 1px solid #d8ccff;
-}
-
-.backButton {
-  margin-bottom: var(--spacing-lg);
-  background: #ffffff;
-  border: 1px solid #d8ccff;
-  cursor: pointer;
-  padding: var(--spacing-sm) var(--spacing-md);
-  transition: all var(--transition-base);
-  color: #6e50d8;
-  border-radius: 6px;
-}
-
-.backButton:hover {
-  background-color: #efe9ff;
-  border-color: #bfa8ff;
-}
-
-.title {
-  font-size: 2.4rem;
-  font-weight: 500;
-  color: #4b2fbf;
-  margin-bottom: var(--spacing-sm);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.subtitle {
-  font-size: var(--font-size-base);
-  color: #6e50d8;
-  font-weight: 400;
-}
-
-/* ================= FORM ================= */
-.form {
-  flex: 1;
-  padding: var(--spacing-xl);
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-  position: relative;
-  z-index: 2;
-}
-
-.formTitle {
-  text-align: center;
-  color: #4b2fbf;
-  margin-bottom: var(--spacing-lg);
-  font-size: var(--font-size-h4);
-  font-weight: 500;
-}
-
-/* ================= INFO CARD ================= */
-.infoCard {
-  background: #ffffff;
-  padding: var(--spacing-lg);
-  display: flex;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  border-left: 4px solid #a580f0;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff; /* White background */
   border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(128, 90, 230, 0.15);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.infoText {
-  font-size: var(--font-size-sm);
-  color: #6e50d8;
-  line-height: 1.6;
+.header {
+  font-size: 1.8rem;
+  color: #333333; /* Dark gray text */
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
-/* ================= INPUTS ================= */
-.inputContainer {
-  margin-bottom: var(--spacing-lg);
-  position: relative;
-  z-index: 5; /* keeps dropdown above map */
+.subHeader {
+  font-size: 1rem;
+  color: #666666; /* Medium gray text */
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.section {
+  margin-bottom: 2rem;
 }
 
 .label {
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: #4b2fbf;
-  margin-bottom: var(--spacing-sm);
+  display: block;
+  font-size: 0.9rem;
+  color: #333333; /* Dark gray text */
+  margin-bottom: 0.6rem;
+  font-weight: 600;
 }
 
-/* ================= DROPDOWN ================= */
+.inputContainer {
+  position: relative;
+}
+
 .dropdown {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #ffffff;
-  padding: var(--spacing-md);
-  border: 2px solid #d8ccff;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cccccc; /* Light gray border */
+  border-radius: 6px;
+  background-color: #ffffff; /* White background */
+  text-align: left;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border-radius: 8px;
+  font-size: 1rem;
+  color: #333333; /* Dark gray text */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color 0.2s ease-in-out;
 }
 
 .dropdown:hover {
-  border-color: #a580f0;
+  border-color: #007bff; /* Blue border on hover */
 }
 
 .dropdownText {
-  font-size: var(--font-size-base);
-  color: #4b2fbf;
-}
-
-.placeholderText {
-  color: #9c8edb;
+  flex-grow: 1;
+  color: #666666; /* Medium gray text */
 }
 
 .dropdownList {
   position: absolute;
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid #d8ccff;
-  margin-top: var(--spacing-xs);
-  z-index: 9999; /* 🔥 FIX: above map */
-  max-height: 260px;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #ffffff; /* White background */
+  border: 1px solid #cccccc; /* Light gray border */
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 200px;
   overflow-y: auto;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(128, 90, 230, 0.15);
-  animation: slideDown 0.2s ease-out;
+  margin-top: 0.5rem;
 }
 
 .dropdownItem {
-  padding: var(--spacing-md);
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: background 0.2s ease;
+  font-size: 1rem;
+  color: #333333; /* Dark gray text */
 }
 
 .dropdownItem:hover {
-  background: #efe9ff;
+  background-color: #f8f9fa; /* Lighter gray on hover */
 }
 
-.dropdownItemText {
-  color: #4b2fbf;
-  font-size: var(--font-size-base);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================= MAP ================= */
-.mapContainer {
-  height: 400px;
-  width: 100%;
-  margin-bottom: var(--spacing-lg);
-  border-radius: 10px;
-  border: 1px solid #d8ccff;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(128, 90, 230, 0.15);
-  position: relative;
-  z-index: 1; /* stays behind dropdown */
-}
-
-/* ================= LOADING TEXT ================= */
-.loadingText {
-  text-align: center;
-  color: #9c8edb;
-  margin-bottom: var(--spacing-md);
-  font-size: var(--font-size-sm);
-}
-
-/* ================= CONFIRMATION ================= */
-.confirmationDialog {
-  background: #ffffff;
-  padding: var(--spacing-xl);
-  margin-top: var(--spacing-lg);
-  border-radius: 10px;
-  border: 1px solid #d8ccff;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(128, 90, 230, 0.15);
-}
-
-.dialogActions {
+/* Brand Selection */
+.brandSelection {
   display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.brandButton {
+  flex: 1;
+  min-width: 120px;
+  max-width: 150px;
+  padding: 1rem;
+  border: 1px solid #cccccc; /* Light gray border */
+  border-radius: 8px;
+  background-color: #ffffff; /* White background */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #333333; /* Dark gray text */
+  transition: all 0.2s ease-in-out;
+}
+
+.brandButton:hover {
+  border-color: #007bff; /* Blue border on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.brandButton.selected {
+  border-color: #007bff; /* Blue border */
+  background-color: #e7f3ff; /* Light blue background */
+  color: #007bff; /* Blue text */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.brandIcon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Map Placeholder */
+.mapPlaceholder {
+  min-height: 200px;
+  background-color: #f8f9fa; /* Lighter gray background */
+  border: 1px dashed #cccccc; /* Light gray dashed border */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
+  align-items: center;
+  text-align: center;
+  color: #666666; /* Medium gray text */
+  gap: 0.5rem;
+  padding: 1rem;
 }
 
-.confirmButton,
-.cancelButton {
-  padding: var(--spacing-md) var(--spacing-lg);
-  cursor: pointer;
-  border: none;
-  font-weight: 500;
-  border-radius: 6px;
+.mapPinIcon {
+  width: 48px;
+  height: 48px;
+  opacity: 0.6;
 }
 
-.confirmButton {
-  background: #a580f0;
-  color: #ffffff;
-}
-
-.confirmButton:hover {
-  background: #8f6ae6;
-}
-
-.cancelButton {
-  background: #efe9ff;
-  color: #4b2fbf;
-}
-
-/* ================= FOOTER ================= */
-.footer {
-  background: #ffffff;
-  padding: var(--spacing-lg);
-  border-top: 1px solid #d8ccff;
-  position: sticky;
-  bottom: 0;
-  z-index: 3;
-}
-
-/* ================= FIND BUTTON (FIXED SIZE) ================= */
 .findButton {
-  width: 20%;
-  margin: 0 auto;          /* ✅ centers the button */
-  display: block;
-  padding: 12px 16px;
-  background: #a580f0;
+  background-color: #007bff; /* Blue background */
+  color: #ffffff; /* White text */
+  padding: 0.75rem 1.5rem;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 1rem;
 }
-
 
 .findButton:hover:not(:disabled) {
-  background: #8f6ae6;
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
-.findButtonText {
-  color: #ffffff;
-  font-size: 72px;      /* 🔥 very large */
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
+.findButton:disabled {
+  background-color: #cccccc; /* Light gray when disabled */
+  cursor: not-allowed;
 }
 
-.buttonDisabled {
-  opacity: 0.5;
+.errorText {
+  color: #dc3545; /* Red error text */
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* Detected Address */
+.detectedAddress {
+  background-color: #e7f3ff; /* Light blue background */
+  border: 1px solid #007bff; /* Blue border */
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.locationPinIcon {
+  width: 24px;
+  height: 24px;
+  color: #007bff; /* Blue icon */
+  flex-shrink: 0;
+}
+
+.addressLabel {
+  font-weight: 600;
+  color: #333333; /* Dark gray text */
+  margin-bottom: 0.25rem;
+}
+
+.addressText {
+  color: #666666; /* Medium gray text */
+  font-size: 0.95rem;
+}
+
+.coordinatesText {
+  color: #666666; /* Medium gray text */
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.locationActions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.confirmLocationButton,
+.selectAgainButton {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.confirmLocationButton {
+  background-color: #28a745; /* Green background */
+  color: #ffffff; /* White text */
+  border: none;
+}
+
+.confirmLocationButton:hover:not(:disabled) {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.confirmLocationButton:disabled {
+  background-color: #cccccc; /* Light gray when disabled */
+  cursor: not-allowed;
+}
+
+.selectAgainButton {
+  background-color: #ffffff; /* White background */
+  color: #dc3545; /* Red text */
+  border: 1px solid #dc3545; /* Red border */
+}
+
+.selectAgainButton:hover {
+  background-color: #f8d7da; /* Light red on hover */
+}
+
+/* Form Actions */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eeeeee; /* Very light gray border */
+}
+
+.cancelButton {
+  background-color: #e9ecef; /* Light gray background */
+  color: #6c757d; /* Dark gray text */
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.cancelButton:hover {
+  background-color: #dae0e5; /* Slightly darker gray on hover */
+}
+
+.continueButton {
+  background-color: #007bff; /* Blue background */
+  color: #ffffff; /* White text */
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.continueButton:hover:not(:disabled) {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.continueButton:disabled {
+  background-color: #cccccc; /* Light gray when disabled */
   cursor: not-allowed;
 }

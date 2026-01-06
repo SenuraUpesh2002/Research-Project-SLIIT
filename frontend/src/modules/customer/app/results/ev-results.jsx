@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ev-results.module.css";
 import apiClient from "@services/apiClient";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 // Dummy data for demonstration
 const bestMatchStation = {
@@ -49,6 +50,7 @@ export default function EVResultsScreen() {
   const [selectedStation, setSelectedStation] = useState(null); // Track selected station
   const [showConfirm, setShowConfirm] = useState(false); // Show confirmation dialog
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Handle selection of a station (best or alternative)
   const handleSelectStation = (station) => {
@@ -191,7 +193,7 @@ export default function EVResultsScreen() {
             </div>
           </div>
           <div className={styles.confirmActions}>
-            <button className={styles.homeButton}>Back to Home</button>
+            <button className={styles.homeButton} onClick={() => navigate("/user-type")}>Back to Home</button>
             <button className={styles.historyButton}>View History</button>
           </div>
         </div>

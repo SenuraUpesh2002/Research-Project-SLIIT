@@ -1,18 +1,61 @@
 .sidebar {
-  width: 260px;
-  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  width: 250px;
+  background-color: #343a40; /* Dark background for the sidebar */
   color: white;
-  height: 100vh;
+  padding: 20px;
   position: fixed;
-  left: 0;
-  top: 0;
+  height: 100%;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  overflow-y: auto;
-  visibility: visible !important;
-  opacity: 1 !important;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #4CAF50; /* A contrasting color for the logo */
+}
+
+.nav {
+  flex-grow: 1;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin-bottom: 10px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navLink:hover, .navLink.active {
+  background-color: #495057; /* Slightly lighter dark for hover/active */
+  color: #4CAF50; /* Highlight color for active link */
+}
+
+.navLink span {
+  margin-left: 10px;
+}
+
+.footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #adb5bd;
 }
 
 .logo {

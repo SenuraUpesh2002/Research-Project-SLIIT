@@ -1,166 +1,101 @@
 import { useState, useEffect } from 'react';
-import { API_ENDPOINTS } from "../../../constants/api";
-import apiClient from '../../../services/apiClient';
+import apiClient from "../../../services/apiClient";
 import styles from './Submissions.module.css';
-import SubmissionTable from '../components/SubmissionTable'; // Assuming this component exists
+import AdminSidebar from '../components/AdminSidebar';
+import SubmissionTable from '../components/SubmissionTable'; // Import SubmissionTable
+import { toast } from 'react-toastify'; // For notifications
+import 'react-toastify/dist/ReactToastify.css'; // Import toast CSS
 
-const Submissions = () => {
+export default function Submissions() {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const [sortBy, setSortBy] = useState('date');
+
+  const fetchSubmissions = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await apiClient.get('/submissions', { params: { search: searchTerm } });
+      setSubmissions(response.data);
+    } catch (err) {
+      setError(err);
+      toast.error('Failed to fetch submissions.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Placeholder for fetching submissions from an API
-    const fetchSubmissions = async () => {
-      try {
-        const token = localStorage.getItem('authToken');
-        console.log('Token in Submissions:', token);
-
-        // Fix: Ensure API endpoint is correct (no duplicated '/api')
-        // If your apiClient baseURL is 'http://localhost:5000/api', use '/submissions'
-        console.log('Fetching submissions from /submissions endpoint...');
-        const response = await apiClient.get(API_ENDPOINTS.SUBMISSIONS.GET_ALL);
-        const data = response.data || [];
-        console.log('Submissions data:', data);
-    
-        // Ensure data is an array
-        if (Array.isArray(data)) {
-          setSubmissions(data);
-        } else if (data && typeof data === 'object') {
-          setSubmissions([data]);
-        } else {
-          setSubmissions([]);
-        }
-      } catch (err) {
-        console.error('Error fetching submissions:', err);
-        setError('Failed to fetch submissions.');
-        setSubmissions([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchSubmissions();
-  }, []);
+  }, [searchTerm]); // Re-fetch when searchTerm changes
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    console.log('Search term updated:', value);
-  };
-
-  const handleFilterChange = (e) => {
-    setFilterType(e.target.value);
-  };
-
-  const handleSortChange = (e) => {
-    setSortBy(e.target.value);
-  };
-
-  const filteredSubmissions = submissions.filter((submission) => {
-    // Safe string conversion
-    const getName = () => {
-      const name = submission.name || submission.user;
-      return typeof name === 'string' ? name : (name?.name || '');
-    };
-    
-    const getEmail = () => {
-      const email = submission.email;
-      return typeof email === 'string' ? email : (email?.email || '');
-    };
-    
-    const getVehicleType = () => {
-      const type = submission.vehicleType || submission.type;
-      return typeof type === 'string' ? type : (type?.type || '');
-    };
-
-    const name = getName().toLowerCase();
-    const email = getEmail().toLowerCase();
-    const vehicleType = getVehicleType().toLowerCase();
-    const search = searchTerm.toLowerCase().trim();
-
-    const matchesSearch = search === '' || name.includes(search) || email.includes(search);
-    const matchesFilter = filterType === 'all' || vehicleType.includes(filterType.toLowerCase());
-    
-    return matchesSearch && matchesFilter;
-  });
-
-  console.log('Search term:', searchTerm, 'Filtered results:', filteredSubmissions.length);
-
-  const sortedSubmissions = [...filteredSubmissions].sort((a, b) => {
-    if (sortBy === 'date') {
-      return new Date(b.date) - new Date(a.date);
-    } else if (sortBy === 'name') {
-      return a.name.localeCompare(b.name);
+  const handleDeleteSubmission = async (id) => {
+    if (window.confirm('Are you sure you want to delete this submission?')) {
+      try {
+        await apiClient.delete(`/submissions/${id}`);
+        toast.success('Submission deleted successfully!');
+        fetchSubmissions(); // Refresh the list
+      } catch (err) {
+        toast.error('Failed to delete submission.');
+        console.error('Delete submission error:', err);
+      }
     }
-    return 0;
-  });
-
-  const handleViewDetails = (id) => {
-    console.log(`View details for submission ${id}`);
-    // Navigate to a detailed view page or open a modal
   };
 
   const handleEditSubmission = (id) => {
-    console.log(`Edit submission ${id}`);
-    // Navigate to an edit page or open an edit modal
+    // Implement edit logic here, e.g., open a modal or navigate to an edit page
+    toast.info(`Edit functionality for submission ID: ${id} is not yet implemented.`);
+    console.log('Edit submission with ID:', id);
   };
 
-  const handleDeleteSubmission = (id) => {
-    console.log(`Delete submission ${id}`);
-    // Implement deletion logic, e.g., API call and state update
-    setSubmissions(submissions.filter(sub => sub.id !== id));
-  };
+  // Remove client-side filtering as it's now handled by the backend
+  // const filteredSubmissions = submissions.filter(submission =>
+  //   submission.stationName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //   submission.submissionType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //   submission.status.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   if (loading) return <div className={styles.loading}>Loading submissions...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
+  if (error) return <div className={styles.error}>Error: {error.message}</div>;
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>User Submissions Management</h1>
+    <div className={styles.adminLayout}>
+      <AdminSidebar />
+      <div className={styles.mainContent}>
+        <div className={styles.container}>
+          <div className={styles.headerRow}>
+            <div className={styles.titleBlock}>
+              <h1 className={styles.title}>Submissions</h1>
+              <p className={styles.subtitle}>Manage all user submissions</p>
+            </div>
+            <div className={styles.controls}>
+              <input
+                type="text"
+                placeholder="Search submissions..."
+                className={styles.searchInput}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
 
-      <div className={styles.controls}>
-        <input
-          type="text"
-          placeholder="Search by name or email..."
-          className={styles.searchInput}
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <select className={styles.filterSelect} value={filterType} onChange={handleFilterChange}>
-          <option value="all">All Types</option>
-          <option value="EV Form">EV Form</option>
-          <option value="Fuel Form">Fuel Form</option>
-        </select>
-        <select className={styles.sortSelect} value={sortBy} onChange={handleSortChange}>
-          <option value="date">Sort by Date</option>
-          <option value="name">Sort by Name</option>
-        </select>
+          <div className={styles.panel}>
+            {submissions.length === 0 && searchTerm === '' ? (
+              <p>No submissions found.</p>
+            ) : submissions.length === 0 && searchTerm !== '' ? (
+              <p>No submissions match your search.</p>
+            ) : (
+              <SubmissionTable 
+                submissions={submissions} 
+                onDeleteSubmission={handleDeleteSubmission}
+                onEditSubmission={handleEditSubmission}
+                // onViewDetails={handleViewDetails} // If you want to implement a view details function
+              />
+            )}
+          </div>
+        </div>
       </div>
-
-      <SubmissionTable
-        submissions={sortedSubmissions}
-        onViewDetails={handleViewDetails}
-        onEditSubmission={handleEditSubmission}
-        onDeleteSubmission={handleDeleteSubmission}
-      />
     </div>
   );
-};
-
-export default Submissions;
-
-// Remove this duplicate function at the end of the file:
-//
-// const fetchSubmissions = async () => {
-//   try {
-//     // Fix: Remove extra '/api' from the endpoint
-//     const response = await apiClient.get('/submissions');
-//     setSubmissions(response.data);
-//   } catch (error) {
-//     console.error('Error fetching submissions:', error);
-//   }
-// };
+}

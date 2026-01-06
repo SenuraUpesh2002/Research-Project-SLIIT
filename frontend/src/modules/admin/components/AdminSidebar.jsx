@@ -1,67 +1,70 @@
-import { Link, useLocation } from 'react-router-dom';
-import styles from './AdminSidebar.module.css';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from './AdminSidebar.module.css'; // Import the CSS module
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTachometerAlt, faUsers, faClipboardList, faChartBar, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
-export default function AdminSidebar() {
-  const location = useLocation();
-
-  const menuItems = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: '📊' },
-    { name: 'Submissions', path: '/admin/submissions', icon: '📝' },
-    { name: 'Duplicates', path: '/admin/duplicates', icon: '📋' },
-    { name: 'Alerts', path: '/admin/alerts', icon: '⚠️' },
-    { name: 'Analytics', path: '/admin/analytics', icon: '📈' },
-    { name: 'Users', path: '/admin/users', icon: '👥' },
-  ];
-
-  const isActive = (path) => location.pathname === path;
-
+const AdminSidebar = () => {
   return (
-    <aside className={styles.sidebar}>
+    <div className={styles.sidebar}>
       <div className={styles.logo}>
-        <span className={styles.logoIcon}>⚡</span>
-        <span className={styles.logoText}>EV Charging</span>
+        Admin Panel
       </div>
-
       <nav className={styles.nav}>
-        <div className={styles.navSection}>
-          <p className={styles.navLabel}>Main</p>
-          {menuItems.slice(0, 3).map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`${styles.navItem} ${isActive(item.path) ? styles.active : ''}`}
-            >
-              <span className={styles.navIcon}>{item.icon}</span>
-              <span className={styles.navName}>{item.name}</span>
-            </Link>
-          ))}
-        </div>
-
-        <div className={styles.navSection}>
-          <p className={styles.navLabel}>Reports</p>
-          {menuItems.slice(3).map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`${styles.navItem} ${isActive(item.path) ? styles.active : ''}`}
-            >
-              <span className={styles.navIcon}>{item.icon}</span>
-              <span className={styles.navName}>{item.name}</span>
-            </Link>
-          ))}
-        </div>
+        <ul className={styles.navList}>
+          <li className={styles.navItem}>
+            <NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>
+              <FontAwesomeIcon icon={faTachometerAlt} />
+              <span>Dashboard</span>
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink to="/admin/users" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>
+              <FontAwesomeIcon icon={faUsers} />
+              <span>Users</span>
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink to="/admin/submissions" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>
+              <FontAwesomeIcon icon={faClipboardList} />
+              <span>Submissions</span>
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink to="/admin/analytics" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>
+              <FontAwesomeIcon icon={faChartBar} />
+              <span>Analytics</span>
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink to="/admin/reports" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>
+              <FontAwesomeIcon icon={faChartBar} />
+              <span>Reports</span>
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink to="/admin/alerts" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>
+              <FontAwesomeIcon icon={faBell} /> {/* Using faBell for alerts */}
+              <span>Alerts</span>
+            </NavLink>
+          </li>
+          <li className={styles.navItem}>
+            <NavLink to="/admin/settings" className={({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>
+              <FontAwesomeIcon icon={faCog} />
+              <span>Settings</span>
+            </NavLink>
+          </li>
+        </ul>
       </nav>
-
       <div className={styles.footer}>
-        <div className={styles.userInfo}>
-          <div className={styles.userAvatar}>👤</div>
-          <div>
-            <div className={styles.userName}>Admin</div>
-            <div className={styles.userEmail}>admin@test.com</div>
-          </div>
-        </div>
-        <button className={styles.logoutBtn}>🚪</button>
+        <NavLink to="/admin/logout" className={styles.navLink}>
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          <span>Logout</span>
+        </NavLink>
       </div>
-    </aside>
+    </div>
   );
-}
+};
+
+export default AdminSidebar;

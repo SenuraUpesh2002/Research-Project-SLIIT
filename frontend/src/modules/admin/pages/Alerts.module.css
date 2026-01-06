@@ -1,3 +1,18 @@
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Light background for the whole layout */
+}
+
+.mainContent {
+  margin-left: 260px; /* Adjust based on sidebar width */
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #ffffff; /* White background for the main content area */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
 /* Container */
 .container {
   padding: 24px;

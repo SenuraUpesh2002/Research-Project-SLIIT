@@ -1,15 +1,20 @@
 import apiClient from './apiClient';
+import { jwtDecode } from 'jwt-decode';
 
 const authService = {
   login: async (credentials) => {
+    console.log("authService.login called with credentials:", credentials);
     try {
       const response = await apiClient.post('/auth/login', credentials);
+      console.log("Backend login response data:", response.data);
       if (response.data.token) {
+        console.log("Token received from backend:", response.data.token);
         localStorage.setItem('authToken', response.data.token);
+        return jwtDecode(response.data.token);
       }
-      return response.data;
+      return null;
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login error:", error);
       throw error;
     }
   },
@@ -37,6 +42,23 @@ const authService = {
       throw error;
     }
   },
+
+  validateToken: () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      return false;
+    }
+    try {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000; // Convert to seconds
+      return decodedToken.exp > currentTime;
+    } catch (error) {
+      console.error('Token validation failed:', error);
+      return false;
+    }
+  },
 };
 
 export default authService;
+
+
