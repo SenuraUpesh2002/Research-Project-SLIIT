@@ -21,7 +21,41 @@ const createReport = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getReports = asyncHandler(async (req, res) => {
   const reports = await Report.findAll();
-  res.json(reports);
+
+  // Process reports to generate submission trends and user activity
+  const submissionTrends = {};
+  const userActivity = {};
+
+  reports.forEach(report => {
+    // Submission Trends (by month)
+    const month = new Date(report.createdAt).toLocaleString('en-US', { month: 'short', year: 'numeric' });
+    submissionTrends[month] = (submissionTrends[month] || 0) + 1;
+
+    // User Activity (unique users per day)
+    const day = new Date(report.createdAt).toISOString().split('T')[0]; // YYYY-MM-DD
+    if (!userActivity[day]) {
+      userActivity[day] = new Set();
+    }
+    userActivity[day].add(report.user.id);
+  });
+
+  // Convert submissionTrends to array format
+  const submissionTrendsArray = Object.keys(submissionTrends).map(month => ({
+    month,
+    count: submissionTrends[month]
+  })).sort((a, b) => new Date(a.month) - new Date(b.month)); // Sort by date
+
+  // Convert userActivity to array format
+  const userActivityArray = Object.keys(userActivity).map(day => ({
+    day,
+    activeUsers: userActivity[day].size
+  })).sort((a, b) => new Date(a.day) - new Date(b.day)); // Sort by date
+
+  res.json({
+    allReports: reports, // Optionally include all raw reports
+    submissionTrends: submissionTrendsArray,
+    userActivity: userActivityArray,
+  });
 });
 
 // @desc    Get report by ID

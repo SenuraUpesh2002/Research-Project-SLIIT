@@ -12,10 +12,8 @@ const FUEL_TYPES = [
   "Petrol (Octane 92)", "Petrol (Octane 95) / Super Petrol", "Diesel",
   "Auto Diesel", "Lubricants", "Kerosene", "Any Fuel Type"
 ];
-const BRANDS_DISPLAY = [
-  { id: "IOC", name: "IOC" },
-  { id: "CPC", name: "CPC" },
-  { id: "Shell", name: "Shell" },
+const BRANDS_DROPDOWN = [
+  "IOC", "CPC", "Shell", "CEYPETCO", "Any Brand"
 ];
 
 export default function FuelFormScreen() {
@@ -192,30 +190,15 @@ export default function FuelFormScreen() {
       <p className={styles.subHeader}>Fill in your requirements to find the best match</p>
 
       <div className={styles.formGrid}>
-        {renderDropdown("vehicleType", VEHICLE_TYPES, "Vehicle Type")}
         {renderDropdown("fuelType", FUEL_TYPES, "Fuel Type")}
-      </div>
-
-      <div className={styles.section}>
-        <label className={styles.label}>Preferred Brand</label>
-        <div className={styles.brandSelection}>
-          {BRANDS_DISPLAY.map((brand) => (
-            <button
-              key={brand.id}
-              className={`${styles.brandButton} ${formData.preferredBrand === brand.id ? styles.selected : ""}`}
-              onClick={() => handleBrandSelect(brand.id)}
-            >
-              {brand.name}
-            </button>
-          ))}
-        </div>
+        {renderDropdown("preferredBrand", BRANDS_DROPDOWN, "Preferred Brand")}
       </div>
 
       <div className={styles.section}>
         <label className={styles.label}>Select Your Exact Location</label>
         <div className={styles.mapPlaceholder}>
-          <img src="/icons/map-pin.png" alt="Map Pin" className={styles.mapPinIcon} />
-          <p>Click on the map to select your location</p>
+          
+          
           <button
             className={styles.findButton}
             onClick={handleUseCurrentLocation}
@@ -251,7 +234,7 @@ export default function FuelFormScreen() {
               className={styles.selectAgainButton}
               onClick={handleSelectAgain}
             >
-              Select Again
+              Cancel
             </button>
           </div>
         </div>
@@ -264,7 +247,7 @@ export default function FuelFormScreen() {
         <button
           className={styles.continueButton}
           onClick={handleContinueToRecommendations}
-          disabled={!confirmedLocation || !formData.vehicleType || !formData.fuelType || !formData.preferredBrand}
+          disabled={!confirmedLocation || !formData.fuelType}
         >
           Continue to Recommendations →
         </button>

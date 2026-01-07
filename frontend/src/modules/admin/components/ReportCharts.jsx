@@ -1,4 +1,7 @@
-/* eslint-disable react/prop-types */
+import {
+  LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
+
 const ReportCharts = ({ data, chartType, dataKey, nameKey }) => {
   const chartContainerStyle = {
     width: '100%',
@@ -17,20 +20,52 @@ const ReportCharts = ({ data, chartType, dataKey, nameKey }) => {
     return <div style={chartContainerStyle}>No data available for this chart.</div>;
   }
 
+  const renderChart = () => {
+    switch (chartType) {
+      case 'line':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={data}
+              margin={{
+                top: 5, right: 30, left: 20, bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey={nameKey} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey={dataKey} stroke="#8884d8" activeDot={{ r: 8 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        );
+      case 'bar':
+        return (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data}
+              margin={{
+                top: 5, right: 30, left: 20, bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey={nameKey} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey={dataKey} fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+      default:
+        return <div style={chartContainerStyle}>Unsupported chart type.</div>;
+    }
+  };
+
   return (
-    <div style={chartContainerStyle}>
-      {/* 
-        In a real application, you would integrate a charting library here,
-        e.g., Recharts, Chart.js, Nivo, etc.
-        
-        Example with mock data display:
-      */}
-      <p>Displaying a {chartType} chart for {dataKey} by {nameKey}.</p>
-      <ul>
-        {data.map((item, index) => (
-          <li key={index}>{item[nameKey]}: {item[dataKey]}</li>
-        ))}
-      </ul>
+    <div style={{ width: '100%', height: '300px' }}>
+      {renderChart()}
     </div>
   );
 };
